@@ -115,7 +115,7 @@
      contrast while the image loads or if it fails to load at all. */
   .c27-navy-field {
     background-color: var(--c27-navy);
-    background-image: url("/bg-image.png");
+    background-image: url("/bg-image.webp");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
