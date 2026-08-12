@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "@fontsource-variable/figtree";
 @import "./fonts.css";
 @import "./tokens.css";
 
@@ -121,16 +120,25 @@
     background-repeat: no-repeat;
   }
 
+  /* --- progressive disclosure --------------------------------------- */
+  /* Tab panels ship with `hidden` so a scripted visit paints the selected
+     panel immediately, instead of flashing all eight and collapsing. Nothing
+     can undo `hidden` without JS, so it is overridden here — the `.js` class
+     is set by Layout.astro before first paint. */
+  html:not(.js) [data-panel][hidden] {
+    display: block;
+  }
+
   /* --- reveal on scroll -------------------------------------------- */
-  /* The .in class is added by an IntersectionObserver in Layout.astro.
-     Without JS the element is visible, because the hidden state is only
-     applied when JS has marked the document. */
-  .js .c27-rise {
+  /* The .in class is added by an IntersectionObserver in Layout.astro, which
+     also sets `.reveal`. That class is narrower than `.js`: content may only
+     be hidden here when the observer that reveals it again actually exists. */
+  .reveal .c27-rise {
     opacity: 0;
     transform: translateY(16px);
   }
 
-  .js .c27-rise.in {
+  .reveal .c27-rise.in {
     opacity: 1;
     transform: none;
     transition:
@@ -140,7 +148,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .js .c27-rise {
+    .reveal .c27-rise {
       opacity: 1;
       transform: none;
       transition: none;

@@ -45,8 +45,17 @@ const canonicalUrl = canonical
     <meta name="generator" content="Astro" />
 
     {
-      /* The body face is self-hosted; Figtree is bundled with the global CSS. */
+      /* Both faces are used above the fold. Preloading is what lets
+         font-display: optional commit to the real face on first paint
+         instead of falling back — see the note in fonts.css. */
     }
+    <link
+      rel="preload"
+      href="/fonts/figtree-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link
       rel="preload"
       href="/fonts/switzer-variable.woff2"
@@ -64,21 +73,24 @@ const canonicalUrl = canonical
     />
 
     {
-      /* Marks the document as JS-capable before first paint, so the reveal
-         classes only hide content when the observer can reveal it again.
-         Without this a JS failure leaves the page blank.
+      /* Two markers, set before first paint and deliberately separate.
 
-         Two ways that promise can be broken, both handled here: the browser
-         has no IntersectionObserver, or the reveal module never runs because
-         it was blocked or failed to parse. In either case the hidden state is
-         never applied, or is dropped again at load. */
+         `js` means scripting is on, so CSS can leave progressively-enhanced
+         content collapsed instead of painting it and letting JS snap it away.
+
+         `reveal` is narrower: it gates the scroll animation, which hides
+         content until the observer reveals it. That is only safe when the
+         observer exists AND the module that drives it actually ran — if the
+         module was blocked or failed to parse, the class comes off at load
+         rather than leaving the page blank. */
     }
     <script is:inline>
+      document.documentElement.classList.add("js");
       if ("IntersectionObserver" in window) {
-        document.documentElement.classList.add("js");
+        document.documentElement.classList.add("reveal");
         window.addEventListener("load", function () {
           if (document.documentElement.dataset.c27Reveal !== "on") {
-            document.documentElement.classList.remove("js");
+            document.documentElement.classList.remove("reveal");
           }
         });
       }

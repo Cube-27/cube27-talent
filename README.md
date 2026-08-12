@@ -61,7 +61,7 @@ functions/
   api/             employer-lead.ts, candidate-application.ts
 public/
   _headers         CSP and cache rules
-  fonts/           Switzer variable woff2 (display); body face from npm
+  fonts/           self-hosted woff2 — Figtree (display) + Switzer (body)
 ```
 
 **No UI framework.** No React, Vue, CMS or database — the two tab selectors and

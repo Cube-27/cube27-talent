@@ -1,10 +1,46 @@
-/* Self-hosted variable faces. Preloaded in Layout.astro — keep the paths in
-   sync with the <link rel="preload"> tags there. Design system §3. */
+/* Self-hosted variable faces. Both are preloaded in Layout.astro — keep the
+   paths in sync with the <link rel="preload"> tags there. Design system §3.
 
+   font-display: optional, not swap. `swap` paints the fallback first and then
+   re-renders in the real face, which reads as a flicker on every load that is
+   not already warm — the display face sets every heading, so the whole page
+   jumps. `optional` gives the font a short window to arrive and then commits
+   to whatever it has, never swapping mid-view. Preloading is what makes it
+   win that window; the files are same-origin and cached immutably for a year
+   (public/_headers), so repeat views are instant. */
+
+/* Display face: headings, buttons, the wordmark. Latin covers ordinary copy;
+   latin-ext stays lazy behind its unicode-range and is not preloaded. */
+@font-face {
+  font-family: "Figtree Variable";
+  src: url("/fonts/figtree-latin-wght-normal.woff2") format("woff2-variations");
+  font-weight: 300 900;
+  font-display: optional;
+  font-style: normal;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Figtree Variable";
+  src: url("/fonts/figtree-latin-ext-wght-normal.woff2")
+    format("woff2-variations");
+  font-weight: 300 900;
+  font-display: optional;
+  font-style: normal;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Body face. */
 @font-face {
   font-family: "Switzer Variable";
   src: url("/fonts/switzer-variable.woff2") format("woff2");
   font-weight: 100 900;
-  font-display: swap;
+  font-display: optional;
   font-style: normal;
 }

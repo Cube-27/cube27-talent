@@ -5,9 +5,11 @@ import { ROLE_FAMILIES } from "@/data/roles";
 /**
  * Tabbed role-family selector. Design system §6.7.
  *
- * All eight panels are server-rendered; JS only toggles `hidden` and
- * `aria-selected`. Without JS every panel is visible, so the full taxonomy is
- * still readable (plan §19.4 progressive enhancement).
+ * All eight panels are server-rendered and JS only toggles `hidden` and
+ * `aria-selected`. The panels ship hidden so a scripted visit paints the
+ * selected one straight away rather than flashing all eight and collapsing.
+ * Without JS that `hidden` is overridden in globals.css, so the full taxonomy
+ * stays readable (plan §19.4 progressive enhancement).
  */
 ---
 
@@ -40,11 +42,12 @@ import { ROLE_FAMILIES } from "@/data/roles";
 
   <div class="p-[clamp(1.5rem,3vw,2.25rem)]">
     {
-      ROLE_FAMILIES.map((family) => (
+      ROLE_FAMILIES.map((family, i) => (
         <div
           role="tabpanel"
           id={`panel-${family.id}`}
           aria-labelledby={`tab-${family.id}`}
+          hidden={i !== 0}
           data-panel
         >
           <h3 class="c27-h3-lg">{family.name}</h3>
