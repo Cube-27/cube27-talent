@@ -109,6 +109,18 @@
     max-width: 52ch;
   }
 
+  /* --- dark panels -------------------------------------------------- */
+  /* Shared navy field for the footer, the how-it-works hero and the
+     nine-step section. Navy stays as the paint underneath, so text keeps its
+     contrast while the image loads or if it fails to load at all. */
+  .c27-navy-field {
+    background-color: var(--c27-navy);
+    background-image: url("/bg-image.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
   /* --- reveal on scroll -------------------------------------------- */
   /* The .in class is added by an IntersectionObserver in Layout.astro.
      Without JS the element is visible, because the hidden state is only
