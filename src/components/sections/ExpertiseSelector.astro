@@ -1,0 +1,110 @@
+---
+import Icon from "@/components/ui/Icon.astro";
+import { ROLE_FAMILIES } from "@/data/roles";
+
+/**
+ * Tabbed role-family selector. Design system §6.7.
+ *
+ * All eight panels are server-rendered; JS only toggles `hidden` and
+ * `aria-selected`. Without JS every panel is visible, so the full taxonomy is
+ * still readable (plan §19.4 progressive enhancement).
+ */
+---
+
+<div
+  class="c27-rise grid overflow-hidden rounded-c27-lg border border-c27-line bg-c27-surface shadow-c27-lg lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)]"
+  data-expertise
+>
+  <div
+    class="flex snap-x snap-mandatory gap-1.5 overflow-x-auto scroll-smooth border-b border-c27-line bg-c27-surface-2 p-3 [scrollbar-width:thin] lg:flex-col lg:snap-none lg:overflow-visible lg:border-b-0 lg:border-r lg:p-4"
+    role="tablist"
+    aria-label="Role families"
+  >
+    {
+      ROLE_FAMILIES.map((family, i) => (
+        <button
+          type="button"
+          role="tab"
+          id={`tab-${family.id}`}
+          aria-controls={`panel-${family.id}`}
+          aria-selected={i === 0 ? "true" : "false"}
+          tabindex={i === 0 ? 0 : -1}
+          class="flex min-h-11 shrink-0 snap-start items-center gap-2.5 whitespace-nowrap rounded-c27-sm px-3.5 py-2.5 text-left text-body-sm font-medium text-c27-ink-2 transition-colors hover:bg-c27-tint hover:text-c27-ink aria-selected:bg-c27-navy aria-selected:font-semibold aria-selected:text-white"
+        >
+          <Icon name={family.icon} size={18} />
+          <span>{family.name}</span>
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="p-[clamp(1.5rem,3vw,2.25rem)]">
+    {
+      ROLE_FAMILIES.map((family) => (
+        <div
+          role="tabpanel"
+          id={`panel-${family.id}`}
+          aria-labelledby={`tab-${family.id}`}
+          data-panel
+        >
+          <h3 class="c27-h3-lg">{family.name}</h3>
+          <p class="mt-2 max-w-[52ch] text-body-sm text-c27-ink-2">
+            {family.blurb}
+          </p>
+          <ul class="mt-5 flex flex-wrap gap-2">
+            {family.roles.map((role) => (
+              <li class="rounded-full border border-c27-line bg-c27-surface px-3.5 py-1.5 text-body-sm">
+                {role}
+              </li>
+            ))}
+          </ul>
+          <div class="mt-6 flex flex-wrap gap-x-8 gap-y-3 border-t border-c27-line-2 pt-5 text-caption text-c27-ink-2">
+            <span>Full-time employment through Cube27</span>
+            <span>
+              Remote &middot; hybrid &middot; onsite &middot; relocation
+            </span>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  // Roving tabindex with arrow-key support, per WAI-ARIA tabs pattern.
+  for (const root of document.querySelectorAll<HTMLElement>(
+    "[data-expertise]",
+  )) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>("[data-panel]")];
+
+    const select = (index: number, focus = false) => {
+      tabs.forEach((tab, i) => {
+        tab.setAttribute("aria-selected", String(i === index));
+        tab.tabIndex = i === index ? 0 : -1;
+      });
+      panels.forEach((panel, i) => {
+        panel.hidden = i !== index;
+      });
+      if (focus) tabs[index].focus();
+    };
+
+    // Only collapse to one visible panel once JS is running.
+    select(0);
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => select(i));
+      tab.addEventListener("keydown", (event) => {
+        const delta =
+          event.key === "ArrowDown" || event.key === "ArrowRight"
+            ? 1
+            : event.key === "ArrowUp" || event.key === "ArrowLeft"
+              ? -1
+              : 0;
+        if (!delta) return;
+        event.preventDefault();
+        select((i + delta + tabs.length) % tabs.length, true);
+      });
+    });
+  }
+</script>

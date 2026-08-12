@@ -1,0 +1,77 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/ui/Section.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import HowItWorksHero from "@/components/sections/HowItWorksHero.astro";
+import ModelCards from "@/components/sections/ModelCards.astro";
+import ProcessStepper from "@/components/sections/ProcessStepper.astro";
+import AudienceSplit from "@/components/sections/AudienceSplit.astro";
+import { SITE_CONFIG } from "@/site-config";
+
+const title = `How it works | ${SITE_CONFIG.brand}`;
+const description =
+  "Cube27 screens, technically interviews, employs and payrolls the engineer. The client interviews, selects, directs the work and decides on continuation.";
+
+/* Candidate-side flow, plan §12.4. */
+const candidateFlow = [
+  "Application received",
+  "Profile review",
+  "HR screen",
+  "Technical assessment",
+  "Technical interview",
+  "Reference and background checks",
+  "Matched to a client requirement",
+  "Client interview",
+  "Cube27 employment offer",
+  "Onboarding and assignment",
+];
+---
+
+<Layout title={title} description={description}>
+  <HowItWorksHero />
+
+  <Section tone="surface" bordered>
+    <SectionHead
+      label="The model"
+      heading="Employment sits with Cube27. Direction sits with the client."
+    />
+    <ModelCards />
+  </Section>
+
+  <Section tone="dark">
+    <SectionHead
+      label="Client flow"
+      heading="Nine steps from brief to first day"
+      lede="Assessments are role-appropriate. A QA lead and a product designer do not sit the same test."
+      invert
+    />
+    <ProcessStepper />
+  </Section>
+
+  <Section>
+    <SectionHead
+      label="Candidate flow"
+      heading="The route into a Cube27 assignment"
+      lede="No stage is skipped, and no stage guarantees the next one."
+    />
+    <ol
+      class="c27-rise grid gap-px overflow-hidden rounded-c27-lg border border-c27-line bg-c27-line shadow-c27-lg sm:grid-cols-2"
+    >
+      {
+        candidateFlow.map((step, i) => (
+          <li class="flex items-baseline gap-3.5 bg-c27-surface px-5 py-4">
+            <span class="font-display text-caption font-bold tabular-nums text-c27-blue">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span class="text-body-sm">{step}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </Section>
+
+  <Section tone="surface" bordered>
+    <SectionHead label="Two ways in" heading="Hiring, or looking?" />
+    <AudienceSplit />
+  </Section>
+</Layout>

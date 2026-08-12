@@ -1,0 +1,139 @@
+/* ============================================================
+   Cube27 Talent — design tokens.
+   The single source of truth for colour, type, spacing, radius,
+   elevation and motion. See docs/design-system.md.
+
+   Raw values live on --c27-*. Tailwind utilities are generated
+   from the @theme inline block, so `bg-c27-surface`,
+   `text-c27-ink-2`, `border-c27-line` etc. all resolve here.
+   Never hard-code a hex value in a component.
+   ============================================================ */
+
+:root {
+  /* --- surfaces --- */
+  --c27-ground: #fafafa;
+  --c27-surface: #ffffff;
+  --c27-surface-2: #f8fafc;
+  --c27-tint: #eef1f8;
+  --c27-tint-2: #f4f6fc;
+  --c27-navy: #173b86;
+  --c27-navy-2: #173b86;
+
+  /* --- text --- */
+  --c27-ink: #111827;
+  --c27-ink-2: #56617a;
+  /* Darkened from #8b93ab so tertiary text clears 4.5:1 on --c27-ground. */
+  --c27-ink-3: #6b7590;
+
+  /* --- accent. One job each: green acts + verifies, blue informs. --- */
+  --c27-green: #10b45f;
+  /* #10b45f fails contrast as text on white; this is the text/hover value. */
+  --c27-green-d: #0d7a42;
+  --c27-blue: #2c5fdb;
+  --c27-blue-d: #244fb6;
+  --c27-blue-soft: #e8eefd;
+  --c27-amber: #b45309;
+
+  /* --- lines --- */
+  --c27-line: #e2e8f0;
+  --c27-line-2: #eef1f6;
+  --c27-line-dark: rgb(255 255 255 / 0.18);
+
+  /* --- on-navy text. These are tested contrast floors; do not lower. --- */
+  --c27-on-navy: #ffffff;
+  --c27-on-navy-2: rgb(255 255 255 / 0.9);
+  --c27-on-navy-3: rgb(255 255 255 / 0.86);
+  --c27-on-navy-accent: #e2eaff;
+  --c27-on-navy-success: #b7f7d1;
+
+  /* --- type --- */
+  --c27-font-display: "Figtree Variable", ui-sans-serif, system-ui, sans-serif;
+  --c27-font-body: "Switzer Variable", ui-sans-serif, system-ui, sans-serif;
+  --c27-font-mono:
+    ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+
+  --c27-text-display: clamp(2.1rem, 4.1vw, 3.4rem);
+  --c27-text-h2: clamp(1.6rem, 2.9vw, 2.3rem);
+  --c27-text-h3-lg: 1.5rem;
+  --c27-text-h3: 1.0625rem;
+  --c27-text-body: 1rem;
+  --c27-text-body-sm: 0.9375rem;
+  --c27-text-caption: 0.8125rem;
+  --c27-text-label: 0.75rem;
+  --c27-text-micro: 0.6875rem;
+
+  /* --- layout --- */
+  --c27-gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --c27-pad-section: clamp(3.5rem, 6.5vw, 6rem);
+  --c27-container: 78rem;
+  --c27-container-narrow: 60rem;
+
+  /* --- radius --- */
+  --c27-radius-sm: 8px;
+  --c27-radius: 10px;
+  --c27-radius-lg: 16px;
+
+  /* --- elevation. Two only; borders do the rest. --- */
+  --c27-shadow-sm:
+    0 1px 2px rgb(17 24 39 / 0.04), 0 10px 30px -22px rgb(17 24 39 / 0.25);
+  --c27-shadow-lg:
+    0 2px 6px rgb(17 24 39 / 0.05), 0 32px 60px -34px rgb(17 24 39 / 0.4);
+
+  /* --- motion --- */
+  --c27-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --c27-dur: 620ms;
+}
+
+@theme inline {
+  --color-c27-ground: var(--c27-ground);
+  --color-c27-surface: var(--c27-surface);
+  --color-c27-surface-2: var(--c27-surface-2);
+  --color-c27-tint: var(--c27-tint);
+  --color-c27-tint-2: var(--c27-tint-2);
+  --color-c27-navy: var(--c27-navy);
+  --color-c27-navy-2: var(--c27-navy-2);
+
+  --color-c27-ink: var(--c27-ink);
+  --color-c27-ink-2: var(--c27-ink-2);
+  --color-c27-ink-3: var(--c27-ink-3);
+
+  --color-c27-green: var(--c27-green);
+  --color-c27-green-d: var(--c27-green-d);
+  --color-c27-blue: var(--c27-blue);
+  --color-c27-blue-d: var(--c27-blue-d);
+  --color-c27-blue-soft: var(--c27-blue-soft);
+  --color-c27-amber: var(--c27-amber);
+
+  --color-c27-line: var(--c27-line);
+  --color-c27-line-2: var(--c27-line-2);
+  --color-c27-line-dark: var(--c27-line-dark);
+
+  --color-c27-on-navy: var(--c27-on-navy);
+  --color-c27-on-navy-2: var(--c27-on-navy-2);
+  --color-c27-on-navy-3: var(--c27-on-navy-3);
+  --color-c27-on-navy-accent: var(--c27-on-navy-accent);
+  --color-c27-on-navy-success: var(--c27-on-navy-success);
+
+  --font-display: var(--c27-font-display);
+  --font-body: var(--c27-font-body);
+  --font-sans: var(--c27-font-body);
+  --font-mono: var(--c27-font-mono);
+
+  --text-display: var(--c27-text-display);
+  --text-h2: var(--c27-text-h2);
+  --text-h3-lg: var(--c27-text-h3-lg);
+  --text-h3: var(--c27-text-h3);
+  --text-body-sm: var(--c27-text-body-sm);
+  --text-caption: var(--c27-text-caption);
+  --text-label: var(--c27-text-label);
+  --text-micro: var(--c27-text-micro);
+
+  --radius-c27-sm: var(--c27-radius-sm);
+  --radius-c27: var(--c27-radius);
+  --radius-c27-lg: var(--c27-radius-lg);
+
+  --shadow-c27-sm: var(--c27-shadow-sm);
+  --shadow-c27-lg: var(--c27-shadow-lg);
+
+  --ease-c27: var(--c27-ease);
+}

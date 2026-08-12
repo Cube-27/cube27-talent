@@ -1,0 +1,7 @@
+dist
+node_modules
+.astro
+.wrangler
+pnpm-lock.yaml
+public/fonts
+docs/mockup

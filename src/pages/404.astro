@@ -1,0 +1,24 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/ui/Section.astro";
+import Button from "@/components/ui/Button.astro";
+import { ROUTES, SITE_CONFIG } from "@/site-config";
+---
+
+<Layout
+  title={`Page not found | ${SITE_CONFIG.brand}`}
+  description="Page not found."
+  noindex
+>
+  <Section narrow>
+    <span class="c27-label mb-3 block">404</span>
+    <h1 class="c27-h2">That page does not exist</h1>
+    <p class="c27-lede mt-4">
+      The link may be out of date. Both routes below are the useful ones.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <Button href={ROUTES.hire} variant="primary" arrow>Hire talent</Button>
+      <Button href={ROUTES.join} variant="line">Find a job</Button>
+    </div>
+  </Section>
+</Layout>

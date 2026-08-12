@@ -1,0 +1,10 @@
+/* Self-hosted variable faces. Preloaded in Layout.astro — keep the paths in
+   sync with the <link rel="preload"> tags there. Design system §3. */
+
+@font-face {
+  font-family: "Switzer Variable";
+  src: url("/fonts/switzer-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}

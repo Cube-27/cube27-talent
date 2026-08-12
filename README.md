@@ -1,0 +1,129 @@
+# Cube27 Talent
+
+Managed engineering talent and staffing site for `talent.cube27.com`. Astro
+static output plus two Cloudflare Pages Functions for the forms, deployed to an
+**independent** Pages project so it shares no failure domain with `cube27.com`.
+
+## Reference documents
+
+Priority when they conflict: **invariants → V1 plan → design system → code.**
+
+| Document                                                                                               | Governs                               |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------- |
+| [`docs/cube27-talent-product-invariants-revised.md`](docs/cube27-talent-product-invariants-revised.md) | Locked business decisions             |
+| [`docs/cube27-talent-v1-plan-revised.md`](docs/cube27-talent-v1-plan-revised.md)                       | Product and implementation plan       |
+| [`docs/design-system.md`](docs/design-system.md)                                                       | Colour, type, components, usage rules |
+| [`docs/mockup/homepage.html`](docs/mockup/homepage.html)                                               | Approved visual reference             |
+
+## Commands
+
+```bash
+pnpm install
+pnpm dev        # localhost:3100 — static pages only, no Pages Functions
+pnpm build      # static output to dist/
+pnpm preview    # wrangler pages dev dist — the ONLY way to exercise the forms
+pnpm test       # resume and request-body security tests
+pnpm verify     # format:check + lint + astro check + test + build
+```
+
+`pnpm dev` does not run `functions/`. Form submissions only work under
+`pnpm preview`, which needs `.dev.vars`.
+
+## Local setup for the forms
+
+```bash
+cp .env.example .env             # PUBLIC_TURNSTILE_SITE_KEY, read at build time
+cp .dev.vars.example .dev.vars   # then fill in RESEND_API_KEY
+pnpm build && pnpm preview
+```
+
+Both example files ship Cloudflare's Turnstile **test** keys — the site key
+always passes and no real challenge is shown. Swap in real keys per environment
+before launch.
+
+`PUBLIC_TURNSTILE_SITE_KEY` is required for a build: the endpoints reject any
+submission without a Turnstile token, so a build without the key would ship
+forms that cannot be submitted. The build fails instead. `pnpm dev` is exempt.
+
+## Architecture
+
+```text
+src/
+  data/            role taxonomy, process, FAQs, proof — the content source of truth
+  styles/          fonts.css → tokens.css → globals.css
+  components/ui/   Button, Section, SectionHead, Icon, SnapshotCard, Faq
+  components/sections/  Header, Footer, Hero, ExpertiseSelector, ProcessStepper, …
+  components/forms/     EmployerForm, CandidateForm
+  lib/form-client.ts    shared submit handling, attribution capture
+  pages/           one file per route
+functions/
+  _shared/         responses, validation, turnstile, email
+  api/             employer-lead.ts, candidate-application.ts
+public/
+  _headers         CSP and cache rules
+  fonts/           Switzer variable woff2 (display); body face from npm
+```
+
+**No UI framework.** No React, Vue, CMS or database — the two tab selectors and
+the form handlers are plain TypeScript modules (plan §12.4.5).
+
+### Rules the code enforces
+
+- **Proof gating.** Numbers render only when their `src/data/proof.ts` entry is
+  `verified: true`. `200+ positions filled` is currently `false` and does not
+  appear on the site.
+- **The snapshot card is a template.** It always carries the "Template" badge
+  and the "Not a live candidate" line (invariant 32).
+- **Third person in headings.** No "we"/"you" in any `h1`–`h4`.
+- **Internal email is the critical send.** If Resend fails on the internal
+  notification the endpoint returns an error and the browser never reaches the
+  confirmation page. The acknowledgement is best-effort and only logged.
+- **Two separate candidate consents.** Processing consent is required; retention
+  consent is optional and unticked (plan §9.2).
+
+## Environment variables
+
+Every variable is documented in [`.dev.vars.example`](.dev.vars.example). In
+Cloudflare, set them per environment. `RESEND_API_KEY` and
+`TURNSTILE_SECRET_KEY` are encrypted secrets; the rest are plain vars.
+
+**Production and preview must differ.** Preview `CANDIDATE_APPLICATIONS_TO`
+must point at a test inbox — a preview submission must never deliver a resume
+to the live recruitment distribution (plan §13.2).
+
+## Deployment
+
+Follow the complete [Cloudflare deployment and integrations operations guide](docs/operations.md)
+for Pages, domains, environment bindings, Turnstile, Resend, WAF rules,
+verification, monitoring, rotation, and rollback.
+
+1. Create a **new** Cloudflare Pages project — do not reuse `cube27-web`.
+2. Build command `pnpm build`, output directory `dist`.
+3. Set the variables above for production and preview separately.
+4. Verify the Resend sending domain (`updates.cube27.com` or the approved
+   alternative) before the first real submission.
+5. Attach `talent.cube27.com` and confirm TLS.
+6. Add a rate-limiting rule on `POST /api/*`.
+7. Smoke-test both forms from an external network.
+
+## Before launch
+
+Blocking:
+
+- [ ] Verify `200+ positions filled` and flip it in `src/data/proof.ts`, or
+      leave it off.
+- [ ] Real Turnstile keys per environment.
+- [ ] Production and preview inboxes confirmed, with owners assigned.
+
+CSR, privacy, and terms link to the approved parent-brand pages configured in
+`src/site-config.ts`; this site does not duplicate those pages.
+
+Known gaps, deliberately not built:
+
+- **No durable store.** A Resend outage means the submission is not captured
+  anywhere. The user sees an error rather than a false success, so nothing is
+  silently dropped — but the lead is not recoverable either. A KV or D1 write
+  before the send is the recommended fix; it also makes deletion requests
+  executable, which an email-only pipeline cannot honour.
+- **No rate limiting in code** — configure it at the Cloudflare edge.
+- **No analytics or LinkedIn tag** — pending the consent decision (plan §14.5).

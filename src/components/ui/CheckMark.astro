@@ -1,0 +1,27 @@
+---
+/** Filled check badge. Green = verified/Cube27, blue = client-owned. */
+interface Props {
+  size?: number;
+  tone?: "green" | "blue";
+  class?: string;
+}
+const { size = 16, tone = "green", class: className = "" } = Astro.props;
+const fill = tone === "green" ? "#10b45f" : "#2563eb";
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 16 16"
+  fill="none"
+  aria-hidden="true"
+  class:list={["shrink-0", className]}
+>
+  <circle cx="8" cy="8" r="8" fill={fill}></circle>
+  <path
+    d="M4.6 8.2l2.2 2.2 4.5-5"
+    stroke="#fff"
+    stroke-width="1.7"
+    stroke-linecap="round"
+    stroke-linejoin="round"></path>
+</svg>

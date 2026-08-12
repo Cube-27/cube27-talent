@@ -1,0 +1,179 @@
+---
+import { PROCESS_STEPS } from "@/data/process";
+import Icon from "@/components/ui/Icon.astro";
+
+/**
+ * Nine-step process. Design system §6.7. Opens on step 05 — the technical
+ * interview is the differentiator, so it is the default panel.
+ */
+const DEFAULT_INDEX = 4;
+const OWNER_LABELS = {
+  Cube27: "Owned by Cube27",
+  Client: "Client decision",
+  Both: "Shared responsibility",
+} as const;
+const PROCESS_ICONS: Record<string, string> = {
+  "01": "target",
+  "02": "search",
+  "03": "chat",
+  "04": "code",
+  "05": "person",
+  "06": "shield",
+  "07": "users",
+  "08": "briefcase",
+  "09": "compass",
+};
+---
+
+<div class="grid gap-5" data-process>
+  <div
+    class="c27-rise flex snap-x snap-mandatory overflow-x-auto pb-3 pt-2 [scrollbar-color:rgb(255_255_255/0.35)_transparent] [scrollbar-width:thin]"
+    role="tablist"
+    aria-label="Process steps"
+    aria-orientation="horizontal"
+  >
+    {
+      PROCESS_STEPS.map((step, i) => (
+        <button
+          type="button"
+          role="tab"
+          id={`step-tab-${step.n}`}
+          aria-controls={`step-panel-${step.n}`}
+          aria-selected={i === DEFAULT_INDEX ? "true" : "false"}
+          tabindex={i === DEFAULT_INDEX ? 0 : -1}
+          aria-label={`${step.name}, stage ${i + 1} of ${PROCESS_STEPS.length}`}
+          data-complete={i < DEFAULT_INDEX ? "true" : undefined}
+          class="group relative flex min-h-[5.25rem] w-[9rem] shrink-0 snap-start flex-col items-center gap-2.5 px-2 text-center text-caption text-c27-on-navy-2 transition-colors hover:text-white focus-visible:rounded-c27-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white aria-selected:font-semibold aria-selected:text-white sm:w-auto sm:min-w-[7.25rem] sm:flex-1"
+        >
+          {i < PROCESS_STEPS.length - 1 && (
+            <span
+              aria-hidden="true"
+              class="absolute left-[calc(50%+1.5rem)] top-8 h-px w-[calc(100%-3rem)] bg-white/25 transition-colors duration-300 [button[data-complete='true']_&]:bg-c27-on-navy-success"
+            />
+          )}
+          <span class="relative z-[1] grid size-12 place-items-center rounded-full border border-white/30 bg-white/10 text-c27-on-navy-accent shadow-[0_8px_22px_-16px_rgb(0_0_0/0.55)] transition-[background-color,border-color,color,transform,box-shadow] duration-300 [button[data-complete='true']_&]:border-c27-on-navy-success [button[data-complete='true']_&]:text-c27-on-navy-success [button[aria-selected='true']_&]:scale-110 [button[aria-selected='true']_&]:border-white [button[aria-selected='true']_&]:bg-white [button[aria-selected='true']_&]:text-c27-blue [button[aria-selected='true']_&]:shadow-[0_14px_30px_-14px_rgb(0_0_0/0.55)] motion-safe:[button[aria-selected='true']_&]:animate-[c27-step-pop_320ms_var(--c27-ease)]">
+            <Icon name={PROCESS_ICONS[step.n]} size={20} />
+          </span>
+          <span class="max-w-[9rem] leading-snug">{step.name}</span>
+        </button>
+      ))
+    }
+  </div>
+
+  <div
+    class="c27-rise rounded-c27-lg border border-c27-line-dark bg-white/[0.07] p-[clamp(1.5rem,3vw,2.25rem)] shadow-c27-lg"
+    style="--c27-d:100ms"
+  >
+    {
+      PROCESS_STEPS.map((step, i) => (
+        <div
+          role="tabpanel"
+          id={`step-panel-${step.n}`}
+          aria-labelledby={`step-tab-${step.n}`}
+          hidden={i !== DEFAULT_INDEX}
+          data-step-panel
+          class="grid gap-6 motion-safe:animate-[c27-panel-in_320ms_var(--c27-ease)] md:grid-cols-[minmax(0,1fr)_minmax(16rem,0.62fr)] md:items-center"
+        >
+          <div>
+            <div class="mb-3 flex flex-wrap items-center gap-2.5">
+              <span class="rounded-full border border-c27-line-dark px-2.5 py-1 text-micro font-semibold uppercase tracking-[0.08em] text-c27-on-navy-2">
+                {OWNER_LABELS[step.owner]}
+              </span>
+            </div>
+            <h3 class="c27-h3-lg text-white">{step.name}</h3>
+            <p class="mt-3 max-w-[58ch] text-body-sm text-c27-on-navy-2">
+              {step.detail}
+            </p>
+          </div>
+
+          <ul class="grid gap-2 border-t border-c27-line-dark pt-5 md:border-l md:border-t-0 md:py-1 md:pl-6">
+            {step.points.map((point) => (
+              <li class="grid grid-cols-[1.15rem_minmax(0,1fr)] gap-2 text-caption text-c27-on-navy-2">
+                <span class="text-c27-on-navy-success" aria-hidden="true">
+                  &#10003;
+                </span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  );
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-process]")) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>("[data-step-panel]")];
+    const tablist = root.querySelector<HTMLElement>('[role="tablist"]');
+
+    const select = (index: number, focus = false) => {
+      tabs.forEach((tab, i) => {
+        tab.setAttribute("aria-selected", String(i === index));
+        tab.tabIndex = i === index ? 0 : -1;
+        if (i < index) tab.setAttribute("data-complete", "true");
+        else tab.removeAttribute("data-complete");
+      });
+      panels.forEach((panel, i) => {
+        panel.hidden = i !== index;
+      });
+      if (focus) {
+        tabs[index].focus();
+        tabs[index].scrollIntoView({
+          behavior: prefersReducedMotion.matches ? "auto" : "smooth",
+          block: "nearest",
+          inline: "nearest",
+        });
+      }
+    };
+
+    // Keep the default differentiator visible in the horizontally scrollable
+    // mobile rail without moving the page itself.
+    const selectedTab = tabs.find(
+      (tab) => tab.getAttribute("aria-selected") === "true",
+    );
+    if (tablist && selectedTab) {
+      tablist.scrollLeft =
+        selectedTab.offsetLeft -
+        (tablist.clientWidth - selectedTab.offsetWidth) / 2;
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => select(i));
+      tab.addEventListener("keydown", (event) => {
+        if (event.key === "Home" || event.key === "End") {
+          event.preventDefault();
+          select(event.key === "Home" ? 0 : tabs.length - 1, true);
+          return;
+        }
+        const delta =
+          event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+        if (!delta) return;
+        event.preventDefault();
+        select((i + delta + tabs.length) % tabs.length, true);
+      });
+    });
+  }
+</script>
+
+<style is:global>
+  @keyframes c27-step-pop {
+    from {
+      transform: scale(0.88);
+      box-shadow: 0 0 0 rgb(0 0 0 / 0);
+    }
+  }
+
+  @keyframes c27-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+      clip-path: inset(0 0 12% 0 round var(--c27-radius));
+    }
+  }
+</style>

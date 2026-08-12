@@ -1,0 +1,64 @@
+---
+/**
+ * The only button in the system. Design system §6.1.
+ * Variants carry meaning: primary = employer action, blue = candidate action.
+ */
+interface Props {
+  href?: string;
+  type?: "button" | "submit";
+  variant?: "primary" | "blue" | "line" | "line-invert";
+  size?: "md" | "sm";
+  arrow?: boolean;
+  class?: string;
+  id?: string;
+}
+
+const {
+  href,
+  type = "button",
+  variant = "primary",
+  size = "md",
+  arrow = false,
+  class: className = "",
+  id,
+} = Astro.props;
+
+const base =
+  "inline-flex items-center gap-2 whitespace-nowrap rounded-c27-sm border font-display font-bold no-underline cursor-pointer transition-[background-color,border-color,color,transform,box-shadow] duration-200 motion-safe:hover:-translate-y-px";
+
+const variants = {
+  primary:
+    "border-transparent bg-c27-green text-white hover:bg-c27-green-d hover:shadow-[0_8px_18px_-8px_rgb(16_180_95/0.7)]",
+  blue: "border-transparent bg-c27-blue text-white hover:bg-c27-blue-d hover:shadow-[0_8px_18px_-8px_rgb(37_99_235/0.7)]",
+  line: "border-[#cbd5e1] bg-c27-surface text-c27-ink hover:border-c27-blue hover:text-c27-blue-d",
+  "line-invert":
+    "border-white/35 bg-transparent text-white hover:border-white hover:bg-white/10",
+};
+
+// min-h-11 keeps every button at the 44px tap-target floor (§8), which the
+// old `sm` padding alone (~36px) did not meet.
+const sizes = {
+  md: "min-h-12 px-5 py-3 text-[0.9375rem]",
+  sm: "min-h-11 px-4 py-2 text-[0.875rem]",
+};
+
+const cls = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
+---
+
+{
+  href ? (
+    <a href={href} class={cls} id={id}>
+      <slot />
+      {arrow && (
+        <span class="font-mono transition-transform duration-200 group-hover:translate-x-1">
+          &rarr;
+        </span>
+      )}
+    </a>
+  ) : (
+    <button type={type} class={cls} id={id}>
+      <slot />
+      {arrow && <span class="font-mono">&rarr;</span>}
+    </button>
+  )
+}

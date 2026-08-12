@@ -1,0 +1,138 @@
+---
+import "@/styles/globals.css";
+import Seo from "@/components/Seo.astro";
+import Header from "@/components/sections/Header.astro";
+import Footer from "@/components/sections/Footer.astro";
+import { SITE_CONFIG } from "@/site-config";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** Suppresses the announcement bar on confirmation pages. */
+  bare?: boolean;
+}
+
+const {
+  title = SITE_CONFIG.name,
+  description = SITE_CONFIG.description,
+  canonical,
+  noindex = false,
+  jsonLd,
+  bare = false,
+} = Astro.props;
+
+const site = Astro.site;
+const canonicalUrl = canonical
+  ? new URL(canonical, site).toString()
+  : site
+    ? new URL(Astro.url.pathname, site).toString()
+    : undefined;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <meta name="theme-color" content="#173b86" />
+    <meta name="generator" content="Astro" />
+
+    {
+      /* The body face is self-hosted; Figtree is bundled with the global CSS. */
+    }
+    <link
+      rel="preload"
+      href="/fonts/switzer-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <Seo
+      title={title}
+      description={description}
+      canonicalUrl={canonicalUrl}
+      noindex={noindex}
+      jsonLd={jsonLd}
+    />
+
+    {
+      /* Marks the document as JS-capable before first paint, so the reveal
+         classes only hide content when the observer can reveal it again.
+         Without this a JS failure leaves the page blank.
+
+         Two ways that promise can be broken, both handled here: the browser
+         has no IntersectionObserver, or the reveal module never runs because
+         it was blocked or failed to parse. In either case the hidden state is
+         never applied, or is dropped again at load. */
+    }
+    <script is:inline>
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("js");
+        window.addEventListener("load", function () {
+          if (document.documentElement.dataset.c27Reveal !== "on") {
+            document.documentElement.classList.remove("js");
+          }
+        });
+      }
+    </script>
+
+    <slot name="head" />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only absolute left-4 top-4 z-[100] rounded-c27-sm bg-c27-surface px-4 py-2 font-semibold text-c27-ink shadow-c27-lg focus:not-sr-only"
+      >Skip to content</a
+    >
+
+    <Header bare={bare} />
+    <main id="main" tabindex="-1"><slot /></main>
+    <Footer />
+
+    <script>
+      // Scroll reveal. Elements opt in with `.c27-rise` and stagger with
+      // `style="--c27-d: 90ms"`. Unobserved after first reveal so scrolling
+      // back up does not re-run the transition.
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            entry.target.classList.add("in");
+            observer.unobserve(entry.target);
+          }
+        },
+        { rootMargin: "0px 0px -8%" },
+      );
+      for (const el of document.querySelectorAll(".c27-rise")) {
+        observer.observe(el);
+      }
+      // Tells the head script the reveal path is live, so it leaves the
+      // hidden state in place.
+      document.documentElement.dataset.c27Reveal = "on";
+
+      // Header gains a hairline once the page scrolls off the top.
+      const header = document.getElementById("site-header");
+      if (header) {
+        let ticking = false;
+        const onScroll = () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(() => {
+            header.classList.toggle("is-stuck", window.scrollY > 8);
+            ticking = false;
+          });
+        };
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+      }
+    </script>
+  </body>
+</html>

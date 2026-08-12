@@ -1,0 +1,161 @@
+@import "tailwindcss";
+@import "@fontsource-variable/figtree";
+@import "./fonts.css";
+@import "./tokens.css";
+
+/* ============================================================
+   Base layer. Element defaults only — anything with a variant
+   belongs in a component, not here. Design system §3, §8.
+   ============================================================ */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Sticky header clearance for in-page anchors. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background: var(--c27-ground);
+    color: var(--c27-ink);
+    font-family: var(--c27-font-body);
+    font-size: var(--c27-text-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--c27-font-display);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  /* Focus is never removed. Design system §8. */
+  :focus-visible {
+    outline: 2px solid var(--c27-blue);
+    outline-offset: 3px;
+  }
+
+  /* The skip-link target is programmatically focusable but never a tab stop,
+     so the ring would only ever appear on that jump. */
+  main[tabindex="-1"]:focus {
+    outline: none;
+  }
+
+  ::selection {
+    background: var(--c27-blue-soft);
+    color: var(--c27-blue-d);
+  }
+}
+
+@layer components {
+  /* --- container --------------------------------------------------- */
+  .c27-wrap {
+    max-width: var(--c27-container);
+    margin-inline: auto;
+    padding-inline: var(--c27-gutter);
+  }
+
+  .c27-wrap-narrow {
+    max-width: var(--c27-container-narrow);
+    margin-inline: auto;
+    padding-inline: var(--c27-gutter);
+  }
+
+  /* --- type roles -------------------------------------------------- */
+  .c27-display {
+    font-size: var(--c27-text-display);
+    line-height: 1.06;
+    letter-spacing: -0.038em;
+    max-width: 17ch;
+  }
+
+  /* 38ch, not 20ch: a 20ch measure broke a 37-character heading across two
+     lines even on a wide screen. The .head container (42rem) is the real
+     constraint; this only stops a very long heading running edge to edge. */
+  .c27-h2 {
+    font-size: var(--c27-text-h2);
+    line-height: 1.14;
+    letter-spacing: -0.03em;
+    max-width: 38ch;
+  }
+
+  .c27-h3 {
+    font-size: var(--c27-text-h3);
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  .c27-h3-lg {
+    font-size: var(--c27-text-h3-lg);
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+
+  .c27-label {
+    font-size: var(--c27-text-label);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c27-blue);
+  }
+
+  .c27-lede {
+    color: var(--c27-ink-2);
+    max-width: 52ch;
+  }
+
+  /* --- dark panels -------------------------------------------------- */
+  /* Shared navy field for the footer, the how-it-works hero and the
+     nine-step section. Navy stays as the paint underneath, so text keeps its
+     contrast while the image loads or if it fails to load at all. */
+  .c27-navy-field {
+    background-color: var(--c27-navy);
+    background-image: url("/bg-image.webp");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  /* --- reveal on scroll -------------------------------------------- */
+  /* The .in class is added by an IntersectionObserver in Layout.astro.
+     Without JS the element is visible, because the hidden state is only
+     applied when JS has marked the document. */
+  .js .c27-rise {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .js .c27-rise.in {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--c27-dur) var(--c27-ease),
+      transform var(--c27-dur) var(--c27-ease);
+    transition-delay: var(--c27-d, 0ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js .c27-rise {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
+
+/* Reduced motion: kill every animation and transition site-wide. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
