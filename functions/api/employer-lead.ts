@@ -20,7 +20,10 @@ import {
   inAllowList,
   attribution,
 } from "../_shared/validation";
+import { parseBoundedFormData } from "../_shared/request-body";
 import { verifyTurnstile } from "../_shared/turnstile";
+// Single source of truth for the taxonomy — see the note in src/data/roles.ts.
+import { ROLE_FAMILY_IDS } from "../../src/data/roles";
 import {
   sendEmail,
   htmlRows,
@@ -54,17 +57,6 @@ const ARRANGEMENTS = [
   "Relocation",
   "Flexible",
 ] as const;
-const ROLE_FAMILY_IDS = [
-  "software-engineering",
-  "mobile",
-  "quality-engineering",
-  "cloud-infrastructure",
-  "product",
-  "design",
-  "enterprise-content",
-  "ecommerce",
-] as const;
-
 const GENERIC_ERROR = "We could not send your requirement. Please try again.";
 
 export const onRequest = async ({
@@ -80,20 +72,17 @@ export const onRequest = async ({
     return json({ ok: false, error: "Cross-origin submission denied." }, 403);
   }
 
-  const declaredLength = Number(request.headers.get("content-length") ?? "0");
-  if (Number.isFinite(declaredLength) && declaredLength > MAX_BODY_BYTES) {
-    return json({ ok: false, error: "Submission is too large." }, 413);
-  }
-
-  let form: FormData;
-  try {
-    form = await request.formData();
-  } catch {
+  const parsed = await parseBoundedFormData(request, MAX_BODY_BYTES);
+  if (!parsed.ok) {
+    if (parsed.reason === "too-large") {
+      return json({ ok: false, error: "Submission is too large." }, 413);
+    }
     return json(
       { ok: false, error: "Please send a valid form submission." },
       400,
     );
   }
+  const form = parsed.form;
 
   // Honeypot: report success so a bot has no signal to tune against, but
   // send nothing.

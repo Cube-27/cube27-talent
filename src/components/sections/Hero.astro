@@ -6,6 +6,15 @@ import { VERIFIED_PROOF } from "@/data/proof";
 import { ROUTES } from "@/site-config";
 
 const stats = VERIFIED_PROOF.slice(0, 3);
+// Proof gating can leave one, two or three points, so the column count has to
+// follow the data — a fixed grid-cols-3 leaves an empty cell. Full class names
+// only, so Tailwind's scanner sees them.
+const statsColumns =
+  stats.length === 1
+    ? "grid-cols-1"
+    : stats.length === 2
+      ? "grid-cols-2"
+      : "grid-cols-3";
 ---
 
 <section
@@ -48,7 +57,7 @@ const stats = VERIFIED_PROOF.slice(0, 3);
       {
         stats.length > 0 && (
           <div
-            class="c27-rise mt-7 grid max-w-[30rem] grid-cols-3 gap-4 border-t border-c27-line pt-5"
+            class={`c27-rise mt-7 grid max-w-[30rem] ${statsColumns} gap-4 border-t border-c27-line pt-5`}
             style="--c27-d:220ms"
           >
             {stats.map((stat) => (

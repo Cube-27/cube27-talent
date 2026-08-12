@@ -36,19 +36,17 @@ const canonicalUrl = canonical
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/cube27-logo.png" />
-    <meta name="theme-color" content="#0b192c" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <meta name="theme-color" content="#173b86" />
     <meta name="generator" content="Astro" />
 
-    {/* Both faces are used above the fold, so both are preloaded. */}
-    <link
-      rel="preload"
-      href="/fonts/satoshi-variable.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    {
+      /* The body face is self-hosted; Figtree is bundled with the global CSS. */
+    }
     <link
       rel="preload"
       href="/fonts/switzer-variable.woff2"
@@ -68,10 +66,22 @@ const canonicalUrl = canonical
     {
       /* Marks the document as JS-capable before first paint, so the reveal
          classes only hide content when the observer can reveal it again.
-         Without this a JS failure leaves the page blank. */
+         Without this a JS failure leaves the page blank.
+
+         Two ways that promise can be broken, both handled here: the browser
+         has no IntersectionObserver, or the reveal module never runs because
+         it was blocked or failed to parse. In either case the hidden state is
+         never applied, or is dropped again at load. */
     }
     <script is:inline>
-      document.documentElement.classList.add("js");
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("js");
+        window.addEventListener("load", function () {
+          if (document.documentElement.dataset.c27Reveal !== "on") {
+            document.documentElement.classList.remove("js");
+          }
+        });
+      }
     </script>
 
     <slot name="head" />
@@ -104,6 +114,9 @@ const canonicalUrl = canonical
       for (const el of document.querySelectorAll(".c27-rise")) {
         observer.observe(el);
       }
+      // Tells the head script the reveal path is live, so it leaves the
+      // hidden state in place.
+      document.documentElement.dataset.c27Reveal = "on";
 
       // Header gains a hairline once the page scrolls off the top.
       const header = document.getElementById("site-header");

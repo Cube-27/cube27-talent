@@ -12,15 +12,18 @@ export const SITE_CONFIG = {
   url: "https://talent.cube27.com",
   description:
     "Cube27 Talent screens and technically interviews engineering, QA, DevOps, product and design talent, employs them, and runs their payroll. The client directs the work and decides who stays.",
+  // Entity, privacy contact and address all match the published policy at
+  // ROUTES.privacy, which is the notice this site links to from both consent
+  // checkboxes. Change them only alongside that page.
   organization: {
-    /** PENDING: confirm the exact contracting entity before legal pages ship. */
     legalName: "Cube27 IT Pvt. Ltd.",
     parentSite: "https://www.cube27.com",
     email: "talent@cube27.com",
-    /** PENDING: confirm the privacy contact address. */
-    privacyEmail: "privacy@cube27.com",
+    /** The contact the published privacy policy names for data requests. */
+    privacyEmail: "contact@cube27.com",
     address: {
-      streetAddress: "Plot 12, Mulberry Garden 1, Magarpatta City, Hadapsar",
+      streetAddress:
+        "Plot No. 12, Mulberry Gardens 1, Magarpatta City, Hadapsar",
       addressLocality: "Pune",
       addressRegion: "Maharashtra",
       postalCode: "411013",
@@ -37,8 +40,9 @@ export const ROUTES = {
   join: "/join-talent-network/",
   how: "/how-it-works/",
   expertise: "/expertise/",
-  privacy: "/privacy/",
-  terms: "/terms/",
+  csr: "https://www.cube27.com/csr/",
+  privacy: "https://www.cube27.com/privacy-policy/",
+  terms: "https://www.cube27.com/terms-of-service/",
   thankYouEmployer: "/thank-you/employer/",
   thankYouCandidate: "/thank-you/candidate/",
 } as const;
@@ -49,6 +53,23 @@ export const NAV_LINKS = [
   { label: "Hire talent", href: ROUTES.hire },
   { label: "Careers", href: ROUTES.join },
 ] as const;
+
+/**
+ * Turnstile site key, injected at build time. Both endpoints fail closed on a
+ * missing token, so a build without this key would ship forms that silently
+ * cannot be submitted. Fail the build instead — never render a configuration
+ * message to visitors. `astro dev` is exempt so pages still render locally
+ * without secrets.
+ */
+export const TURNSTILE_SITE_KEY =
+  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+
+if (!TURNSTILE_SITE_KEY && import.meta.env.PROD) {
+  throw new Error(
+    "PUBLIC_TURNSTILE_SITE_KEY is not set. Copy .env.example to .env for a " +
+      "local build, or set it in the Cloudflare Pages environment.",
+  );
+}
 
 /** API endpoints served by Cloudflare Pages Functions. Plan §13.1. */
 export const ENDPOINTS = {

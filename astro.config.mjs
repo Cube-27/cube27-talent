@@ -24,12 +24,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       // Confirmation pages are noindex and must never enter the sitemap.
-      // /privacy/ and /terms/ are unreviewed drafts carrying noindex — drop
-      // them from this list once the approved notices ship.
-      filter: (page) =>
-        !["/thank-you/", "/privacy/", "/terms/"].some((path) =>
-          page.includes(path),
-        ),
+      filter: (page) => !page.includes("/thank-you/"),
     }),
   ],
   vite: {

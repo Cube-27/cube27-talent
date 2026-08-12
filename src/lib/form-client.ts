@@ -70,11 +70,18 @@ export function attachFormHandler(options: Options) {
     submit.setAttribute("aria-busy", "true");
     status.textContent = "Sending…";
 
+    // A stalled connection would otherwise leave the button disabled and the
+    // status stuck on "Sending…" forever. Generous enough for a 5 MB resume
+    // on a slow link plus the two Resend calls behind the endpoint.
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 45_000);
+
     try {
       const response = await fetch(form.action, {
         method: "POST",
         body: new FormData(form),
         headers: { accept: "application/json" },
+        signal: controller.signal,
       });
 
       const result = (await response.json().catch(() => ({}))) as {
@@ -102,6 +109,7 @@ export function attachFormHandler(options: Options) {
       errors.focus();
       status.textContent = "";
     } finally {
+      window.clearTimeout(timeout);
       pending = false;
       submit.disabled = false;
       submit.removeAttribute("aria-busy");

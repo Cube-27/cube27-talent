@@ -13,6 +13,7 @@ import {
   submissionId,
 } from "../_shared/responses";
 import {
+  MAX_BODY_BYTES,
   MAX_RESUME_BYTES,
   asText,
   checkLine,
@@ -21,10 +22,13 @@ import {
   isPhone,
   inAllowList,
   attribution,
-  looksLikeAllowedDocument,
   safeFilename,
 } from "../_shared/validation";
+import { validateResumeDocument } from "../_shared/documents";
+import { parseBoundedFormData } from "../_shared/request-body";
 import { verifyTurnstile } from "../_shared/turnstile";
+// Single source of truth for the taxonomy — see the note in src/data/roles.ts.
+import { ROLE_FAMILY_IDS } from "../../src/data/roles";
 import {
   sendEmail,
   htmlRows,
@@ -43,16 +47,6 @@ interface Env {
   TURNSTILE_SECRET_KEY?: string;
 }
 
-const ROLE_FAMILY_IDS = [
-  "software-engineering",
-  "mobile",
-  "quality-engineering",
-  "cloud-infrastructure",
-  "product",
-  "design",
-  "enterprise-content",
-  "ecommerce",
-] as const;
 const AVAILABILITY = [
   "Immediately",
   "Within 30 days",
@@ -84,15 +78,20 @@ export const onRequest = async ({
     return json({ ok: false, error: "Cross-origin submission denied." }, 403);
   }
 
-  let form: FormData;
-  try {
-    form = await request.formData();
-  } catch {
+  const parsed = await parseBoundedFormData(
+    request,
+    MAX_RESUME_BYTES + MAX_BODY_BYTES,
+  );
+  if (!parsed.ok) {
+    if (parsed.reason === "too-large") {
+      return json({ ok: false, error: "Submission is too large." }, 413);
+    }
     return json(
       { ok: false, error: "Please send a valid form submission." },
       400,
     );
   }
+  const form = parsed.form;
 
   if (asText(form.get("website"))) return json({ ok: true });
 
@@ -168,12 +167,16 @@ export const onRequest = async ({
   const lowerName = resume.name.toLowerCase();
   const extensionOk = ALLOWED_EXTENSIONS.some((ext) => lowerName.endsWith(ext));
   const mimeOk = ALLOWED_MIME.includes(resume.type);
-  const signature = await looksLikeAllowedDocument(resume);
-  const signatureMatchesExtension =
-    (signature === "pdf" && lowerName.endsWith(".pdf")) ||
-    (signature === "docx" && lowerName.endsWith(".docx"));
+  const document = await validateResumeDocument(resume);
+  const formatMatchesExtension =
+    document.ok &&
+    ((document.format === "pdf" && lowerName.endsWith(".pdf")) ||
+      (document.format === "docx" && lowerName.endsWith(".docx")));
 
-  if (!extensionOk || !mimeOk || !signature || !signatureMatchesExtension) {
+  if (!extensionOk || !mimeOk || !document.ok || !formatMatchesExtension) {
+    if (!document.ok) {
+      console.warn(`candidate: resume rejected (${document.reason})`);
+    }
     return json({ ok: false, error: "Please attach a PDF or DOCX file." }, 415);
   }
 
@@ -204,7 +207,7 @@ export const onRequest = async ({
 
   const filename = safeFilename(
     resume.name,
-    `${id}${signature === "pdf" ? ".pdf" : ".docx"}`,
+    `${id}${document.format === "pdf" ? ".pdf" : ".docx"}`,
   );
 
   const fields: [string, string][] = [

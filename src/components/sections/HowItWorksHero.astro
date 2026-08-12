@@ -1,0 +1,156 @@
+---
+import Icon from "@/components/ui/Icon.astro";
+
+const phases = [
+  {
+    icon: "target",
+    title: "Qualify the brief",
+    detail: "Role, level, location and work model are agreed before sourcing.",
+  },
+  {
+    icon: "shield",
+    title: "Prove the fit",
+    detail:
+      "HR screening, a role-appropriate assessment and an interview by technical people.",
+  },
+  {
+    icon: "briefcase",
+    title: "Employ and onboard",
+    detail:
+      "Cube27 issues the offer, runs payroll and arranges the work hardware.",
+  },
+  {
+    icon: "compass",
+    title: "Stay accountable",
+    detail:
+      "Ongoing check-ins and staffing support continue throughout the assignment.",
+  },
+];
+
+const clientControls = [
+  "Final selection",
+  "Daily priorities",
+  "Performance review",
+  "Continuation",
+];
+---
+
+<section class="relative isolate overflow-hidden bg-c27-navy text-white">
+  <div
+    aria-hidden="true"
+    class="absolute -right-[18rem] -top-[20rem] size-[48rem] rounded-full border border-white/10"
+  >
+  </div>
+  <div
+    aria-hidden="true"
+    class="absolute -right-[8rem] -top-[10rem] size-[30rem] rounded-full border border-c27-on-navy-success/20"
+  >
+  </div>
+  <div
+    aria-hidden="true"
+    class="absolute bottom-[-11rem] left-[34%] size-[25rem] rounded-full border border-c27-on-navy-accent/15"
+  >
+  </div>
+
+  <div
+    class="c27-wrap relative py-[clamp(4.75rem,8vw,7.5rem)] lg:min-h-[42rem]"
+  >
+    <h1 class="c27-rise c27-display max-w-none font-display">
+      <span class="block lg:whitespace-nowrap"
+        >We build the engineering team.</span
+      >
+      <span class="mt-2 block text-c27-on-navy-accent lg:whitespace-nowrap"
+        >You lead what comes next.</span
+      >
+    </h1>
+
+    <div
+      class="mt-[clamp(3rem,6vw,5rem)] grid items-start gap-[clamp(3.5rem,7vw,7rem)] lg:grid-cols-[minmax(0,0.9fr)_minmax(25rem,1.1fr)]"
+    >
+      <div
+        class="c27-rise max-w-[62ch] space-y-4 text-[clamp(1rem,1.35vw,1.125rem)] leading-relaxed text-c27-on-navy-2"
+        style="--c27-d:100ms"
+      >
+        <p>
+          Cube27 handles the people operation behind delivery: we qualify the
+          brief, source and technically screen candidates, employ those
+          selected, and manage payroll and ongoing staffing support.
+        </p>
+        <p>
+          The client keeps final selection, daily priorities and performance
+          control—so its leaders can stay focused on the product and the market.
+        </p>
+      </div>
+
+      <ol
+        class="delivery-path c27-rise relative grid gap-2"
+        aria-label="Cube27 delivery responsibilities"
+        style="--c27-d:180ms"
+      >
+        {
+          phases.map((phase) => (
+            <li class="relative grid grid-cols-[3rem_minmax(0,1fr)] gap-4 py-3.5">
+              <span class="relative z-[1] grid size-12 place-items-center rounded-full border border-white/25 bg-c27-navy text-c27-on-navy-success shadow-[0_12px_28px_-18px_rgb(0_0_0/0.7)]">
+                <Icon name={phase.icon} size={20} />
+              </span>
+              <div>
+                <h2 class="text-lg tracking-[-0.02em] text-white">
+                  {phase.title}
+                </h2>
+                <p class="mt-1 max-w-[38ch] text-body-sm text-c27-on-navy-2">
+                  {phase.detail}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div
+      class="c27-rise mt-[clamp(3.5rem,7vw,6rem)] grid gap-4 border-t border-c27-line-dark pt-6 md:grid-cols-[12rem_minmax(0,1fr)] md:items-center"
+      style="--c27-d:260ms"
+    >
+      <strong
+        class="font-display text-caption uppercase tracking-[0.1em] text-c27-on-navy-success"
+        >Client control stays clear</strong
+      >
+      <ul class="flex flex-wrap gap-x-6 gap-y-2 text-body-sm text-white">
+        {
+          clientControls.map((item) => (
+            <li class="flex items-center gap-2">
+              <span
+                class="size-1.5 rounded-full bg-c27-on-navy-accent"
+                aria-hidden="true"
+              />
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .delivery-path::before {
+    position: absolute;
+    inset-block: 2.25rem;
+    left: 1.5rem;
+    width: 1px;
+    content: "";
+    background: linear-gradient(
+      to bottom,
+      var(--c27-on-navy-success),
+      var(--c27-on-navy-accent)
+    );
+    transform-origin: top;
+    animation: c27-delivery-line 900ms var(--c27-ease) 280ms both;
+  }
+
+  @keyframes c27-delivery-line {
+    from {
+      transform: scaleY(0);
+    }
+  }
+</style>

@@ -31,8 +31,9 @@ export function isEmail(value: string): boolean {
   return value.length <= 320 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
+/** Separators are allowed, but a number made only of them is not a number. */
 export function isPhone(value: string): boolean {
-  return /^[+()0-9.\s-]{7,50}$/.test(value);
+  return /^[+()0-9.\s-]{7,50}$/.test(value) && /[0-9]/.test(value);
 }
 
 /** Single-line field: required, length-capped, no control characters. */
@@ -78,25 +79,6 @@ export function attribution(form: FormData) {
     utmContent: clean("utmContent"),
     utmTerm: clean("utmTerm"),
   };
-}
-
-/** File-signature check. Extension and MIME type alone are trivially forged. */
-export async function looksLikeAllowedDocument(
-  file: File,
-): Promise<"pdf" | "docx" | null> {
-  const header = new Uint8Array(await file.slice(0, 8).arrayBuffer());
-  // %PDF
-  if (
-    header[0] === 0x25 &&
-    header[1] === 0x50 &&
-    header[2] === 0x44 &&
-    header[3] === 0x46
-  ) {
-    return "pdf";
-  }
-  // PK.. — docx is a zip container. Narrowed further by extension + MIME.
-  if (header[0] === 0x50 && header[1] === 0x4b) return "docx";
-  return null;
 }
 
 /** Strips path components and anything that could confuse a mail client. */

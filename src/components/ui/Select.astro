@@ -89,6 +89,14 @@ const { id, name, required = false, class: className = "" } = Astro.props;
     const select: HTMLSelectElement = native;
 
     const options = [...select.options];
+    // A disabled option — the "Choose…" placeholder that makes `required`
+    // fail while nothing is picked — stays in the native select but is never
+    // offered as a row here, so it can be neither hovered nor committed.
+    const choices = options
+      .map((option, index) => ({ option, index }))
+      .filter(({ option }) => !option.disabled);
+    if (!choices.length) return;
+
     const listId = `${select.id}-listbox`;
     const buttonId = `${select.id}-button`;
 
@@ -120,13 +128,20 @@ const { id, name, required = false, class: className = "" } = Astro.props;
     list.className =
       "absolute inset-x-0 top-full z-40 mt-1.5 max-h-64 overflow-y-auto rounded-c27-sm border border-c27-line bg-c27-surface p-1.5 shadow-c27-lg";
 
-    let activeIndex = Math.max(select.selectedIndex, 0);
+    /** Position within `choices` of the currently selected native option. */
+    const activeFromSelection = () =>
+      Math.max(
+        choices.findIndex(({ index }) => index === select.selectedIndex),
+        0,
+      );
 
-    const items = options.map((option, i) => {
+    // Indexes `choices`/`items`, not `select.options`.
+    let activeIndex = activeFromSelection();
+
+    const items = choices.map(({ option, index }) => {
       const item = document.createElement("li");
-      item.id = `${select.id}-opt-${i}`;
+      item.id = `${select.id}-opt-${index}`;
       item.setAttribute("role", "option");
-      item.dataset.index = String(i);
       item.className =
         "flex min-h-11 cursor-pointer items-center justify-between gap-2 rounded-md px-3 py-2 text-body-sm text-c27-ink";
       const label = document.createElement("span");
@@ -140,9 +155,13 @@ const { id, name, required = false, class: className = "" } = Astro.props;
     });
 
     function paint() {
-      value.textContent = options[select.selectedIndex]?.textContent ?? "";
+      const current = options[select.selectedIndex];
+      value.textContent = current?.textContent ?? "";
+      // A placeholder is not an answer, so it must not read like one.
+      value.classList.toggle("text-c27-ink-3", Boolean(current?.disabled));
+      value.classList.toggle("font-normal", Boolean(current?.disabled));
       items.forEach(({ item, tick }, i) => {
-        const selected = i === select.selectedIndex;
+        const selected = choices[i].index === select.selectedIndex;
         const active = i === activeIndex;
         item.setAttribute("aria-selected", String(selected));
         tick.classList.toggle("opacity-0", !selected);
@@ -155,7 +174,7 @@ const { id, name, required = false, class: className = "" } = Astro.props;
     }
 
     function open() {
-      activeIndex = Math.max(select.selectedIndex, 0);
+      activeIndex = activeFromSelection();
       list.hidden = false;
       button.setAttribute("aria-expanded", "true");
       arrow.classList.add("bg-c27-blue", "text-white", "rotate-180");
@@ -176,7 +195,9 @@ const { id, name, required = false, class: className = "" } = Astro.props;
       arrow.classList.add("bg-c27-tint", "text-c27-ink-2");
     }
 
+    /** Takes a native option index. A disabled option is never selectable. */
     function commit(index: number) {
+      if (!options[index] || options[index].disabled) return;
       select.selectedIndex = index;
       // Fire change so any listener on the native select still works.
       select.dispatchEvent(new Event("change", { bubbles: true }));
@@ -214,7 +235,7 @@ const { id, name, required = false, class: className = "" } = Astro.props;
         case " ":
           event.preventDefault();
           if (list.hidden) open();
-          else commit(activeIndex);
+          else commit(choices[activeIndex].index);
           break;
         case "Escape":
           if (!list.hidden) {
@@ -226,9 +247,11 @@ const { id, name, required = false, class: className = "" } = Astro.props;
           if (!list.hidden) close();
           break;
         default: {
-          // Typeahead: jump to the first option starting with the key.
+          // Typeahead: jump to the first option starting with the key. A
+          // modified key is a shortcut (Ctrl+R, Cmd+L, …), not a character.
           if (event.key.length !== 1) return;
-          const match = options.findIndex((option) =>
+          if (event.ctrlKey || event.metaKey || event.altKey) return;
+          const match = choices.findIndex(({ option }) =>
             option.textContent
               ?.trim()
               .toLowerCase()
@@ -237,7 +260,7 @@ const { id, name, required = false, class: className = "" } = Astro.props;
           if (match < 0) return;
           event.preventDefault();
           if (list.hidden) {
-            commit(match);
+            commit(choices[match].index);
           } else {
             activeIndex = match;
             paint();
@@ -248,7 +271,7 @@ const { id, name, required = false, class: className = "" } = Astro.props;
     });
 
     items.forEach(({ item }, i) => {
-      item.addEventListener("click", () => commit(i));
+      item.addEventListener("click", () => commit(choices[i].index));
       item.addEventListener("mousemove", () => {
         if (activeIndex === i) return;
         activeIndex = i;

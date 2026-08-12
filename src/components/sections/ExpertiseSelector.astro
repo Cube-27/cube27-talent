@@ -12,7 +12,7 @@ import { ROLE_FAMILIES } from "@/data/roles";
 ---
 
 <div
-  class="c27-rise grid overflow-hidden rounded-c27-lg border border-c27-line bg-c27-surface lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)]"
+  class="c27-rise grid overflow-hidden rounded-c27-lg border border-c27-line bg-c27-surface shadow-c27-lg lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)]"
   data-expertise
 >
   <div
@@ -40,12 +40,11 @@ import { ROLE_FAMILIES } from "@/data/roles";
 
   <div class="p-[clamp(1.5rem,3vw,2.25rem)]">
     {
-      ROLE_FAMILIES.map((family, i) => (
+      ROLE_FAMILIES.map((family) => (
         <div
           role="tabpanel"
           id={`panel-${family.id}`}
           aria-labelledby={`tab-${family.id}`}
-          hidden={i !== 0}
           data-panel
         >
           <h3 class="c27-h3-lg">{family.name}</h3>

@@ -2,6 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/ui/Section.astro";
 import SectionHead from "@/components/ui/SectionHead.astro";
+import HowItWorksHero from "@/components/sections/HowItWorksHero.astro";
 import ModelCards from "@/components/sections/ModelCards.astro";
 import ProcessStepper from "@/components/sections/ProcessStepper.astro";
 import AudienceSplit from "@/components/sections/AudienceSplit.astro";
@@ -27,14 +28,7 @@ const candidateFlow = [
 ---
 
 <Layout title={title} description={description}>
-  <Section>
-    <span class="c27-label mb-3 block">How it works</span>
-    <h1 class="c27-h2">From requirement to first day</h1>
-    <p class="c27-lede mt-4">
-      Two flows run in parallel: the client's hiring requirement, and the
-      engineer's route into Cube27 employment.
-    </p>
-  </Section>
+  <HowItWorksHero />
 
   <Section tone="surface" bordered>
     <SectionHead
@@ -61,7 +55,7 @@ const candidateFlow = [
       lede="No stage is skipped, and no stage guarantees the next one."
     />
     <ol
-      class="c27-rise grid gap-px overflow-hidden rounded-c27-lg border border-c27-line bg-c27-line sm:grid-cols-2"
+      class="c27-rise grid gap-px overflow-hidden rounded-c27-lg border border-c27-line bg-c27-line shadow-c27-lg sm:grid-cols-2"
     >
       {
         candidateFlow.map((step, i) => (

@@ -22,7 +22,8 @@ pnpm install
 pnpm dev        # localhost:3100 — static pages only, no Pages Functions
 pnpm build      # static output to dist/
 pnpm preview    # wrangler pages dev dist — the ONLY way to exercise the forms
-pnpm verify     # format:check + lint + astro check + build
+pnpm test       # resume and request-body security tests
+pnpm verify     # format:check + lint + astro check + test + build
 ```
 
 `pnpm dev` does not run `functions/`. Form submissions only work under
@@ -31,17 +32,22 @@ pnpm verify     # format:check + lint + astro check + build
 ## Local setup for the forms
 
 ```bash
+cp .env.example .env             # PUBLIC_TURNSTILE_SITE_KEY, read at build time
 cp .dev.vars.example .dev.vars   # then fill in RESEND_API_KEY
 pnpm build && pnpm preview
 ```
 
-The example file ships Cloudflare's Turnstile **test** keys — the site key
+Both example files ship Cloudflare's Turnstile **test** keys — the site key
 always passes and no real challenge is shown. Swap in real keys per environment
 before launch.
 
+`PUBLIC_TURNSTILE_SITE_KEY` is required for a build: the endpoints reject any
+submission without a Turnstile token, so a build without the key would ship
+forms that cannot be submitted. The build fails instead. `pnpm dev` is exempt.
+
 ## Architecture
 
-```
+```text
 src/
   data/            role taxonomy, process, FAQs, proof — the content source of truth
   styles/          fonts.css → tokens.css → globals.css
@@ -55,7 +61,7 @@ functions/
   api/             employer-lead.ts, candidate-application.ts
 public/
   _headers         CSP and cache rules
-  fonts/           Satoshi + Switzer variable woff2
+  fonts/           Switzer variable woff2 (display); body face from npm
 ```
 
 **No UI framework.** No React, Vue, CMS or database — the two tab selectors and
@@ -87,6 +93,10 @@ to the live recruitment distribution (plan §13.2).
 
 ## Deployment
 
+Follow the complete [Cloudflare deployment and integrations operations guide](docs/operations.md)
+for Pages, domains, environment bindings, Turnstile, Resend, WAF rules,
+verification, monitoring, rotation, and rollback.
+
 1. Create a **new** Cloudflare Pages project — do not reuse `cube27-web`.
 2. Build command `pnpm build`, output directory `dist`.
 3. Set the variables above for production and preview separately.
@@ -100,16 +110,13 @@ to the live recruitment distribution (plan §13.2).
 
 Blocking:
 
-- [ ] Privacy notice and terms drafted, reviewed, and `noindex` removed — both
-      pages are placeholders, and `/privacy/` is linked from both consent
-      checkboxes.
-- [ ] Confirm the contracting entity and privacy contact in `src/site-config.ts`.
 - [ ] Verify `200+ positions filled` and flip it in `src/data/proof.ts`, or
       leave it off.
 - [ ] Real Turnstile keys per environment.
 - [ ] Production and preview inboxes confirmed, with owners assigned.
-- [ ] Remove `/privacy/` and `/terms/` from the sitemap exclusion in
-      `astro.config.mjs` once approved.
+
+CSR, privacy, and terms link to the approved parent-brand pages configured in
+`src/site-config.ts`; this site does not duplicate those pages.
 
 Known gaps, deliberately not built:
 

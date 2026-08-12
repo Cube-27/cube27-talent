@@ -2,9 +2,9 @@
 import Button from "@/components/ui/Button.astro";
 import { ROLE_FAMILIES } from "@/data/roles";
 import Select from "@/components/ui/Select.astro";
-import { ENDPOINTS } from "@/site-config";
+import { ENDPOINTS, ROUTES, TURNSTILE_SITE_KEY } from "@/site-config";
 
-const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+const siteKey = TURNSTILE_SITE_KEY;
 const HIRE_COUNTS = ["1", "2–5", "6–10", "11–25", "25+"];
 const START_WINDOWS = [
   "As soon as possible",
@@ -21,7 +21,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
   method="post"
   action={ENDPOINTS.employerLead}
   novalidate
-  class="grid gap-4 rounded-c27-lg border border-c27-line bg-c27-surface p-[clamp(1.5rem,3vw,2.25rem)]"
+  class="grid gap-4 rounded-c27-lg border border-c27-line bg-c27-surface p-[clamp(1.5rem,3vw,2.25rem)] shadow-c27-lg"
 >
   {/* Error summary receives focus on failed validation. §6.8. */}
   <div
@@ -145,12 +145,13 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     <legend class="mb-1 text-caption font-semibold">Role families</legend>
     <div class="flex flex-wrap gap-2">
       {
-        ROLE_FAMILIES.map((family) => (
-          <label class="cursor-pointer select-none rounded-full border border-[#d4dae9] bg-c27-surface px-3.5 py-2 text-caption transition-colors has-[:checked]:border-c27-blue has-[:checked]:bg-c27-blue-soft has-[:checked]:font-semibold has-[:checked]:text-c27-blue-d has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-c27-blue">
+        ROLE_FAMILIES.map((family, i) => (
+          <label class="relative cursor-pointer select-none rounded-full border border-[#d4dae9] bg-c27-surface px-3.5 py-2 text-caption transition-colors has-[:checked]:border-c27-blue has-[:checked]:bg-c27-blue-soft has-[:checked]:font-semibold has-[:checked]:text-c27-blue-d has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-c27-blue">
             <input
               type="checkbox"
               name="roleFamilies"
               value={family.id}
+              required={i === 0}
               class="pointer-events-none absolute opacity-0"
             />
             {family.short}
@@ -188,7 +189,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     <span>
       Cube27 may use these details to respond to this enquiry, as described in
       the <a
-        href="/privacy/"
+        href={ROUTES.privacy}
         class="text-c27-blue-d underline underline-offset-2">privacy notice</a
       >.
     </span>
@@ -255,6 +256,22 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
 
 <script>
   import { attachFormHandler } from "@/lib/form-client";
+
+  // "At least one role family" is a group rule, and HTML can only express it
+  // by marking a single box required. Carry that flag on the first box while
+  // the group is empty and drop it as soon as any box is ticked, so
+  // checkValidity() matches the server rule (roleFamilies.length > 0).
+  const roleFamilies = document.querySelectorAll<HTMLInputElement>(
+    '#employer-form input[name="roleFamilies"]',
+  );
+  if (roleFamilies.length) {
+    const first = roleFamilies[0];
+    const sync = () => {
+      first.required = ![...roleFamilies].some((box) => box.checked);
+    };
+    roleFamilies.forEach((box) => box.addEventListener("change", sync));
+    sync();
+  }
 
   attachFormHandler({
     formId: "employer-form",

@@ -2,9 +2,9 @@
 import Button from "@/components/ui/Button.astro";
 import { ROLE_FAMILIES } from "@/data/roles";
 import Select from "@/components/ui/Select.astro";
-import { ENDPOINTS } from "@/site-config";
+import { ENDPOINTS, ROUTES, TURNSTILE_SITE_KEY } from "@/site-config";
 
-const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+const siteKey = TURNSTILE_SITE_KEY;
 const AVAILABILITY = [
   "Immediately",
   "Within 30 days",
@@ -29,7 +29,7 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
   action={ENDPOINTS.candidateApplication}
   enctype="multipart/form-data"
   novalidate
-  class="grid gap-4 rounded-c27-lg border border-c27-line bg-c27-surface p-[clamp(1.5rem,3vw,2.25rem)]"
+  class="grid gap-4 rounded-c27-lg border border-c27-line bg-c27-surface p-[clamp(1.5rem,3vw,2.25rem)] shadow-c27-lg"
 >
   <div
     id="candidate-errors"
@@ -105,6 +105,7 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
         >Role family</label
       >
       <Select id="cf-family" name="roleFamily" required>
+        <option value="" disabled selected>Select…</option>
         {ROLE_FAMILIES.map((f) => <option value={f.id}>{f.name}</option>)}
       </Select>
     </div>
@@ -175,6 +176,7 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
         >Availability</label
       >
       <Select id="cf-avail" name="availability" required>
+        <option value="" disabled selected>Select…</option>
         {AVAILABILITY.map((a) => <option>{a}</option>)}
       </Select>
     </div>
@@ -183,6 +185,7 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
         >Work preference</label
       >
       <Select id="cf-work" name="workPreference" required>
+        <option value="" disabled selected>Select…</option>
         {WORK_PREFERENCE.map((w) => <option>{w}</option>)}
       </Select>
     </div>
@@ -191,6 +194,7 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
         >Open to relocation</label
       >
       <Select id="cf-reloc" name="relocation" required>
+        <option value="" disabled selected>Select…</option>
         {RELOCATION.map((r) => <option>{r}</option>)}
       </Select>
     </div>
@@ -234,8 +238,9 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
     />
     <span>
       Cube27 may process this profile for recruitment, as described in the
-      <a href="/privacy/" class="text-c27-blue-d underline underline-offset-2"
-        >privacy notice</a
+      <a
+        href={ROUTES.privacy}
+        class="text-c27-blue-d underline underline-offset-2">privacy notice</a
       >.
     </span>
   </label>

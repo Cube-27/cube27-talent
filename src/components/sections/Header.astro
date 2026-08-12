@@ -12,10 +12,7 @@ const isActive = (href: string) => path === href || path.startsWith(href);
 
 {
   !bare && (
-    <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-c27-navy px-4 py-2 text-center text-caption text-c27-on-navy-2">
-      <b class="rounded bg-c27-blue px-1.5 py-0.5 text-micro font-bold uppercase tracking-[0.08em] text-white">
-        V1
-      </b>
+    <div class="announcement-strip flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-c27-navy px-4 pb-2 pt-2 text-center text-caption text-c27-on-navy-2">
       <span>Technical interviews conducted by practising engineers.</span>
       <a
         href={ROUTES.hire}
@@ -29,7 +26,7 @@ const isActive = (href: string) => path === href || path.startsWith(href);
 
 <header
   id="site-header"
-  class="sticky top-0 z-30 border-b border-transparent bg-c27-ground/92 backdrop-blur-md transition-colors duration-200 [&.is-stuck]:border-c27-line"
+  class="sticky z-30 border-b border-transparent bg-c27-ground/92 backdrop-blur-md transition-colors duration-200 [&.is-stuck]:border-c27-line"
 >
   <div class="c27-wrap flex min-h-[4.5rem] items-center gap-4 lg:gap-7">
     <a
@@ -37,14 +34,16 @@ const isActive = (href: string) => path === href || path.startsWith(href);
       class="mr-auto flex items-center gap-2.5 no-underline sm:gap-3"
     >
       <img
-        src="/cube27-logo.png"
+        src="/cube27_logo.png"
         alt="Cube27"
-        width="457"
-        height="161"
-        class="h-7 w-auto sm:h-[1.9rem]"
+        width="300"
+        height="109"
+        class="h-8 w-auto sm:h-9"
       />
-      <span class="h-6 w-px bg-c27-line" aria-hidden="true"></span>
-      <span>
+      <span
+        class="hidden h-6 w-px bg-c27-line min-[23rem]:block"
+        aria-hidden="true"></span>
+      <span class="hidden min-[23rem]:block">
         <span
           class="block font-display text-[1.0625rem] font-bold leading-tight tracking-[-0.02em] text-c27-ink"
           >Talent</span
@@ -79,12 +78,9 @@ const isActive = (href: string) => path === href || path.startsWith(href);
         /* From lg both funnels sit in the bar; below that "Find a job" moves
           into the menu panel so it is never dropped entirely (§1.5). */
       }
-      <Button
-        href={ROUTES.join}
-        variant="line"
-        size="sm"
-        class="hidden lg:inline-flex">Find a job</Button
-      >
+      <span class="hidden lg:block">
+        <Button href={ROUTES.join} variant="line" size="sm">Find a job</Button>
+      </span>
       <Button href={ROUTES.hire} variant="primary" size="sm">Hire talent</Button
       >
 
@@ -159,6 +155,18 @@ const isActive = (href: string) => path === href || path.startsWith(href);
 </header>
 
 <style>
+  .announcement-strip {
+    padding-top: calc(0.5rem + env(safe-area-inset-top, 0px));
+  }
+
+  /* The layout sets viewport-fit=cover, so the notch and status-bar band are
+     inside the viewport. Sticking at 0 would park the header underneath it on
+     a bare page and on any scrolled page, so it stops below the inset instead.
+     Resolves to 0px everywhere there is no inset. */
+  #site-header {
+    top: env(safe-area-inset-top, 0px);
+  }
+
   /* Hide the default disclosure triangle across engines. */
   #mobile-menu > summary {
     list-style: none;
