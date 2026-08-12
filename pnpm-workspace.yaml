@@ -1,0 +1,5 @@
+# Not a workspace — this file exists to approve the build scripts that esbuild
+# and workerd need, matching the cube27.com setup.
+allowBuilds:
+  esbuild: true
+  workerd: true

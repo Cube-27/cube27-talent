@@ -1,0 +1,32 @@
+# Cube27 Talent — local Pages Functions environment.
+# Copy to `.dev.vars` (git-ignored) for `pnpm preview`.
+# In Cloudflare, set these per environment: production and preview MUST differ.
+# Plan §13.2.
+
+# Public origin, no trailing slash. Used for origin checks and links in email.
+SITE_URL="http://localhost:8788"
+
+# "production" | "preview" | "development". Tags internal email subjects.
+ENVIRONMENT="development"
+
+# Comma-separated hostnames allowed to POST to the endpoints.
+ALLOWED_HOSTS="localhost:8788,127.0.0.1:8788"
+
+# Resend — encrypted secret in Cloudflare.
+RESEND_API_KEY=""
+
+# Verified Resend sending identity. Use a sending subdomain, not the site host.
+RESEND_FROM="Cube27 Talent <talent@updates.cube27.com>"
+
+# Monitored reply-to for acknowledgement emails. Never no-reply.
+RESEND_REPLY_TO="talent@cube27.com"
+
+# Internal recipients. Preview MUST point at a test inbox — a preview candidate
+# submission must never deliver a resume to the live recruitment distribution.
+EMPLOYER_LEADS_TO="talent-leads@cube27.com"
+CANDIDATE_APPLICATIONS_TO="talent-apply@cube27.com"
+
+# Cloudflare Turnstile. Test keys: https://developers.cloudflare.com/turnstile/troubleshooting/testing/
+# 1x00000000000000000000AA always passes; 2x00000000000000000000AB always blocks.
+PUBLIC_TURNSTILE_SITE_KEY="1x00000000000000000000AA"
+TURNSTILE_SECRET_KEY="1x0000000000000000000000000000000AA"

@@ -1,0 +1,70 @@
+---
+import { SITE_CONFIG } from "@/site-config";
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl?: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  noindex?: boolean;
+  type?: "website" | "article";
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  canonicalUrl,
+  imageUrl,
+  imageAlt = "Cube27 Talent",
+  noindex = false,
+  type = "website",
+  jsonLd,
+} = Astro.props;
+
+const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+
+{
+  /* Preview deployments must never be indexed (plan §16.2). Cloudflare preview
+     hostnames are *.pages.dev; the production custom domain is the only host
+     allowed to serve an indexable page. */
+}
+{
+  noindex ? (
+    <meta name="robots" content="noindex, nofollow" />
+  ) : (
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+  )
+}
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE_CONFIG.brand} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+{imageUrl && <meta property="og:image" content={imageUrl} />}
+{imageUrl && <meta property="og:image:alt" content={imageAlt} />}
+
+<meta
+  name="twitter:card"
+  content={imageUrl ? "summary_large_image" : "summary"}
+/>
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{imageUrl && <meta name="twitter:image" content={imageUrl} />}
+
+{
+  schemas.map((schema) => (
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(schema)}
+    />
+  ))
+}

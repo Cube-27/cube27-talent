@@ -1,0 +1,29 @@
+---
+/**
+ * Label → h2 → optional lede. Every content section opens with one.
+ * Design system §6.3. Headings are third person — no "we"/"you" (§1.4).
+ */
+interface Props {
+  label: string;
+  heading: string;
+  lede?: string;
+  invert?: boolean;
+}
+
+const { label, heading, lede, invert = false } = Astro.props;
+---
+
+<div class="c27-rise mb-[clamp(2rem,4vw,3rem)] max-w-[42rem]">
+  <span
+    class:list={["c27-label mb-3 block", invert && "text-c27-on-navy-accent"]}
+    >{label}</span
+  >
+  <h2 class:list={["c27-h2", invert && "text-white"]}>{heading}</h2>
+  {
+    lede && (
+      <p class:list={["c27-lede mt-3.5", invert && "text-c27-on-navy-2"]}>
+        {lede}
+      </p>
+    )
+  }
+</div>

@@ -1,0 +1,80 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/ui/Section.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import CandidateForm from "@/components/forms/CandidateForm.astro";
+import Faq from "@/components/ui/Faq.astro";
+import { CANDIDATE_FAQS } from "@/data/faqs";
+import { SITE_CONFIG } from "@/site-config";
+
+const title = `Careers — join the Cube27 talent network | ${SITE_CONFIG.brand}`;
+const description =
+  "Join Cube27 as an employee on Cube27 payroll and be assigned to client engagements. Structured technical screening, work hardware provided, global clients.";
+
+/* Invariant 22: the candidate proposition is employment, not placement.
+   Each benefit below is operationally true today. */
+const benefits = [
+  {
+    title: "Employment, not a gig",
+    body: "Successful candidates join Cube27 as employees on Cube27 payroll, with employment administration handled.",
+  },
+  {
+    title: "A real technical interview",
+    body: "An HR screen, a task matched to the discipline, and an interview with Cube27 engineers or technical leadership.",
+  },
+  {
+    title: "Work hardware provided",
+    body: "Equipment is arranged under Cube27 policy, so no personal machine is required for client work.",
+  },
+  {
+    title: "Global client assignments",
+    body: "Assignments with companies building real products, across time zones and working models.",
+  },
+];
+---
+
+<Layout title={title} description={description}>
+  <Section>
+    <div
+      class="grid gap-[clamp(2rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)]"
+    >
+      <div class="c27-rise">
+        <span class="c27-label mb-3 block">Careers</span>
+        <h1 class="c27-h2">Join the Cube27 talent network</h1>
+        <p class="c27-lede mt-4">
+          One structured evaluation, then consideration for suitable client
+          requirements as they arrive.
+        </p>
+
+        <dl class="mt-8 grid gap-5">
+          {
+            benefits.map((benefit) => (
+              <div class="border-t border-c27-line pt-4">
+                <dt class="c27-h3">{benefit.title}</dt>
+                <dd class="mt-1 text-body-sm text-c27-ink-2">{benefit.body}</dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        {
+          /* Invariant 23 / plan §10 — overseas framing must stay conditional. */
+        }
+        <p
+          class="mt-6 rounded-c27-sm border border-c27-line bg-c27-surface p-4 text-caption text-c27-ink-2"
+        >
+          Some assignments involve overseas work. Where an approved assignment
+          requires it, Cube27 assists with the applicable visa process. Overseas
+          travel, relocation and visa approval are never guaranteed.
+        </p>
+      </div>
+
+      <div class="c27-rise" style="--c27-d:100ms"><CandidateForm /></div>
+    </div>
+  </Section>
+
+  <Section tone="surface" bordered narrow>
+    <SectionHead label="FAQ" heading="Questions from candidates" />
+    <Faq items={CANDIDATE_FAQS} />
+  </Section>
+</Layout>

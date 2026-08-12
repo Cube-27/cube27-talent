@@ -1,0 +1,41 @@
+---
+import type { Faq } from "@/data/faqs";
+
+interface Props {
+  items: Faq[];
+}
+const { items } = Astro.props;
+---
+
+{/* Native <details> — accessible and functional with no JS. §6.9. */}
+<div class="c27-rise grid gap-2.5">
+  {
+    items.map((item, i) => (
+      <details
+        open={i === 0}
+        class="rounded-c27 border border-c27-line bg-c27-surface px-5 py-4 transition-colors open:border-[#c3d5ff]"
+      >
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-6 font-display font-bold tracking-[-0.015em] [&::-webkit-details-marker]:hidden">
+          {item.q}
+          <span class="font-mono text-lg text-c27-blue" aria-hidden="true">
+            +
+          </span>
+        </summary>
+        <p class="mt-2.5 max-w-[70ch] text-body-sm text-c27-ink-2">{item.a}</p>
+      </details>
+    ))
+  }
+</div>
+
+<style>
+  details[open] summary span {
+    visibility: hidden;
+    position: relative;
+  }
+  details[open] summary span::after {
+    content: "–";
+    visibility: visible;
+    position: absolute;
+    inset: 0;
+  }
+</style>

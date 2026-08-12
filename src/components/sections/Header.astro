@@ -1,0 +1,211 @@
+---
+import Button from "@/components/ui/Button.astro";
+import { NAV_LINKS, ROUTES } from "@/site-config";
+
+interface Props {
+  bare?: boolean;
+}
+const { bare = false } = Astro.props;
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || path.startsWith(href);
+---
+
+{
+  !bare && (
+    <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-c27-navy px-4 py-2 text-center text-caption text-c27-on-navy-2">
+      <b class="rounded bg-c27-blue px-1.5 py-0.5 text-micro font-bold uppercase tracking-[0.08em] text-white">
+        V1
+      </b>
+      <span>Technical interviews conducted by practising engineers.</span>
+      <a
+        href={ROUTES.hire}
+        class="font-semibold text-c27-on-navy-accent no-underline hover:text-white"
+      >
+        Submit a requirement &rarr;
+      </a>
+    </div>
+  )
+}
+
+<header
+  id="site-header"
+  class="sticky top-0 z-30 border-b border-transparent bg-c27-ground/92 backdrop-blur-md transition-colors duration-200 [&.is-stuck]:border-c27-line"
+>
+  <div class="c27-wrap flex min-h-[4.5rem] items-center gap-4 lg:gap-7">
+    <a
+      href={ROUTES.home}
+      class="mr-auto flex items-center gap-2.5 no-underline sm:gap-3"
+    >
+      <img
+        src="/cube27-logo.png"
+        alt="Cube27"
+        width="457"
+        height="161"
+        class="h-7 w-auto sm:h-[1.9rem]"
+      />
+      <span class="h-6 w-px bg-c27-line" aria-hidden="true"></span>
+      <span>
+        <span
+          class="block font-display text-[1.0625rem] font-bold leading-tight tracking-[-0.02em] text-c27-ink"
+          >Talent</span
+        >
+        {/* The strapline is the first thing to go when width is tight. */}
+        <span
+          class="hidden text-[0.625rem] font-medium uppercase tracking-[0.14em] text-c27-ink-3 sm:block"
+          >Managed engineering staffing</span
+        >
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary">
+      {
+        NAV_LINKS.map((link) => (
+          <a
+            href={link.href}
+            aria-current={isActive(link.href) ? "page" : undefined}
+            class:list={[
+              "text-body-sm font-medium no-underline transition-colors hover:text-c27-blue",
+              isActive(link.href) ? "text-c27-blue" : "text-c27-ink-2",
+            ]}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-2.5">
+      {
+        /* From lg both funnels sit in the bar; below that "Find a job" moves
+          into the menu panel so it is never dropped entirely (§1.5). */
+      }
+      <Button
+        href={ROUTES.join}
+        variant="line"
+        size="sm"
+        class="hidden lg:inline-flex">Find a job</Button
+      >
+      <Button href={ROUTES.hire} variant="primary" size="sm">Hire talent</Button
+      >
+
+      {/* <details> so the menu works with no JS at all. */}
+      <details id="mobile-menu" class="lg:hidden">
+        <summary
+          class="grid size-11 cursor-pointer place-items-center rounded-c27-sm text-c27-ink transition-colors hover:bg-c27-tint"
+          aria-label="Menu"
+        >
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+            class="menu-open"
+          >
+            <path
+              d="M4 7h16M4 12h16M4 17h16"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"></path>
+          </svg>
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+            class="menu-close"
+          >
+            <path
+              d="M6 6l12 12M18 6L6 18"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"></path>
+          </svg>
+        </summary>
+
+        <div
+          class="absolute inset-x-0 top-full border-y border-c27-line bg-c27-surface shadow-c27-lg"
+        >
+          <nav class="c27-wrap py-3" aria-label="Menu">
+            <ul>
+              {
+                NAV_LINKS.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      aria-current={isActive(link.href) ? "page" : undefined}
+                      class:list={[
+                        "flex min-h-11 items-center border-b border-c27-line-2 text-body-sm font-medium no-underline",
+                        isActive(link.href) ? "text-c27-blue" : "text-c27-ink",
+                      ]}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+            <div class="grid gap-2.5 pt-4">
+              <Button href={ROUTES.join} variant="line" class="justify-center"
+                >Find a job</Button
+              >
+            </div>
+          </nav>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Hide the default disclosure triangle across engines. */
+  #mobile-menu > summary {
+    list-style: none;
+  }
+  #mobile-menu > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Stack both icons in the same grid cell and swap on open. */
+  #mobile-menu > summary > svg {
+    grid-area: 1 / 1;
+  }
+  #mobile-menu:not([open]) .menu-close,
+  #mobile-menu[open] .menu-open {
+    display: none;
+  }
+</style>
+
+<script>
+  const menu = document.getElementById(
+    "mobile-menu",
+  ) as HTMLDetailsElement | null;
+  if (menu) {
+    const close = () => menu.removeAttribute("open");
+
+    // Navigating within the page (hash links) does not reload, so close it.
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", close);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu.open) {
+        close();
+        menu.querySelector("summary")?.focus();
+      }
+    });
+
+    // Clicking outside the panel dismisses it.
+    document.addEventListener("click", (event) => {
+      if (menu.open && !menu.contains(event.target as Node)) close();
+    });
+
+    // Leaving mobile width with the panel open would strand it open behind
+    // the desktop nav, so close it at the breakpoint.
+    const desktop = window.matchMedia("(min-width: 64rem)");
+    desktop.addEventListener("change", (event) => {
+      if (event.matches) close();
+    });
+  }
+</script>

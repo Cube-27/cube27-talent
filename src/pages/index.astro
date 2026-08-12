@@ -1,0 +1,75 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/ui/Section.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Inclusions from "@/components/sections/Inclusions.astro";
+import ExpertiseSelector from "@/components/sections/ExpertiseSelector.astro";
+import ModelCards from "@/components/sections/ModelCards.astro";
+import ProcessStepper from "@/components/sections/ProcessStepper.astro";
+import AudienceSplit from "@/components/sections/AudienceSplit.astro";
+import Faq from "@/components/ui/Faq.astro";
+import { EMPLOYER_FAQS } from "@/data/faqs";
+import { SITE_CONFIG } from "@/site-config";
+
+/* Organization schema uses only verified facts (plan §16.1) — no employee
+   counts, ratings or awards. */
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_CONFIG.brand,
+  url: SITE_CONFIG.url,
+  parentOrganization: {
+    "@type": "Organization",
+    name: SITE_CONFIG.organization.legalName,
+    url: SITE_CONFIG.organization.parentSite,
+  },
+  address: {
+    "@type": "PostalAddress",
+    ...SITE_CONFIG.organization.address,
+  },
+  sameAs: SITE_CONFIG.organization.sameAs,
+};
+---
+
+<Layout jsonLd={jsonLd}>
+  <Hero />
+  <Inclusions />
+
+  <Section id="expertise">
+    <SectionHead
+      label="Expertise"
+      heading="Eight technical families, one partner"
+      lede="Adjacent roles where Cube27 can screen credibly."
+    />
+    <ExpertiseSelector />
+  </Section>
+
+  <Section id="model" tone="surface" bordered>
+    <SectionHead
+      label="The model"
+      heading="Employment sits with Cube27. Direction sits with the client."
+    />
+    <ModelCards />
+  </Section>
+
+  <Section id="process" tone="dark">
+    <SectionHead
+      label="Process"
+      heading="Nine steps from brief to first day"
+      lede="Assessments are role-appropriate. A QA lead and a product designer do not sit the same test."
+      invert
+    />
+    <ProcessStepper />
+  </Section>
+
+  <Section id="audiences">
+    <SectionHead label="Two ways in" heading="Hiring, or looking?" />
+    <AudienceSplit />
+  </Section>
+
+  <Section id="faq" tone="surface" bordered narrow>
+    <SectionHead label="FAQ" heading="Frequently asked questions" />
+    <Faq items={EMPLOYER_FAQS} />
+  </Section>
+</Layout>

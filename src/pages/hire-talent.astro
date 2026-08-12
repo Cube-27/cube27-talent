@@ -1,0 +1,67 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/ui/Section.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import ModelCards from "@/components/sections/ModelCards.astro";
+import ProcessStepper from "@/components/sections/ProcessStepper.astro";
+import EmployerForm from "@/components/forms/EmployerForm.astro";
+import Faq from "@/components/ui/Faq.astro";
+import { EMPLOYER_FAQS } from "@/data/faqs";
+import { SITE_CONFIG } from "@/site-config";
+
+const title = `Hire engineering talent | ${SITE_CONFIG.brand}`;
+const description =
+  "Submit a hiring requirement. Cube27 screens and technically interviews candidates, employs the selected engineer and runs payroll, while the client directs the work.";
+---
+
+<Layout title={title} description={description}>
+  <Section>
+    <div
+      class="grid gap-[clamp(2rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)]"
+    >
+      <div class="c27-rise">
+        <span class="c27-label mb-3 block">Hire talent</span>
+        <h1 class="c27-h2">Submit a hiring requirement</h1>
+        <p class="c27-lede mt-4">
+          One senior role, several openings, or a team built over time. Every
+          requirement gets a straight answer on whether it fits Cube27's
+          screening scope and current capacity.
+        </p>
+        <ul class="mt-6 grid gap-2.5 text-body-sm text-c27-ink-2">
+          <li>Full-time employment through Cube27, with payroll handled.</li>
+          <li>Remote, hybrid, onsite or relocation arrangements.</li>
+          <li>
+            Commercial terms agreed in writing before candidates are presented.
+          </li>
+        </ul>
+        <p class="mt-6 text-caption text-c27-ink-3">
+          Cube27 may decline requirements outside its technical screening scope,
+          and does not publish rates.
+        </p>
+      </div>
+      <div class="c27-rise" style="--c27-d:100ms"><EmployerForm /></div>
+    </div>
+  </Section>
+
+  <Section tone="surface" bordered>
+    <SectionHead
+      label="The model"
+      heading="Employment sits with Cube27. Direction sits with the client."
+    />
+    <ModelCards />
+  </Section>
+
+  <Section tone="dark">
+    <SectionHead
+      label="Process"
+      heading="Nine steps from brief to first day"
+      invert
+    />
+    <ProcessStepper />
+  </Section>
+
+  <Section narrow>
+    <SectionHead label="FAQ" heading="Frequently asked questions" />
+    <Faq items={EMPLOYER_FAQS} />
+  </Section>
+</Layout>

@@ -1,0 +1,278 @@
+---
+/**
+ * Select with a fully styled picker. Design system §6.8.
+ *
+ * A native <select> cannot have its open list styled — the option list is
+ * drawn by the operating system, and CSS reaches almost none of it. So the
+ * native control is rendered for markup and no-JS use, then progressively
+ * replaced with an ARIA combobox + listbox that IS styleable.
+ *
+ * The native <select> stays in the DOM (hidden) and remains the form value,
+ * so submission, validation and server-side parsing are unchanged.
+ */
+interface Props {
+  id: string;
+  name: string;
+  required?: boolean;
+  class?: string;
+}
+
+const { id, name, required = false, class: className = "" } = Astro.props;
+---
+
+<div class:list={["c27-select relative min-w-0", className]} data-select>
+  {/* Source of truth for the value. Hidden once the custom UI is built. */}
+  <select
+    id={id}
+    name={name}
+    required={required}
+    class="c27-select-native h-12 w-full min-w-0 cursor-pointer appearance-none rounded-c27-sm border border-[#d4dae9] bg-c27-surface pl-3.5 pr-[3.5rem] text-body-sm font-medium text-c27-ink focus:border-c27-blue focus:outline-none focus:ring-[3px] focus:ring-c27-blue/15"
+  >
+    <slot />
+  </select>
+
+  {/* Chevron for the un-upgraded native control only. */}
+  <span
+    class="c27-select-native-arrow pointer-events-none absolute right-1.5 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-md bg-c27-tint text-c27-ink-2"
+  >
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M6 9.5l6 6 6-6"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+    </svg>
+  </span>
+</div>
+
+<style>
+  /* Once JS upgrades the control, the native select is removed from view but
+     kept in the form. `display:none` would drop it from submission in no
+     browser, but hidden+absolute keeps behaviour identical everywhere. */
+  .c27-select[data-upgraded] .c27-select-native,
+  .c27-select[data-upgraded] .c27-select-native-arrow {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  select option {
+    background: var(--c27-surface);
+    color: var(--c27-ink);
+    font-weight: 400;
+  }
+</style>
+
+<script>
+  const CHEVRON = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9.5l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const TICK = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  function upgrade(root: HTMLElement) {
+    const native = root.querySelector("select");
+    if (!native) return;
+    // Re-bind to a fresh const: TypeScript does not carry an `instanceof`
+    // narrowing into hoisted function declarations, which the closures below
+    // all are.
+    const select: HTMLSelectElement = native;
+
+    const options = [...select.options];
+    const listId = `${select.id}-listbox`;
+    const buttonId = `${select.id}-button`;
+
+    // The visible trigger.
+    const button = document.createElement("button");
+    button.type = "button";
+    button.id = buttonId;
+    button.setAttribute("role", "combobox");
+    button.setAttribute("aria-haspopup", "listbox");
+    button.setAttribute("aria-expanded", "false");
+    button.setAttribute("aria-controls", listId);
+    button.className =
+      "flex h-12 w-full min-w-0 items-center gap-2 rounded-c27-sm border border-[#d4dae9] bg-c27-surface pl-3.5 pr-1.5 text-left text-body-sm font-medium text-c27-ink transition-[border-color,box-shadow] hover:border-[#aab6cf] focus-visible:border-c27-blue focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-c27-blue/15 aria-expanded:border-c27-blue aria-expanded:ring-[3px] aria-expanded:ring-c27-blue/15";
+
+    const value = document.createElement("span");
+    value.className = "flex-1 truncate";
+    const arrow = document.createElement("span");
+    arrow.className =
+      "grid size-9 shrink-0 place-items-center rounded-md bg-c27-tint text-c27-ink-2 transition-[background-color,color,transform] duration-200";
+    arrow.innerHTML = CHEVRON;
+    button.append(value, arrow);
+
+    // The styled picker.
+    const list = document.createElement("ul");
+    list.id = listId;
+    list.setAttribute("role", "listbox");
+    list.tabIndex = -1;
+    list.hidden = true;
+    list.className =
+      "absolute inset-x-0 top-full z-40 mt-1.5 max-h-64 overflow-y-auto rounded-c27-sm border border-c27-line bg-c27-surface p-1.5 shadow-c27-lg";
+
+    let activeIndex = Math.max(select.selectedIndex, 0);
+
+    const items = options.map((option, i) => {
+      const item = document.createElement("li");
+      item.id = `${select.id}-opt-${i}`;
+      item.setAttribute("role", "option");
+      item.dataset.index = String(i);
+      item.className =
+        "flex min-h-11 cursor-pointer items-center justify-between gap-2 rounded-md px-3 py-2 text-body-sm text-c27-ink";
+      const label = document.createElement("span");
+      label.textContent = option.textContent;
+      const tick = document.createElement("span");
+      tick.className = "text-c27-blue opacity-0";
+      tick.innerHTML = TICK;
+      item.append(label, tick);
+      list.append(item);
+      return { item, tick };
+    });
+
+    function paint() {
+      value.textContent = options[select.selectedIndex]?.textContent ?? "";
+      items.forEach(({ item, tick }, i) => {
+        const selected = i === select.selectedIndex;
+        const active = i === activeIndex;
+        item.setAttribute("aria-selected", String(selected));
+        tick.classList.toggle("opacity-0", !selected);
+        item.classList.toggle("bg-c27-blue-soft", selected);
+        item.classList.toggle("font-semibold", selected);
+        item.classList.toggle("text-c27-blue-d", selected);
+        // Active (keyboard) row is tinted unless it is already the selected one.
+        item.classList.toggle("bg-c27-tint", active && !selected);
+      });
+    }
+
+    function open() {
+      activeIndex = Math.max(select.selectedIndex, 0);
+      list.hidden = false;
+      button.setAttribute("aria-expanded", "true");
+      arrow.classList.add("bg-c27-blue", "text-white", "rotate-180");
+      arrow.classList.remove("bg-c27-tint", "text-c27-ink-2");
+      paint();
+      items[activeIndex]?.item.scrollIntoView({ block: "nearest" });
+      button.setAttribute(
+        "aria-activedescendant",
+        items[activeIndex]?.item.id ?? "",
+      );
+    }
+
+    function close() {
+      list.hidden = true;
+      button.setAttribute("aria-expanded", "false");
+      button.removeAttribute("aria-activedescendant");
+      arrow.classList.remove("bg-c27-blue", "text-white", "rotate-180");
+      arrow.classList.add("bg-c27-tint", "text-c27-ink-2");
+    }
+
+    function commit(index: number) {
+      select.selectedIndex = index;
+      // Fire change so any listener on the native select still works.
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+      paint();
+      close();
+      button.focus();
+    }
+
+    function move(delta: number) {
+      activeIndex = (activeIndex + delta + items.length) % items.length;
+      paint();
+      items[activeIndex].item.scrollIntoView({ block: "nearest" });
+      button.setAttribute("aria-activedescendant", items[activeIndex].item.id);
+    }
+
+    button.addEventListener("click", () => (list.hidden ? open() : close()));
+
+    button.addEventListener("keydown", (event) => {
+      switch (event.key) {
+        case "ArrowDown":
+        case "ArrowUp":
+          event.preventDefault();
+          if (list.hidden) open();
+          else move(event.key === "ArrowDown" ? 1 : -1);
+          break;
+        case "Home":
+        case "End":
+          if (list.hidden) return;
+          event.preventDefault();
+          activeIndex = event.key === "Home" ? 0 : items.length - 1;
+          paint();
+          items[activeIndex].item.scrollIntoView({ block: "nearest" });
+          break;
+        case "Enter":
+        case " ":
+          event.preventDefault();
+          if (list.hidden) open();
+          else commit(activeIndex);
+          break;
+        case "Escape":
+          if (!list.hidden) {
+            event.preventDefault();
+            close();
+          }
+          break;
+        case "Tab":
+          if (!list.hidden) close();
+          break;
+        default: {
+          // Typeahead: jump to the first option starting with the key.
+          if (event.key.length !== 1) return;
+          const match = options.findIndex((option) =>
+            option.textContent
+              ?.trim()
+              .toLowerCase()
+              .startsWith(event.key.toLowerCase()),
+          );
+          if (match < 0) return;
+          event.preventDefault();
+          if (list.hidden) {
+            commit(match);
+          } else {
+            activeIndex = match;
+            paint();
+            items[match].item.scrollIntoView({ block: "nearest" });
+          }
+        }
+      }
+    });
+
+    items.forEach(({ item }, i) => {
+      item.addEventListener("click", () => commit(i));
+      item.addEventListener("mousemove", () => {
+        if (activeIndex === i) return;
+        activeIndex = i;
+        paint();
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!list.hidden && !root.contains(event.target as Node)) close();
+    });
+
+    // The label points at the native select; move it to the visible trigger so
+    // clicking the label focuses what the user can actually see.
+    const label = document.querySelector<HTMLLabelElement>(
+      `label[for="${CSS.escape(select.id)}"]`,
+    );
+    if (label) label.htmlFor = buttonId;
+
+    root.append(button, list);
+    root.dataset.upgraded = "true";
+    select.tabIndex = -1;
+    select.setAttribute("aria-hidden", "true");
+    paint();
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-select]").forEach(upgrade);
+</script>

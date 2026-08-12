@@ -1,0 +1,43 @@
+---
+/**
+ * Section shell. Owns all vertical rhythm and background tone so no page file
+ * sets its own padding. Design system §6.2.
+ */
+interface Props {
+  id?: string;
+  tone?: "ground" | "surface" | "tint" | "dark";
+  bordered?: boolean;
+  narrow?: boolean;
+  class?: string;
+}
+
+const {
+  id,
+  tone = "ground",
+  bordered = false,
+  narrow = false,
+  class: className = "",
+} = Astro.props;
+
+const tones = {
+  ground: "bg-c27-ground",
+  surface: "bg-c27-surface",
+  tint: "bg-c27-tint-2",
+  dark: "bg-[linear-gradient(150deg,var(--c27-navy)_0%,#0e2143_55%,var(--c27-navy-2)_100%)] text-white",
+};
+---
+
+<section
+  id={id}
+  class:list={[
+    "py-[var(--c27-pad-section)]",
+    tones[tone],
+    bordered && "border-y border-c27-line",
+    tone === "dark" && "border-transparent",
+    className,
+  ]}
+>
+  <div class={narrow ? "c27-wrap-narrow" : "c27-wrap"}>
+    <slot />
+  </div>
+</section>

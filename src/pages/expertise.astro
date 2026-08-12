@@ -1,0 +1,47 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/ui/Section.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import ExpertiseSelector from "@/components/sections/ExpertiseSelector.astro";
+import AudienceSplit from "@/components/sections/AudienceSplit.astro";
+import { OUT_OF_SCOPE } from "@/data/roles";
+import { SITE_CONFIG } from "@/site-config";
+
+const title = `Expertise — the roles Cube27 recruits | ${SITE_CONFIG.brand}`;
+const description =
+  "Software engineering, mobile, quality engineering, cloud and infrastructure, product, design, enterprise content and e-commerce roles, screened by practitioners.";
+---
+
+<Layout title={title} description={description}>
+  <Section>
+    <span class="c27-label mb-3 block">Expertise</span>
+    <h1 class="c27-h2">Eight technical families, one partner</h1>
+    <p class="c27-lede mt-4">
+      Cube27 recruits only where it can screen credibly. Adjacent technical
+      roles are considered case by case.
+    </p>
+    <div class="mt-10"><ExpertiseSelector /></div>
+  </Section>
+
+  <Section tone="surface" bordered>
+    <SectionHead
+      label="Out of scope"
+      heading="Roles Cube27 declines"
+      lede="Requirements outside the technical scope are turned down rather than passed on to a partner."
+    />
+    <ul class="c27-rise flex flex-wrap gap-2.5">
+      {
+        OUT_OF_SCOPE.map((role) => (
+          <li class="rounded-full border border-c27-line bg-c27-ground px-4 py-2 text-body-sm text-c27-ink-2">
+            {role}
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Section>
+    <SectionHead label="Two ways in" heading="Hiring, or looking?" />
+    <AudienceSplit />
+  </Section>
+</Layout>

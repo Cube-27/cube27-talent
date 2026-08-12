@@ -1,0 +1,125 @@
+---
+import CheckMark from "@/components/ui/CheckMark.astro";
+import { RESPONSIBILITIES } from "@/data/process";
+
+/**
+ * The three-party model plus the responsibility table. This is the visible
+ * expression of invariants 3-8 and 17 — who employs, who directs, who decides.
+ * Headings are third person (design system §1.4).
+ */
+---
+
+<div class="grid gap-5 md:grid-cols-3">
+  <div
+    class="c27-rise rounded-c27-lg border border-c27-line bg-c27-surface p-7"
+  >
+    <span class="c27-label">Cube27</span>
+    <h3 class="mt-2.5 text-[1.1875rem] tracking-[-0.025em]">
+      Employs and pays
+    </h3>
+    <p class="mt-2 text-body-sm text-c27-ink-2">
+      Sourcing, screening, technical interviews, employment contract, payroll,
+      hardware and check-ins.
+    </p>
+  </div>
+
+  <div
+    class="c27-rise rounded-c27-lg border border-transparent bg-[linear-gradient(155deg,var(--c27-blue),#1e50cf)] p-7 text-white"
+    style="--c27-d:90ms"
+  >
+    <span class="c27-label text-[#c3d5ff]">The client</span>
+    <h3 class="mt-2.5 text-[1.1875rem] tracking-[-0.025em]">
+      Directs and decides
+    </h3>
+    <p class="mt-2 text-body-sm text-white/80">
+      Final interviews, selection, daily work, priorities, performance review
+      and continuation.
+    </p>
+  </div>
+
+  <div
+    class="c27-rise rounded-c27-lg border border-c27-line bg-c27-surface p-7"
+    style="--c27-d:180ms"
+  >
+    <span class="c27-label">The engineer</span>
+    <h3 class="mt-2.5 text-[1.1875rem] tracking-[-0.025em]">
+      Delivers on the team
+    </h3>
+    <p class="mt-2 text-body-sm text-c27-ink-2">
+      A Cube27 employee on a stable payroll, working inside the client's team
+      model.
+    </p>
+  </div>
+</div>
+
+{
+  /* tabindex + role make the scroll container reachable by keyboard, which a
+     bare overflow-x div is not. The hint only shows where it can actually
+     scroll. */
+}
+<p class="c27-rise mt-7 text-caption text-c27-ink-3 md:hidden">
+  Swipe the table sideways to compare columns.
+</p>
+
+<div
+  class="c27-rise mt-2.5 overflow-x-auto rounded-c27-lg border border-c27-line bg-c27-surface md:mt-7"
+  tabindex="0"
+  role="region"
+  aria-label="Division of responsibility between Cube27 and the client"
+>
+  <table class="w-full min-w-[38rem] border-collapse">
+    <thead>
+      <tr>
+        <th
+          scope="col"
+          class="border-b border-c27-line bg-c27-surface-2 px-5 py-3.5 text-left font-display text-caption font-bold text-c27-ink-2"
+          >Responsibility</th
+        >
+        <th
+          scope="col"
+          class="border-b border-c27-line bg-c27-surface-2 px-5 py-3.5 text-left font-display text-caption font-bold text-c27-ink-2"
+          >Cube27</th
+        >
+        <th
+          scope="col"
+          class="border-b border-c27-line bg-c27-surface-2 px-5 py-3.5 text-left font-display text-caption font-bold text-c27-ink-2"
+          >Client</th
+        >
+      </tr>
+    </thead>
+    <tbody>
+      {
+        RESPONSIBILITIES.map((row) => (
+          <tr class="border-b border-c27-line-2 last:border-b-0">
+            <th
+              scope="row"
+              class="w-[44%] px-5 py-3.5 text-left text-body-sm font-medium text-c27-ink"
+            >
+              {row.item}
+            </th>
+            <td class="px-5 py-3.5 text-body-sm text-c27-ink-3">
+              {row.owner === "cube27" ? (
+                <span class="inline-flex items-center gap-1.5 font-semibold text-c27-green-d">
+                  <CheckMark size={15} />
+                  Cube27
+                </span>
+              ) : (
+                (row.note ?? "—")
+              )}
+            </td>
+            <td class="px-5 py-3.5 text-body-sm text-c27-ink-3">
+              {row.owner === "client" ? (
+                <span class="inline-flex items-center gap-1.5 font-semibold text-c27-blue-d">
+                  <CheckMark size={15} tone="blue" />
+                  Client
+                </span>
+              ) : (
+                "—"
+              )}
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
