@@ -20,7 +20,10 @@
   --c27-navy-2: #1e293b;
 
   /* --- text --- */
-  --c27-ink: #0f172a;
+  /* One step off slate-900. Pure-black-adjacent ink measured 17.85:1 on white,
+     which reads as harsh at display sizes; this is 14.63:1 and still far above
+     any floor. */
+  --c27-ink: #1e293b;
   --c27-ink-2: #475569;
   --c27-ink-3: #64748b;
 
