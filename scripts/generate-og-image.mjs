@@ -28,10 +28,8 @@ const BACKGROUND = [0xff, 0xff, 0xff];
  */
 const LOGO_SHARE = 0.45;
 
-/** Decodes a non-interlaced truecolour PNG to flat RGBA. */
-function decodePng(buffer) {
-  if (buffer.readUInt32BE(0) !== 0x89504e47) throw new Error("not a PNG");
-
+/** Walks the chunk stream, collecting the IHDR fields and the IDAT segments. */
+function readChunks(buffer) {
   let offset = 8;
   let header = null;
   const idat = [];
@@ -58,6 +56,11 @@ function decodePng(buffer) {
     offset += 12 + length;
   }
 
+  return { header, idat };
+}
+
+/** This decoder handles only what the brand logo needs; reject anything else. */
+function assertSupported(header) {
   if (!header) throw new Error("no IHDR");
   if (header.depth !== 8 || header.interlace !== 0) {
     throw new Error(
@@ -67,6 +70,64 @@ function decodePng(buffer) {
   if (header.colorType !== 2 && header.colorType !== 6) {
     throw new Error(`unsupported colour type ${header.colorType}`);
   }
+}
+
+/** PNG's Paeth predictor: whichever neighbour is closest to left + up - upLeft. */
+function paeth(left, up, upLeft) {
+  const p = left + up - upLeft;
+  const dl = Math.abs(p - left);
+  const du = Math.abs(p - up);
+  const dul = Math.abs(p - upLeft);
+
+  if (dl <= du && dl <= dul) return left;
+  if (du <= dul) return up;
+  return upLeft;
+}
+
+/** Reverses one scanline's filter in place, per PNG spec §9.2. */
+function unfilter(line, previous, filter, channels) {
+  for (let x = 0; x < line.length; x += 1) {
+    const left = x >= channels ? line[x - channels] : 0;
+    const up = previous[x];
+    const upLeft = x >= channels ? previous[x - channels] : 0;
+
+    switch (filter) {
+      case 1:
+        line[x] = (line[x] + left) & 0xff;
+        break;
+      case 2:
+        line[x] = (line[x] + up) & 0xff;
+        break;
+      case 3:
+        line[x] = (line[x] + ((left + up) >> 1)) & 0xff;
+        break;
+      case 4:
+        line[x] = (line[x] + paeth(left, up, upLeft)) & 0xff;
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+/** Widens one unfiltered scanline into the RGBA buffer, opaque if it has no alpha. */
+function writeScanline(pixels, line, y, width, channels) {
+  for (let x = 0; x < width; x += 1) {
+    const src = x * channels;
+    const dst = (y * width + x) * 4;
+    pixels[dst] = line[src];
+    pixels[dst + 1] = line[src + 1];
+    pixels[dst + 2] = line[src + 2];
+    pixels[dst + 3] = channels === 4 ? line[src + 3] : 255;
+  }
+}
+
+/** Decodes a non-interlaced truecolour PNG to flat RGBA. */
+function decodePng(buffer) {
+  if (buffer.readUInt32BE(0) !== 0x89504e47) throw new Error("not a PNG");
+
+  const { header, idat } = readChunks(buffer);
+  assertSupported(header);
 
   const channels = header.colorType === 6 ? 4 : 3;
   const raw = inflateSync(Buffer.concat(idat));
@@ -76,49 +137,12 @@ function decodePng(buffer) {
   let previous = Buffer.alloc(stride);
 
   for (let y = 0; y < header.height; y += 1) {
-    const filter = raw[y * (stride + 1)];
-    const line = Buffer.from(
-      raw.subarray(y * (stride + 1) + 1, (y + 1) * (stride + 1)),
-    );
+    // Each scanline is one filter byte followed by `stride` bytes of data.
+    const start = y * (stride + 1);
+    const line = Buffer.from(raw.subarray(start + 1, start + 1 + stride));
 
-    for (let x = 0; x < stride; x += 1) {
-      const left = x >= channels ? line[x - channels] : 0;
-      const up = previous[x];
-      const upLeft = x >= channels ? previous[x - channels] : 0;
-
-      switch (filter) {
-        case 1:
-          line[x] = (line[x] + left) & 0xff;
-          break;
-        case 2:
-          line[x] = (line[x] + up) & 0xff;
-          break;
-        case 3:
-          line[x] = (line[x] + ((left + up) >> 1)) & 0xff;
-          break;
-        case 4: {
-          const p = left + up - upLeft;
-          const dl = Math.abs(p - left);
-          const du = Math.abs(p - up);
-          const dul = Math.abs(p - upLeft);
-          const predictor =
-            dl <= du && dl <= dul ? left : du <= dul ? up : upLeft;
-          line[x] = (line[x] + predictor) & 0xff;
-          break;
-        }
-        default:
-          break;
-      }
-    }
-
-    for (let x = 0; x < header.width; x += 1) {
-      const src = x * channels;
-      const dst = (y * header.width + x) * 4;
-      pixels[dst] = line[src];
-      pixels[dst + 1] = line[src + 1];
-      pixels[dst + 2] = line[src + 2];
-      pixels[dst + 3] = channels === 4 ? line[src + 3] : 255;
-    }
+    unfilter(line, previous, raw[start], channels);
+    writeScanline(pixels, line, y, header.width, channels);
 
     previous = line;
   }
