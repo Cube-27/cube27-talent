@@ -82,9 +82,13 @@ import { RESPONSIBILITIES } from "@/data/process";
           class="border-b border-c27-line bg-c27-surface-2/80 px-5 py-3.5 text-left font-display text-caption font-bold text-c27-ink-2"
           >Cube27</th
         >
+        {
+          /* Extra trailing padding keeps the last column off the clipped edge
+            of the scroll container on mobile, so it does not read as cut off. */
+        }
         <th
           scope="col"
-          class="border-b border-c27-line bg-c27-surface-2/80 px-5 py-3.5 text-left font-display text-caption font-bold text-c27-ink-2"
+          class="border-b border-c27-line bg-c27-surface-2/80 px-5 pr-8 py-3.5 text-left font-display text-caption font-bold text-c27-ink-2 md:pr-5"
           >Client</th
         >
       </tr>
@@ -109,7 +113,7 @@ import { RESPONSIBILITIES } from "@/data/process";
                 (row.note ?? "—")
               )}
             </td>
-            <td class="px-5 py-3.5 text-body-sm text-c27-ink-3">
+            <td class="px-5 pr-8 py-3.5 text-body-sm text-c27-ink-3 md:pr-5">
               {row.owner === "client" ? (
                 <span class="inline-flex items-center gap-1.5 font-semibold text-c27-blue-d">
                   <CheckMark size={15} tone="blue" />

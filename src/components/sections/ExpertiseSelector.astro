@@ -29,8 +29,13 @@ const Heading = `h${headingLevel}` as "h2" | "h3";
   class="c27-rise grid overflow-hidden rounded-c27-lg border border-c27-line bg-c27-surface shadow-c27-sm lg:grid-cols-[minmax(0,17.5rem)_minmax(0,1fr)]"
   data-expertise
 >
+  {
+    /* scroll-px matches the strip padding: without it a snapped tab rests flush
+      against the card edge, because snapping aligns to the scrollport, not the
+      padding box. */
+  }
   <div
-    class="flex snap-x snap-mandatory gap-1.5 overflow-x-auto border-b border-c27-line bg-c27-surface-2/80 p-3 [scrollbar-width:thin] lg:flex-col lg:snap-none lg:overflow-visible lg:border-b-0 lg:border-r lg:p-4"
+    class="flex snap-x snap-mandatory scroll-px-3 gap-1.5 overflow-x-auto border-b border-c27-line bg-c27-surface-2/80 p-3 [scrollbar-width:thin] lg:flex-col lg:snap-none lg:overflow-visible lg:border-b-0 lg:border-r lg:p-4"
     role="tablist"
     aria-label="Role families"
   >
