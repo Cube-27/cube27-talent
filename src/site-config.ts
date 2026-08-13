@@ -69,7 +69,7 @@ export const NAV_LINKS = [
  */
 const TURNSTILE_SITE_KEYS = {
   /** `cube27-talent-production` widget — hostname `talent.cube27.com`. */
-  production: "",
+  production: "0x4AAAAAAEOp3L5wZhbsNFJq",
   /**
    * `cube27-talent-preview` widget — hostname `talent-preview.cube27.com`.
    * Currently Cloudflare's documented always-pass test key, so preview branches
