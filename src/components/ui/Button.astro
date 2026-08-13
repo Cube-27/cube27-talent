@@ -11,6 +11,7 @@ interface Props {
   arrow?: boolean;
   class?: string;
   id?: string;
+  disabled?: boolean;
 }
 
 const {
@@ -21,10 +22,11 @@ const {
   arrow = false,
   class: className = "",
   id,
+  disabled = false,
 } = Astro.props;
 
 const base =
-  "inline-flex items-center gap-2 whitespace-nowrap rounded-c27-sm border font-display font-bold no-underline cursor-pointer transition-[background-color,border-color,color,transform,box-shadow] duration-200 motion-safe:hover:-translate-y-px";
+  "group inline-flex items-center gap-2 whitespace-nowrap rounded-c27-sm border font-display font-bold no-underline cursor-pointer transition-[background-color,border-color,color,transform,box-shadow] duration-200 motion-safe:hover:-translate-y-px disabled:cursor-not-allowed disabled:opacity-60 disabled:pointer-events-none";
 
 const variants = {
   primary:
@@ -56,9 +58,13 @@ const cls = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
       )}
     </a>
   ) : (
-    <button type={type} class={cls} id={id}>
+    <button type={type} class={cls} id={id} disabled={disabled}>
       <slot />
-      {arrow && <span class="font-mono">&rarr;</span>}
+      {arrow && (
+        <span class="font-mono transition-transform duration-200 group-hover:translate-x-1">
+          &rarr;
+        </span>
+      )}
     </button>
   )
 }

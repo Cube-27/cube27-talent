@@ -24,6 +24,10 @@ const {
 } = Astro.props;
 
 const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+// JSON.stringify does not escape "<", so a value containing "</script" would
+// close the inline script early. Escape it to keep the payload inert.
+const serialize = (schema: Record<string, unknown>) =>
+  JSON.stringify(schema).replace(/</g, "\\u003c");
 ---
 
 <title>{title}</title>
@@ -61,10 +65,6 @@ const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
 {
   schemas.map((schema) => (
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify(schema)}
-    />
+    <script type="application/ld+json" is:inline set:html={serialize(schema)} />
   ))
 }

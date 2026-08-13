@@ -32,8 +32,8 @@ const tones = {
   class:list={[
     "py-[var(--c27-pad-section)]",
     tones[tone],
-    bordered && "border-y border-c27-line",
-    tone === "dark" && "border-transparent",
+    bordered && "border-y",
+    bordered && (tone === "dark" ? "border-transparent" : "border-c27-line"),
     className,
   ]}
 >

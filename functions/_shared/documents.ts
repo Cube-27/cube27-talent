@@ -46,7 +46,6 @@ const FORBIDDEN_PDF_KEYS = new Set([
   "JavaScript",
   "JS",
   "Launch",
-  "OpenAction",
   "RichMedia",
   "RichMediaContent",
   "RichMediaSettings",
@@ -425,7 +424,7 @@ async function validatePdf(bytes: Uint8Array): Promise<ResumeValidation> {
     bytes.byteLength < 8 ||
     new TextDecoder("ascii")
       .decode(bytes.subarray(0, 8))
-      .match(/^%PDF-1\.[0-9]/) === null
+      .match(/^%PDF-[12]\.[0-9]/) === null
   ) {
     return { ok: false, reason: "invalid-pdf-header" };
   }
