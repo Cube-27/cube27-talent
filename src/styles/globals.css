@@ -136,6 +136,36 @@
     background: var(--c27-gradient-blue);
   }
 
+  .c27-sky-field {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    background: var(--c27-gradient-blue);
+  }
+
+  .c27-sky-field::before {
+    position: absolute;
+    z-index: -1;
+    inset: -22%;
+    content: "";
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 24% 30%, var(--c27-sky-light), transparent 33%),
+      radial-gradient(circle at 76% 64%, var(--c27-sky-glow), transparent 35%);
+    animation: c27-sky-drift 18s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  @keyframes c27-sky-drift {
+    from {
+      transform: translate3d(-2%, 1%, 0) scale(1.02);
+    }
+
+    to {
+      transform: translate3d(3%, -2%, 0) scale(1.06);
+    }
+  }
+
   .c27-feature-card {
     background: var(--c27-gradient-warm);
     border: 1px solid var(--c27-line);
@@ -195,6 +225,11 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .c27-sky-field::before {
+      animation: none;
+      transform: none;
+    }
+
     .reveal .c27-rise {
       opacity: 1;
       transform: none;

@@ -67,28 +67,43 @@ import { PROCESS_PHASES } from "@/data/process";
     const list = root.querySelector<HTMLElement>("[data-phase-list]");
     if (!phases.length || !list || reducedMotion.matches) continue;
 
-    const activate = (selected: HTMLElement) => {
+    let activeIndex = 0;
+    let ticking = false;
+
+    const activate = (index: number) => {
+      if (index === activeIndex) return;
+      activeIndex = index;
+
       phases.forEach((phase) => {
-        phase.dataset.active = String(phase === selected);
+        phase.dataset.active = String(phase === phases[index]);
       });
-      const index = phases.indexOf(selected);
       list.style.setProperty(
         "--process-progress",
         `${((index + 1) / phases.length) * 100}%`,
       );
     };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) activate(visible.target as HTMLElement);
-      },
-      { rootMargin: "-30% 0px -45%", threshold: [0.15, 0.35, 0.6] },
-    );
+    const update = () => {
+      const focusLine = window.innerHeight * 0.44;
+      let nextIndex = 0;
 
-    phases.forEach((phase) => observer.observe(phase));
+      phases.forEach((phase, index) => {
+        if (phase.getBoundingClientRect().top <= focusLine) nextIndex = index;
+      });
+
+      activate(nextIndex);
+      ticking = false;
+    };
+
+    const scheduleUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
   }
 </script>
 
@@ -97,6 +112,10 @@ import { PROCESS_PHASES } from "@/data/process";
     border-color: var(--c27-accent);
     background: var(--c27-accent);
     color: white;
+  }
+
+  .process-node {
+    transition-timing-function: var(--c27-ease);
   }
 
   @media (max-width: 63.999rem) {
