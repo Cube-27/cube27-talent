@@ -22,17 +22,19 @@ const engineerPoints = [
 ];
 ---
 
-<div class="grid gap-5 md:grid-cols-2">
+<div class="grid gap-6 md:grid-cols-2">
   <div
-    class="c27-rise grid content-start gap-3.5 rounded-c27-lg border border-c27-line bg-c27-surface p-[clamp(1.75rem,3.5vw,2.75rem)] shadow-c27-lg"
+    class="c27-rise grid content-start gap-4 rounded-c27-lg border border-c27-line bg-c27-surface p-[clamp(1.75rem,3.5vw,2.75rem)] shadow-c27-sm transition-[box-shadow,border-color] duration-300 hover:shadow-c27-lg"
   >
-    <span class="c27-label">For companies</span>
-    <h3 class="c27-h3-lg">Build a team</h3>
-    <ul class="my-1 grid gap-2">
+    <span class="c27-label text-c27-blue">For companies</span>
+    <h3 class="c27-h3-lg font-bold text-c27-ink tracking-tight">
+      Build a team
+    </h3>
+    <ul class="my-1 grid gap-2.5">
       {
         companyPoints.map((point) => (
-          <li class="grid grid-cols-[1.15rem_minmax(0,1fr)] gap-2 text-body-sm text-c27-ink-2">
-            <span class="text-c27-green-d" aria-hidden="true">
+          <li class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-2.5 text-body-sm text-c27-ink-2 leading-snug">
+            <span class="font-bold text-c27-green-d" aria-hidden="true">
               &#10003;
             </span>
             <span>{point}</span>
@@ -40,22 +42,22 @@ const engineerPoints = [
         ))
       }
     </ul>
-    <div class="mt-1.5">
+    <div class="mt-2">
       <Button href={ROUTES.hire} variant="primary" arrow>Hire talent</Button>
     </div>
   </div>
 
   <div
-    class="c27-rise grid content-start gap-3.5 rounded-c27-lg border border-transparent bg-[linear-gradient(160deg,var(--c27-tint)_0%,var(--c27-tint-2)_100%)] p-[clamp(1.75rem,3.5vw,2.75rem)] shadow-c27-lg"
+    class="c27-rise grid content-start gap-4 rounded-c27-lg border border-c27-blue-soft bg-gradient-to-br from-c27-tint to-c27-tint-2 p-[clamp(1.75rem,3.5vw,2.75rem)] shadow-c27-sm transition-[box-shadow,border-color] duration-300 hover:shadow-c27-lg"
     style="--c27-d:90ms"
   >
-    <span class="c27-label">For engineers</span>
-    <h3 class="c27-h3-lg">Join Cube27</h3>
-    <ul class="my-1 grid gap-2">
+    <span class="c27-label text-c27-blue">For engineers</span>
+    <h3 class="c27-h3-lg font-bold text-c27-ink tracking-tight">Join Cube27</h3>
+    <ul class="my-1 grid gap-2.5">
       {
         engineerPoints.map((point) => (
-          <li class="grid grid-cols-[1.15rem_minmax(0,1fr)] gap-2 text-body-sm text-c27-ink-2">
-            <span class="text-c27-blue" aria-hidden="true">
+          <li class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-2.5 text-body-sm text-c27-ink-2 leading-snug">
+            <span class="font-bold text-c27-blue" aria-hidden="true">
               &#10003;
             </span>
             <span>{point}</span>
@@ -63,14 +65,18 @@ const engineerPoints = [
         ))
       }
     </ul>
-    <div class="mt-1.5">
+    <div class="mt-2">
       <Button href={ROUTES.join} variant="blue" arrow>Find a job</Button>
     </div>
     {
       /* Invariants 22-23, 32: no guaranteed placement, travel or visa. This
          disclaimer ships with every candidate CTA. */
     }
-    <p class="text-caption text-c27-ink-3">
+    {
+      /* ink-2, not ink-3: ink-3 measures 4.30:1 on the --c27-tint end of this
+         card's gradient, under the 4.5 floor. ink-2 is 6.85:1 there. */
+    }
+    <p class="text-caption text-c27-ink-2 leading-relaxed">
       Applying does not guarantee screening, an interview, employment or an
       assignment. Overseas travel and visa approval are never guaranteed.
     </p>

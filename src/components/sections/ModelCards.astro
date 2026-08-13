@@ -11,58 +11,60 @@ import { RESPONSIBILITIES } from "@/data/process";
 
 <div class="grid gap-5 md:grid-cols-3">
   <div
-    class="c27-rise rounded-c27-lg border border-c27-line bg-c27-surface p-7 shadow-c27-lg"
+    class="c27-rise rounded-c27-lg border border-c27-line bg-c27-surface p-7 shadow-c27-sm transition-[box-shadow,border-color] duration-300 hover:shadow-c27-lg"
   >
-    <span class="c27-label">Cube27</span>
-    <h3 class="mt-2.5 text-[1.1875rem] tracking-[-0.025em]">
+    <span class="c27-label text-c27-blue">Cube27</span>
+    <h3
+      class="mt-2.5 text-[1.1875rem] font-bold tracking-[-0.025em] text-c27-ink"
+    >
       Employs and pays
     </h3>
-    <p class="mt-2 text-body-sm text-c27-ink-2">
+    <p class="mt-2 text-body-sm text-c27-ink-2 leading-relaxed">
       Sourcing, screening, technical interviews, employment contract, payroll,
       hardware and check-ins.
     </p>
   </div>
 
   <div
-    class="c27-rise rounded-c27-lg border border-transparent bg-c27-blue p-7 text-white shadow-c27-lg"
+    class="c27-rise rounded-c27-lg border border-c27-blue-d/20 bg-gradient-to-br from-c27-blue to-c27-blue-d p-7 text-white shadow-c27-sm transition-[box-shadow,border-color] duration-300 hover:shadow-c27-lg"
     style="--c27-d:90ms"
   >
-    <span class="c27-label text-[#c3d5ff]">The client</span>
-    <h3 class="mt-2.5 text-[1.1875rem] tracking-[-0.025em]">
+    <span class="c27-label text-[#dbeafe]">The client</span>
+    <h3
+      class="mt-2.5 text-[1.1875rem] font-bold tracking-[-0.025em] text-white"
+    >
       Directs and decides
     </h3>
-    <p class="mt-2 text-body-sm text-white/80">
+    <p class="mt-2 text-body-sm text-white/90 leading-relaxed">
       Final interviews, selection, daily work, priorities, performance review
       and continuation.
     </p>
   </div>
 
   <div
-    class="c27-rise rounded-c27-lg border border-c27-line bg-c27-surface p-7 shadow-c27-lg"
+    class="c27-rise rounded-c27-lg border border-c27-line bg-c27-surface p-7 shadow-c27-sm transition-[box-shadow,border-color] duration-300 hover:shadow-c27-lg"
     style="--c27-d:180ms"
   >
-    <span class="c27-label">The engineer</span>
-    <h3 class="mt-2.5 text-[1.1875rem] tracking-[-0.025em]">
+    <span class="c27-label text-c27-blue">The engineer</span>
+    <h3
+      class="mt-2.5 text-[1.1875rem] font-bold tracking-[-0.025em] text-c27-ink"
+    >
       Delivers on the team
     </h3>
-    <p class="mt-2 text-body-sm text-c27-ink-2">
+    <p class="mt-2 text-body-sm text-c27-ink-2 leading-relaxed">
       A Cube27 employee on a stable payroll, working inside the client's team
       model.
     </p>
   </div>
 </div>
 
-{
-  /* tabindex + role make the scroll container reachable by keyboard, which a
-     bare overflow-x div is not. The hint only shows where it can actually
-     scroll. */
-}
+{/* tabindex + role make the scroll container reachable by keyboard */}
 <p class="c27-rise mt-7 text-caption text-c27-ink-3 md:hidden">
   Swipe the table sideways to compare columns.
 </p>
 
 <div
-  class="c27-rise mt-2.5 overflow-x-auto rounded-c27-lg border border-c27-line bg-c27-surface shadow-c27-lg md:mt-7"
+  class="c27-rise mt-2.5 overflow-x-auto rounded-c27-lg border border-c27-line bg-c27-surface shadow-c27-sm md:mt-7"
   tabindex="0"
   role="region"
   aria-label="Division of responsibility between Cube27 and the client"
@@ -72,17 +74,17 @@ import { RESPONSIBILITIES } from "@/data/process";
       <tr>
         <th
           scope="col"
-          class="border-b border-c27-line bg-c27-surface-2 px-5 py-3.5 text-left font-display text-caption font-bold text-c27-ink-2"
+          class="border-b border-c27-line bg-c27-surface-2/80 px-5 py-3.5 text-left font-display text-caption font-bold text-c27-ink-2"
           >Responsibility</th
         >
         <th
           scope="col"
-          class="border-b border-c27-line bg-c27-surface-2 px-5 py-3.5 text-left font-display text-caption font-bold text-c27-ink-2"
+          class="border-b border-c27-line bg-c27-surface-2/80 px-5 py-3.5 text-left font-display text-caption font-bold text-c27-ink-2"
           >Cube27</th
         >
         <th
           scope="col"
-          class="border-b border-c27-line bg-c27-surface-2 px-5 py-3.5 text-left font-display text-caption font-bold text-c27-ink-2"
+          class="border-b border-c27-line bg-c27-surface-2/80 px-5 py-3.5 text-left font-display text-caption font-bold text-c27-ink-2"
           >Client</th
         >
       </tr>
@@ -90,7 +92,7 @@ import { RESPONSIBILITIES } from "@/data/process";
     <tbody>
       {
         RESPONSIBILITIES.map((row) => (
-          <tr class="border-b border-c27-line-2 last:border-b-0">
+          <tr class="border-b border-c27-line-2 last:border-b-0 hover:bg-c27-surface-2/40 transition-colors">
             <th
               scope="row"
               class="w-[44%] px-5 py-3.5 text-left text-body-sm font-medium text-c27-ink"

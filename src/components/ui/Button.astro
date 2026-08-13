@@ -26,24 +26,23 @@ const {
 } = Astro.props;
 
 const base =
-  "group inline-flex items-center gap-2 whitespace-nowrap rounded-c27-sm border font-display font-bold no-underline cursor-pointer transition-[background-color,border-color,color,transform,box-shadow] duration-200 motion-safe:hover:-translate-y-px disabled:cursor-not-allowed disabled:opacity-60 disabled:pointer-events-none";
+  "group inline-flex items-center gap-2.5 whitespace-nowrap rounded-c27-sm border font-display font-bold no-underline cursor-pointer transition-[background-color,border-color,color,transform,box-shadow] duration-200 ease-[var(--c27-ease)] motion-safe:hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:pointer-events-none";
 
 const variants = {
   // green-d, not green: white on #10b45f is 2.72:1 and fails WCAG AA outright.
-  // This is 5.41:1, and the hover step keeps going darker rather than lighter.
+  // This is 5.48:1, and the hover step keeps going darker rather than lighter.
   primary:
-    "border-transparent bg-c27-green-d text-white hover:bg-c27-green-dd hover:shadow-[0_8px_18px_-8px_rgb(13_122_66/0.7)]",
-  blue: "border-transparent bg-c27-blue text-white hover:bg-c27-blue-d hover:shadow-[0_8px_18px_-8px_rgb(37_99_235/0.7)]",
-  line: "border-[#cbd5e1] bg-c27-surface text-c27-ink hover:border-c27-blue hover:text-c27-blue-d",
+    "border-transparent bg-c27-green-d text-white shadow-c27-sm hover:bg-c27-green-dd hover:shadow-[0_8px_20px_-6px_rgb(4_120_87/0.45)]",
+  blue: "border-transparent bg-c27-blue text-white shadow-c27-sm hover:bg-c27-blue-d hover:shadow-[0_8px_20px_-6px_rgba(37,99,235,0.45)]",
+  line: "border-c27-line bg-c27-surface text-c27-ink shadow-c27-sm hover:border-c27-blue hover:text-c27-blue-d hover:bg-c27-tint-2",
   "line-invert":
-    "border-white/35 bg-transparent text-white hover:border-white hover:bg-white/10",
+    "border-white/30 bg-white/5 text-white backdrop-blur-xs hover:border-white hover:bg-white/15",
 };
 
-// min-h-11 keeps every button at the 44px tap-target floor (§8), which the
-// old `sm` padding alone (~36px) did not meet.
+// min-h-11 keeps every button at the 44px tap-target floor (§8)
 const sizes = {
-  md: "min-h-12 px-5 py-3 text-[0.9375rem]",
-  sm: "min-h-11 px-4 py-2 text-[0.875rem]",
+  md: "min-h-12 px-5.5 py-3 text-[0.9375rem]",
+  sm: "min-h-11 px-4.5 py-2.5 text-[0.875rem]",
 };
 
 const cls = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
@@ -54,7 +53,7 @@ const cls = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
     <a href={href} class={cls} id={id}>
       <slot />
       {arrow && (
-        <span class="font-mono transition-transform duration-200 group-hover:translate-x-1">
+        <span class="font-mono transition-transform duration-200 group-hover:translate-x-1.5">
           &rarr;
         </span>
       )}
@@ -63,7 +62,7 @@ const cls = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
     <button type={type} class={cls} id={id} disabled={disabled}>
       <slot />
       {arrow && (
-        <span class="font-mono transition-transform duration-200 group-hover:translate-x-1">
+        <span class="font-mono transition-transform duration-200 group-hover:translate-x-1.5">
           &rarr;
         </span>
       )}

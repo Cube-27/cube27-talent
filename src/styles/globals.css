@@ -28,7 +28,7 @@
   h3,
   h4 {
     font-family: var(--c27-font-display);
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -0.03em;
     text-wrap: balance;
   }

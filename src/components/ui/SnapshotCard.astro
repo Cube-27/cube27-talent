@@ -12,11 +12,13 @@ import CheckMark from "@/components/ui/CheckMark.astro";
 ---
 
 <figure
-  class="relative z-[2] overflow-hidden rounded-c27-lg border border-c27-line bg-c27-surface shadow-c27-lg"
+  class="relative z-[2] overflow-hidden rounded-c27-lg border border-c27-line bg-c27-surface shadow-c27-lg hover:shadow-c27-glow transition-shadow duration-300"
 >
-  <div class="flex items-center gap-3.5 border-b border-c27-line-2 p-5">
+  <div
+    class="flex items-center gap-3.5 border-b border-c27-line-2 p-5 bg-gradient-to-b from-c27-surface-2/60 to-c27-surface"
+  >
     <span
-      class="grid size-10 shrink-0 place-items-center rounded-c27-sm bg-c27-blue-soft text-c27-blue"
+      class="grid size-10 shrink-0 place-items-center rounded-c27-sm bg-c27-blue-soft text-c27-blue ring-1 ring-c27-blue/15"
     >
       <Icon name="person" size={20} />
     </span>
@@ -30,20 +32,20 @@ import CheckMark from "@/components/ui/CheckMark.astro";
       >
     </span>
     <span
-      class="ml-auto shrink-0 rounded bg-c27-tint px-2 py-1 text-micro font-bold uppercase tracking-[0.1em] text-c27-ink-2"
+      class="ml-auto shrink-0 rounded-full border border-c27-line bg-c27-tint px-2.5 py-1 text-micro font-bold uppercase tracking-[0.1em] text-c27-ink-2"
       >Template</span
     >
   </div>
 
   <div class="grid grid-cols-2 gap-2.5 px-5 pb-3.5 pt-[1.1rem]">
     <div
-      class="rounded-c27-sm border border-c27-line-2 bg-c27-surface-2 px-3 py-2.5"
+      class="rounded-c27-sm border border-c27-line bg-c27-surface-2 px-3.5 py-2.5 shadow-2xs"
     >
       <span class="block text-caption text-c27-ink-2">HR screen</span>
       <b class="mt-0.5 block text-body-sm font-bold text-c27-green-d">Passed</b>
     </div>
     <div
-      class="rounded-c27-sm border border-c27-line-2 bg-c27-surface-2 px-3 py-2.5"
+      class="rounded-c27-sm border border-c27-line bg-c27-surface-2 px-3.5 py-2.5 shadow-2xs"
     >
       <span class="block text-caption text-c27-ink-2">Technical interview</span>
       <b class="mt-0.5 block text-body-sm font-bold text-c27-blue-d"
@@ -65,7 +67,7 @@ import CheckMark from "@/components/ui/CheckMark.astro";
             <i
               class:list={[
                 "block h-full origin-left rounded-full motion-safe:animate-[c27-fill_900ms_var(--c27-ease)_both]",
-                row.green ? "bg-c27-green" : "bg-c27-blue",
+                row.green ? "bg-c27-green-d" : "bg-c27-blue",
               ]}
               style={`width:${row.w};animation-delay:${row.delay}`}
             />
@@ -76,7 +78,7 @@ import CheckMark from "@/components/ui/CheckMark.astro";
   </div>
 
   <p
-    class="mx-5 mb-[1.1rem] rounded-c27-sm border border-[#d8e3fb] bg-c27-blue-soft/50 px-3.5 py-3 text-caption leading-relaxed text-c27-ink-2"
+    class="mx-5 mb-[1.1rem] rounded-c27-sm border border-c27-blue-soft bg-c27-blue-soft/40 px-3.5 py-3 text-caption leading-relaxed text-c27-ink-2"
   >
     <b
       class="mb-1 flex items-center gap-1.5 text-caption font-bold text-c27-blue-d"
@@ -89,7 +91,7 @@ import CheckMark from "@/components/ui/CheckMark.astro";
   </p>
 
   <figcaption
-    class="flex items-center justify-between gap-4 border-t border-c27-line-2 bg-c27-surface-2 px-5 py-3.5 text-caption text-c27-ink-2"
+    class="flex items-center justify-between gap-4 border-t border-c27-line bg-c27-surface-2/80 px-5 py-3.5 text-caption text-c27-ink-2"
   >
     <span class="inline-flex items-center gap-1.5 font-bold text-c27-green-d">
       <CheckMark size={15} />

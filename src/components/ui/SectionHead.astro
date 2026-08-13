@@ -13,15 +13,31 @@ interface Props {
 const { label, heading, lede, invert = false } = Astro.props;
 ---
 
-<div class="c27-rise mb-[clamp(2rem,4vw,3rem)] max-w-[42rem]">
+<div class="c27-rise mb-[clamp(2.25rem,4.5vw,3.25rem)] max-w-[42rem]">
   <span
-    class:list={["c27-label mb-3 block", invert && "text-c27-on-navy-accent"]}
-    >{label}</span
+    class:list={[
+      "c27-label mb-3 inline-flex items-center gap-2",
+      invert ? "text-c27-on-navy-accent" : "text-c27-blue",
+    ]}
   >
-  <h2 class:list={["c27-h2", invert && "text-white"]}>{heading}</h2>
+    <i
+      class:list={[
+        "size-1.5 rounded-full",
+        invert ? "bg-c27-on-navy-accent" : "bg-c27-blue",
+      ]}></i>
+    {label}
+  </span>
+  <h2 class:list={["c27-h2 tracking-tight", invert && "text-white"]}>
+    {heading}
+  </h2>
   {
     lede && (
-      <p class:list={["c27-lede mt-3.5", invert && "text-c27-on-navy-2"]}>
+      <p
+        class:list={[
+          "c27-lede mt-3.5 text-body",
+          invert && "text-c27-on-navy-2",
+        ]}
+      >
         {lede}
       </p>
     )
