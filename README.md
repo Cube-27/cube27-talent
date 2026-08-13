@@ -90,13 +90,24 @@ the form handlers are plain TypeScript modules (plan §12.4.5).
 
 ## Environment variables
 
-Every variable is documented in [`.dev.vars.example`](.dev.vars.example). In
-Cloudflare, set them per environment. `RESEND_API_KEY` and
-`TURNSTILE_SECRET_KEY` are encrypted secrets; the rest are plain vars.
+Every variable is documented in [`.dev.vars.example`](.dev.vars.example), which
+covers local `pnpm preview` only. In Cloudflare they are split across two
+places, because this repo ships a Wrangler config file:
+
+- **Plain variables** — the `vars` blocks in [`wrangler.jsonc`](wrangler.jsonc)
+  (top level is production, `env.preview.vars` is preview). The dashboard
+  rejects plain variables while that file exists.
+- **`RESEND_API_KEY` and `TURNSTILE_SECRET_KEY`** — encrypted secrets, added per
+  environment in the Pages dashboard. Never commit them.
 
 **Production and preview must differ.** Preview `CANDIDATE_APPLICATIONS_TO`
 must point at a test inbox — a preview submission must never deliver a resume
 to the live recruitment distribution (plan §13.2).
+
+**One mailbox, two variables.** `EMPLOYER_LEADS_TO` and
+`CANDIDATE_APPLICATIONS_TO` both hold `talent@cube27.com` in production; the
+pair stays split so the two queues can be routed to different people from the
+dashboard without touching code.
 
 **The Resend sending domain is shared.** `mail.cube27.com` serves both this
 project and the main Cube27 site, so send quota and sender reputation are

@@ -3,4 +3,50 @@
   "pages_build_output_dir": "./dist",
   "compatibility_date": "2026-07-15",
   "compatibility_flags": ["nodejs_compat"],
+
+  // Because this file exists, Cloudflare manages plain variables from here and
+  // the Pages dashboard accepts secrets only. Everything below is non-secret
+  // and safe to commit: hostnames and the published `talent@` address.
+  //
+  // The two real secrets, RESEND_API_KEY and TURNSTILE_SECRET_KEY, must NEVER
+  // appear here. Set them per environment in the dashboard under
+  // Settings -> Variables and secrets, as encrypted secrets.
+  //
+  // Changing a value here requires a deployment — unlike dashboard variables,
+  // which took effect on the next request.
+
+  // Production. Top-level `vars` is the production environment for Pages.
+  "vars": {
+    "ENVIRONMENT": "production",
+    "SITE_URL": "https://talent.cube27.com",
+    "ALLOWED_HOSTS": "talent.cube27.com",
+    "RESEND_FROM": "Cube27 Talent <talent@mail.cube27.com>",
+    "RESEND_REPLY_TO": "talent@cube27.com",
+    "EMPLOYER_LEADS_TO": "talent@cube27.com",
+    "CANDIDATE_APPLICATIONS_TO": "talent@cube27.com",
+  },
+
+  // Preview. `vars` is a non-inheritable key: an environment that defines it
+  // replaces the production block outright rather than merging, so every
+  // variable is repeated here. Omitting one leaves it undefined in preview,
+  // and both endpoints fail closed on a missing value.
+  "env": {
+    "preview": {
+      "vars": {
+        "ENVIRONMENT": "preview",
+        "SITE_URL": "https://talent-preview.cube27.com",
+        "ALLOWED_HOSTS": "talent-preview.cube27.com",
+        // Visibly non-production sender. Resend verifies the domain, not the
+        // local part, so this needs no extra setup.
+        "RESEND_FROM": "Cube27 Talent (preview) <talent-preview@mail.cube27.com>",
+        "RESEND_REPLY_TO": "talent@cube27.com",
+        // Plus-addressing keeps preview traffic out of production's way
+        // without a second mailbox, but it still delivers into `talent@` —
+        // test resumes land in the live inbox, filterable but not separated.
+        // Repoint both at a dedicated test inbox to actually hold §13.2.
+        "EMPLOYER_LEADS_TO": "talent+preview@cube27.com",
+        "CANDIDATE_APPLICATIONS_TO": "talent+preview@cube27.com",
+      },
+    },
+  },
 }

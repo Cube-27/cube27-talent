@@ -33,6 +33,19 @@ export const SITE_CONFIG = {
   },
 } as const;
 
+/**
+ * Master switch for search indexing. `false` until the site is launched: every
+ * page renders `noindex, nofollow` and robots.txt stops advertising the
+ * sitemap, on production as well as preview.
+ *
+ * To go live, flip this to `true` AND remove the `X-Robots-Tag` line from the
+ * `/*` block in `public/_headers`. The header is a backstop that covers
+ * non-HTML responses (sitemap, images), and it wins over the meta tag — leaving
+ * it in place would keep the whole site out of the index no matter what this
+ * flag says. The `/thank-you/*` header block stays either way.
+ */
+export const INDEXING_ENABLED = false;
+
 /** Every route in V1. Plan §11. */
 export const ROUTES = {
   home: "/",

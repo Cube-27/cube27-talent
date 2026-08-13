@@ -84,15 +84,24 @@ single-domain plan. See §3.1 for what that sharing costs.
    site uses.
 
 6. Create a separate sending-only API key named `cube27-talent-preview`.
-7. Decide and record the two production recipients:
+7. Record the production recipients. Both are the same mailbox — one team reads
+   both queues:
 
    ```text
-   EMPLOYER_LEADS_TO=<production employer-leads inbox>
-   CANDIDATE_APPLICATIONS_TO=<production recruitment inbox>
+   EMPLOYER_LEADS_TO=talent@cube27.com
+   CANDIDATE_APPLICATIONS_TO=talent@cube27.com
    ```
 
-8. For preview, set both recipient values to the test inbox and use a visibly
-   non-production From address such as `talent-preview@mail.cube27.com`.
+   They remain two variables so that routing employer leads and candidate
+   applications to different people later is a dashboard change, not a code
+   change.
+
+8. For preview, point both recipient values away from the live mailbox and use a
+   visibly non-production From address such as `talent-preview@mail.cube27.com`.
+   `talent+preview@cube27.com` requires no new mailbox, but it delivers into
+   `talent@` all the same: test resumes land in the real inbox, filterable but
+   not separated. A dedicated test address is the only form that actually holds
+   the §13.2 guarantee.
 9. Send one manual Resend test message and confirm SPF/DKIM alignment and inbox
    delivery before testing the application.
 
@@ -209,46 +218,63 @@ Cloudflare reference: [deploy an Astro site to Pages](https://developers.cloudfl
 
 ## 6. Configure production and preview variables
 
-In **Workers & Pages > cube27-talent > Settings > Variables and Secrets**, set
-the values separately for Production and Preview. Secret values must be added
-as secrets, not plaintext variables.
+**Variables and secrets live in two different places, and the split is not
+optional.** Because this repository contains a Wrangler config file
+(`wrangler.jsonc`), Cloudflare manages plain variables from that file and the
+dashboard refuses them — attempting to add one shows "Environment variables for
+this project are being managed through wrangler.toml. Only Secrets (encrypted
+variables) can be managed via the Dashboard."
+
+- **Plain variables** — edit the `vars` blocks in `wrangler.jsonc` and deploy.
+  Production is the top-level `vars`; preview is `env.preview.vars`. `vars` is a
+  non-inheritable key, so preview repeats every name rather than merging with
+  production.
+- **Secrets** (`RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`) — add in **Workers &
+  Pages > cube27-talent > Settings > Variables and secrets**, per environment,
+  as encrypted secrets. These must never be written into `wrangler.jsonc`, which
+  is committed.
 
 Every value below is a **runtime** binding, read only by Pages Functions. The
-build needs nothing from the dashboard — the one build-time value, the Turnstile
+build needs nothing from either place — the one build-time value, the Turnstile
 site key, is committed in `src/site-config.ts` (§4). Neither environment
 inherits from the other; an unset variable is simply absent at runtime.
 
 ### Production
 
-| Name                        | Kind     | Production value                         |
-| --------------------------- | -------- | ---------------------------------------- |
-| `ENVIRONMENT`               | Variable | `production`                             |
-| `SITE_URL`                  | Variable | `https://talent.cube27.com`              |
-| `ALLOWED_HOSTS`             | Variable | `talent.cube27.com`                      |
-| `TURNSTILE_SECRET_KEY`      | Secret   | Production widget secret                 |
-| `RESEND_API_KEY`            | Secret   | Production sending-only key              |
-| `RESEND_FROM`               | Variable | `Cube27 Talent <talent@mail.cube27.com>` |
-| `RESEND_REPLY_TO`           | Variable | Monitored reply address                  |
-| `EMPLOYER_LEADS_TO`         | Variable | Production leads inbox                   |
-| `CANDIDATE_APPLICATIONS_TO` | Variable | Production recruitment inbox             |
+| Name                        | Set in             | Production value                         |
+| --------------------------- | ------------------ | ---------------------------------------- |
+| `ENVIRONMENT`               | `wrangler.jsonc`   | `production`                             |
+| `SITE_URL`                  | `wrangler.jsonc`   | `https://talent.cube27.com`              |
+| `ALLOWED_HOSTS`             | `wrangler.jsonc`   | `talent.cube27.com`                      |
+| `RESEND_FROM`               | `wrangler.jsonc`   | `Cube27 Talent <talent@mail.cube27.com>` |
+| `RESEND_REPLY_TO`           | `wrangler.jsonc`   | `talent@cube27.com`                      |
+| `EMPLOYER_LEADS_TO`         | `wrangler.jsonc`   | `talent@cube27.com`                      |
+| `CANDIDATE_APPLICATIONS_TO` | `wrangler.jsonc`   | `talent@cube27.com`                      |
+| `TURNSTILE_SECRET_KEY`      | Dashboard (secret) | Production widget secret                 |
+| `RESEND_API_KEY`            | Dashboard (secret) | Production sending-only key              |
 
 ### Preview
 
-| Name                        | Kind     | Preview value                                                                   |
-| --------------------------- | -------- | ------------------------------------------------------------------------------- |
-| `ENVIRONMENT`               | Variable | `preview`                                                                       |
-| `SITE_URL`                  | Variable | `https://talent-preview.cube27.com`                                             |
-| `ALLOWED_HOSTS`             | Variable | Stable preview hostname and explicitly approved Pages hostname, comma-separated |
-| `TURNSTILE_SECRET_KEY`      | Secret   | Preview widget secret                                                           |
-| `RESEND_API_KEY`            | Secret   | Preview sending-only key                                                        |
-| `RESEND_FROM`               | Variable | Clearly labelled preview sender, e.g. `talent-preview@mail.cube27.com`          |
-| `RESEND_REPLY_TO`           | Variable | Test owner                                                                      |
-| `EMPLOYER_LEADS_TO`         | Variable | Test inbox only                                                                 |
-| `CANDIDATE_APPLICATIONS_TO` | Variable | Test inbox only                                                                 |
+Set under `env.preview.vars` in `wrangler.jsonc`, and in the dashboard's Preview
+environment for the two secrets.
 
-Changing any value here takes effect on the next request; no rebuild is needed.
-The Turnstile site key is the exception — it is embedded into the static HTML at
-build time, so changing it in `src/site-config.ts` requires a deployment.
+| Name                        | Set in             | Preview value                                                           |
+| --------------------------- | ------------------ | ----------------------------------------------------------------------- |
+| `ENVIRONMENT`               | `wrangler.jsonc`   | `preview`                                                               |
+| `SITE_URL`                  | `wrangler.jsonc`   | `https://talent-preview.cube27.com`                                     |
+| `ALLOWED_HOSTS`             | `wrangler.jsonc`   | Stable preview hostname; add an approved Pages hostname comma-separated |
+| `RESEND_FROM`               | `wrangler.jsonc`   | Clearly labelled preview sender, e.g. `talent-preview@mail.cube27.com`  |
+| `RESEND_REPLY_TO`           | `wrangler.jsonc`   | Test owner                                                              |
+| `EMPLOYER_LEADS_TO`         | `wrangler.jsonc`   | Test inbox only                                                         |
+| `CANDIDATE_APPLICATIONS_TO` | `wrangler.jsonc`   | Test inbox only                                                         |
+| `TURNSTILE_SECRET_KEY`      | Dashboard (secret) | Preview widget secret                                                   |
+| `RESEND_API_KEY`            | Dashboard (secret) | Preview sending-only key                                                |
+
+Secrets changed in the dashboard take effect on the next request. Variables in
+`wrangler.jsonc` do not: the file ships with the deployment, so changing one
+requires redeploying. The Turnstile site key behaves the same way for a
+different reason — it is embedded into the static HTML at build time, so
+changing it in `src/site-config.ts` also requires a deployment.
 
 Cloudflare reference: [Pages Functions bindings](https://developers.cloudflare.com/pages/functions/bindings/).
 

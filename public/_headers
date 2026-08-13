@@ -8,6 +8,10 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   Permissions-Policy: accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
   Cross-Origin-Opener-Policy: same-origin-allow-popups
+  # Pre-launch: nothing here is to be indexed yet. This backstops the meta tag
+  # and covers non-HTML responses (sitemap, images) that cannot carry one.
+  # Remove at launch, together with INDEXING_ENABLED in src/site-config.ts.
+  X-Robots-Tag: noindex, nofollow
   # Turnstile needs its script and frame origins. Cloudflare Web Analytics
   # injects its beacon from static.cloudflareinsights.com and posts results to
   # cloudflareinsights.com; without both the beacon is blocked and logs a CSP
