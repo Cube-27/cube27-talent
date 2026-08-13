@@ -10,26 +10,21 @@ import ProcessStepper from "@/components/sections/ProcessStepper.astro";
 import AudienceSplit from "@/components/sections/AudienceSplit.astro";
 import Faq from "@/components/ui/Faq.astro";
 import { EMPLOYER_FAQS } from "@/data/faqs";
-import { SITE_CONFIG } from "@/site-config";
+import {
+  faqSchema,
+  organizationSchema,
+  serviceSchema,
+  websiteSchema,
+} from "@/lib/schema";
 
-/* Organization schema uses only verified facts (plan §16.1) — no employee
-   counts, ratings or awards. */
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: SITE_CONFIG.brand,
-  url: SITE_CONFIG.url,
-  parentOrganization: {
-    "@type": "Organization",
-    name: SITE_CONFIG.organization.legalName,
-    url: SITE_CONFIG.organization.parentSite,
-  },
-  address: {
-    "@type": "PostalAddress",
-    ...SITE_CONFIG.organization.address,
-  },
-  sameAs: SITE_CONFIG.organization.sameAs,
-};
+/* Schemas use only verified facts (plan §16.1) — no employee counts, ratings
+   or awards. The FAQ payload is built from the same array the page renders. */
+const jsonLd = [
+  organizationSchema(),
+  websiteSchema(),
+  serviceSchema(),
+  faqSchema(EMPLOYER_FAQS),
+];
 ---
 
 <Layout jsonLd={jsonLd}>

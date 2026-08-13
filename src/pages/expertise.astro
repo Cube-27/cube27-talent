@@ -5,14 +5,19 @@ import SectionHead from "@/components/ui/SectionHead.astro";
 import ExpertiseSelector from "@/components/sections/ExpertiseSelector.astro";
 import AudienceSplit from "@/components/sections/AudienceSplit.astro";
 import { OUT_OF_SCOPE } from "@/data/roles";
-import { SITE_CONFIG } from "@/site-config";
+import { ROUTES, SITE_CONFIG } from "@/site-config";
+import { breadcrumbSchema } from "@/lib/schema";
 
 const title = `Expertise — the roles Cube27 recruits | ${SITE_CONFIG.brand}`;
 const description =
   "Eight technical families screened by practitioners: engineering, mobile, QA, cloud, product, design, enterprise content and e-commerce.";
+
+const jsonLd = [
+  breadcrumbSchema([{ name: "Expertise", path: ROUTES.expertise }]),
+];
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} jsonLd={jsonLd}>
   <Section>
     <span class="c27-label mb-3 block">Expertise</span>
     <h1 class="c27-h2">Eight technical families, one partner</h1>
@@ -20,7 +25,7 @@ const description =
       Cube27 recruits only where it can screen credibly. Adjacent technical
       roles are considered case by case.
     </p>
-    <div class="mt-10"><ExpertiseSelector /></div>
+    <div class="mt-10"><ExpertiseSelector headingLevel={2} /></div>
   </Section>
 
   <Section tone="surface" bordered>

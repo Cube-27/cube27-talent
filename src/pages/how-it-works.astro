@@ -6,7 +6,8 @@ import HowItWorksHero from "@/components/sections/HowItWorksHero.astro";
 import ModelCards from "@/components/sections/ModelCards.astro";
 import ProcessStepper from "@/components/sections/ProcessStepper.astro";
 import AudienceSplit from "@/components/sections/AudienceSplit.astro";
-import { SITE_CONFIG } from "@/site-config";
+import { ROUTES, SITE_CONFIG } from "@/site-config";
+import { breadcrumbSchema } from "@/lib/schema";
 
 const title = `How it works | ${SITE_CONFIG.brand}`;
 const description =
@@ -25,9 +26,11 @@ const candidateFlow = [
   "Cube27 employment offer",
   "Onboarding and assignment",
 ];
+
+const jsonLd = [breadcrumbSchema([{ name: "How it works", path: ROUTES.how }])];
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} jsonLd={jsonLd}>
   <HowItWorksHero />
 
   <Section tone="surface" bordered>

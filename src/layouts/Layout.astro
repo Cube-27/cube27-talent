@@ -79,27 +79,18 @@ const canonicalUrl = canonical
     />
 
     {
-      /* Two markers, set before first paint and deliberately separate.
-
-         `js` means scripting is on, so CSS can leave progressively-enhanced
+      /* `js` means scripting is on, so CSS can leave progressively-enhanced
          content collapsed instead of painting it and letting JS snap it away.
 
-         `reveal` is narrower: it gates the scroll animation, which hides
-         content until the observer reveals it. That is only safe when the
-         observer exists AND the module that drives it actually ran — if the
-         module was blocked or failed to parse, the class comes off at load
-         rather than leaving the page blank. */
+         The scroll-reveal marker is deliberately NOT set here. Chrome ignores
+         an element that is `opacity: 0` at first paint as an LCP candidate and
+         does not reconsider it when it fades in, so hiding the first screen
+         before paint left the page with no LCP at all. `reveal` is now added
+         by the module below, after it has marked everything already on screen
+         as revealed. */
     }
     <script is:inline>
       document.documentElement.classList.add("js");
-      if ("IntersectionObserver" in window) {
-        document.documentElement.classList.add("reveal");
-        window.addEventListener("load", function () {
-          if (document.documentElement.dataset.c27Reveal !== "on") {
-            document.documentElement.classList.remove("reveal");
-          }
-        });
-      }
     </script>
 
     <slot name="head" />
@@ -119,22 +110,36 @@ const canonicalUrl = canonical
       // Scroll reveal. Elements opt in with `.c27-rise` and stagger with
       // `style="--c27-d: 90ms"`. Unobserved after first reveal so scrolling
       // back up does not re-run the transition.
-      const observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (!entry.isIntersecting) continue;
-            entry.target.classList.add("in");
-            observer.unobserve(entry.target);
+      if ("IntersectionObserver" in window) {
+        const rise = document.querySelectorAll(".c27-rise");
+
+        // Anything already on screen is marked revealed BEFORE the hidden
+        // state is switched on, so the first screen is never painted at
+        // opacity 0 — that is what preserves the LCP candidate. Elements
+        // below the fold are off screen, so gaining the hidden state after
+        // first paint is invisible.
+        for (const el of rise) {
+          if (el.getBoundingClientRect().top < window.innerHeight) {
+            el.classList.add("in");
           }
-        },
-        { rootMargin: "0px 0px -8%" },
-      );
-      for (const el of document.querySelectorAll(".c27-rise")) {
-        observer.observe(el);
+        }
+
+        document.documentElement.classList.add("reveal");
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add("in");
+              observer.unobserve(entry.target);
+            }
+          },
+          { rootMargin: "0px 0px -8%" },
+        );
+        for (const el of rise) {
+          if (!el.classList.contains("in")) observer.observe(el);
+        }
       }
-      // Tells the head script the reveal path is live, so it leaves the
-      // hidden state in place.
-      document.documentElement.dataset.c27Reveal = "on";
 
       // Header gains a hairline once the page scrolls off the top.
       const header = document.getElementById("site-header");

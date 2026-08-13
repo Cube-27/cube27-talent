@@ -7,14 +7,21 @@ import ProcessStepper from "@/components/sections/ProcessStepper.astro";
 import EmployerForm from "@/components/forms/EmployerForm.astro";
 import Faq from "@/components/ui/Faq.astro";
 import { EMPLOYER_FAQS } from "@/data/faqs";
-import { SITE_CONFIG } from "@/site-config";
+import { ROUTES, SITE_CONFIG } from "@/site-config";
+import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
 
 const title = `Hire engineering talent | ${SITE_CONFIG.brand}`;
 const description =
   "Submit a hiring requirement. Cube27 screens and technically interviews candidates, employs the selected engineer and runs payroll, while the client directs the work.";
+
+const jsonLd = [
+  breadcrumbSchema([{ name: "Hire talent", path: ROUTES.hire }]),
+  serviceSchema(),
+  faqSchema(EMPLOYER_FAQS),
+];
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} jsonLd={jsonLd}>
   <Section>
     <div
       class="grid gap-[clamp(2rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)]"

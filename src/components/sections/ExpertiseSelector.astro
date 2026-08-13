@@ -11,6 +11,18 @@ import { ROLE_FAMILIES } from "@/data/roles";
  * Without JS that `hidden` is overridden in globals.css, so the full taxonomy
  * stays readable (plan §19.4 progressive enhancement).
  */
+
+interface Props {
+  /**
+   * Level for the family name inside each panel. The home page nests this
+   * under a section h2, so 3 is right there; the expertise page puts it
+   * directly under the page h1, where 3 would skip a level.
+   */
+  headingLevel?: 2 | 3;
+}
+
+const { headingLevel = 3 } = Astro.props;
+const Heading = `h${headingLevel}` as "h2" | "h3";
 ---
 
 <div
@@ -50,7 +62,7 @@ import { ROLE_FAMILIES } from "@/data/roles";
           hidden={i !== 0}
           data-panel
         >
-          <h3 class="c27-h3-lg">{family.name}</h3>
+          <Heading class="c27-h3-lg">{family.name}</Heading>
           <p class="mt-2 max-w-[52ch] text-body-sm text-c27-ink-2">
             {family.blurb}
           </p>

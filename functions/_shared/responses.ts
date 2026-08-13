@@ -6,7 +6,10 @@
 export const SECURITY_HEADERS = {
   "content-security-policy":
     "default-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'",
-  "strict-transport-security": "max-age=31536000",
+  // Matches public/_headers. Both hosts serve the same origin, so a visitor
+  // whose first request is an API call must get the same HSTS policy as one
+  // who lands on a page.
+  "strict-transport-security": "max-age=31536000; includeSubDomains",
   "x-frame-options": "DENY",
   "referrer-policy": "strict-origin-when-cross-origin",
   "permissions-policy":
