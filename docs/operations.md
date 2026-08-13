@@ -57,18 +57,31 @@ Turnstile test keys and must not be reused in production.
 
 ## 3. Configure Resend
 
-1. In Resend, add the sending subdomain `updates.cube27.com`.
+This project shares one Resend sending subdomain, `mail.cube27.com`, with the
+main Cube27 site. Resend verifies a domain rather than individual addresses, so
+a single verified subdomain covers every sender both sites need; subdomains are
+separate Resend domains, so do not add a second one while the account is on a
+single-domain plan. See §3.1 for what that sharing costs.
+
+1. In Resend, add the sending subdomain `mail.cube27.com`, or confirm the main
+   site has already verified it.
 2. Add the DNS records Resend displays for domain verification. Wait until the
-   domain reports verified before continuing.
+   domain reports verified before continuing. If the domain is already verified
+   for the main site, skip to step 3 and change nothing about its DNS.
 3. Create an API key named `cube27-talent-production` with **Sending access**,
-   restricted to `updates.cube27.com`. Do not use a full-access account key.
+   restricted to `mail.cube27.com`. Do not use a full-access account key, and do
+   not reuse the main site's key — this project rotates independently.
 4. Store the key immediately; Resend only displays it once.
 5. Use a monitored From and Reply-To configuration:
 
    ```text
-   RESEND_FROM=Cube27 Talent <talent@updates.cube27.com>
+   RESEND_FROM=Cube27 Talent <talent@mail.cube27.com>
    RESEND_REPLY_TO=talent@cube27.com
    ```
+
+   The `talent@` local part is what separates this project's mail from the main
+   site's on the shared subdomain. Keep it distinct from any sender the main
+   site uses.
 
 6. Create a separate sending-only API key named `cube27-talent-preview`.
 7. Decide and record the two production recipients:
@@ -79,9 +92,30 @@ Turnstile test keys and must not be reused in production.
    ```
 
 8. For preview, set both recipient values to the test inbox and use a visibly
-   non-production From address such as `talent-preview@updates.cube27.com`.
+   non-production From address such as `talent-preview@mail.cube27.com`.
 9. Send one manual Resend test message and confirm SPF/DKIM alignment and inbox
    delivery before testing the application.
+
+### 3.1 Consequences of the shared sending subdomain
+
+Sharing `mail.cube27.com` with the main site is a deliberate cost-driven
+compromise, not the target state. Record these in the operations log:
+
+- **Shared reputation.** Bounces and spam complaints from either site's mail
+  affect delivery for both. Candidate acknowledgements and internal application
+  notifications are transactional and low-volume; if the main site ever sends
+  marketing or bulk mail from this subdomain, split the two onto separate
+  sending subdomains — for example `mail.` for transactional and `updates.` for
+  marketing — before that traffic starts.
+- **Shared quota.** Both sites draw on one account's daily and monthly send
+  allowance. Each candidate application sends two emails, one internal and one
+  acknowledgement, and each employer lead sends two. Confirm the current plan
+  limits against Resend's pricing page and check headroom during the monitoring
+  review in §11; the internal notification is the critical send and a quota
+  refusal fails a submission.
+- **Shared blast radius.** A compromise or forced rotation of the domain's DNS
+  records affects both sites. Per-project API keys (§3 step 3 and step 6) keep
+  key rotation isolated; domain-level changes are not.
 
 Resend references: [domain/sender setup](https://resend.com/docs/knowledge-base/how-do-I-create-an-email-address-or-sender-in-resend),
 [API-key permissions](https://resend.com/docs/dashboard/api-keys/introduction), and
@@ -90,7 +124,23 @@ Resend references: [domain/sender setup](https://resend.com/docs/knowledge-base/
 ## 4. Configure Turnstile
 
 Create separate widgets for production and preview so their traffic, secrets,
-and hostnames are isolated.
+and hostnames are isolated. Neither widget requires a deployed site: Turnstile
+does not resolve the hostnames you enter, so create both before the first build
+and edit the hostname lists later if needed — that changes nothing about the
+keys.
+
+The two halves of a widget are handled differently:
+
+- The **site key** is public and ships in the HTML. It belongs in
+  `TURNSTILE_SITE_KEYS` in `src/site-config.ts`, committed, one entry per
+  environment. `CF_PAGES_BRANCH` selects between them at build time: `main`
+  takes `production`, every other branch takes `preview`. Do not add it to the
+  Cloudflare dashboard.
+- The **secret key** is confidential. It is `TURNSTILE_SECRET_KEY`, a Cloudflare
+  secret, set separately for Production and Preview.
+
+Always change a pair together. A site key from one widget with the secret from
+another fails every submission.
 
 ### Production widget
 
@@ -123,6 +173,20 @@ Turnstile references: [setup](https://developers.cloudflare.com/turnstile/get-st
 
 ## 5. Create the Cloudflare Pages project
 
+This must be a **Pages** project, not a Worker. Cloudflare now defaults the
+creation flow to Workers, and the two are not interchangeable here: the
+endpoints rely on Pages Functions' file-based routing, where
+`functions/api/employer-lead.ts` becomes `POST /api/employer-lead` with no
+router. A Worker expects one `main` entry script and would 404 both forms. The
+symptom of picking the wrong flow is a successful build followed by a deploy
+step running `wrangler deploy` and failing with `Missing entry-point to Worker
+script`. A Pages project runs no deploy command at all; the absence of that
+field is how you confirm you are in the right flow.
+
+Cloudflare also needs repository access on the GitHub **organization** that owns
+this repo, not a personal account. Install or configure the Cloudflare GitHub
+App for the `Cube-27` org before starting; an org owner must approve it.
+
 1. Cloudflare dashboard > **Workers & Pages** > **Create application** >
    **Pages** > **Import an existing Git repository**.
 2. Select this repository and create a new project named `cube27-talent`.
@@ -149,20 +213,24 @@ In **Workers & Pages > cube27-talent > Settings > Variables and Secrets**, set
 the values separately for Production and Preview. Secret values must be added
 as secrets, not plaintext variables.
 
+Every value below is a **runtime** binding, read only by Pages Functions. The
+build needs nothing from the dashboard — the one build-time value, the Turnstile
+site key, is committed in `src/site-config.ts` (§4). Neither environment
+inherits from the other; an unset variable is simply absent at runtime.
+
 ### Production
 
-| Name                        | Kind     | Production value                            |
-| --------------------------- | -------- | ------------------------------------------- |
-| `ENVIRONMENT`               | Variable | `production`                                |
-| `SITE_URL`                  | Variable | `https://talent.cube27.com`                 |
-| `ALLOWED_HOSTS`             | Variable | `talent.cube27.com`                         |
-| `PUBLIC_TURNSTILE_SITE_KEY` | Variable | Production widget site key                  |
-| `TURNSTILE_SECRET_KEY`      | Secret   | Production widget secret                    |
-| `RESEND_API_KEY`            | Secret   | Production sending-only key                 |
-| `RESEND_FROM`               | Variable | `Cube27 Talent <talent@updates.cube27.com>` |
-| `RESEND_REPLY_TO`           | Variable | Monitored reply address                     |
-| `EMPLOYER_LEADS_TO`         | Variable | Production leads inbox                      |
-| `CANDIDATE_APPLICATIONS_TO` | Variable | Production recruitment inbox                |
+| Name                        | Kind     | Production value                         |
+| --------------------------- | -------- | ---------------------------------------- |
+| `ENVIRONMENT`               | Variable | `production`                             |
+| `SITE_URL`                  | Variable | `https://talent.cube27.com`              |
+| `ALLOWED_HOSTS`             | Variable | `talent.cube27.com`                      |
+| `TURNSTILE_SECRET_KEY`      | Secret   | Production widget secret                 |
+| `RESEND_API_KEY`            | Secret   | Production sending-only key              |
+| `RESEND_FROM`               | Variable | `Cube27 Talent <talent@mail.cube27.com>` |
+| `RESEND_REPLY_TO`           | Variable | Monitored reply address                  |
+| `EMPLOYER_LEADS_TO`         | Variable | Production leads inbox                   |
+| `CANDIDATE_APPLICATIONS_TO` | Variable | Production recruitment inbox             |
 
 ### Preview
 
@@ -171,17 +239,16 @@ as secrets, not plaintext variables.
 | `ENVIRONMENT`               | Variable | `preview`                                                                       |
 | `SITE_URL`                  | Variable | `https://talent-preview.cube27.com`                                             |
 | `ALLOWED_HOSTS`             | Variable | Stable preview hostname and explicitly approved Pages hostname, comma-separated |
-| `PUBLIC_TURNSTILE_SITE_KEY` | Variable | Preview widget site key                                                         |
 | `TURNSTILE_SECRET_KEY`      | Secret   | Preview widget secret                                                           |
 | `RESEND_API_KEY`            | Secret   | Preview sending-only key                                                        |
-| `RESEND_FROM`               | Variable | Clearly labelled preview sender                                                 |
+| `RESEND_FROM`               | Variable | Clearly labelled preview sender, e.g. `talent-preview@mail.cube27.com`          |
 | `RESEND_REPLY_TO`           | Variable | Test owner                                                                      |
 | `EMPLOYER_LEADS_TO`         | Variable | Test inbox only                                                                 |
 | `CANDIDATE_APPLICATIONS_TO` | Variable | Test inbox only                                                                 |
 
-`PUBLIC_TURNSTILE_SITE_KEY` is embedded into the static site at build time, so
-trigger a new deployment after changing it. The remaining credentials are
-runtime bindings used only by Pages Functions.
+Changing any value here takes effect on the next request; no rebuild is needed.
+The Turnstile site key is the exception — it is embedded into the static HTML at
+build time, so changing it in `src/site-config.ts` requires a deployment.
 
 Cloudflare reference: [Pages Functions bindings](https://developers.cloudflare.com/pages/functions/bindings/).
 
@@ -337,8 +404,16 @@ Cloudflare references: [Malicious Uploads Detection](https://developers.cloudfla
 - [ ] `pnpm verify` passes.
 - [ ] Privacy notice, retention period, deletion process, and legal entity are approved.
 - [ ] Production and preview Resend keys are different and sending-only.
-- [ ] Resend domain is verified; SPF/DKIM and test delivery pass.
+- [ ] `mail.cube27.com` is verified in Resend; SPF/DKIM and test delivery pass.
+- [ ] The `talent@` sender does not collide with a main-site sender, and current
+      plan quota has headroom for both sites (§3.1).
 - [ ] Production and preview Turnstile widgets/secrets are different.
+- [ ] `TURNSTILE_SITE_KEYS.production` in `src/site-config.ts` is the real
+      production widget's site key, not a test key.
+- [ ] `TURNSTILE_SITE_KEYS.preview` is the real preview widget's site key; the
+      always-pass test key `1x000...AA` is no longer in the file.
+- [ ] Each committed site key is paired with its own widget's secret in the
+      matching Cloudflare environment.
 - [ ] Production Turnstile allows only `talent.cube27.com`.
 - [ ] Preview recipient variables point only to a test inbox.
 - [ ] Body-size rules are enabled where the plan supports them.
@@ -361,6 +436,8 @@ Check weekly at launch, then monthly:
 - WAF/rate-limit events and false positives.
 - Turnstile invalid-token, duplicate-token, hostname, and action patterns.
 - Resend delivery failures, bounces, complaints, quota, and sender reputation.
+  Quota and reputation are shared with the main Cube27 site (§3.1), so read them
+  as account-wide numbers, not this project's.
 - Malware scan failures, suspicious uploads, and quarantine events.
 - Shared inbox ownership and response backlog.
 

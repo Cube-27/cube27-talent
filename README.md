@@ -41,9 +41,16 @@ Both example files ship Cloudflare's Turnstile **test** keys — the site key
 always passes and no real challenge is shown. Swap in real keys per environment
 before launch.
 
-`PUBLIC_TURNSTILE_SITE_KEY` is required for a build: the endpoints reject any
-submission without a Turnstile token, so a build without the key would ship
-forms that cannot be submitted. The build fails instead. `pnpm dev` is exempt.
+**Turnstile site keys live in the repo, not the dashboard.** They are public —
+they ship in the HTML — so `TURNSTILE_SITE_KEYS` in `src/site-config.ts` holds
+one per environment and `CF_PAGES_BRANCH` picks between them at build time.
+`main` takes the production key; every other branch takes the preview key.
+`PUBLIC_TURNSTILE_SITE_KEY` remains an override for local builds. The matching
+**secret** keys are confidential and stay in Cloudflare.
+
+A build with no key for its branch fails: the endpoints reject any submission
+without a Turnstile token, so it would ship forms that cannot be submitted.
+Failing the build is deliberate. `pnpm dev` is exempt.
 
 ## Architecture
 
@@ -91,6 +98,11 @@ Cloudflare, set them per environment. `RESEND_API_KEY` and
 must point at a test inbox — a preview submission must never deliver a resume
 to the live recruitment distribution (plan §13.2).
 
+**The Resend sending domain is shared.** `mail.cube27.com` serves both this
+project and the main Cube27 site, so send quota and sender reputation are
+account-wide. Use per-project API keys and a distinct `talent@` sender; see
+[operations §3.1](docs/operations.md) for the trade-offs and when to split.
+
 ## Deployment
 
 Follow the complete [Cloudflare deployment and integrations operations guide](docs/operations.md)
@@ -100,8 +112,8 @@ verification, monitoring, rotation, and rollback.
 1. Create a **new** Cloudflare Pages project — do not reuse `cube27-web`.
 2. Build command `pnpm build`, output directory `dist`.
 3. Set the variables above for production and preview separately.
-4. Verify the Resend sending domain (`updates.cube27.com` or the approved
-   alternative) before the first real submission.
+4. Verify the Resend sending domain (`mail.cube27.com`, shared with the main
+   Cube27 site) before the first real submission.
 5. Attach `talent.cube27.com` and confirm TLS.
 6. Add a rate-limiting rule on `POST /api/*`.
 7. Smoke-test both forms from an external network.

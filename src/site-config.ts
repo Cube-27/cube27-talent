@@ -55,19 +55,68 @@ export const NAV_LINKS = [
 ] as const;
 
 /**
- * Turnstile site key, injected at build time. Both endpoints fail closed on a
- * missing token, so a build without this key would ship forms that silently
- * cannot be submitted. Fail the build instead — never render a configuration
- * message to visitors. `astro dev` is exempt so pages still render locally
- * without secrets.
+ * Turnstile site keys, one per deployment environment.
+ *
+ * These are public: they are rendered into the HTML of every page carrying a
+ * form, so keeping them in the repository costs nothing and removes the build's
+ * dependency on a dashboard value that has to be set correctly, in the right
+ * section, for two environments, before the site will build at all. Only the
+ * matching secret keys are confidential, and those stay in Cloudflare.
+ *
+ * Take each value from its widget in the Cloudflare dashboard (operations §4).
+ * A site key is bound to the hostnames its widget lists, which is what keeps
+ * production and preview isolated.
  */
-export const TURNSTILE_SITE_KEY =
-  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+const TURNSTILE_SITE_KEYS = {
+  /** `cube27-talent-production` widget — hostname `talent.cube27.com`. */
+  production: "",
+  /**
+   * `cube27-talent-preview` widget — hostname `talent-preview.cube27.com`.
+   * Currently Cloudflare's documented always-pass test key, so preview branches
+   * build and submit before the real widget exists. It accepts every caller,
+   * including bots, which is tolerable only because preview is access-protected
+   * and points at test inboxes. Replace it with the preview widget's real site
+   * key, and set that widget's secret as `TURNSTILE_SECRET_KEY` in the Preview
+   * environment at the same time — a mismatched pair fails every submission.
+   */
+  preview: "1x00000000000000000000AA",
+} as const;
+
+/** Pages production branch. Every other branch builds a preview deployment. */
+const PRODUCTION_BRANCH = "main";
+
+/**
+ * `CF_PAGES_BRANCH` is set by Cloudflare Pages on every build, so the branch
+ * being deployed selects the key. An explicit `PUBLIC_TURNSTILE_SITE_KEY` still
+ * wins where it is set, which keeps local builds working from `.env` and leaves
+ * a one-off override available without a commit.
+ */
+function resolveTurnstileSiteKey(): string {
+  const override = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+  if (override) return override;
+
+  const branch = process.env.CF_PAGES_BRANCH;
+  if (!branch) return "";
+
+  return branch === PRODUCTION_BRANCH
+    ? TURNSTILE_SITE_KEYS.production
+    : TURNSTILE_SITE_KEYS.preview;
+}
+
+/**
+ * Both endpoints fail closed on a missing token, so a build without a key would
+ * ship forms that silently cannot be submitted. Fail the build instead — never
+ * render a configuration message to visitors. `astro dev` is exempt so pages
+ * still render locally without secrets.
+ */
+export const TURNSTILE_SITE_KEY = resolveTurnstileSiteKey();
 
 if (!TURNSTILE_SITE_KEY && import.meta.env.PROD) {
+  const branch = process.env.CF_PAGES_BRANCH ?? "(not a Pages build)";
   throw new Error(
-    "PUBLIC_TURNSTILE_SITE_KEY is not set. Copy .env.example to .env for a " +
-      "local build, or set it in the Cloudflare Pages environment.",
+    `No Turnstile site key resolved for branch ${branch}. Fill in the matching ` +
+      "entry in TURNSTILE_SITE_KEYS in src/site-config.ts and commit it, or " +
+      "set PUBLIC_TURNSTILE_SITE_KEY to override (see .env.example).",
   );
 }
 
