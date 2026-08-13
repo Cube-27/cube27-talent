@@ -181,8 +181,15 @@ function encodePng(width, height, rgb) {
 
 const logo = decodePng(readFileSync(SOURCE));
 
-const targetWidth = Math.round(WIDTH * LOGO_SHARE);
-const targetHeight = Math.round((logo.height / logo.width) * targetWidth);
+/**
+ * LOGO_SHARE sets the width, but a tall enough source would then overflow the
+ * card vertically and the compositing loop would write past the canvas — which
+ * a Buffer silently drops, clipping the logo. Contain-fit within both axes so
+ * the aspect ratio survives and the origins stay non-negative.
+ */
+const scale = Math.min((WIDTH * LOGO_SHARE) / logo.width, HEIGHT / logo.height);
+const targetWidth = Math.max(1, Math.round(logo.width * scale));
+const targetHeight = Math.max(1, Math.round(logo.height * scale));
 const originX = Math.round((WIDTH - targetWidth) / 2);
 const originY = Math.round((HEIGHT - targetHeight) / 2);
 

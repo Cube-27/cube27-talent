@@ -32,7 +32,10 @@ export const onRequest = async ({
 
   if (url.hostname === PRODUCTION_PAGES_HOST) {
     const target = new URL(url.pathname + url.search, CANONICAL_ORIGIN);
-    return Response.redirect(target.toString(), 301);
+    // 308, not 301: the two API routes accept POST, and 301 permits a client to
+    // replay the redirect as GET, dropping the body. 308 is equally permanent
+    // but preserves method and body.
+    return Response.redirect(target.toString(), 308);
   }
 
   return next();
