@@ -5,27 +5,26 @@ interface Props {
   items: Faq[];
 }
 const { items } = Astro.props;
+const groupName = `faq-${crypto.randomUUID()}`;
 ---
 
 {/* Native <details> — accessible and functional with no JS. */}
-<div class="c27-rise grid gap-3" data-faq>
+<div class="c27-rise border-y border-c27-line">
   {
     items.map((item, i) => (
       <details
+        name={groupName}
         open={i === 0}
-        class="c27-soft-panel transition-[border-color,background-color] duration-[var(--c27-dur-fast)] hover:border-c27-accent/40 open:border-c27-accent/60 open:bg-c27-accent-soft/35"
+        class="border-b border-c27-line last:border-b-0"
       >
-        <summary class="group flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-display font-semibold leading-snug tracking-[-0.015em] text-c27-ink transition-colors group-hover:text-c27-accent-d [&::-webkit-details-marker]:hidden">
+        <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-5 font-display font-semibold leading-snug tracking-[-0.015em] text-c27-ink transition-colors hover:text-c27-accent-d [&::-webkit-details-marker]:hidden">
           {item.q}
-          {/* The +/- glyph is drawn by ::before, not swapped with visibility.
-              `transition-all` plus a visibility flip left the old + painted for
-              the whole transition while the - was already on top of it. */}
           <span
-            class="grid size-7 shrink-0 place-items-center bg-c27-accent-soft font-mono text-base font-semibold leading-none text-c27-accent-d transition-[background-color,color] duration-[var(--c27-dur-fast)]"
+            class="relative size-6 shrink-0 text-c27-accent"
             aria-hidden="true"
           />
         </summary>
-        <p class="max-w-[70ch] px-5 pb-5 text-body-sm leading-relaxed text-c27-ink-2">
+        <p class="max-w-[70ch] pb-6 pr-12 text-body-sm leading-relaxed text-c27-ink-2">
           {item.a}
         </p>
       </details>
@@ -33,34 +32,32 @@ const { items } = Astro.props;
   }
 </div>
 
-<script>
-  // Exclusive disclosure is done here rather than with the `name` attribute:
-  // a name is document-wide, so two Faq blocks on one page would group into
-  // each other. Scoping to [data-faq] keeps each block independent.
-  for (const root of document.querySelectorAll<HTMLElement>("[data-faq]")) {
-    const items = [...root.querySelectorAll<HTMLDetailsElement>("details")];
-    for (const item of items) {
-      item.addEventListener("toggle", () => {
-        if (!item.open) return;
-        for (const sibling of items) {
-          if (sibling !== item) sibling.removeAttribute("open");
-        }
-      });
-    }
-  }
-</script>
-
 <style>
-  summary span::before {
-    content: "+";
+  summary span::before,
+  summary span::after {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0.875rem;
+    height: 1.5px;
+    content: "";
+    background: currentColor;
+    transform: translate(-50%, -50%);
+    transition:
+      opacity var(--c27-dur-fast) ease,
+      transform var(--c27-dur-fast) var(--c27-ease);
   }
 
-  details[open] summary span::before {
-    content: "–";
+  summary span::after {
+    transform: translate(-50%, -50%) rotate(90deg);
   }
 
-  details[open] summary span {
-    background: var(--c27-accent);
-    color: white;
+  details[open] summary {
+    color: var(--c27-accent-d);
+  }
+
+  details[open] summary span::after {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(0deg);
   }
 </style>

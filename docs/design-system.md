@@ -9,7 +9,7 @@ The interface is direct, commercial, and restrained. Compact headings, generous 
 1. Section bands, content panels, and marketing cards have square corners.
 2. Buttons, inputs, selects, and other functional controls use a 2–4px radius.
 3. Content surfaces never use drop shadows. Overlays may use the single overlay shadow.
-4. Gradients are limited to authored blue atmosphere fields, warm feature-card surfaces, and icon tiles. No gradient text, glass effects, floating badges, decorative pills, hover translation, or hover scaling.
+4. Gradients are limited to authored neutral atmosphere fields, warm feature-card surfaces, and icon tiles. No gradient text, glass effects, floating badges, decorative pills, hover translation, or hover scaling.
 5. One indigo accent carries actions and state. Supporting tints create page-level rhythm rather than isolated decoration.
 6. A 1px hairline is the default separator.
 7. The hiring-process rail owns the most expressive motion.
@@ -34,8 +34,8 @@ When this system is applied to another Cube27 property without a full visual red
 - **Secondary ink:** muted neutral slate (`#4d535e`) for supporting copy.
 - **Muted ink:** subtle caption slate (`#626875`).
 - **Accent:** deep indigo (`#3b38d8`) for actions, links, focus, and active process state.
-- **Blue field:** executive slate-blue linear gradient (`#f8fafc` to `#edf2f7`) for hero and transition regions.
-- **Deep field:** rich deep slate navy (`#0f172a`) with high-contrast text (`#f8fafc`) for footer and conversion sections.
+- **Neutral field:** soft grey linear gradient (`#f7f7f5` to `#ebebe8`) for hero and transition regions.
+- **Deep field:** charcoal grey (`#25282e`) with high-contrast text (`#f8fafc`) for footer and conversion sections.
 - **Supporting fields:** restrained, monochromatic soft micro-tints (violet, mint, peach, sky) for subtle section differentiation without loud multi-color gradients.
 - **Feature surface:** a pale stone vertical gradient used on selected marketing cards.
 - **Danger:** reserved for validation and errors.

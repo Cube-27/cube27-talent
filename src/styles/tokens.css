@@ -24,23 +24,23 @@
   --c27-tint-violet: #f1effe;
   --c27-tint-mint: #edf6f3;
   --c27-tint-peach: #fdf4ef;
-  --c27-tint-sky: #f0f4fb;
-  --c27-hero: #f4f7fb;
-  --c27-deep: #0f172a;
-  --c27-deep-2: #1e293b;
+  --c27-tint-sky: #f1f2f3;
+  --c27-hero: #f4f4f2;
+  --c27-deep: #25282e;
+  --c27-deep-2: #32363d;
 
   /* --- atmospheric surfaces -------------------------------------
      These are used on a small number of deliberate regions. They do
-     not replace the indigo action fill or the solid blue process field. */
-  --c27-gradient-blue: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%);
-  --c27-sky-glow: rgba(99, 102, 241, 0.08);
+     not replace the indigo action fill or the solid charcoal process field. */
+  --c27-gradient-blue: linear-gradient(180deg, #f7f7f5 0%, #ebebe8 100%);
+  --c27-sky-glow: rgba(80, 85, 93, 0.08);
   --c27-sky-light: rgba(255, 255, 255, 0.85);
   --c27-gradient-warm: linear-gradient(180deg, #f3f1ec 0%, #faf8f5 100%);
   --c27-gradient-soft: linear-gradient(180deg, #ffffff 0%, #f6f5f0 100%);
   --c27-tile-violet: linear-gradient(135deg, #f1effe 0%, #e5e2fc 100%);
   --c27-tile-mint: linear-gradient(135deg, #edf6f3 0%, #dff0e9 100%);
   --c27-tile-peach: linear-gradient(135deg, #fdf4ef 0%, #f9e8e0 100%);
-  --c27-tile-sky: linear-gradient(135deg, #f0f4fb 0%, #e2eaf6 100%);
+  --c27-tile-sky: linear-gradient(135deg, #f0f1f2 0%, #dfe1e3 100%);
 
   /* --- ink -------------------------------------------------------
      Softened charcoal slate tones to avoid pitch-black eye strain while
