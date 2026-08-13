@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=22.6.0"
+  },
   "scripts": {
     "dev": "astro dev --port 3100",
     "build": "astro build",

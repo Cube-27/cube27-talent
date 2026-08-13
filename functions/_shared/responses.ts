@@ -52,7 +52,7 @@ export function isAllowedOrigin(
   const origin = request.headers.get("origin");
   const fetchSite = request.headers.get("sec-fetch-site");
 
-  if (fetchSite && !["same-origin", "same-site", "none"].includes(fetchSite)) {
+  if (fetchSite && !["same-origin", "none"].includes(fetchSite)) {
     return false;
   }
 

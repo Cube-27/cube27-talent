@@ -24,6 +24,12 @@ const {
   bare = false,
 } = Astro.props;
 
+// Cloudflare Pages sets CF_PAGES_BRANCH at build time. Any branch other than the
+// production branch (main) is a preview deployment on *.pages.dev and must never
+// be indexed, regardless of the per-page noindex prop.
+const previewBranch = process.env.CF_PAGES_BRANCH;
+const isPreviewDeploy = Boolean(previewBranch) && previewBranch !== "main";
+
 const site = Astro.site;
 const canonicalUrl = canonical
   ? new URL(canonical, site).toString()
@@ -68,7 +74,7 @@ const canonicalUrl = canonical
       title={title}
       description={description}
       canonicalUrl={canonicalUrl}
-      noindex={noindex}
+      noindex={noindex || isPreviewDeploy}
       jsonLd={jsonLd}
     />
 

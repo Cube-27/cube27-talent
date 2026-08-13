@@ -231,8 +231,12 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
   }
 
   <div class="flex flex-wrap items-center gap-3">
-    <Button type="submit" variant="primary" arrow id="employer-submit"
-      >Send requirement</Button
+    <Button
+      type="submit"
+      variant="primary"
+      arrow
+      id="employer-submit"
+      disabled={!siteKey}>Send requirement</Button
     >
     <p
       id="employer-status"

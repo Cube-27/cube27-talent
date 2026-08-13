@@ -126,7 +126,7 @@ export const onRequest = async ({
   // Plan §9.2 — must never be pre-selected or bundled with the first consent.
   const retentionConsent = asText(form.get("retentionConsent")) === "yes";
 
-  const experienceYears = Number(experience);
+  const experienceYears = experience === "" ? Number.NaN : Number(experience);
 
   const valid =
     checkLine(name, 100) &&

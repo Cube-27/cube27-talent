@@ -290,6 +290,17 @@ const { id, name, required = false, class: className = "" } = Astro.props;
     );
     if (label) label.htmlFor = buttonId;
 
+    // Native validation targets the clipped select. Surface it on the trigger
+    // the user can actually see.
+    select.addEventListener("invalid", (event) => {
+      event.preventDefault();
+      button.setAttribute("aria-invalid", "true");
+      button.focus();
+    });
+    select.addEventListener("change", () => {
+      if (select.checkValidity()) button.removeAttribute("aria-invalid");
+    });
+
     root.append(button, list);
     root.dataset.upgraded = "true";
     select.tabIndex = -1;

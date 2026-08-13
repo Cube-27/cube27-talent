@@ -29,15 +29,17 @@ export const PROOF: ProofPoint[] = [
     verified: true,
   },
   {
-    value: "100+",
+    value: "150+",
     label: "Brands served",
-    source: "cube27.com src/content/site/facts.json (published)",
+    source:
+      "cube27.com src/content/site/facts.json (published as 'Brands we helped')",
     verified: true,
   },
   // Removed: "150+ Specialists across Cube27". cube27.com publishes 150+ as
-  // "Brands we helped" — a brands figure, not a headcount. No published
-  // specialist count exists, so the label had no source. Do not re-add it
-  // without a headcount Cube27 will stand behind.
+  // "Brands we helped" — a brands figure, not a headcount, and it is the source
+  // for the "Brands served" stat above. No published specialist count exists,
+  // so the label had no source. Do not re-add it without a headcount Cube27
+  // will stand behind.
 ];
 
 /** Only verified points reach a template. */
