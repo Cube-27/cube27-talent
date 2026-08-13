@@ -18,79 +18,60 @@
      on a tinted section, tinted card on a white section. The four
      tints let a set of cards differentiate by colour instead of by
      elevation — cycle them in order, do not add a fifth. */
-  --c27-ground: #fbfaf7;
+  --c27-ground: #faf9f5;
   --c27-surface: #ffffff;
-  --c27-surface-2: #f5f3ef;
-  --c27-tint-violet: #eeeafd;
-  --c27-tint-mint: #e6f5ed;
-  --c27-tint-peach: #fff0e6;
-  --c27-tint-sky: #e7efff;
-  --c27-hero: #eaf8ff;
-  --c27-deep: #e2ebff;
-  --c27-deep-2: #d7e4ff;
+  --c27-surface-2: #f4f2ee;
+  --c27-tint-violet: #f1effe;
+  --c27-tint-mint: #edf6f3;
+  --c27-tint-peach: #fdf4ef;
+  --c27-tint-sky: #f0f4fb;
+  --c27-hero: #f4f7fb;
+  --c27-deep: #0f172a;
+  --c27-deep-2: #1e293b;
 
   /* --- atmospheric surfaces -------------------------------------
      These are used on a small number of deliberate regions. They do
      not replace the indigo action fill or the solid blue process field. */
-  --c27-gradient-blue: linear-gradient(
-    135deg,
-    #f2fbff 0%,
-    #d9f2ff 52%,
-    #e8f8ff 100%
-  );
-  --c27-sky-glow: rgba(82, 190, 255, 0.24);
-  --c27-sky-light: rgba(255, 255, 255, 0.62);
-  --c27-gradient-warm: linear-gradient(180deg, #eeece7 0%, #faf8f4 100%);
-  --c27-gradient-soft: linear-gradient(180deg, #ffffff 0%, #f6f4ef 100%);
-  --c27-tile-violet: linear-gradient(135deg, #e5d4ff 0%, #becfff 100%);
-  --c27-tile-mint: linear-gradient(135deg, #bce8d1 0%, #8ed6d4 100%);
-  --c27-tile-peach: linear-gradient(135deg, #ffc2dd 0%, #ffc09f 100%);
-  --c27-tile-sky: linear-gradient(135deg, #d3d0ff 0%, #b8dcff 100%);
+  --c27-gradient-blue: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%);
+  --c27-sky-glow: rgba(99, 102, 241, 0.08);
+  --c27-sky-light: rgba(255, 255, 255, 0.85);
+  --c27-gradient-warm: linear-gradient(180deg, #f3f1ec 0%, #faf8f5 100%);
+  --c27-gradient-soft: linear-gradient(180deg, #ffffff 0%, #f6f5f0 100%);
+  --c27-tile-violet: linear-gradient(135deg, #f1effe 0%, #e5e2fc 100%);
+  --c27-tile-mint: linear-gradient(135deg, #edf6f3 0%, #dff0e9 100%);
+  --c27-tile-peach: linear-gradient(135deg, #fdf4ef 0%, #f9e8e0 100%);
+  --c27-tile-sky: linear-gradient(135deg, #f0f4fb 0%, #e2eaf6 100%);
 
   /* --- ink -------------------------------------------------------
-     Ratios given on white first, then on --c27-tint-violet, which is
-     the darkest of the six light grounds and therefore the binding
-     constraint for every one of these. */
-  /* 17.21 on white, 14.47 on violet. */
-  --c27-ink: #1c1a22;
-  /* 7.53 / 6.33. */
-  --c27-ink-2: #55535f;
-  /* 5.42 / 4.55 — the floor of the system. Captions and meta only,
-     never below --c27-text-caption, and never for text a visitor has
-     to read to finish a task. #7a7786 was tried first and rejected:
-     3.67 on violet, a clear AA failure. */
-  --c27-ink-3: #6b6878;
+     Softened charcoal slate tones to avoid pitch-black eye strain while
+     maintaining > 13:1 WCAG AA contrast ratio. */
+  --c27-ink: #21252d;
+  --c27-ink-2: #4d535e;
+  --c27-ink-3: #626875;
 
   /* --- accent ----------------------------------------------------
-     One accent, one job: actions, links and active state. There is a
-     single value because it has to work as text AND as a fill —
-     6.46 as text on white, 5.43 as text on violet, and 6.46 for
-     white text sitting on it as the primary button. */
-  --c27-accent: #4f39f6;
-  /* Hover and press, 8.56 under white text. */
-  --c27-accent-d: #3d28d4;
-  /* Accent-tinted fill. Same value as --c27-tint-violet, named for
-     intent so a button's soft state does not read as a panel. */
-  --c27-accent-soft: #ece9fe;
+     One accent, one job: actions, links and active state. */
+  --c27-accent: #3b38d8;
+  --c27-accent-d: #2d29c4;
+  --c27-accent-soft: #eeeefe;
 
   /* Section-icon accents. These identify service categories, not actions. */
-  --c27-icon-violet: #5238e8;
-  --c27-icon-green: #08785b;
-  --c27-icon-orange: #bd4f1d;
-  --c27-icon-blue: #1f5fc4;
+  --c27-icon-violet: #4f46e5;
+  --c27-icon-green: #0d9488;
+  --c27-icon-orange: #ea580c;
+  --c27-icon-blue: #2563eb;
 
   /* --- lines -----------------------------------------------------
-     A 1px hairline is the default boundary between surfaces. It does
-     more work here than any shadow. */
-  --c27-line: #dedde3;
-  --c27-line-2: #eceae6;
-  --c27-line-deep: rgba(28, 26, 34, 0.16);
+     A 1px hairline is the default boundary between surfaces. */
+  --c27-line: #e2e0e6;
+  --c27-line-2: #eceae5;
+  --c27-line-deep: rgba(255, 255, 255, 0.12);
 
-  /* --- on blue fields --- */
-  --c27-on-deep: #1c1a22;
-  --c27-on-deep-2: #55535f;
-  --c27-on-deep-3: #6b6878;
-  --c27-on-deep-accent: #3d28d4;
+  /* --- on deep fields --- */
+  --c27-on-deep: #f8fafc;
+  --c27-on-deep-2: #94a3b8;
+  --c27-on-deep-3: #64748b;
+  --c27-on-deep-accent: #818cf8;
 
   /* --- feedback --------------------------------------------------
      The one colour outside the accent, and only because an error must

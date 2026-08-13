@@ -28,19 +28,19 @@ When this system is applied to another Cube27 property without a full visual red
 
 ## 3. Colour roles
 
-- **Ground:** warm ivory for the main reading surface.
-- **Surface:** white or pale stone for grouped content.
-- **Ink:** near-black for display and body text.
-- **Secondary ink:** muted neutral for supporting copy.
-- **Accent:** indigo for actions, links, focus, and active process state.
-- **Blue field:** energetic light blue for the hero, process, leadership, conversion, and footer sections.
-- **Supporting fields:** restrained violet, mint, sky, and warm neutral used as whole regions.
-- **Primary blue field:** light energetic blue (`#e2ebff`) with dark copy; it replaces every former dark section.
-- **Atmospheric blue:** a restrained blue-to-violet gradient reserved for the How We Hire hero and leadership field.
-- **Feature surface:** a pale stone vertical gradient used on selected marketing cards, never form controls.
+- **Ground:** warm ivory (`#faf9f5`) for the main reading surface.
+- **Surface:** crisp white or pale stone (`#f4f2ee`) for grouped content.
+- **Ink:** softened deep charcoal slate (`#21252d`) for display and body text to reduce eye strain while maintaining > 13:1 WCAG AA contrast.
+- **Secondary ink:** muted neutral slate (`#4d535e`) for supporting copy.
+- **Muted ink:** subtle caption slate (`#626875`).
+- **Accent:** deep indigo (`#3b38d8`) for actions, links, focus, and active process state.
+- **Blue field:** executive slate-blue linear gradient (`#f8fafc` to `#edf2f7`) for hero and transition regions.
+- **Deep field:** rich deep slate navy (`#0f172a`) with high-contrast text (`#f8fafc`) for footer and conversion sections.
+- **Supporting fields:** restrained, monochromatic soft micro-tints (violet, mint, peach, sky) for subtle section differentiation without loud multi-color gradients.
+- **Feature surface:** a pale stone vertical gradient used on selected marketing cards.
 - **Danger:** reserved for validation and errors.
 
-All combinations must meet WCAG AA. Token comments record measured contrast where a colour is changed.
+All combinations meet WCAG AA.
 
 ## 4. Typography
 

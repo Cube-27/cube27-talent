@@ -74,7 +74,7 @@ The public hiring journey has four named phases and no numeric framing:
 
 - **Define the team:** establish the role, hiring context, outcomes, location, and working model.
 - **Find the right people:** source against the agreed brief and confirm interest and fit.
-- **Assess with evidence:** use a role-appropriate recorded assessment, practitioner interview, and verification.
+- **Assess real work:** use a role-appropriate recorded assessment, practitioner interview, and verification.
 - **Select and start:** present a curated shortlist with assessment context, support the client’s decision, and coordinate onboarding.
 
 The words “nine steps,” numbered stages, and count-based process claims are prohibited. Ongoing support is presented separately as employee lifecycle management.

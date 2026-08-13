@@ -6,7 +6,6 @@ import HowItWorksHero from "@/components/sections/HowItWorksHero.astro";
 import ProcessRail from "@/components/sections/ProcessRail.astro";
 import Lifecycle from "@/components/sections/Lifecycle.astro";
 import FinalCta from "@/components/sections/FinalCta.astro";
-import { PROCESS_LEDE } from "@/data/process";
 import { ROUTES, SITE_CONFIG } from "@/site-config";
 import { breadcrumbSchema } from "@/lib/schema";
 
@@ -22,8 +21,8 @@ const jsonLd = [breadcrumbSchema([{ name: "How we hire", path: ROUTES.how }])];
 
   <Section tone="deep">
     <SectionHead
-      heading="Evidence at every decision."
-      lede={PROCESS_LEDE}
+      heading="See how the shortlist takes shape."
+      lede="Each phase adds context while keeping judgment in human hands."
       invert
     />
     <ProcessRail />
@@ -37,5 +36,5 @@ const jsonLd = [breadcrumbSchema([{ name: "How we hire", path: ROUTES.how }])];
     <Lifecycle />
   </Section>
 
-  <FinalCta heading="Hire with evidence." body="Tell us who you need." />
+  <FinalCta heading="Build the team you need." body="Tell us who you need." />
 </Layout>

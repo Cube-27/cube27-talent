@@ -6,10 +6,10 @@ export interface ProcessPhase {
   icon: string;
 }
 
-export const PROCESS_HEADING = "Evidence-backed shortlists";
+export const PROCESS_HEADING = "Shortlists built for clearer decisions";
 
 export const PROCESS_LEDE =
-  "Every shortlist includes evidence from role-specific work and expert review.";
+  "See candidates handle role-specific work before they reach your team.";
 
 export const PROCESS_PHASES: ProcessPhase[] = [
   {
@@ -28,18 +28,18 @@ export const PROCESS_PHASES: ProcessPhase[] = [
   },
   {
     id: "assess",
-    name: "Assess with evidence",
-    summary: "Recorded assessments and practitioner interviews.",
-    points: ["Role-specific work", "Practitioner review", "Verified evidence"],
+    name: "Assess real work",
+    summary: "Combine recorded assessments with practitioner interviews.",
+    points: ["Role-specific work", "Practitioner review", "Clear findings"],
     icon: "spark",
   },
   {
     id: "select",
     name: "Select and start",
-    summary: "Review a focused shortlist with expert context.",
+    summary: "Compare a focused shortlist with context on strengths and gaps.",
     points: [
       "Focused shortlist",
-      "Evidence summary",
+      "Candidate context",
       "Final decision stays yours",
     ],
     icon: "briefcase",

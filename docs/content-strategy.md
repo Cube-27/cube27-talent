@@ -72,7 +72,7 @@ Career value → fair discipline-specific evaluation → what information to sub
 - Home H1: Build the team your business needs.
 - Managed-team section: Qualified candidates. Clearer decisions.
 - How we hire H1: Hire with proof, not promises.
-- Homepage process: Shortlists backed by evidence.
+- Homepage process: Shortlists built for clearer decisions.
 - Lifecycle: Support that continues after the hire.
 - Expertise: Hire across every critical function.
 - Security: Build a security team for the standard ahead.

@@ -55,7 +55,7 @@ The hero contains no fake candidate, dashboard, product mockup, decorative right
 
 ## 5. Hiring-process behavior
 
-The four phases are Define the team, Find the right people, Assess with evidence, and Select and start.
+The four phases are Define the team, Find the right people, Assess real work, and Select and start.
 
 On desktop, every phase remains visible in a scroll-linked vertical rail. The current phase receives the accent colour and the connecting line advances as the visitor scrolls. On mobile the rail becomes a static vertical sequence. With JavaScript disabled or reduced motion enabled, every phase remains visible and understandable.
 

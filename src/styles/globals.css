@@ -146,24 +146,13 @@
   .c27-sky-field::before {
     position: absolute;
     z-index: -1;
-    inset: -22%;
+    inset: -10%;
     content: "";
     pointer-events: none;
     background:
-      radial-gradient(circle at 24% 30%, var(--c27-sky-light), transparent 33%),
-      radial-gradient(circle at 76% 64%, var(--c27-sky-glow), transparent 35%);
-    animation: c27-sky-drift 18s ease-in-out infinite alternate;
-    will-change: transform;
-  }
-
-  @keyframes c27-sky-drift {
-    from {
-      transform: translate3d(-2%, 1%, 0) scale(1.02);
-    }
-
-    to {
-      transform: translate3d(3%, -2%, 0) scale(1.06);
-    }
+      radial-gradient(circle at 30% 20%, var(--c27-sky-light), transparent 50%),
+      radial-gradient(circle at 70% 80%, var(--c27-sky-glow), transparent 45%);
+    opacity: 0.85;
   }
 
   .c27-feature-card {
