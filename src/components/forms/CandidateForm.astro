@@ -18,7 +18,7 @@ const RELOCATION = ["Yes", "No", "Depends on the opportunity"];
 // h-12 matches the Select so inputs and dropdowns line up in the same row.
 // The textarea takes the base without a fixed height.
 const fieldBase =
-  "w-full rounded-c27-sm border border-[#d4dae9] bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-blue focus:outline-none focus:ring-[3px] focus:ring-c27-blue/15";
+  "w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15";
 const field = `h-12 ${fieldBase}`;
 const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
 ---
@@ -29,14 +29,14 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
   action={ENDPOINTS.candidateApplication}
   enctype="multipart/form-data"
   novalidate
-  class="grid gap-4 rounded-c27-lg border border-c27-line bg-c27-surface p-[clamp(1.5rem,3vw,2.25rem)] shadow-c27-lg"
+  class="grid gap-4 rounded-c27-lg border border-c27-line bg-c27-surface p-[clamp(1.5rem,3vw,2.25rem)]"
 >
   <div
     id="candidate-errors"
     role="alert"
     hidden
     tabindex="-1"
-    class="rounded-c27-sm border-l-2 border-[#dc2626] bg-[#fef2f2] px-4 py-3 text-caption text-[#991b1b]"
+    class="rounded-c27-sm border-l-2 border-c27-danger bg-c27-danger-soft px-4 py-3 text-caption text-c27-danger"
   >
   </div>
 
@@ -156,18 +156,34 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
     </div>
   </div>
 
-  <div class="grid min-w-0 gap-1.5">
-    <label for="cf-linkedin" class="text-caption font-semibold">
-      LinkedIn <span class="font-normal text-c27-ink-3">— optional</span>
-    </label>
-    <input
-      id="cf-linkedin"
-      name="linkedin"
-      type="url"
-      maxlength="300"
-      placeholder="https://www.linkedin.com/in/…"
-      class={field}
-    />
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div class="grid min-w-0 gap-1.5">
+      <label for="cf-linkedin" class="text-caption font-semibold">
+        LinkedIn <span class="font-normal text-c27-ink-3">— optional</span>
+      </label>
+      <input
+        id="cf-linkedin"
+        name="linkedin"
+        type="url"
+        maxlength="300"
+        placeholder="https://www.linkedin.com/in/…"
+        class={field}
+      />
+    </div>
+    <div class="grid min-w-0 gap-1.5">
+      <label for="cf-github" class="text-caption font-semibold">
+        GitHub or portfolio
+        <span class="font-normal text-c27-ink-3">— optional</span>
+      </label>
+      <input
+        id="cf-github"
+        name="github"
+        type="url"
+        maxlength="300"
+        placeholder="https://github.com/…"
+        class={field}
+      />
+    </div>
   </div>
 
   <div class="grid gap-4 sm:grid-cols-3">
@@ -210,7 +226,7 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
       type="file"
       required
       accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      class="h-12 w-full rounded-c27-sm border border-[#d4dae9] bg-c27-surface px-3.5 py-2.5 text-body-sm file:mr-3 file:rounded file:border-0 file:bg-c27-tint file:px-3 file:py-1.5 file:text-caption file:font-semibold file:text-c27-ink"
+      class="h-12 w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm file:mr-3 file:rounded file:border-0 file:bg-c27-accent-soft file:px-3 file:py-1.5 file:text-caption file:font-semibold file:text-c27-ink"
     />
   </div>
 
@@ -234,13 +250,13 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
       name="consent"
       required
       value="yes"
-      class="mt-1 accent-[var(--c27-blue)]"
+      class="mt-1 accent-[var(--c27-accent)]"
     />
     <span>
-      Cube27 may process this profile for recruitment, as described in the
+      We may process this profile for recruitment, as described in the
       <a
         href={ROUTES.privacy}
-        class="text-c27-blue-d underline underline-offset-2">privacy notice</a
+        class="text-c27-accent-d underline underline-offset-2">privacy notice</a
       >.
     </span>
   </label>
@@ -252,7 +268,7 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
       type="checkbox"
       name="retentionConsent"
       value="yes"
-      class="mt-1 accent-[var(--c27-blue)]"
+      class="mt-1 accent-[var(--c27-accent)]"
     />
     <span>
       Optional: keep this profile on file for future suitable opportunities.
@@ -295,7 +311,7 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
   <div class="flex flex-wrap items-center gap-3">
     <Button
       type="submit"
-      variant="blue"
+      variant="primary"
       arrow
       id="candidate-submit"
       disabled={!siteKey}>Send application</Button

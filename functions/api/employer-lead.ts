@@ -212,9 +212,9 @@ export const onRequest = async ({
     text: [
       `Hello ${name},`,
       "",
-      "Your hiring requirement has reached Cube27 Talent.",
+      "Your hiring requirement has reached us.",
       "",
-      "Cube27 will review whether it fits our technical screening scope and current capacity, then contact you using the details you supplied. Submitting a requirement does not by itself create a commercial engagement.",
+      "We will read it properly, work out whether we can assess the role well, and come back to you either way using the details you supplied. Sending a requirement does not by itself start an engagement.",
       "",
       `Your reference is ${id}.`,
       "",
@@ -227,7 +227,7 @@ export const onRequest = async ({
         ["Company", company],
         [
           "Next",
-          "Cube27 will review whether this fits our technical screening scope and current capacity, then contact you using the details you supplied. Submitting a requirement does not by itself create a commercial engagement.",
+          "We will read it properly, work out whether we can assess the role well, and come back to you either way using the details you supplied. Sending a requirement does not by itself start an engagement.",
         ],
       ]),
     ),

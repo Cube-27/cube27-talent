@@ -1,12 +1,15 @@
 ---
 /**
- * The only button in the system. Design system §6.1.
- * Variants carry meaning: primary = employer action, blue = candidate action.
+ * The only button in the system. Design system §5.1.
+ *
+ * Nothing here transforms on hover — design system rule 1. Colour and border
+ * carry the entire interaction, and no variant has a shadow: a button is a
+ * flat fill against its ground.
  */
 interface Props {
   href?: string;
   type?: "button" | "submit";
-  variant?: "primary" | "blue" | "line" | "line-invert";
+  variant?: "primary" | "line" | "ghost" | "on-deep";
   size?: "md" | "sm";
   arrow?: boolean;
   class?: string;
@@ -26,46 +29,44 @@ const {
 } = Astro.props;
 
 const base =
-  "group inline-flex items-center gap-2.5 whitespace-nowrap rounded-c27-sm border font-display font-bold no-underline cursor-pointer transition-[background-color,border-color,color,transform,box-shadow] duration-200 ease-[var(--c27-ease)] motion-safe:hover:-translate-y-px active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:pointer-events-none";
+  "group inline-flex items-center gap-2.5 whitespace-nowrap rounded-c27-sm border font-display font-bold no-underline cursor-pointer transition-[background-color,border-color,color] duration-[var(--c27-dur-fast)] ease-[var(--c27-ease)] disabled:cursor-not-allowed disabled:opacity-60 disabled:pointer-events-none";
 
 const variants = {
-  // green-d, not green: white on #10b45f is 2.72:1 and fails WCAG AA outright.
-  // This is 5.48:1, and the hover step keeps going darker rather than lighter.
-  primary:
-    "border-transparent bg-c27-green-d text-white shadow-c27-sm hover:bg-c27-green-dd hover:shadow-[0_8px_20px_-6px_rgb(4_120_87/0.45)]",
-  blue: "border-transparent bg-c27-blue text-white shadow-c27-sm hover:bg-c27-blue-d hover:shadow-[0_8px_20px_-6px_rgba(37,99,235,0.45)]",
-  line: "border-c27-line bg-c27-surface text-c27-ink shadow-c27-sm hover:border-c27-blue hover:text-c27-blue-d hover:bg-c27-tint-2",
-  "line-invert":
-    "border-white/30 bg-white/5 text-white backdrop-blur-xs hover:border-white hover:bg-white/15",
+  // One accent value serves as fill and as text elsewhere: white on
+  // --c27-accent is 6.46:1, and the hover step goes darker (8.56:1), never
+  // lighter.
+  primary: "border-transparent bg-c27-accent text-white hover:bg-c27-accent-d",
+  line: "border-c27-line bg-c27-surface text-c27-ink hover:border-c27-accent hover:bg-c27-accent-soft hover:text-c27-accent-d",
+  ghost:
+    "border-transparent bg-transparent text-c27-ink-2 hover:bg-c27-surface-2 hover:text-c27-ink",
+  "on-deep": "border-transparent bg-white text-c27-deep hover:bg-c27-on-deep-2",
 };
 
-// min-h-11 keeps every button at the 44px tap-target floor (§8)
+// min-h-11 keeps every button at the 44px tap-target floor.
 const sizes = {
   md: "min-h-12 px-5.5 py-3 text-[0.9375rem]",
   sm: "min-h-11 px-4.5 py-2.5 text-[0.875rem]",
 };
 
 const cls = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
+
+// No hover transform on the arrow either. A sliding arrow was the last
+// survivor of the old system, and keeping it would have made rule 1 a rule
+// with an exception — which is the same as not having it. The arrow still
+// carries the direction; it just does it without moving.
+const arrowCls = "font-mono";
 ---
 
 {
   href ? (
     <a href={href} class={cls} id={id}>
       <slot />
-      {arrow && (
-        <span class="font-mono transition-transform duration-200 group-hover:translate-x-1.5">
-          &rarr;
-        </span>
-      )}
+      {arrow && <span class={arrowCls}>&rarr;</span>}
     </a>
   ) : (
     <button type={type} class={cls} id={id} disabled={disabled}>
       <slot />
-      {arrow && (
-        <span class="font-mono transition-transform duration-200 group-hover:translate-x-1.5">
-          &rarr;
-        </span>
-      )}
+      {arrow && <span class={arrowCls}>&rarr;</span>}
     </button>
   )
 }

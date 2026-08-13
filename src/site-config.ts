@@ -4,14 +4,20 @@
  */
 
 export const SITE_CONFIG = {
-  /** Long descriptive name — homepage <title> and default page title. */
-  name: "Cube27 Talent — Managed engineering talent for global companies",
+  /**
+   * Long descriptive name — homepage <title> and default page title.
+   *
+   * The brand strings and the organisation block below are the ONLY places the
+   * company name is allowed to appear (invariant rule 0.1). Everything the
+   * visitor reads as prose is first person plural.
+   */
+  name: "Cube27 Talent — build the team, then keep building it",
   /** Short brand, appended to sub-page titles: "Expertise | Cube27 Talent". */
   brand: "Cube27 Talent",
   /** Canonical production origin, no trailing slash. Matches astro.config `site`. */
   url: "https://talent.cube27.com",
   description:
-    "Cube27 Talent screens and technically interviews engineering, QA, DevOps, product and design talent, employs them, and runs their payroll. The client directs the work and decides who stays.",
+    "We find engineering, cloud, data, security, quality, design and leadership talent for global companies, assess them on a recorded task with practitioners, and handle everything around the hire.",
   // Entity, privacy contact and address all match the published policy at
   // ROUTES.privacy, which is the notice this site links to from both consent
   // checkboxes. Change them only alongside that page.
@@ -66,6 +72,13 @@ export const NAV_LINKS = [
   { label: "Hire talent", href: ROUTES.hire },
   { label: "Careers", href: ROUTES.join },
 ] as const;
+
+/**
+ * Nav stays at four. Security and leadership are homepage and expertise-page
+ * sections rather than routes — adding them here would push the bar past what
+ * fits at the `lg` breakpoint, and neither has enough content to justify a page
+ * of its own yet.
+ */
 
 /**
  * Turnstile site keys, one per deployment environment.

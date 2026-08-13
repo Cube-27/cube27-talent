@@ -8,28 +8,29 @@ import { CANDIDATE_FAQS } from "@/data/faqs";
 import { ROUTES, SITE_CONFIG } from "@/site-config";
 import { breadcrumbSchema, faqSchema } from "@/lib/schema";
 
-const title = `Careers — join the Cube27 talent network | ${SITE_CONFIG.brand}`;
+const title = `Careers | ${SITE_CONFIG.brand}`;
 const description =
-  "Join Cube27 as an employee on Cube27 payroll and be assigned to client engagements. Structured technical screening, work hardware provided, global clients.";
+  "Real work with global clients, an assessment matched to what you actually do, and a process that tells you where you stand.";
 
-/* Invariant 22: the candidate proposition is employment, not placement.
-   Each benefit below is operationally true today. */
+/* Invariant 15: the candidate proposition is a career, not a placement.
+   Every claim below is operationally true today, and none of it is
+   contractual — no equipment, no employment mechanics (rule 0.2). */
 const benefits = [
   {
-    title: "Employment, not a gig",
-    body: "Successful candidates join Cube27 as employees on Cube27 payroll, with employment administration handled.",
+    title: "Real work, not a listing",
+    body: "Assignments with companies building products people use, across time zones and working models.",
   },
   {
-    title: "A real technical interview",
-    body: "An HR screen, a task matched to the discipline, and an interview with Cube27 engineers or technical leadership.",
+    title: "An assessment that fits what you do",
+    body: "A task matched to your discipline rather than a generic test, and an interview with someone who does the same work.",
   },
   {
-    title: "Work hardware provided",
-    body: "Equipment is arranged under Cube27 policy, so no personal machine is required for client work.",
+    title: "Your reasoning goes with you",
+    body: "The assessment is recorded, so what reaches the client is how you think — not a CV and a score out of ten.",
   },
   {
-    title: "Global client assignments",
-    body: "Assignments with companies building real products, across time zones and working models.",
+    title: "A process that respects your time",
+    body: "You will know where you stand at each stage, including when the answer is no.",
   },
 ];
 
@@ -46,31 +47,32 @@ const jsonLd = [
     >
       <div class="c27-rise">
         <span class="c27-label mb-3 block">Careers</span>
-        <h1 class="c27-h2">Join the Cube27 talent network</h1>
+        <h1 class="c27-h2">Work worth moving for</h1>
         <p class="c27-lede mt-4">
-          One structured evaluation, then consideration for suitable client
-          requirements as they arrive.
+          One proper evaluation, then consideration for suitable roles as they
+          come in. Send us a profile even if nothing is open — that is how most
+          of our placements start.
         </p>
 
         <dl class="mt-8 grid gap-5">
           {
             benefits.map((benefit) => (
               <div class="border-t border-c27-line pt-4">
-                <dt class="c27-h3">{benefit.title}</dt>
-                <dd class="mt-1 text-body-sm text-c27-ink-2">{benefit.body}</dd>
+                <dt class="c27-h3 font-bold">{benefit.title}</dt>
+                <dd class="mt-1.5 text-body-sm leading-relaxed text-c27-ink-2">
+                  {benefit.body}
+                </dd>
               </div>
             ))
           }
         </dl>
 
-        {
-          /* Invariant 23 / plan §10 — overseas framing must stay conditional. */
-        }
+        {/* Invariant 16 — overseas framing must stay conditional. */}
         <p
-          class="mt-6 rounded-c27-sm border border-c27-line bg-c27-surface p-4 text-caption text-c27-ink-2"
+          class="mt-7 rounded-c27-sm bg-c27-tint-mint p-4 text-caption leading-relaxed text-c27-ink-2"
         >
-          Some assignments involve overseas work. Where an approved assignment
-          requires it, Cube27 assists with the applicable visa process. Overseas
+          Some assignments involve overseas work, and we assist with the
+          applicable process where an approved assignment requires it. Overseas
           travel, relocation and visa approval are never guaranteed.
         </p>
       </div>

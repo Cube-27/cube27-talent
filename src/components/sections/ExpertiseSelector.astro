@@ -1,15 +1,19 @@
 ---
 import Icon from "@/components/ui/Icon.astro";
-import { ROLE_FAMILIES } from "@/data/roles";
+import { ROLE_FAMILIES, OPEN_SCOPE_LINE } from "@/data/roles";
 
 /**
- * Tabbed role-family selector. Design system §6.7.
+ * Tabbed role-family selector.
  *
- * All eight panels are server-rendered and JS only toggles `hidden` and
+ * Every panel is server-rendered and JS only toggles `hidden` and
  * `aria-selected`. The panels ship hidden so a scripted visit paints the
- * selected one straight away rather than flashing all eight and collapsing.
+ * selected one straight away rather than flashing all seven and collapsing.
  * Without JS that `hidden` is overridden in globals.css, so the full taxonomy
- * stays readable (plan §19.4 progressive enhancement).
+ * stays readable.
+ *
+ * OPEN_SCOPE_LINE is not decoration — invariant rule 0.3 requires it wherever
+ * the families are listed, because the list is a starting point and must never
+ * read as a boundary. Do not remove it.
  */
 
 interface Props {
@@ -26,7 +30,7 @@ const Heading = `h${headingLevel}` as "h2" | "h3";
 ---
 
 <div
-  class="c27-rise grid overflow-hidden rounded-c27-lg border border-c27-line bg-c27-surface shadow-c27-sm lg:grid-cols-[minmax(0,17.5rem)_minmax(0,1fr)]"
+  class="c27-rise grid overflow-hidden rounded-c27-lg border border-c27-line bg-c27-surface lg:grid-cols-[minmax(0,19rem)_minmax(0,1fr)]"
   data-expertise
 >
   {
@@ -35,7 +39,7 @@ const Heading = `h${headingLevel}` as "h2" | "h3";
       padding box. */
   }
   <div
-    class="flex snap-x snap-mandatory scroll-px-3 gap-1.5 overflow-x-auto border-b border-c27-line bg-c27-surface-2/80 p-3 [scrollbar-width:thin] lg:flex-col lg:snap-none lg:overflow-visible lg:border-b-0 lg:border-r lg:p-4"
+    class="flex snap-x snap-mandatory scroll-px-3 gap-1.5 overflow-x-auto border-b border-c27-line bg-c27-surface-2 p-3 [scrollbar-width:thin] lg:flex-col lg:snap-none lg:overflow-visible lg:border-b-0 lg:border-r lg:p-4"
     role="tablist"
     aria-label="Role families"
   >
@@ -48,10 +52,10 @@ const Heading = `h${headingLevel}` as "h2" | "h3";
           aria-controls={`panel-${family.id}`}
           aria-selected={i === 0 ? "true" : "false"}
           tabindex={i === 0 ? 0 : -1}
-          class="flex min-h-11 shrink-0 snap-start items-center gap-2.5 whitespace-nowrap rounded-c27-sm px-3.5 py-2.5 text-left text-body-sm font-medium text-c27-ink-2 transition-[background-color,color,box-shadow] duration-200 hover:bg-c27-tint hover:text-c27-ink aria-selected:bg-c27-blue aria-selected:font-semibold aria-selected:text-white aria-selected:shadow-c27-sm"
+          class="flex min-h-11 shrink-0 snap-start items-center gap-2.5 whitespace-nowrap rounded-c27-sm px-3.5 py-2.5 text-left text-body-sm font-medium text-c27-ink-2 transition-[background-color,color] duration-[var(--c27-dur-fast)] hover:bg-c27-accent-soft hover:text-c27-ink aria-selected:bg-c27-accent aria-selected:font-semibold aria-selected:text-white"
         >
           <Icon name={family.icon} size={18} />
-          <span>{family.name}</span>
+          <span>{family.short}</span>
         </button>
       ))
     }
@@ -67,34 +71,32 @@ const Heading = `h${headingLevel}` as "h2" | "h3";
           hidden={i !== 0}
           data-panel
         >
-          <Heading class="c27-h3-lg font-bold text-c27-ink tracking-tight">
+          <Heading class="c27-h3-lg font-bold text-c27-ink">
             {family.name}
           </Heading>
-          <p class="mt-2.5 max-w-[52ch] text-body-sm text-c27-ink-2 leading-relaxed">
+          <p class="mt-2.5 max-w-[54ch] text-body-sm leading-relaxed text-c27-ink-2">
             {family.blurb}
           </p>
           <ul class="mt-5.5 flex flex-wrap gap-2.5">
             {family.roles.map((role) => (
-              <li class="rounded-full border border-c27-line bg-c27-surface-2/60 px-3.5 py-1.5 text-body-sm font-medium text-c27-ink transition-colors hover:border-c27-blue/40">
+              <li class="rounded-full bg-c27-surface-2 px-3.5 py-1.5 text-body-sm font-medium text-c27-ink">
                 {role}
               </li>
             ))}
           </ul>
-          <div class="mt-6 flex flex-wrap gap-x-8 gap-y-3 border-t border-c27-line-2 pt-5 text-caption font-medium text-c27-ink-3">
-            <span class="inline-flex items-center gap-1.5">
-              <i class="size-1.5 rounded-full bg-c27-green-d" /> Full-time
-              employment through Cube27
-            </span>
-            <span class="inline-flex items-center gap-1.5">
-              <i class="size-1.5 rounded-full bg-c27-blue" /> Remote &middot;
-              hybrid &middot; onsite &middot; relocation
-            </span>
-          </div>
         </div>
       ))
     }
   </div>
 </div>
+
+{/* Invariant rule 0.3. Required wherever the families are listed. */}
+<p
+  class="c27-rise mt-5 max-w-[62ch] text-body-sm leading-relaxed text-c27-ink-2"
+  style="--c27-d:80ms"
+>
+  {OPEN_SCOPE_LINE}
+</p>
 
 <script>
   // Roving tabindex with arrow-key support, per WAI-ARIA tabs pattern.

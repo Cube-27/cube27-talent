@@ -7,25 +7,25 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-{/* Native <details> — accessible and functional with no JS. §6.9. */}
+{/* Native <details> — accessible and functional with no JS. */}
 <div class="c27-rise grid gap-3" data-faq>
   {
     items.map((item, i) => (
       <details
         open={i === 0}
-        class="rounded-c27 border border-c27-line bg-c27-surface shadow-c27-sm transition-[border-color,box-shadow] duration-200 hover:border-c27-blue/40 open:border-c27-blue/60 open:shadow-c27-lg"
+        class="rounded-c27 border border-c27-line bg-c27-surface transition-[border-color,background-color] duration-[var(--c27-dur-fast)] hover:border-c27-accent/40 open:border-c27-accent/60 open:bg-c27-accent-soft/35"
       >
-        <summary class="group flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-display font-bold leading-snug tracking-[-0.015em] text-c27-ink transition-colors group-hover:text-c27-blue-d [&::-webkit-details-marker]:hidden">
+        <summary class="group flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-display font-bold leading-snug tracking-[-0.015em] text-c27-ink transition-colors group-hover:text-c27-accent-d [&::-webkit-details-marker]:hidden">
           {item.q}
           {/* The +/- glyph is drawn by ::before, not swapped with visibility.
               `transition-all` plus a visibility flip left the old + painted for
-              the whole 200ms while the - was already on top of it. */}
+              the whole transition while the - was already on top of it. */}
           <span
-            class="grid size-7 shrink-0 place-items-center rounded-full bg-c27-blue-soft font-mono text-base font-bold leading-none text-c27-blue transition-[background-color,color,transform] duration-200 group-hover:scale-105"
+            class="grid size-7 shrink-0 place-items-center rounded-full bg-c27-accent-soft font-mono text-base font-bold leading-none text-c27-accent-d transition-[background-color,color] duration-[var(--c27-dur-fast)]"
             aria-hidden="true"
           />
         </summary>
-        <p class="max-w-[70ch] px-5 pb-5 text-body-sm text-c27-ink-2 leading-relaxed">
+        <p class="max-w-[70ch] px-5 pb-5 text-body-sm leading-relaxed text-c27-ink-2">
           {item.a}
         </p>
       </details>
@@ -60,7 +60,7 @@ const { items } = Astro.props;
   }
 
   details[open] summary span {
-    background: var(--c27-blue);
+    background: var(--c27-accent);
     color: white;
   }
 </style>

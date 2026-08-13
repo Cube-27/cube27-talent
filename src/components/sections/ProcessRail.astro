@@ -1,0 +1,327 @@
+---
+import { PROCESS_STEPS } from "@/data/process";
+import Icon from "@/components/ui/Icon.astro";
+
+/**
+ * The nine steps — the centrepiece of the site. Plan §6.1, design system §5.4.
+ *
+ * With hover motion banned everywhere else (design system rule 1), this is
+ * where the whole animation budget goes. Two things had to be true at once:
+ * the section has to read as substantial, and a visitor must be able to see
+ * every panel without doing anything. So it autoplays, and it is also a fully
+ * operable tablist.
+ *
+ * Autoplay rules, all deliberate:
+ *  - starts only when the section is half visible, so it is not already
+ *    finished by the time anyone scrolls to it;
+ *  - stops PERMANENTLY on the first real interaction — it must never fight
+ *    someone who has taken control;
+ *  - pauses on pointer-over and when the tab is hidden;
+ *  - stops at step nine instead of looping, because a loop pulls the eye back
+ *    to a section the reader has finished with;
+ *  - never calls .focus(), which would rip the caret out of the page mid-scroll.
+ */
+
+const DEFAULT_INDEX = 0;
+const AUTOPLAY_MS = 5000;
+
+const STEP_ICONS: Record<string, string> = {
+  "01": "target",
+  "02": "search",
+  "03": "chat",
+  "04": "code",
+  "05": "person",
+  "06": "shield",
+  "07": "users",
+  "08": "briefcase",
+  "09": "compass",
+};
+---
+
+<div class="grid gap-8" data-process data-autoplay-ms={AUTOPLAY_MS}>
+  {/* --- the rail ------------------------------------------------------ */}
+  {
+    /* min-w-0: this is a grid item, and a grid item's default `min-width: auto`
+      refuses to shrink below its content. Without it the scroller cannot
+      contain the nine nodes and the whole page scrolls sideways on mobile
+      instead — measured at 725px of overflow before this was added. */
+  }
+  <div class="c27-rise min-w-0">
+    {
+      /* Two elements, deliberately. The outer one scrolls; the inner one is
+        the tablist and the layout row.
+
+        The track has to live on the element the nodes lay out in. Anchoring it
+        to the outer wrapper looked right at `sm` and up — where the tabs are
+        flex-1 and fill the width — but on mobile the nodes scroll and a track
+        fixed to the viewport does not follow them, so the fill pointed at the
+        wrong step.
+
+        `role="tablist"` sits on the inner element rather than the scroller so
+        the tabs stay its direct children: a plain div between a tablist and
+        its tabs breaks ownership in the accessibility tree. The track is a
+        non-tab child, which is why it is `aria-hidden` — that removes it from
+        the tree entirely. */
+    }
+    <div
+      class="snap-x snap-mandatory overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      data-rail-scroller
+    >
+      <div
+        class="relative flex min-w-full"
+        role="tablist"
+        aria-label="Our nine-step process"
+        aria-orientation="horizontal"
+      >
+        {
+          /* 2px, not 1px: at a hairline the violet fill was indistinguishable
+            from the track at normal viewing distance, so the one thing the
+            rail exists to show — how far along the process you are — did not
+            read. */
+        }
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-x-0 top-[calc(1.5rem-1px)] h-0.5 rounded-full bg-c27-line-deep"
+        >
+          <i
+            data-rail-fill
+            class="block h-full origin-left bg-c27-on-deep-accent transition-[width] duration-500 ease-[var(--c27-ease)]"
+            style="width:0%"></i>
+        </div>
+
+        {
+          PROCESS_STEPS.map((step, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`step-tab-${step.n}`}
+              aria-controls={`step-panel-${step.n}`}
+              aria-selected={i === DEFAULT_INDEX ? "true" : "false"}
+              tabindex={i === DEFAULT_INDEX ? 0 : -1}
+              aria-label={`${step.name}, step ${i + 1} of ${PROCESS_STEPS.length}`}
+              data-complete={i < DEFAULT_INDEX ? "true" : undefined}
+              class="group relative flex w-[7.5rem] shrink-0 snap-start flex-col items-center gap-3 px-1.5 text-center focus-visible:rounded-c27-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-auto sm:min-w-[6.5rem] sm:flex-1"
+            >
+              {/* Node. Upcoming = hairline; complete = tinted; active = solid
+                white. No lift, no scale — the state change is entirely fill. */}
+              <span class="relative z-[1] grid size-12 place-items-center rounded-full border border-c27-line-deep bg-c27-deep text-c27-on-deep-3 transition-[background-color,border-color,color] duration-300 [button[aria-selected='true']_&]:border-white [button[aria-selected='true']_&]:bg-white [button[aria-selected='true']_&]:text-c27-deep [button[data-complete='true']_&]:border-c27-on-deep-accent/50 [button[data-complete='true']_&]:text-c27-on-deep-accent">
+                <Icon name={STEP_ICONS[step.n]} size={19} />
+              </span>
+              <span class="font-display text-caption font-semibold leading-snug text-c27-on-deep-3 transition-colors duration-300 group-hover:text-c27-on-deep-2 [button[aria-selected='true']_&]:text-c27-on-deep [button[data-complete='true']_&]:text-c27-on-deep-2">
+                {step.short}
+              </span>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  {/* --- the panels ---------------------------------------------------- */}
+  <div
+    class="c27-rise rounded-c27-lg border border-c27-line-deep bg-c27-deep-2 p-[clamp(1.75rem,3.5vw,2.75rem)]"
+    style="--c27-d:100ms"
+  >
+    {
+      PROCESS_STEPS.map((step, i) => (
+        <div
+          role="tabpanel"
+          id={`step-panel-${step.n}`}
+          aria-labelledby={`step-tab-${step.n}`}
+          hidden={i !== DEFAULT_INDEX}
+          data-step-panel
+          class="grid gap-7 motion-safe:animate-[c27-panel-in_360ms_var(--c27-ease)] md:grid-cols-[minmax(0,1fr)_minmax(15rem,0.6fr)] md:items-start"
+        >
+          <div>
+            <span class="font-mono text-caption font-bold tracking-[0.18em] text-c27-on-deep-accent">
+              {step.n}
+            </span>
+            <h3 class="c27-h3-lg mt-2 font-bold text-c27-on-deep">
+              {step.name}
+            </h3>
+            <p class="mt-3 max-w-[56ch] text-body leading-relaxed text-c27-on-deep-2">
+              {step.detail}
+            </p>
+          </div>
+
+          <ul class="grid gap-3 border-t border-c27-line-deep pt-6 md:border-l md:border-t-0 md:pl-7 md:pt-1">
+            {step.points.map((point) => (
+              <li class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-2.5 text-body-sm leading-relaxed text-c27-on-deep-2">
+                <span
+                  class="font-bold text-c27-on-deep-accent"
+                  aria-hidden="true"
+                >
+                  &#10003;
+                </span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-process]")) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>("[data-step-panel]")];
+    // The scroller, not the tablist: the tablist is now the inner row, so it
+    // is the thing that scrolls WITHIN this element rather than the thing that
+    // scrolls. Tab offsets are measured against the inner row, which is the
+    // scroll content and starts at 0, so they map straight onto scrollLeft.
+    const scroller = root.querySelector<HTMLElement>("[data-rail-scroller]");
+    const fill = root.querySelector<HTMLElement>("[data-rail-fill]");
+    if (!tabs.length) continue;
+
+    const autoplayMs = Number(root.dataset.autoplayMs) || 5000;
+    let index = tabs.findIndex(
+      (tab) => tab.getAttribute("aria-selected") === "true",
+    );
+    if (index < 0) index = 0;
+
+    let timer: number | undefined;
+    /** Set once the visitor takes over. Never unset. */
+    let surrendered = false;
+    let hovering = false;
+
+    const stopTimer = () => {
+      if (timer !== undefined) {
+        window.clearInterval(timer);
+        timer = undefined;
+      }
+    };
+
+    const startTimer = () => {
+      if (surrendered || reduced.matches || hovering || document.hidden) return;
+      if (timer !== undefined) return;
+      // Already at the end: nothing left to advance to.
+      if (index >= tabs.length - 1) return;
+      timer = window.setInterval(() => {
+        if (index >= tabs.length - 1) {
+          stopTimer();
+          return;
+        }
+        select(index + 1);
+      }, autoplayMs);
+    };
+
+    /** Suppresses smooth scrolling for the very first paint. See below. */
+    let firstPaint = true;
+
+    /**
+     * Paints a step. `focus` is only ever true for keyboard navigation —
+     * autoplay must not move focus.
+     */
+    function select(next: number, focus = false) {
+      index = next;
+      tabs.forEach((tab, i) => {
+        tab.setAttribute("aria-selected", String(i === next));
+        tab.tabIndex = i === next ? 0 : -1;
+        if (i < next) tab.setAttribute("data-complete", "true");
+        else tab.removeAttribute("data-complete");
+      });
+      panels.forEach((panel, i) => {
+        panel.hidden = i !== next;
+      });
+
+      if (fill) {
+        // Nodes are evenly distributed, so the fill lands on the active node's
+        // centre at (i + 0.5) / n. Step one shows a short leading stub rather
+        // than an empty track, which reads as "started" instead of "broken".
+        fill.style.width = `${((next + 0.5) / tabs.length) * 100}%`;
+      }
+
+      // Keep the active node in view in the horizontally scrolling rail
+      // without scrolling the page itself.
+      //
+      // The first paint is deliberately instant. A snap container that
+      // animates its initial scroll during load makes Chrome report no LCP
+      // candidate for the whole page — the same failure the expertise selector
+      // documents — and this section is well above the fold.
+      if (scroller) {
+        const tab = tabs[next];
+        scroller.scrollTo({
+          left: tab.offsetLeft - (scroller.clientWidth - tab.offsetWidth) / 2,
+          behavior: firstPaint || reduced.matches ? "auto" : "smooth",
+        });
+      }
+      firstPaint = false;
+
+      if (focus) tabs[next].focus();
+    }
+
+    /** First real interaction hands control over for good. */
+    const surrender = () => {
+      surrendered = true;
+      stopTimer();
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => {
+        surrender();
+        select(i);
+      });
+      tab.addEventListener("focus", surrender);
+      tab.addEventListener("keydown", (event) => {
+        if (event.key === "Home" || event.key === "End") {
+          event.preventDefault();
+          surrender();
+          select(event.key === "Home" ? 0 : tabs.length - 1, true);
+          return;
+        }
+        const delta =
+          event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+        if (!delta) return;
+        event.preventDefault();
+        surrender();
+        select((i + delta + tabs.length) % tabs.length, true);
+      });
+    });
+
+    root.addEventListener("pointerenter", () => {
+      hovering = true;
+      stopTimer();
+    });
+    root.addEventListener("pointerleave", () => {
+      hovering = false;
+      startTimer();
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stopTimer();
+      else startTimer();
+    });
+
+    // Paint the initial state so the rail fill is correct on first render.
+    select(index);
+
+    // Autoplay waits until the section is genuinely on screen — otherwise it
+    // would have run to the end before anyone scrolled down to it.
+    if ("IntersectionObserver" in window && !reduced.matches) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            observer.disconnect();
+            startTimer();
+          }
+        },
+        { threshold: 0.5 },
+      );
+      observer.observe(root);
+    }
+  }
+</script>
+
+<style is:global>
+  @keyframes c27-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+</style>

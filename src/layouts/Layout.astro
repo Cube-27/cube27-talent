@@ -47,7 +47,11 @@ const canonicalUrl = canonical
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <link rel="icon" href="/favicon.ico" sizes="any" />
-    <meta name="theme-color" content="#173b86" />
+    {
+      /* Matches --c27-deep, the colour of the announcement strip that sits at
+        the very top of the page. */
+    }
+    <meta name="theme-color" content="#171325" />
     <meta name="generator" content="Astro" />
 
     {
@@ -98,7 +102,7 @@ const canonicalUrl = canonical
   <body>
     <a
       href="#main"
-      class="sr-only absolute left-4 top-4 z-[100] rounded-c27-sm bg-c27-surface px-4 py-2 font-semibold text-c27-ink shadow-c27-lg focus:not-sr-only"
+      class="sr-only absolute left-4 top-4 z-[100] rounded-c27-sm bg-c27-surface px-4 py-2 font-semibold text-c27-ink shadow-c27-overlay focus:not-sr-only"
       >Skip to content</a
     >
 

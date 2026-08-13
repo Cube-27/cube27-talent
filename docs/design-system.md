@@ -1,252 +1,213 @@
-# Cube27 Talent — Design System
+# Design System — flat, vibrant, colour-as-elevation
 
-**Status:** Locked for V1 implementation
-**Prepared:** 12 August 2026
-**Source of truth for:** colour, type, spacing, radius, elevation, motion, and every shared component on `talent.cube27.com`
+**Status:** Locked
+**Prepared:** 13 August 2026
+**Supersedes:** the previous design-system document in full
+**Source of truth in code:** `src/styles/tokens.css` and the `@layer components` block in `src/styles/globals.css`
 
-> This document governs implementation. If a page needs something not defined here, the token or component is added to this file **first**, then used. Nothing is styled ad hoc in a page file. Priority when documents conflict: **invariants → V1 plan → this design system → implementation detail**.
-
----
-
-## 1. Principles
-
-1. **One accent job per colour.** Green means "act" (primary CTA) and "verified". Blue means "Cube27 / informational". Navy is structure. Nothing else is coloured.
-2. **Evidence over decoration.** Visual weight goes to the candidate snapshot, the responsibility table, and the process — the things that prove the model. No decorative imagery.
-3. **No unverified proof.** Any number rendered on the site comes from `src/data/proof.ts`, and every entry there carries a `verified` flag. Unverified entries do not render.
-4. **Third person in headings.** No "we", "us", "our", "you", "your" in any `h1`–`h4`. Body copy may use natural language.
-5. **Both funnels are always reachable.** Employer and candidate CTAs appear together in the header, the hero, and the audience split.
-6. **Motion is a reveal, not a performance.** Entrance fades and one underline draw. Everything respects `prefers-reduced-motion`.
+> Reference: Superhuman for the flat surface language and colour-as-elevation, Toptal for the professional register. Both build depth with tint and hairlines rather than shadow, and neither lifts anything on hover.
 
 ---
 
-## 2. Colour tokens
+## 1. The seven hard rules
 
-Defined in `src/styles/tokens.css` as CSS custom properties and exposed to Tailwind v4 through `@theme inline`. Tailwind utilities read `--color-c27-*`; raw values live on `--c27-*`.
+These are not preferences. A change that breaks one of them is a bug.
 
-### 2.1 Surfaces
+1. **No hover lift.** No `translateY`, no `scale`, no `transform` of any kind on `:hover`, anywhere. Hover changes a fill tint, a border colour or an underline. Nothing moves.
+2. **Elevation is colour.** A raised surface is a tint step against its ground — a white card on a tinted section, a tinted card on a white section. A card never carries a drop shadow.
+3. **One shadow, for overlays only.** `--c27-shadow-overlay` belongs to things that genuinely float above the page: the stuck header, select menus, the mobile nav sheet. Never a content card.
+4. **Hairlines.** A 1px `--c27-line` is the default boundary between surfaces. It does more work than any shadow.
+5. **One accent.** Indigo carries every action, link and active state. Tints carry grouping and rhythm. Nothing else is coloured — no success green, no warning amber, no second brand colour.
+6. **No gradients on content surfaces.** Flat fills only.
+7. **The motion budget goes to the nine steps.** With hover motion gone, the process rail is where the site spends its animation. Everywhere else: a single fade-and-rise on entry, and nothing more.
 
-| Token             | Value     | Use                                                      |
-| ----------------- | --------- | -------------------------------------------------------- |
-| `--c27-ground`    | `#fafafa` | Page background                                          |
-| `--c27-surface`   | `#ffffff` | Cards, panels, form fields, alternating sections         |
-| `--c27-surface-2` | `#f8fafc` | Recessed areas: table head, snapshot footer, score boxes |
-| `--c27-tint`      | `#eef1f8` | Lavender tint: bars, badges, candidate audience card     |
-| `--c27-tint-2`    | `#f4f6fc` | Lightest tint: form section background                   |
-| `--c27-navy`      | `#0b192c` | Announcement bar, footer, dark band base                 |
-| `--c27-navy-2`    | `#16305c` | Dark band gradient end                                   |
+---
 
-### 2.2 Text
+## 2. Colour
 
-| Token         | Value     | Use                    | Min size |
-| ------------- | --------- | ---------------------- | -------- |
-| `--c27-ink`   | `#0b192c` | Headings, primary body | —        |
-| `--c27-ink-2` | `#56617a` | Secondary body, labels | 14px     |
-| `--c27-ink-3` | `#6b7590` | Tertiary, disclaimers  | 14px     |
+Every ratio below is measured, not estimated. Recompute before changing any value.
 
-`--c27-ink-3` was darkened from `#8b93ab` to clear 4.5:1 on `--c27-ground`. Do not lighten it.
+### 2.1 Grounds
+
+| Token               | Value     | Role                             |
+| ------------------- | --------- | -------------------------------- |
+| `--c27-ground`      | `#ffffff` | Page background                  |
+| `--c27-surface`     | `#ffffff` | Card on a tinted section         |
+| `--c27-surface-2`   | `#f7f7fb` | Card on a white section          |
+| `--c27-tint-violet` | `#ece9fe` | Primary accent panel             |
+| `--c27-tint-mint`   | `#e4f6ec` | Second panel in a set            |
+| `--c27-tint-peach`  | `#fdeee4` | Third panel in a set             |
+| `--c27-tint-sky`    | `#e4eefe` | Fourth panel in a set            |
+| `--c27-deep`        | `#171325` | Nine-step section, footer        |
+| `--c27-deep-2`      | `#241d3d` | Raised block inside a deep panel |
+
+The four tints exist so a set of cards can be differentiated by colour instead of by elevation. Cycle them in order; do not invent a fifth.
+
+### 2.2 Ink
+
+| Token         | Value     | On white | On the darkest tint (`#ece9fe`) | Use                    |
+| ------------- | --------- | -------- | ------------------------------- | ---------------------- |
+| `--c27-ink`   | `#1c1a22` | 17.21    | 14.47                           | Headings and body      |
+| `--c27-ink-2` | `#55535f` | 7.53     | 6.33                            | Secondary body, ledes  |
+| `--c27-ink-3` | `#6b6878` | 5.42     | 4.55                            | Captions and meta only |
+
+`--c27-ink-3` is the floor of the system. It clears AA on all six light grounds with 4.55 to spare at worst, and it must never be used below `--c27-text-caption`, nor for anything a visitor has to read to complete a task.
+
+`#7a7786` was tested first and rejected: 3.67 on the violet tint, a clear AA failure.
 
 ### 2.3 Accent
 
-| Token             | Value     | Use                                                               |
-| ----------------- | --------- | ----------------------------------------------------------------- |
-| `--c27-green`     | `#10b45f` | Primary CTA background, verified marks                            |
-| `--c27-green-d`   | `#0d7a42` | CTA hover, green text on light (`#10b45f` fails contrast as text) |
-| `--c27-blue`      | `#2563eb` | Icons, links, informational accent, secondary CTA                 |
-| `--c27-blue-d`    | `#1d4ed8` | Blue hover, blue text on tint                                     |
-| `--c27-blue-soft` | `#e8eefd` | Icon plates, selected chips, note blocks                          |
-| `--c27-amber`     | `#b45309` | Pending/conditional markers only. Never a CTA                     |
+| Token               | Value     | Notes                                                                                                                                                                               |
+| ------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--c27-accent`      | `#4f39f6` | 6.46 on white, 5.43 on the darkest tint, and **6.46 for white text on it as a fill**. One value serves as link text and as the primary button fill, which is why there is only one. |
+| `--c27-accent-d`    | `#3d28d4` | Hover and press. 8.56 under white text.                                                                                                                                             |
+| `--c27-accent-soft` | `#ece9fe` | Accent-tinted fill — same value as `--c27-tint-violet`, named for intent.                                                                                                           |
 
 ### 2.4 Lines
 
-| Token             | Value                    | Use                                            |
-| ----------------- | ------------------------ | ---------------------------------------------- |
-| `--c27-line`      | `#e2e8f0`                | Card borders, section dividers, hero grid wash |
-| `--c27-line-2`    | `#eef1f6`                | Interior rules inside a card                   |
-| `--c27-line-dark` | `rgba(255,255,255,0.18)` | Rules on navy                                  |
+| Token             | Value                    | Role                            |
+| ----------------- | ------------------------ | ------------------------------- |
+| `--c27-line`      | `#e6e5ee`                | Default hairline                |
+| `--c27-line-2`    | `#f1f0f6`                | Internal dividers inside a card |
+| `--c27-line-deep` | `rgba(255,255,255,0.12)` | Hairline on a deep panel        |
 
-### 2.5 On-navy text
+### 2.5 On deep panels
 
-| Token                  | Value                    | Notes                                |
-| ---------------------- | ------------------------ | ------------------------------------ |
-| `--c27-on-navy`        | `#ffffff`                | Headings                             |
-| `--c27-on-navy-2`      | `rgba(255,255,255,0.78)` | Body — raised from 0.66 for contrast |
-| `--c27-on-navy-3`      | `rgba(255,255,255,0.62)` | Meta labels — floor. Never go below  |
-| `--c27-on-navy-accent` | `#a8c3ff`                | Labels on navy                       |
+The two alpha tokens are measured **composited** over their ground — the alpha value itself tells you nothing about contrast, so the ratios below are the flattened colours.
 
-**Contrast rule:** every text/background pair must clear WCAG 2.2 AA — 4.5:1 for body, 3:1 for text ≥24px or ≥19px bold. The three tokens above are the tested floors on navy.
+| Token                  | Value                    | On `--c27-deep` | On `--c27-deep-2` | Use                      |
+| ---------------------- | ------------------------ | --------------- | ----------------- | ------------------------ |
+| `--c27-on-deep`        | `#ffffff`                | 18.16           | 15.93             | Headings, active state   |
+| `--c27-on-deep-2`      | `rgba(255,255,255,0.82)` | 12.36           | 11.07             | Body                     |
+| `--c27-on-deep-3`      | `rgba(255,255,255,0.60)` | 7.07            | 6.56              | Meta only, never body    |
+| `--c27-on-deep-accent` | `#c4b5fd`                | 9.84            | 8.63              | Labels, active rail node |
 
----
+### 2.6 Elevation
 
-## 3. Typography
+```css
+--c27-shadow-overlay: 0 8px 28px -12px rgba(23, 19, 37, 0.22);
+```
 
-Two families, self-hosted as variable `woff2` in `public/fonts/`, preloaded in `Layout.astro`.
-
-| Role               | Family      | Token                | Weight          | Tracking             |
-| ------------------ | ----------- | -------------------- | --------------- | -------------------- |
-| Display / headings | Satoshi     | `--c27-font-display` | 700             | −0.03em to −0.038em  |
-| Body / UI          | Switzer     | `--c27-font-body`    | 400 / 500 / 600 | 0                    |
-| Data / code        | System mono | `--c27-font-mono`    | 500             | 0.1em when uppercase |
-
-### 3.1 Scale
-
-| Name      | Size                           | Line | Weight | Used for                             |
-| --------- | ------------------------------ | ---- | ------ | ------------------------------------ |
-| `display` | `clamp(2.1rem, 4.1vw, 3.4rem)` | 1.06 | 700    | `h1`, once per page                  |
-| `h2`      | `clamp(1.6rem, 2.9vw, 2.3rem)` | 1.14 | 700    | Section headings                     |
-| `h3-lg`   | `1.5rem`                       | 1.2  | 700    | Audience cards, process detail       |
-| `h3`      | `1.0625rem`                    | 1.3  | 700    | Card titles                          |
-| `body`    | `1rem`                         | 1.55 | 400    | Default                              |
-| `body-sm` | `0.9375rem`                    | 1.5  | 400    | Card copy, table cells, lists        |
-| `caption` | `0.8125rem`                    | 1.45 | 400    | Meta, disclaimers, form labels       |
-| `label`   | `0.75rem`                      | 1.2  | 600    | Uppercase eyebrows, `0.1em` tracking |
-| `micro`   | `0.6875rem`                    | 1.2  | 700    | Badges, owner tags, `0.1em` tracking |
-
-**Hero size is capped at `3.4rem`.** Do not raise it.
-
-### 3.2 Measure
-
-Headings `text-wrap: balance`, max 17ch for `h1`, 20ch for `h2`. Body max 52ch, lede max 44ch.
+The only shadow in the system. Rule 3 governs where it may appear.
 
 ---
 
-## 4. Spacing, radius, elevation
+## 3. Type
 
-**Spacing** uses the Tailwind 4px scale. Section rhythm is one token:
+Faces are unchanged: **Figtree** for display, **Switzer** for body, both self-hosted and preloaded.
 
-- `--c27-pad-section`: `clamp(3.5rem, 6.5vw, 6rem)` vertical, on every `<section>`
-- `--c27-gutter`: `clamp(1.25rem, 4vw, 3.5rem)` horizontal
-- Container: `max-width: 78rem`; narrow container `60rem` for FAQ and legal
+| Token                | Value                           | Role                    |
+| -------------------- | ------------------------------- | ----------------------- |
+| `--c27-text-display` | `clamp(2.4rem, 5vw, 4rem)`      | H1                      |
+| `--c27-text-h2`      | `clamp(1.75rem, 3.2vw, 2.6rem)` | Section headings        |
+| `--c27-text-h3-lg`   | `1.5rem`                        | Panel headings          |
+| `--c27-text-h3`      | `1.0625rem`                     | Card headings           |
+| `--c27-text-body`    | `1rem`                          | Body                    |
+| `--c27-text-body-sm` | `0.9375rem`                     | Dense body, form fields |
+| `--c27-text-caption` | `0.8125rem`                     | Captions, labels        |
+| `--c27-text-label`   | `0.75rem`                       | Uppercase eyebrow       |
+| `--c27-text-micro`   | `0.6875rem`                     | Badges only             |
 
-**Radius**
+Headings are `font-weight: 600`, `letter-spacing: -0.03em`, `text-wrap: balance`. Display runs tighter at `-0.04em` — flat systems can carry more negative tracking than shadowed ones because there is no blur softening the edges.
 
-| Token             | Value   | Use                                        |
-| ----------------- | ------- | ------------------------------------------ |
-| `--c27-radius-sm` | `8px`   | Buttons, inputs, icon plates, small panels |
-| `--c27-radius`    | `10px`  | FAQ rows, process steps                    |
-| `--c27-radius-lg` | `16px`  | Cards, tables, major panels                |
-| pill              | `999px` | Chips, badges, status pills                |
-
-**Elevation** — two shadows only. Borders do most of the separation work.
-
-| Token             | Value                                                                    | Use                |
-| ----------------- | ------------------------------------------------------------------------ | ------------------ |
-| `--c27-shadow-sm` | `0 1px 2px rgb(11 25 44 / 0.04), 0 10px 30px -22px rgb(11 25 44 / 0.25)` | Floating chips     |
-| `--c27-shadow-lg` | `0 2px 6px rgb(11 25 44 / 0.05), 0 32px 60px -34px rgb(11 25 44 / 0.4)`  | Snapshot card only |
-
-Cards use `1px solid var(--c27-line)` and **no** shadow. The snapshot card is the single elevated object on the page.
+Measures: display 17ch, h2 24ch, lede 52ch, body 68ch.
 
 ---
 
-## 5. Motion
+## 4. Space, radius, layout
 
-| Name           | Value                                                         |
-| -------------- | ------------------------------------------------------------- |
-| Ease           | `cubic-bezier(0.22, 1, 0.36, 1)`                              |
-| Reveal         | `opacity` + `translateY(16px)`, 620ms, stagger 90ms via `--d` |
-| Underline draw | `background-size` 0 → 100%, 700ms, 450ms delay                |
-| Bar fill       | `scaleX` 0 → 1, 900ms, staggered via `--bd`                   |
-| Hover          | 180ms on colour, `translateY(-1px)` on buttons                |
+```css
+:root {
+  --c27-gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --c27-pad-section: clamp(4rem, 7vw, 7rem);
+  --c27-container: 78rem;
+  --c27-container-narrow: 60rem;
 
-All of the above sit inside `@media (prefers-reduced-motion: no-preference)`. Under `reduce`, revealed elements render at full opacity with no transform and bars render filled. **No parallax, no scroll-jacking, no autoplaying loops except the two hero chips.**
+  --c27-radius-sm: 10px; /* inputs, chips, small controls */
+  --c27-radius: 14px; /* cards, buttons */
+  --c27-radius-lg: 20px; /* panels, form containers */
+}
+```
 
----
-
-## 6. Components
-
-Every component below exists as one Astro file. Pages compose them; pages never restyle them.
-
-### 6.1 Button — `components/ui/Button.astro`
-
-| Variant       | Background      | Text                                | Use                                |
-| ------------- | --------------- | ----------------------------------- | ---------------------------------- |
-| `primary`     | `--c27-green`   | white                               | Employer CTA. One per section, max |
-| `blue`        | `--c27-blue`    | white                               | Candidate CTA                      |
-| `line`        | `--c27-surface` | `--c27-ink`, 1px `#cbd5e1`          | Secondary                          |
-| `line-invert` | transparent     | white, 1px `rgba(255,255,255,0.32)` | Secondary on navy                  |
-
-Sizes `md` (0.8rem/1.35rem, 15px) and `sm` (0.55rem/1rem, 14px). Radius `--c27-radius-sm`, weight 700. Optional trailing `→` that translates 3px on hover.
-
-### 6.2 Section shell — `components/ui/Section.astro`
-
-Props: `id`, `tone` (`ground` | `surface` | `tint` | `dark`), `bordered`, `narrow`. Applies padding, container, background, and top/bottom hairlines. **No page sets its own section padding.**
-
-### 6.3 Section head — `components/ui/SectionHead.astro`
-
-Label (uppercase, blue) → `h2` → optional lede. Max 42rem, bottom margin `clamp(2rem, 4vw, 3rem)`. Every content section starts with one.
-
-### 6.4 Snapshot card — `components/ui/SnapshotCard.astro`
-
-The candidate profile template. **Always carries the `Template` badge and the "Not a live candidate" line** — invariant 32 forbids anything that reads as live inventory. Structure: header (icon, role, badge) → two score boxes → three progress bars → interviewer note → footer with verified stamp.
-
-### 6.5 Stat — `components/ui/Stat.astro`
-
-Value in Satoshi 800, label below in `body-sm`. Renders **only** when its `proof.ts` entry is `verified: true`.
-
-### 6.6 Responsibility table — `components/sections/ResponsibilityTable.astro`
-
-Three columns: Responsibility / Cube27 / Client. Green check for Cube27, blue check for Client, em dash for neither. Wrapped in `overflow-x: auto`, `min-width: 38rem`.
-
-### 6.7 Tabbed selector — `components/ui/TabSelector.astro`
-
-Side rail of buttons + detail panel. Used by Expertise (8 families) and Process (9 steps). Roving `aria-selected`, arrow-key navigation, `role="tablist"`. Server-renders the first panel so it works without JS.
-
-### 6.8 Form controls — `components/forms/`
-
-Field 8px radius, 1px `#d4dae9`, focus = blue border + 3px `rgb(37 99 235 / 0.14)` ring. Labels 13px/600 above the field. Errors: red text below the field, `aria-describedby`, plus a form-level summary that receives focus. Chips are pill checkboxes; checked = blue border, `--c27-blue-soft` fill.
-
-**Select** — `components/ui/Select.astro`. Never a bare `<select>`: the native control is kept for the OS picker and keyboard behaviour, but `appearance-none` suppresses the platform arrow and a chevron from the icon set replaces it, rotating 180° on focus. `option` sets an explicit background and colour so the open list survives a dark OS theme. Right padding is `2.75rem` to clear the chevron.
-
-### 6.10 Header
-
-Three width bands, because both funnels must stay reachable (§1.5):
-
-| Width          | Nav links         | Find a job        | Hire talent |
-| -------------- | ----------------- | ----------------- | ----------- |
-| ≥ `lg` (64rem) | In the bar        | In the bar        | In the bar  |
-| < `lg`         | In the menu panel | In the menu panel | In the bar  |
-
-The menu is a `<details>` element, so it opens with no JS. Script only adds close-on-Escape, close-on-outside-click, close-on-link, and close when crossing back to `lg`. The strapline under the wordmark hides below `sm`.
-
-### 6.9 FAQ — `components/ui/Faq.astro`
-
-Native `<details>`, 1px border, `+`/`–` in blue. First item open. No JS.
+Tighter than the previous system by 2px at every step. Flat surfaces read sharper with less rounding; softness was doing shadow's job before.
 
 ---
 
-## 7. Page composition
+## 5. Components
 
-Homepage order is fixed:
+### 5.1 Buttons
 
-1. Announcement bar
-2. Header (logo · nav · **Find a job** + **Hire talent**)
-3. Hero — pill, `h1`, lede, 3 verified stats, dual CTA, snapshot card
-4. Inclusions strip
-5. Expertise selector
-6. Model — three cards + responsibility table
-7. Process — dark band, stepper
-8. Audience split — companies / engineers
-9. FAQ
-10. Employer requirement form
-11. Footer
+| Variant   | Rest                                       | Hover                                           | Notes                   |
+| --------- | ------------------------------------------ | ----------------------------------------------- | ----------------------- |
+| `primary` | `--c27-accent` fill, white text            | `--c27-accent-d` fill                           | The one action per view |
+| `line`    | Transparent, `--c27-line` border, ink text | `--c27-accent-soft` fill, `--c27-accent` border | Secondary               |
+| `ghost`   | Transparent, ink-2 text                    | `--c27-surface-2` fill                          | Tertiary, nav           |
+| `on-deep` | White fill, `--c27-deep` text              | `--c27-on-deep-2` fill                          | Inside a deep panel     |
 
-**Not on the site in V1:** commercial/pricing section, client logos, testimonials, case studies, candidate inventory, job board, salary figures, delivery-time claims.
+Colour and border transition at 160ms. **No transform**, no shadow, in any state.
+
+### 5.2 Cards
+
+A card is a fill plus a hairline plus padding. That is the whole recipe.
+
+- On a white section: `--c27-surface-2` fill or a tint, with `--c27-line`.
+- On a tinted section: `--c27-surface` fill, with `--c27-line`.
+- Interactive card hover: border shifts to `--c27-accent`, fill shifts one tint step. Nothing moves.
+
+### 5.3 Form controls
+
+`--c27-radius-sm`, `--c27-surface` fill, `--c27-line` border, `--c27-ink` text at `--c27-text-body-sm`, 3rem tall so inputs and selects align in a row. Focus: `--c27-accent` border plus a 3px `--c27-accent` ring at 15% opacity. The form container is a hairline panel with **no shadow**.
+
+Errors use `#b42318` text on `#fef3f2` with a `#b42318` left rule — the one place a colour outside the accent is permitted, because an error must not read as an action.
+
+### 5.4 The process rail
+
+Documented in full in the V1 plan §6.1 and implemented in `src/components/sections/ProcessRail.astro`. Visual specification:
+
+- Full-bleed `--c27-deep` section.
+- Nine nodes on a rail, with a progress bar filling left to right in `--c27-on-deep-accent`.
+- Node states: upcoming is a hairline circle; complete is filled `--c27-on-deep-accent` at low opacity; active is a solid white circle with `--c27-deep` glyph.
+- Detail panel on `--c27-deep-2` with a `--c27-line-deep` hairline, cross-fading between steps.
+- Autoplay advances every 5s once the section is half visible, stops permanently on first interaction, pauses on pointer-over and when the tab is hidden, and stops at step nine rather than looping.
+- Autoplay never calls `.focus()`.
 
 ---
 
-## 8. Accessibility floor
+## 6. Motion
 
-- WCAG 2.2 AA on every text pair; verify before adding a colour.
-- Visible focus: 2px `--c27-blue`, 3px offset. Never removed.
-- Landmarks: one `main`, `header`, `footer`, `nav[aria-label]`. Heading order never skips.
-- Tap targets ≥ 44px everywhere, enforced with `min-h-11` on buttons, tab rails, process steps and menu rows — padding alone is not sufficient and was previously giving ~36px.
-- Async form states announced via a `role="status"` live region.
-- Everything except the tab selectors and form submission works without JS.
+```css
+:root {
+  --c27-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --c27-dur: 500ms; /* entry reveal */
+  --c27-dur-fast: 160ms; /* colour and border transitions */
+}
+```
+
+**Entry reveal.** Elements opt in with `.c27-rise` and stagger with `style="--c27-d: 90ms"`. An `IntersectionObserver` in `Layout.astro` marks everything already on screen as revealed _before_ switching on the hidden state, then adds `.reveal` to the root — this is what keeps the first screen from painting at `opacity: 0` and losing the LCP candidate. Do not move that logic into CSS.
+
+A small `translateY` on **entry** is allowed and is not a violation of rule 1. Rule 1 governs `:hover`.
+
+**Reduced motion.** `prefers-reduced-motion: reduce` disables every animation and transition site-wide, cancels autoplay, and renders all nine step panels stacked and readable.
 
 ---
 
-## 9. Adding to this system
+## 7. Accessibility
 
-1. Check an existing token or component covers it.
-2. If not, add the token here with its contrast result, then to `tokens.css`.
-3. Build it as a component in `components/ui/`, not inline in a page.
-4. New colours need a stated single job. A fourth accent hue needs a business reason, not a visual one.
+- Focus is never removed: 2px `--c27-accent` outline at 3px offset, on every interactive element.
+- Every colour pairing in §2 is measured and recorded. Recompute before changing a value; do not estimate.
+- The process rail keeps full `tablist`/`tab`/`tabpanel` semantics, roving `tabindex`, and arrow/Home/End navigation.
+- Tab panels ship with `hidden` and are un-hidden by CSS when the root lacks `.js`, so a scripted visit paints one panel and an unscripted visit paints all nine.
+- No horizontal overflow at 375px. Wide content scrolls inside its own container.
+
+---
+
+## 8. Writing
+
+Governed by the invariants' four rules. Additionally:
+
+- **First person plural.** We, our team, our engineers. Never the company name (invariant rule 0.1).
+- **Headings are statements**, not labels. "Nine steps. One team that stays." not "Our Process".
+- **Sentence case** everywhere except the uppercase eyebrow label.
+- **British spelling.**
+- Short sentences. Concrete nouns. No narrative framing, no rhetorical questions, no "imagine", no invented customer stories.
+- Numerals for counts and figures.

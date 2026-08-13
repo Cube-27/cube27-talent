@@ -3,13 +3,15 @@ import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/ui/Section.astro";
 import SectionHead from "@/components/ui/SectionHead.astro";
 import Hero from "@/components/sections/Hero.astro";
-import Inclusions from "@/components/sections/Inclusions.astro";
+import ProcessRail from "@/components/sections/ProcessRail.astro";
+import Lifecycle from "@/components/sections/Lifecycle.astro";
 import ExpertiseSelector from "@/components/sections/ExpertiseSelector.astro";
-import ModelCards from "@/components/sections/ModelCards.astro";
-import ProcessStepper from "@/components/sections/ProcessStepper.astro";
+import SecurityTeams from "@/components/sections/SecurityTeams.astro";
+import LeadershipHiring from "@/components/sections/LeadershipHiring.astro";
 import AudienceSplit from "@/components/sections/AudienceSplit.astro";
 import Faq from "@/components/ui/Faq.astro";
 import { EMPLOYER_FAQS } from "@/data/faqs";
+import { PROCESS_HEADING, PROCESS_LEDE } from "@/data/process";
 import {
   faqSchema,
   organizationSchema,
@@ -17,8 +19,8 @@ import {
   websiteSchema,
 } from "@/lib/schema";
 
-/* Schemas use only verified facts (plan §16.1) — no employee counts, ratings
-   or awards. The FAQ payload is built from the same array the page renders. */
+/* Schemas use only verified facts — no employee counts, ratings or awards.
+   The FAQ payload is built from the same array the page renders. */
 const jsonLd = [
   organizationSchema(),
   websiteSchema(),
@@ -29,33 +31,45 @@ const jsonLd = [
 
 <Layout jsonLd={jsonLd}>
   <Hero />
-  <Inclusions />
 
-  <Section id="expertise">
+  {
+    /* The centrepiece. Sits immediately after the hero and is the largest,
+      most designed section on the site — plan §9.1. */
+  }
+  <Section id="process" tone="deep">
+    <SectionHead
+      label="How it works"
+      heading={PROCESS_HEADING}
+      lede={PROCESS_LEDE}
+      invert
+    />
+    <ProcessRail />
+  </Section>
+
+  <Section id="lifecycle">
+    <SectionHead
+      label="What you hand over"
+      heading="We take the hiring off your plate — and keep it there"
+      lede="Finding someone is the visible part. Most of the work is everything either side of it."
+    />
+    <Lifecycle />
+  </Section>
+
+  <Section id="expertise" tone="surface" bordered>
     <SectionHead
       label="Expertise"
-      heading="Eight technical families, one partner"
-      lede="Adjacent roles where Cube27 can screen credibly."
+      heading="Whatever the team is missing"
+      lede="Assessment is matched to the discipline. A QA lead, an SRE and a product designer do not sit the same test."
     />
     <ExpertiseSelector />
   </Section>
 
-  <Section id="model" tone="surface" bordered>
-    <SectionHead
-      label="The model"
-      heading="Employment sits with Cube27. Direction sits with the client."
-    />
-    <ModelCards />
+  <Section id="security">
+    <SecurityTeams />
   </Section>
 
-  <Section id="process" tone="dark">
-    <SectionHead
-      label="Process"
-      heading="Nine steps from brief to first day"
-      lede="Assessments are role-appropriate. A QA lead and a product designer do not sit the same test."
-      invert
-    />
-    <ProcessStepper />
+  <Section id="leadership" tone="surface" bordered>
+    <LeadershipHiring />
   </Section>
 
   <Section id="audiences">
@@ -64,7 +78,7 @@ const jsonLd = [
   </Section>
 
   <Section id="faq" tone="surface" bordered narrow>
-    <SectionHead label="FAQ" heading="Frequently asked questions" />
+    <SectionHead label="FAQ" heading="Questions we get asked" />
     <Faq items={EMPLOYER_FAQS} />
   </Section>
 </Layout>

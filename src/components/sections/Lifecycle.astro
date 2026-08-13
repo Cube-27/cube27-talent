@@ -1,0 +1,42 @@
+---
+import Icon from "@/components/ui/Icon.astro";
+import { LIFECYCLE } from "@/data/process";
+
+/**
+ * "What we take off your plate" — plan §9.1.3.
+ *
+ * This is the section where contractual detail would most naturally creep back
+ * in. Invariant rule 0.2 governs every word: benefits only, no mechanics, no
+ * equipment, no employment-entity language, no removal or replacement.
+ *
+ * Four tiles, four tints. The colour IS the elevation (design system rule 2) —
+ * these carry no border and no shadow.
+ */
+
+const TINTS = {
+  violet: "bg-c27-tint-violet",
+  mint: "bg-c27-tint-mint",
+  peach: "bg-c27-tint-peach",
+  sky: "bg-c27-tint-sky",
+} as const;
+---
+
+<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  {
+    LIFECYCLE.map((item, i) => (
+      <div
+        class:list={[
+          "c27-rise grid content-start gap-3 rounded-c27 p-6",
+          TINTS[item.tint],
+        ]}
+        style={`--c27-d:${i * 80}ms`}
+      >
+        <span class="grid size-10 place-items-center rounded-c27-sm bg-c27-surface text-c27-ink">
+          <Icon name={item.icon} size={20} />
+        </span>
+        <h3 class="c27-h3 font-bold text-c27-ink">{item.title}</h3>
+        <p class="text-body-sm leading-relaxed text-c27-ink-2">{item.body}</p>
+      </div>
+    ))
+  }
+</div>

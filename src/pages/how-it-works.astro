@@ -3,28 +3,32 @@ import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/ui/Section.astro";
 import SectionHead from "@/components/ui/SectionHead.astro";
 import HowItWorksHero from "@/components/sections/HowItWorksHero.astro";
-import ModelCards from "@/components/sections/ModelCards.astro";
-import ProcessStepper from "@/components/sections/ProcessStepper.astro";
+import ProcessRail from "@/components/sections/ProcessRail.astro";
+import Lifecycle from "@/components/sections/Lifecycle.astro";
 import AudienceSplit from "@/components/sections/AudienceSplit.astro";
+import { PROCESS_HEADING, PROCESS_LEDE } from "@/data/process";
 import { ROUTES, SITE_CONFIG } from "@/site-config";
 import { breadcrumbSchema } from "@/lib/schema";
 
 const title = `How it works | ${SITE_CONFIG.brand}`;
 const description =
-  "Cube27 screens, technically interviews, employs and payrolls the engineer. The client interviews, selects, directs the work and decides on continuation.";
+  "Nine steps from brief to first day. What we do at each stage, what you decide, and what happens after someone starts.";
 
-/* Candidate-side flow, plan §12.4. */
+/* The candidate's view of the same route. Deliberately plainer than the
+   employer rail — an applicant wants to know what happens next, not how the
+   service is structured. Invariant rules 0.1 and 0.2 apply: no company name,
+   nothing contractual. */
 const candidateFlow = [
-  "Application received",
-  "Profile review",
-  "HR screen",
-  "Technical assessment",
-  "Technical interview",
-  "Reference and background checks",
-  "Matched to a client requirement",
-  "Client interview",
-  "Cube27 employment offer",
-  "Onboarding and assignment",
+  "You send us a profile",
+  "We read it properly",
+  "First conversation",
+  "A task matched to your discipline, recorded",
+  "Technical interview with a practitioner",
+  "References, with your written consent",
+  "Matched to a live requirement",
+  "You meet the client",
+  "Offer",
+  "Onboarding and first day",
 ];
 
 const jsonLd = [breadcrumbSchema([{ name: "How it works", path: ROUTES.how }])];
@@ -33,37 +37,29 @@ const jsonLd = [breadcrumbSchema([{ name: "How it works", path: ROUTES.how }])];
 <Layout title={title} description={description} jsonLd={jsonLd}>
   <HowItWorksHero />
 
-  <Section tone="surface" bordered>
+  <Section tone="deep" bordered>
     <SectionHead
-      label="The model"
-      heading="Employment sits with Cube27. Direction sits with the client."
-    />
-    <ModelCards />
-  </Section>
-
-  <Section tone="dark">
-    <SectionHead
-      label="Client flow"
-      heading="Nine steps from brief to first day"
-      lede="Assessments are role-appropriate. A QA lead and a product designer do not sit the same test."
+      label="If you are hiring"
+      heading={PROCESS_HEADING}
+      lede={PROCESS_LEDE}
       invert
     />
-    <ProcessStepper />
+    <ProcessRail />
   </Section>
 
   <Section>
     <SectionHead
-      label="Candidate flow"
-      heading="The route into a Cube27 assignment"
-      lede="No stage is skipped, and no stage guarantees the next one."
+      label="If you are applying"
+      heading="What happens after you send us a profile"
+      lede="No stage is skipped, and no stage guarantees the next one. You will know where you stand at each of them."
     />
     <ol
-      class="c27-rise grid gap-px overflow-hidden rounded-c27-lg border border-c27-line bg-c27-line shadow-c27-lg sm:grid-cols-2"
+      class="c27-rise grid gap-px overflow-hidden rounded-c27-lg border border-c27-line bg-c27-line sm:grid-cols-2"
     >
       {
         candidateFlow.map((step, i) => (
           <li class="flex items-baseline gap-3.5 bg-c27-surface px-5 py-4">
-            <span class="font-display text-caption font-bold tabular-nums text-c27-blue">
+            <span class="font-display text-caption font-bold tabular-nums text-c27-accent">
               {String(i + 1).padStart(2, "0")}
             </span>
             <span class="text-body-sm">{step}</span>
@@ -74,6 +70,15 @@ const jsonLd = [breadcrumbSchema([{ name: "How it works", path: ROUTES.how }])];
   </Section>
 
   <Section tone="surface" bordered>
+    <SectionHead
+      label="What you hand over"
+      heading="Everything either side of the hire"
+      lede="Finding someone is the visible part. Most of the work is what surrounds it."
+    />
+    <Lifecycle />
+  </Section>
+
+  <Section>
     <SectionHead label="Two ways in" heading="Hiring, or looking?" />
     <AudienceSplit />
   </Section>

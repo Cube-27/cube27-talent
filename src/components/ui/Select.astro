@@ -26,14 +26,14 @@ const { id, name, required = false, class: className = "" } = Astro.props;
     id={id}
     name={name}
     required={required}
-    class="c27-select-native h-12 w-full min-w-0 cursor-pointer appearance-none rounded-c27-sm border border-[#d4dae9] bg-c27-surface pl-3.5 pr-[3.5rem] text-body-sm font-medium text-c27-ink focus:border-c27-blue focus:outline-none focus:ring-[3px] focus:ring-c27-blue/15"
+    class="c27-select-native h-12 w-full min-w-0 cursor-pointer appearance-none rounded-c27-sm border border-[var(--c27-line)] bg-c27-surface pl-3.5 pr-[3.5rem] text-body-sm font-medium text-c27-ink focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15"
   >
     <slot />
   </select>
 
   {/* Chevron for the un-upgraded native control only. */}
   <span
-    class="c27-select-native-arrow pointer-events-none absolute right-1.5 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-md bg-c27-tint text-c27-ink-2"
+    class="c27-select-native-arrow pointer-events-none absolute right-1.5 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-md bg-c27-surface-2 text-c27-ink-2"
   >
     <svg
       width="16"
@@ -109,13 +109,13 @@ const { id, name, required = false, class: className = "" } = Astro.props;
     button.setAttribute("aria-expanded", "false");
     button.setAttribute("aria-controls", listId);
     button.className =
-      "flex h-12 w-full min-w-0 items-center gap-2 rounded-c27-sm border border-[#d4dae9] bg-c27-surface pl-3.5 pr-1.5 text-left text-body-sm font-medium text-c27-ink transition-[border-color,box-shadow] hover:border-[#aab6cf] focus-visible:border-c27-blue focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-c27-blue/15 aria-expanded:border-c27-blue aria-expanded:ring-[3px] aria-expanded:ring-c27-blue/15";
+      "flex h-12 w-full min-w-0 items-center gap-2 rounded-c27-sm border border-[var(--c27-line)] bg-c27-surface pl-3.5 pr-1.5 text-left text-body-sm font-medium text-c27-ink transition-[border-color,box-shadow] hover:border-c27-ink-3 focus-visible:border-c27-accent focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-c27-accent/15 aria-expanded:border-c27-accent aria-expanded:ring-[3px] aria-expanded:ring-c27-accent/15";
 
     const value = document.createElement("span");
     value.className = "flex-1 truncate";
     const arrow = document.createElement("span");
     arrow.className =
-      "grid size-9 shrink-0 place-items-center rounded-md bg-c27-tint text-c27-ink-2 transition-[background-color,color,transform] duration-200";
+      "grid size-9 shrink-0 place-items-center rounded-md bg-c27-surface-2 text-c27-ink-2 transition-[background-color,color,transform] duration-200";
     arrow.innerHTML = CHEVRON;
     button.append(value, arrow);
 
@@ -126,7 +126,7 @@ const { id, name, required = false, class: className = "" } = Astro.props;
     list.tabIndex = -1;
     list.hidden = true;
     list.className =
-      "absolute inset-x-0 top-full z-40 mt-1.5 max-h-64 overflow-y-auto rounded-c27-sm border border-c27-line bg-c27-surface p-1.5 shadow-c27-lg";
+      "absolute inset-x-0 top-full z-40 mt-1.5 max-h-64 overflow-y-auto rounded-c27-sm border border-c27-line bg-c27-surface p-1.5 shadow-c27-overlay";
 
     /** Position within `choices` of the currently selected native option. */
     const activeFromSelection = () =>
@@ -147,7 +147,7 @@ const { id, name, required = false, class: className = "" } = Astro.props;
       const label = document.createElement("span");
       label.textContent = option.textContent;
       const tick = document.createElement("span");
-      tick.className = "text-c27-blue opacity-0";
+      tick.className = "text-c27-accent opacity-0";
       tick.innerHTML = TICK;
       item.append(label, tick);
       list.append(item);
@@ -165,11 +165,11 @@ const { id, name, required = false, class: className = "" } = Astro.props;
         const active = i === activeIndex;
         item.setAttribute("aria-selected", String(selected));
         tick.classList.toggle("opacity-0", !selected);
-        item.classList.toggle("bg-c27-blue-soft", selected);
+        item.classList.toggle("bg-c27-accent-soft", selected);
         item.classList.toggle("font-semibold", selected);
-        item.classList.toggle("text-c27-blue-d", selected);
+        item.classList.toggle("text-c27-accent-d", selected);
         // Active (keyboard) row is tinted unless it is already the selected one.
-        item.classList.toggle("bg-c27-tint", active && !selected);
+        item.classList.toggle("bg-c27-surface-2", active && !selected);
       });
     }
 
@@ -177,8 +177,8 @@ const { id, name, required = false, class: className = "" } = Astro.props;
       activeIndex = activeFromSelection();
       list.hidden = false;
       button.setAttribute("aria-expanded", "true");
-      arrow.classList.add("bg-c27-blue", "text-white", "rotate-180");
-      arrow.classList.remove("bg-c27-tint", "text-c27-ink-2");
+      arrow.classList.add("bg-c27-accent", "text-white", "rotate-180");
+      arrow.classList.remove("bg-c27-surface-2", "text-c27-ink-2");
       paint();
       items[activeIndex]?.item.scrollIntoView({ block: "nearest" });
       button.setAttribute(
@@ -191,8 +191,8 @@ const { id, name, required = false, class: className = "" } = Astro.props;
       list.hidden = true;
       button.setAttribute("aria-expanded", "false");
       button.removeAttribute("aria-activedescendant");
-      arrow.classList.remove("bg-c27-blue", "text-white", "rotate-180");
-      arrow.classList.add("bg-c27-tint", "text-c27-ink-2");
+      arrow.classList.remove("bg-c27-accent", "text-white", "rotate-180");
+      arrow.classList.add("bg-c27-surface-2", "text-c27-ink-2");
     }
 
     /** Takes a native option index. A disabled option is never selectable. */

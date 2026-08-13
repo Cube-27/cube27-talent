@@ -4,7 +4,7 @@
 
 /* ============================================================
    Base layer. Element defaults only — anything with a variant
-   belongs in a component, not here. Design system §3, §8.
+   belongs in a component, not here. See docs/design-system.md.
    ============================================================ */
 
 @layer base {
@@ -33,9 +33,9 @@
     text-wrap: balance;
   }
 
-  /* Focus is never removed. Design system §8. */
+  /* Focus is never removed. Design system §7. */
   :focus-visible {
-    outline: 2px solid var(--c27-blue);
+    outline: 2px solid var(--c27-accent);
     outline-offset: 3px;
   }
 
@@ -46,8 +46,8 @@
   }
 
   ::selection {
-    background: var(--c27-blue-soft);
-    color: var(--c27-blue-d);
+    background: var(--c27-accent-soft);
+    color: var(--c27-accent-d);
   }
 }
 
@@ -66,21 +66,20 @@
   }
 
   /* --- type roles -------------------------------------------------- */
+  /* Display carries more negative tracking than the rest: a flat system has
+     no blur softening the letter edges, so it can take it. */
   .c27-display {
     font-size: var(--c27-text-display);
-    line-height: 1.06;
-    letter-spacing: -0.038em;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
     max-width: 17ch;
   }
 
-  /* 38ch, not 20ch: a 20ch measure broke a 37-character heading across two
-     lines even on a wide screen. The .head container (42rem) is the real
-     constraint; this only stops a very long heading running edge to edge. */
   .c27-h2 {
     font-size: var(--c27-text-h2);
-    line-height: 1.14;
-    letter-spacing: -0.03em;
-    max-width: 38ch;
+    line-height: 1.12;
+    letter-spacing: -0.032em;
+    max-width: 24ch;
   }
 
   .c27-h3 {
@@ -100,7 +99,7 @@
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--c27-blue);
+    color: var(--c27-accent);
   }
 
   .c27-lede {
@@ -108,26 +107,54 @@
     max-width: 52ch;
   }
 
-  /* --- dark panels -------------------------------------------------- */
-  /* Shared navy field for the footer, the how-it-works hero and the
-     nine-step section. Navy stays as the paint underneath, so text keeps its
-     contrast while the image loads or if it fails to load at all. */
-  .c27-navy-field {
-    background-color: var(--c27-navy);
-    background-image: url("/bg-image.webp");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+  /* --- flat surfaces ------------------------------------------------
+     A card is a fill, a hairline and padding. That is the whole recipe.
+     Nothing here carries a shadow — elevation is the tint step between
+     the card and the section it sits on. Design system §1, rules 2-4. */
+  .c27-card {
+    background: var(--c27-surface-2);
+    border: 1px solid var(--c27-line);
+    border-radius: var(--c27-radius);
+  }
+
+  /* On a tinted section the card inverts: white on colour. */
+  .c27-card-on-tint {
+    background: var(--c27-surface);
+    border: 1px solid var(--c27-line);
+    border-radius: var(--c27-radius);
+  }
+
+  /* Interactive cards shift fill and border. They do not move — rule 1. */
+  .c27-card-link {
+    transition:
+      background-color var(--c27-dur-fast) ease,
+      border-color var(--c27-dur-fast) ease;
+  }
+
+  .c27-card-link:hover {
+    background: var(--c27-accent-soft);
+    border-color: var(--c27-accent);
+  }
+
+  /* --- highlighted words in a heading -------------------------------
+     Replaces the old gradient underline. A flat tint block behind the
+     words, set slightly loose so descenders clear the edge. */
+  .c27-mark {
+    background: var(--c27-accent-soft);
+    color: var(--c27-accent-d);
+    padding-inline: 0.18em;
+    border-radius: 4px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
   }
 
   /* --- progressive disclosure --------------------------------------- */
   /* Tab panels ship with `hidden` so a scripted visit paints the selected
-     panel immediately, instead of flashing all eight and collapsing. Nothing
+     panel immediately instead of flashing all nine and collapsing. Nothing
      can undo `hidden` without JS, so it is overridden here — the `.js` class
      is set by Layout.astro before first paint. */
-  html:not(.js) [data-panel][hidden] {
-    display: block;
-  }
+  /* The no-JS panel fallback lives in @layer base, not here. See the block
+     below the components layer for why. */
 
   /* --- reveal on scroll -------------------------------------------- */
   /* `.in` is added by an IntersectionObserver in Layout.astro, which also sets
@@ -135,7 +162,10 @@
      screen as `.in`, and only if the observer exists. Content is therefore
      never hidden unless something is guaranteed to reveal it again, and the
      first screen is never painted at opacity 0 (which would cost the LCP
-     candidate outright). */
+     candidate outright).
+
+     The translate here is on ENTRY, which rule 1 permits. Rule 1 bans
+     transforms on :hover. */
   .reveal .c27-rise {
     opacity: 0;
     transform: translateY(16px);
@@ -156,6 +186,36 @@
       transform: none;
       transition: none;
     }
+  }
+}
+
+/* ============================================================
+   No-JS panel fallback.
+
+   Tab panels ship with the `hidden` attribute so a scripted visit paints the
+   selected panel immediately instead of flashing all nine and collapsing. The
+   `.js` class is set by Layout.astro before first paint, so its absence means
+   nothing will ever un-hide them and CSS has to.
+
+   Two things make this fussier than it looks, and both were found by testing
+   with JavaScript actually disabled rather than by reading the CSS:
+
+   1. Tailwind v4's preflight ships
+      `[hidden]:where(:not([hidden="until-found"])) { display: none !important }`.
+      A normal declaration cannot beat it, so this one is `!important` too.
+
+   2. It has to sit in @layer base, alongside preflight — NOT in @layer
+      components. For `!important` declarations the cascade reverses layer
+      order, so a later layer loses to an earlier one. Inside the same layer
+      the higher-specificity selector wins again, which is this one.
+
+   Before this was right, a visitor without JavaScript saw one step panel out
+   of nine and one role family out of seven.
+   ============================================================ */
+@layer base {
+  html:not(.js) [data-panel][hidden],
+  html:not(.js) [data-step-panel][hidden] {
+    display: block !important;
   }
 }
 

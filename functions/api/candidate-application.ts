@@ -117,6 +117,7 @@ export const onRequest = async ({
   const skills = asText(form.get("skills"));
   const experience = asText(form.get("experience"));
   const linkedin = asText(form.get("linkedin"));
+  const github = asText(form.get("github"));
   const availability = asText(form.get("availability"));
   const workPreference = asText(form.get("workPreference"));
   const relocation = asText(form.get("relocation"));
@@ -140,6 +141,7 @@ export const onRequest = async ({
     experienceYears >= 0 &&
     experienceYears <= 60 &&
     checkLine(linkedin, 300, { required: false }) &&
+    checkLine(github, 300, { required: false }) &&
     inAllowList(availability, AVAILABILITY) &&
     inAllowList(workPreference, WORK_PREFERENCE) &&
     inAllowList(relocation, RELOCATION) &&
@@ -221,6 +223,7 @@ export const onRequest = async ({
     ["Core skills", skills],
     ["Experience (years)", String(experienceYears)],
     ["LinkedIn", linkedin],
+    ["GitHub / portfolio", github],
     ["Availability", availability],
     ["Work preference", workPreference],
     ["Open to relocation", relocation],
@@ -260,9 +263,9 @@ export const onRequest = async ({
     text: [
       `Hello ${name},`,
       "",
-      "Your profile has reached Cube27 Talent.",
+      "Your profile has reached us.",
       "",
-      "Cube27 will consider it against suitable client requirements and will contact you if there is a relevant next step. Submitting a profile does not guarantee screening, an interview, employment or an assignment.",
+      "We will read it properly and get in touch if there is a relevant next step. Sending a profile does not guarantee screening, an interview, employment or an assignment.",
       "",
       "To correct or delete your profile, reply to this address.",
       "",
@@ -277,7 +280,7 @@ export const onRequest = async ({
         ["Target role", roleTitle],
         [
           "Next",
-          "Cube27 will consider your profile against suitable client requirements and will contact you if there is a relevant next step. Submitting a profile does not guarantee screening, an interview, employment or an assignment.",
+          "We will read it properly and get in touch if there is a relevant next step. Sending a profile does not guarantee screening, an interview, employment or an assignment.",
         ],
       ]),
     ),

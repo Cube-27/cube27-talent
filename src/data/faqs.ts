@@ -1,6 +1,13 @@
 /**
- * FAQ content. Answers are bound by the claim rules in plan §6.7 — no
- * percentages, no guarantee periods, no delivery-time promises.
+ * FAQ content.
+ *
+ * Rewritten in full. Every question in the previous version was unusable under
+ * the current copy rules — they named the company, named the legal employer,
+ * and answered questions about equipment and removing people.
+ *
+ * Bound by invariant rules 0.1 and 0.2: first person plural, no company name,
+ * and nothing contractual. No percentages, no guarantee periods, no delivery
+ * times, no equipment, no removal or replacement.
  */
 
 export interface Faq {
@@ -10,50 +17,62 @@ export interface Faq {
 
 export const EMPLOYER_FAQS: Faq[] = [
   {
-    q: "Who employs the engineer?",
-    a: "Cube27. The employment offer is issued after the client selects the candidate, and Cube27 runs payroll and employment administration for the duration of the engagement.",
+    q: "How do you assess people?",
+    a: "A screen, then a task matched to the discipline, then a technical interview run by someone who does that work. The assessment is recorded and comes to you with the shortlist, so you can see how a person thinks rather than take our word for it.",
   },
   {
-    q: "Can a client remove someone who is not working out?",
-    a: "Yes — that decision belongs to the client. Because Cube27 is the legal employer, Cube27 processes the formal employment side under its agreement and applicable law, and starts the replacement search.",
+    q: "Do you use AI in the process?",
+    a: "For search and for covering ground at volume, yes. Every decision about who is worth your time is made by a person, and every technical interview is run by one.",
   },
   {
-    q: "Who runs the technical interview?",
-    a: "Cube27 engineers, technical leadership or the CEO — someone who works in the discipline being assessed.",
+    q: "Can you help with one hire, or do we need a team?",
+    a: "Either. A single senior specialist is a perfectly good place to start. The work tends to be most useful to teams hiring several people or growing steadily over a year or two.",
   },
   {
-    q: "Who provides the laptop?",
-    a: "Cube27 procures it and the client is charged the actual cost, with buyback at an agreed depreciated value after a minimum of twelve months.",
+    q: "Which roles do you cover?",
+    a: "Engineering and product, cloud and infrastructure, data and AI, security and compliance, quality and delivery, design, and leadership up to CXO. That list is where we start, not where we stop — if we can assess a role properly, we can hire for it.",
   },
   {
-    q: "Is there a minimum number of hires?",
-    a: "No. A single senior role is a valid mandate, though the service works best for clients hiring several people or building a team over time.",
+    q: "Can you build a security team for a certification programme?",
+    a: "Yes. It is one of the things we are asked for most: the security and compliance people an organisation needs to work towards ISO 27001, SOC 2, PCI DSS, HIPAA or GDPR. We build the team; the certification is yours to earn.",
   },
   {
-    q: "Which roles fall outside the scope?",
-    a: "Sales, marketing, finance, general HR, administration and non-technical mass hiring. Adjacent technical roles are considered case by case.",
+    q: "What happens after someone starts?",
+    a: "We handle onboarding, payroll and the administration around it, and we keep checking in for as long as the engagement runs. Your team directs the work.",
+  },
+  {
+    q: "What does it cost?",
+    a: "Terms depend on the roles, the seniority, the location and how many people you are hiring, so we price each engagement directly rather than publishing a rate card. It is a short conversation.",
+  },
+  {
+    q: "How quickly can you move?",
+    a: "It depends entirely on the role and the market for it, and we would rather tell you that honestly than quote a number we cannot stand behind. We will give you a realistic window on the first call, once we know what you are hiring for.",
   },
 ];
 
 export const CANDIDATE_FAQS: Faq[] = [
   {
-    q: "Who is the employer?",
-    a: "Cube27. Successful candidates join Cube27 as employees on Cube27 payroll, and are assigned to client engagements.",
+    q: "What kind of work is this?",
+    a: "Real employment with real clients — global companies building product teams — not gig work and not a job board listing. It is a role with a team behind it, and someone to call while you are in it.",
   },
   {
-    q: "What does the assessment involve?",
-    a: "An HR screen, a task matched to the discipline, and a technical interview with Cube27 engineers or technical leadership. References follow, with separate written consent.",
+    q: "What does the process involve?",
+    a: "A screen, a task matched to your discipline, and a technical interview with someone who does the work you do. References follow with your separate written consent. You will know where you stand at each stage.",
   },
   {
-    q: "Are overseas assignments available?",
-    a: "Some assignments involve overseas work, and Cube27 assists with the applicable visa process where an approved assignment requires it. Overseas travel and visa approval are never guaranteed.",
+    q: "Is the assessment recorded?",
+    a: "Yes, and it works in your favour. It means your reasoning goes to the client alongside the result, instead of a CV and a score.",
   },
   {
-    q: "Is equipment provided?",
-    a: "Yes. Work hardware is provided under Cube27 policy.",
+    q: "What kind of roles do you recruit for?",
+    a: "Engineering and product, cloud and infrastructure, data and AI, security and compliance, quality and delivery, design, and senior leadership roles. If your discipline is not on that list, apply anyway and tell us what you do.",
   },
   {
-    q: "Does an application guarantee a role?",
-    a: "No. Submitting a profile does not guarantee screening, an interview, employment or an assignment.",
+    q: "Are there opportunities to work overseas?",
+    a: "Some assignments involve overseas work, and we assist with the applicable process where an approved assignment requires it. It depends on the role and the client, and it is never guaranteed.",
+  },
+  {
+    q: "Does applying guarantee anything?",
+    a: "No. Sending us a profile does not guarantee screening, an interview, employment or an assignment. What we will do is read it properly and be straight with you.",
   },
 ];

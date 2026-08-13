@@ -1,59 +1,80 @@
 /* ============================================================
-   Cube27 Talent 2.0 — design tokens.
-   The single source of truth for colour, type, spacing, radius,
-   elevation and motion.
+   Design tokens — the single source of truth for colour, type,
+   spacing, radius, elevation and motion. See docs/design-system.md.
 
-   Raw values live on --c27-*. Tailwind utilities are generated
-   from the @theme inline block, so `bg-c27-surface`,
-   `text-c27-ink-2`, `border-c27-line` etc. all resolve here.
-   Never hard-code a hex value in a component.
+   The system is flat: elevation is a tint step, never a shadow,
+   and nothing lifts on hover. Raw values live on --c27-*.
+   Tailwind utilities are generated from the @theme inline block,
+   so `bg-c27-surface-2`, `text-c27-ink-2`, `border-c27-line` all
+   resolve here. Never hard-code a hex value in a component.
+
+   Every contrast ratio in a comment below is measured. Recompute
+   before changing a value; do not estimate.
    ============================================================ */
 
 :root {
-  /* --- surfaces --- */
-  --c27-ground: #f8fafc;
+  /* --- grounds ---------------------------------------------------
+     A raised surface is a tint step against its ground: white card
+     on a tinted section, tinted card on a white section. The four
+     tints let a set of cards differentiate by colour instead of by
+     elevation — cycle them in order, do not add a fifth. */
+  --c27-ground: #ffffff;
   --c27-surface: #ffffff;
-  --c27-surface-2: #f1f5f9;
-  --c27-tint: #edf4ff;
-  --c27-tint-2: #f5f8ff;
-  --c27-navy: #0f172a;
-  --c27-navy-2: #1e293b;
+  --c27-surface-2: #f7f7fb;
+  --c27-tint-violet: #ece9fe;
+  --c27-tint-mint: #e4f6ec;
+  --c27-tint-peach: #fdeee4;
+  --c27-tint-sky: #e4eefe;
+  --c27-deep: #171325;
+  --c27-deep-2: #241d3d;
 
-  /* --- text --- */
-  /* One step off slate-900. Pure-black-adjacent ink measured 17.85:1 on white,
-     which reads as harsh at display sizes; this is 14.63:1 and still far above
-     any floor. */
-  --c27-ink: #1e293b;
-  --c27-ink-2: #475569;
-  --c27-ink-3: #64748b;
+  /* --- ink -------------------------------------------------------
+     Ratios given on white first, then on --c27-tint-violet, which is
+     the darkest of the six light grounds and therefore the binding
+     constraint for every one of these. */
+  /* 17.21 on white, 14.47 on violet. */
+  --c27-ink: #1c1a22;
+  /* 7.53 / 6.33. */
+  --c27-ink-2: #55535f;
+  /* 5.42 / 4.55 — the floor of the system. Captions and meta only,
+     never below --c27-text-caption, and never for text a visitor has
+     to read to finish a task. #7a7786 was tried first and rejected:
+     3.67 on violet, a clear AA failure. */
+  --c27-ink-3: #6b6878;
 
-  /* --- accent. One job each: green acts + verifies, blue informs. --- */
-  /* Decorative only — rules, dots and bars. White on #10b45f is 2.72:1, so it
-     must never carry text or be the fill behind a label. */
-  --c27-green: #10b45f;
-  /* The readable green: 5.48:1 as text on white and as the primary button fill
-     under white text; 5.24:1 on --c27-ground and 5.01:1 on --c27-surface-2,
-     the other two grounds it lands on. #059669 measured 3.77:1 and failed AA
-     outright in all three places. */
-  --c27-green-d: #047857;
-  /* Hover for the primary button, one step darker again (7.68:1). */
-  --c27-green-dd: #065f46;
-  --c27-blue: #2563eb;
-  --c27-blue-d: #1d4ed8;
-  --c27-blue-soft: #e0f2fe;
-  --c27-amber: #d97706;
+  /* --- accent ----------------------------------------------------
+     One accent, one job: actions, links and active state. There is a
+     single value because it has to work as text AND as a fill —
+     6.46 as text on white, 5.43 as text on violet, and 6.46 for
+     white text sitting on it as the primary button. */
+  --c27-accent: #4f39f6;
+  /* Hover and press, 8.56 under white text. */
+  --c27-accent-d: #3d28d4;
+  /* Accent-tinted fill. Same value as --c27-tint-violet, named for
+     intent so a button's soft state does not read as a panel. */
+  --c27-accent-soft: #ece9fe;
 
-  /* --- lines --- */
-  --c27-line: #e2e8f0;
-  --c27-line-2: #f1f5f9;
-  --c27-line-dark: rgba(255, 255, 255, 0.12);
+  /* --- lines -----------------------------------------------------
+     A 1px hairline is the default boundary between surfaces. It does
+     more work here than any shadow. */
+  --c27-line: #e6e5ee;
+  --c27-line-2: #f1f0f6;
+  --c27-line-deep: rgba(255, 255, 255, 0.12);
 
-  /* --- on-navy text. These are tested contrast floors; do not lower. --- */
-  --c27-on-navy: #ffffff;
-  --c27-on-navy-2: rgba(255, 255, 255, 0.85);
-  --c27-on-navy-3: rgba(255, 255, 255, 0.65);
-  --c27-on-navy-accent: #93c5fd;
-  --c27-on-navy-success: #6ee7b7;
+  /* --- on deep panels --- */
+  /* 18.16 on --c27-deep, 15.93 on --c27-deep-2. */
+  --c27-on-deep: #ffffff;
+  --c27-on-deep-2: rgba(255, 255, 255, 0.82);
+  /* Meta only — never body copy. */
+  --c27-on-deep-3: rgba(255, 255, 255, 0.6);
+  /* 9.84 on --c27-deep, 8.63 on --c27-deep-2. */
+  --c27-on-deep-accent: #c4b5fd;
+
+  /* --- feedback --------------------------------------------------
+     The one colour outside the accent, and only because an error must
+     not read as an action. 6.05 on its own tint, 6.57 on white. */
+  --c27-danger: #b42318;
+  --c27-danger-soft: #fef3f2;
 
   /* --- type --- */
   --c27-font-display: "Figtree Variable", ui-sans-serif, system-ui, sans-serif;
@@ -61,8 +82,8 @@
   --c27-font-mono:
     ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
 
-  --c27-text-display: clamp(2.25rem, 4.5vw, 3.6rem);
-  --c27-text-h2: clamp(1.65rem, 3vw, 2.4rem);
+  --c27-text-display: clamp(2.4rem, 5vw, 4rem);
+  --c27-text-h2: clamp(1.75rem, 3.2vw, 2.6rem);
   --c27-text-h3-lg: 1.5rem;
   --c27-text-h3: 1.0625rem;
   --c27-text-body: 1rem;
@@ -73,57 +94,60 @@
 
   /* --- layout --- */
   --c27-gutter: clamp(1.25rem, 4vw, 3.5rem);
-  --c27-pad-section: clamp(3.5rem, 6.5vw, 6rem);
+  --c27-pad-section: clamp(4rem, 7vw, 7rem);
   --c27-container: 78rem;
   --c27-container-narrow: 60rem;
 
-  /* --- radius --- */
-  --c27-radius-sm: 8px;
-  --c27-radius: 12px;
-  --c27-radius-lg: 18px;
+  /* --- radius ----------------------------------------------------
+     2px tighter than the previous system at every step. Flat
+     surfaces read sharper with less rounding; the extra softness was
+     doing shadow's job. */
+  --c27-radius-sm: 10px;
+  --c27-radius: 14px;
+  --c27-radius-lg: 20px;
 
-  /* --- elevation --- */
-  --c27-shadow-sm:
-    0 1px 3px rgba(15, 23, 42, 0.04), 0 6px 16px -4px rgba(15, 23, 42, 0.06);
-  --c27-shadow-lg:
-    0 4px 12px rgba(15, 23, 42, 0.05), 0 20px 40px -8px rgba(15, 23, 42, 0.12);
-  --c27-shadow-glow: 0 0 25px -5px rgba(37, 99, 235, 0.18);
+  /* --- elevation -------------------------------------------------
+     The only shadow in the system, and it belongs to things that
+     genuinely float above the page: the stuck header, select menus,
+     the mobile nav sheet. A content card never carries one. */
+  --c27-shadow-overlay: 0 8px 28px -12px rgba(23, 19, 37, 0.22);
 
   /* --- motion --- */
   --c27-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --c27-dur: 500ms;
+  --c27-dur-fast: 160ms;
 }
 
 @theme inline {
   --color-c27-ground: var(--c27-ground);
   --color-c27-surface: var(--c27-surface);
   --color-c27-surface-2: var(--c27-surface-2);
-  --color-c27-tint: var(--c27-tint);
-  --color-c27-tint-2: var(--c27-tint-2);
-  --color-c27-navy: var(--c27-navy);
-  --color-c27-navy-2: var(--c27-navy-2);
+  --color-c27-tint-violet: var(--c27-tint-violet);
+  --color-c27-tint-mint: var(--c27-tint-mint);
+  --color-c27-tint-peach: var(--c27-tint-peach);
+  --color-c27-tint-sky: var(--c27-tint-sky);
+  --color-c27-deep: var(--c27-deep);
+  --color-c27-deep-2: var(--c27-deep-2);
 
   --color-c27-ink: var(--c27-ink);
   --color-c27-ink-2: var(--c27-ink-2);
   --color-c27-ink-3: var(--c27-ink-3);
 
-  --color-c27-green: var(--c27-green);
-  --color-c27-green-d: var(--c27-green-d);
-  --color-c27-green-dd: var(--c27-green-dd);
-  --color-c27-blue: var(--c27-blue);
-  --color-c27-blue-d: var(--c27-blue-d);
-  --color-c27-blue-soft: var(--c27-blue-soft);
-  --color-c27-amber: var(--c27-amber);
+  --color-c27-accent: var(--c27-accent);
+  --color-c27-accent-d: var(--c27-accent-d);
+  --color-c27-accent-soft: var(--c27-accent-soft);
 
   --color-c27-line: var(--c27-line);
   --color-c27-line-2: var(--c27-line-2);
-  --color-c27-line-dark: var(--c27-line-dark);
+  --color-c27-line-deep: var(--c27-line-deep);
 
-  --color-c27-on-navy: var(--c27-on-navy);
-  --color-c27-on-navy-2: var(--c27-on-navy-2);
-  --color-c27-on-navy-3: var(--c27-on-navy-3);
-  --color-c27-on-navy-accent: var(--c27-on-navy-accent);
-  --color-c27-on-navy-success: var(--c27-on-navy-success);
+  --color-c27-on-deep: var(--c27-on-deep);
+  --color-c27-on-deep-2: var(--c27-on-deep-2);
+  --color-c27-on-deep-3: var(--c27-on-deep-3);
+  --color-c27-on-deep-accent: var(--c27-on-deep-accent);
+
+  --color-c27-danger: var(--c27-danger);
+  --color-c27-danger-soft: var(--c27-danger-soft);
 
   --font-display: var(--c27-font-display);
   --font-body: var(--c27-font-body);
@@ -143,9 +167,7 @@
   --radius-c27: var(--c27-radius);
   --radius-c27-lg: var(--c27-radius-lg);
 
-  --shadow-c27-sm: var(--c27-shadow-sm);
-  --shadow-c27-lg: var(--c27-shadow-lg);
-  --shadow-c27-glow: var(--c27-shadow-glow);
+  --shadow-c27-overlay: var(--c27-shadow-overlay);
 
   --ease-c27: var(--c27-ease);
 }

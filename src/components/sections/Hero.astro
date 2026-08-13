@@ -5,6 +5,14 @@ import SnapshotCard from "@/components/ui/SnapshotCard.astro";
 import { VERIFIED_PROOF } from "@/data/proof";
 import { ROUTES } from "@/site-config";
 
+/**
+ * The hero.
+ *
+ * Flat rebuild: the radial glow and the gradient heading underline are both
+ * gone. Emphasis is now a flat tint block (.c27-mark) and depth is the tint
+ * step between the ground and the card.
+ */
+
 const stats = VERIFIED_PROOF.slice(0, 3);
 // Proof gating can leave one, two or three points, so the column count has to
 // follow the data — a fixed grid-cols-3 leaves an empty cell. Full class names
@@ -18,53 +26,41 @@ const statsColumns =
 ---
 
 <section
-  class="relative overflow-hidden border-b border-c27-line bg-c27-ground pb-[clamp(3.5rem,6vw,5.5rem)] pt-[clamp(3rem,5vw,4.5rem)]"
+  class="border-b border-c27-line bg-c27-ground pb-[clamp(3.5rem,6vw,5.5rem)] pt-[clamp(3rem,5vw,4.5rem)]"
 >
-  {/* Soft ambient radial glow canvas instead of grid lines */}
   <div
-    aria-hidden="true"
-    class="pointer-events-none absolute inset-0 opacity-70 [background:radial-gradient(circle_at_50%_-10%,rgba(37,99,235,0.09)_0%,rgba(248,250,252,0)_65%)]"
-  >
-  </div>
-
-  <div
-    class="c27-wrap relative grid items-center gap-[clamp(2.5rem,5vw,4rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(21rem,0.95fr)]"
+    class="c27-wrap grid items-center gap-[clamp(2.5rem,5vw,4rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(21rem,0.95fr)]"
   >
     <div>
       <span
-        class="c27-rise inline-flex items-center gap-2 font-display text-caption font-bold uppercase tracking-[0.12em] text-c27-blue"
+        class="c27-rise inline-flex items-center gap-2 rounded-full bg-c27-accent-soft px-3.5 py-1.5 font-display text-caption font-bold tracking-[0.02em] text-c27-accent-d"
       >
-        <Icon name="shield" size={14} />
-        Managed engineering staffing &middot; Global
+        <Icon name="spark" size={14} />
+        Managed talent &middot; Global
       </span>
 
-      <h1
-        class="c27-rise c27-display mt-3.5 text-c27-ink font-semibold"
-        style="--c27-d:60ms"
-      >
-        Hire engineers who are <span
-          class="bg-[linear-gradient(var(--c27-green-d),var(--c27-green-d))] bg-[length:100%_0.1em] bg-[position:0_96%] bg-no-repeat text-c27-blue-d motion-safe:animate-[c27-draw_700ms_var(--c27-ease)_450ms_both]"
-          >already tested</span
-        >
+      <h1 class="c27-rise c27-display mt-4 text-c27-ink" style="--c27-d:60ms">
+        Build the team. Then <span class="c27-mark">keep building</span> it.
       </h1>
 
       <p
-        class="c27-rise c27-lede mt-4.5 max-w-[44ch] text-body leading-relaxed"
+        class="c27-rise c27-lede mt-5 max-w-[46ch] text-body leading-relaxed"
         style="--c27-d:140ms"
       >
-        Cube27 screens and technically interviews the talent, employs them, and
-        runs their payroll. The client directs the work and decides who stays.
+        We find the people, assess them properly — by practitioners, on a
+        recorded task — and handle everything around the hire. Your team gets
+        someone who is ready to work, and you carry none of the overhead.
       </p>
 
       {
         stats.length > 0 && (
           <div
-            class={`c27-rise mt-8 grid max-w-[30rem] ${statsColumns} gap-4 border-t border-c27-line/80 pt-6`}
+            class={`c27-rise mt-8 grid max-w-[30rem] ${statsColumns} gap-4 border-t border-c27-line pt-6`}
             style="--c27-d:220ms"
           >
             {stats.map((stat) => (
               <div>
-                <b class="block font-display text-2xl font-bold leading-none tracking-[-0.035em] text-c27-ink tabular-nums">
+                <b class="block font-display text-2xl font-bold leading-none tracking-[-0.035em] tabular-nums text-c27-ink">
                   {stat.value}
                 </b>
                 <span class="mt-1.5 block text-caption font-medium text-c27-ink-2">
@@ -78,40 +74,24 @@ const statsColumns =
 
       <div class="c27-rise mt-8 flex flex-wrap gap-3.5" style="--c27-d:300ms">
         <Button href={ROUTES.hire} variant="primary" arrow>Hire talent</Button>
-        <Button href={ROUTES.join} variant="line">Find a job</Button>
+        <Button href={ROUTES.join} variant="line">Find a role</Button>
       </div>
     </div>
 
     <div class="c27-rise relative px-2 py-5" style="--c27-d:360ms">
       <span
-        class="absolute -left-3 -top-1 z-[3] hidden items-center gap-2 rounded-full border border-c27-line bg-c27-surface px-3.5 py-1.5 text-caption font-semibold shadow-c27-sm motion-safe:animate-[c27-bob_5.5s_ease-in-out_infinite] sm:inline-flex"
+        class="absolute -left-3 -top-1 z-[3] hidden items-center gap-2 rounded-full border border-c27-line bg-c27-surface px-3.5 py-1.5 text-caption font-semibold text-c27-ink sm:inline-flex"
       >
-        <i class="size-2 rounded-full bg-c27-blue"></i>Go &middot; Kubernetes
+        <i class="size-2 rounded-full bg-c27-accent"></i>Assessment recorded
       </span>
       <span
-        class="absolute -right-4 top-[44%] z-[3] hidden items-center gap-2 rounded-full border border-c27-line bg-c27-surface px-3.5 py-1.5 text-caption font-semibold shadow-c27-sm motion-safe:animate-[c27-bob_5.5s_ease-in-out_-2.7s_infinite] sm:inline-flex"
+        class="absolute -right-4 top-[44%] z-[3] hidden items-center gap-2 rounded-full border border-c27-line bg-c27-surface px-3.5 py-1.5 text-caption font-semibold text-c27-ink sm:inline-flex"
       >
-        <i class="size-2 rounded-full bg-c27-green-d"></i>References verified
+        <i class="size-2 rounded-full bg-c27-accent"></i>Interviewed by
+        practitioners
       </span>
 
       <SnapshotCard />
     </div>
   </div>
 </section>
-
-<style is:global>
-  @keyframes c27-draw {
-    from {
-      background-size: 0 0.1em;
-    }
-  }
-  @keyframes c27-bob {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-7px);
-    }
-  }
-</style>

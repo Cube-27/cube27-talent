@@ -99,19 +99,24 @@ export function faqSchema(items: Faq[]): Schema {
 }
 
 /**
- * What Cube27 sells, described without pricing or turnaround claims. `Service`
+ * The service, described without pricing or turnaround claims. `Service`
  * rather than `Product` because nothing here is a purchasable unit.
+ *
+ * Structured data is exempt from invariant rule 0.1 (the legal entity has to be
+ * named for the entity graph to be correct) but NOT from rule 0.2 — the
+ * previous `serviceType: "employer of record"` and the description that spelled
+ * out the employment split were both contractual claims, and are gone.
  */
 export function serviceSchema(): Schema {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Managed engineering talent",
-    serviceType: "Technical recruitment and employer of record",
+    name: "Managed talent and team building",
+    serviceType: "Technical recruitment and staffing",
     provider: { "@id": ORGANIZATION_ID },
     areaServed: "Worldwide",
     description:
-      "Cube27 screens and technically interviews engineering, QA, DevOps, product and design talent, employs them, and runs their payroll. The client directs the work and decides who stays.",
+      "Finding, assessing and placing engineering, cloud, data, security, quality, design and leadership talent for global companies, with the hiring, onboarding and administration handled.",
     url: absolute(ROUTES.hire),
   };
 }

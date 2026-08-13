@@ -21,7 +21,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
   method="post"
   action={ENDPOINTS.employerLead}
   novalidate
-  class="grid gap-4 rounded-c27-lg border border-c27-line bg-c27-surface p-[clamp(1.5rem,3vw,2.25rem)] shadow-c27-lg"
+  class="grid gap-4 rounded-c27-lg border border-c27-line bg-c27-surface p-[clamp(1.5rem,3vw,2.25rem)]"
 >
   {/* Error summary receives focus on failed validation. §6.8. */}
   <div
@@ -29,7 +29,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     role="alert"
     hidden
     tabindex="-1"
-    class="rounded-c27-sm border-l-2 border-[#dc2626] bg-[#fef2f2] px-4 py-3 text-caption text-[#991b1b]"
+    class="rounded-c27-sm border-l-2 border-c27-danger bg-c27-danger-soft px-4 py-3 text-caption text-c27-danger"
   >
   </div>
 
@@ -44,7 +44,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         maxlength="100"
         autocomplete="name"
         placeholder="Priya Raghavan"
-        class="h-12 w-full rounded-c27-sm border border-[#d4dae9] bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-blue focus:outline-none focus:ring-[3px] focus:ring-c27-blue/15"
+        class="h-12 w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15"
       />
     </div>
     <div class="grid min-w-0 gap-1.5">
@@ -58,7 +58,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         maxlength="320"
         autocomplete="email"
         placeholder="you@company.com"
-        class="h-12 w-full rounded-c27-sm border border-[#d4dae9] bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-blue focus:outline-none focus:ring-[3px] focus:ring-c27-blue/15"
+        class="h-12 w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15"
       />
     </div>
   </div>
@@ -74,7 +74,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         maxlength="200"
         autocomplete="organization"
         placeholder="Company name"
-        class="h-12 w-full rounded-c27-sm border border-[#d4dae9] bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-blue focus:outline-none focus:ring-[3px] focus:ring-c27-blue/15"
+        class="h-12 w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15"
       />
     </div>
     <div class="grid min-w-0 gap-1.5">
@@ -87,7 +87,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         maxlength="120"
         autocomplete="organization-title"
         placeholder="VP Engineering"
-        class="h-12 w-full rounded-c27-sm border border-[#d4dae9] bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-blue focus:outline-none focus:ring-[3px] focus:ring-c27-blue/15"
+        class="h-12 w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15"
       />
     </div>
   </div>
@@ -103,7 +103,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         maxlength="80"
         autocomplete="country-name"
         placeholder="Netherlands"
-        class="h-12 w-full rounded-c27-sm border border-[#d4dae9] bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-blue focus:outline-none focus:ring-[3px] focus:ring-c27-blue/15"
+        class="h-12 w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15"
       />
     </div>
     <div class="grid min-w-0 gap-1.5">
@@ -146,7 +146,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     <div class="flex flex-wrap gap-2">
       {
         ROLE_FAMILIES.map((family, i) => (
-          <label class="relative cursor-pointer select-none rounded-full border border-[#d4dae9] bg-c27-surface px-3.5 py-2 text-caption transition-colors has-[:checked]:border-c27-blue has-[:checked]:bg-c27-blue-soft has-[:checked]:font-semibold has-[:checked]:text-c27-blue-d has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-c27-blue">
+          <label class="relative cursor-pointer select-none rounded-full border border-c27-line bg-c27-surface px-3.5 py-2 text-caption transition-colors has-[:checked]:border-c27-accent has-[:checked]:bg-c27-accent-soft has-[:checked]:font-semibold has-[:checked]:text-c27-accent-d has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-c27-accent">
             <input
               type="checkbox"
               name="roleFamilies"
@@ -172,7 +172,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
       minlength="20"
       maxlength="4000"
       placeholder="Levels, stack, work model, what the team is building."
-      class="min-h-[6rem] w-full resize-y rounded-c27-sm border border-[#d4dae9] bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-blue focus:outline-none focus:ring-[3px] focus:ring-c27-blue/15"
+      class="min-h-[6rem] w-full resize-y rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15"
     ></textarea>
   </div>
 
@@ -184,13 +184,12 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
       name="consent"
       required
       value="yes"
-      class="mt-1 accent-[var(--c27-blue)]"
+      class="mt-1 accent-[var(--c27-accent)]"
     />
     <span>
-      Cube27 may use these details to respond to this enquiry, as described in
-      the <a
+      We may use these details to respond to this enquiry, as described in the <a
         href={ROUTES.privacy}
-        class="text-c27-blue-d underline underline-offset-2">privacy notice</a
+        class="text-c27-accent-d underline underline-offset-2">privacy notice</a
       >.
     </span>
   </label>

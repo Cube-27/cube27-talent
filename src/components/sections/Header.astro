@@ -13,11 +13,13 @@ const isActive = (href: string) =>
 
 {
   !bare && (
-    <div class="announcement-strip flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-c27-navy px-4 pb-2 pt-2 text-center text-caption text-c27-on-navy-2">
-      <span>Technical interviews conducted by practising engineers.</span>
+    <div class="announcement-strip flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-c27-deep px-4 pb-2 pt-2 text-center text-caption text-c27-on-deep-2">
+      <span>
+        Every technical interview is run by someone who does the work.
+      </span>
       <a
         href={ROUTES.hire}
-        class="font-semibold text-c27-on-navy-accent no-underline hover:text-white"
+        class="font-semibold text-c27-on-deep-accent no-underline hover:text-white"
       >
         Submit a requirement &rarr;
       </a>
@@ -52,7 +54,7 @@ const isActive = (href: string) =>
         {/* The strapline is the first thing to go when width is tight. */}
         <span
           class="hidden text-[0.625rem] font-medium uppercase tracking-[0.14em] text-c27-ink-3 sm:block"
-          >Managed engineering staffing</span
+          >Managed talent</span
         >
       </span>
     </a>
@@ -64,8 +66,8 @@ const isActive = (href: string) =>
             href={link.href}
             aria-current={isActive(link.href) ? "page" : undefined}
             class:list={[
-              "text-body-sm font-medium no-underline transition-colors hover:text-c27-blue",
-              isActive(link.href) ? "text-c27-blue" : "text-c27-ink-2",
+              "text-body-sm font-medium no-underline transition-colors hover:text-c27-accent",
+              isActive(link.href) ? "text-c27-accent" : "text-c27-ink-2",
             ]}
           >
             {link.label}
@@ -80,7 +82,7 @@ const isActive = (href: string) =>
           into the menu panel so it is never dropped entirely (§1.5). */
       }
       <span class="hidden lg:block">
-        <Button href={ROUTES.join} variant="line" size="sm">Find a job</Button>
+        <Button href={ROUTES.join} variant="line" size="sm">Find a role</Button>
       </span>
       <Button href={ROUTES.hire} variant="primary" size="sm">Hire talent</Button
       >
@@ -88,7 +90,7 @@ const isActive = (href: string) =>
       {/* <details> so the menu works with no JS at all. */}
       <details id="mobile-menu" class="lg:hidden">
         <summary
-          class="grid size-11 cursor-pointer place-items-center rounded-c27-sm text-c27-ink transition-colors hover:bg-c27-tint"
+          class="grid size-11 cursor-pointer place-items-center rounded-c27-sm text-c27-ink transition-colors hover:bg-c27-surface-2"
           aria-label="Menu"
         >
           <svg
@@ -122,7 +124,7 @@ const isActive = (href: string) =>
         </summary>
 
         <div
-          class="absolute inset-x-0 top-full border-y border-c27-line bg-c27-surface shadow-c27-lg"
+          class="absolute inset-x-0 top-full border-y border-c27-line bg-c27-surface shadow-c27-overlay"
         >
           <nav class="c27-wrap py-3" aria-label="Menu">
             <ul>
@@ -134,7 +136,9 @@ const isActive = (href: string) =>
                       aria-current={isActive(link.href) ? "page" : undefined}
                       class:list={[
                         "flex min-h-11 items-center border-b border-c27-line-2 text-body-sm font-medium no-underline",
-                        isActive(link.href) ? "text-c27-blue" : "text-c27-ink",
+                        isActive(link.href)
+                          ? "text-c27-accent"
+                          : "text-c27-ink",
                       ]}
                     >
                       {link.label}
@@ -145,7 +149,7 @@ const isActive = (href: string) =>
             </ul>
             <div class="grid gap-2.5 pt-4">
               <Button href={ROUTES.join} variant="line" class="justify-center"
-                >Find a job</Button
+                >Find a role</Button
               >
             </div>
           </nav>

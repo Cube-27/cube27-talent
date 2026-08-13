@@ -22,21 +22,26 @@ const title = `Requirement received | ${SITE_CONFIG.brand}`;
   <Section narrow>
     <div class="max-w-[46rem]">
       <span
-        class="inline-flex items-center gap-2 rounded-full border border-c27-line bg-c27-surface px-3.5 py-1.5 text-caption font-semibold text-c27-green-d"
+        class="inline-flex items-center gap-2 rounded-full border border-c27-line bg-c27-surface px-3.5 py-1.5 text-caption font-semibold text-c27-accent-d"
       >
         <CheckMark size={15} />
         Requirement received
       </span>
-      <h1 class="c27-h2 mt-5">Thank you — the requirement is with Cube27</h1>
+      <h1 class="c27-h2 mt-5">Thank you — we have your requirement</h1>
+      {
+        /* Same as the candidate confirmation: the lead itself is delivered
+           before this page is reached, but the acknowledgement email is
+           best-effort and can fail silently, so this does not assert it
+           arrived. */
+      }
       <p class="c27-lede mt-4">
-        A confirmation has been sent to the email address supplied, with a
-        reference number. Cube27 will review whether the requirement fits its
-        technical screening scope and current capacity, then make contact.
+        A confirmation is on its way to the email address you supplied, with a
+        reference number. We will read the requirement properly, work out
+        whether we can assess the role well, and come back to you either way.
       </p>
       <p class="mt-4 text-body-sm text-c27-ink-2">
-        Submitting a requirement does not by itself create a commercial
-        engagement. Commercial terms are agreed in writing before candidates are
-        presented.
+        Sending a requirement does not by itself start an engagement. Terms are
+        agreed directly before anyone is presented to you.
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
         <Button href={ROUTES.how} variant="line">How it works</Button>
