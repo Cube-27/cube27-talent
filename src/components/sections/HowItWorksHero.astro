@@ -1,112 +1,80 @@
 ---
 import Icon from "@/components/ui/Icon.astro";
+import Button from "@/components/ui/Button.astro";
+import { ROUTES } from "@/site-config";
 
-/**
- * How It Works hero.
- *
- * Rewritten under invariant rules 0.1 and 0.2 — no company name, and the
- * "client control" strip is gone: it was a responsibility matrix in strip form,
- * which is exactly what rule 0.2 removes. What is left says the same useful
- * thing positively, once.
- */
-
-const phases = [
+const EVIDENCE = [
   {
-    icon: "target",
-    title: "Agree the brief",
-    detail:
-      "Role, level, budget range, location and working model, written down before the search starts.",
+    title: "Relevant work",
+    body: "Assessment built around the role.",
+    icon: "briefcase" as const,
+    color: "text-c27-icon-violet",
+    tile: "c27-tile-violet",
   },
   {
-    icon: "spark",
-    title: "Prove the fit",
-    detail:
-      "A screen, a recorded task matched to the discipline, then an interview run by someone who does that work.",
+    title: "Practitioner review",
+    body: "An expert evaluates the evidence.",
+    icon: "person" as const,
+    color: "text-c27-icon-green",
+    tile: "c27-tile-mint",
   },
   {
-    icon: "briefcase",
-    title: "Handle the hire",
-    detail:
-      "Offer, onboarding and the administration around it, so the first day is a working day.",
-  },
-  {
-    icon: "compass",
-    title: "Stay involved",
-    detail:
-      "Check-ins for as long as the engagement runs, and the next hire ready when the team grows.",
+    title: "Decision-ready shortlist",
+    body: "See strengths and gaps before interview.",
+    icon: "check" as const,
+    color: "text-c27-icon-blue",
+    tile: "c27-tile-sky",
   },
 ];
 ---
 
-<section class="bg-c27-deep text-c27-on-deep">
-  <div class="c27-wrap py-[clamp(4rem,7vw,6.5rem)]">
-    <h1 class="c27-rise c27-display max-w-none font-display">
-      <span class="block">We build the team.</span>
-      <span class="mt-2 block text-c27-on-deep-accent">You lead it.</span>
-    </h1>
-
-    <div
-      class="mt-[clamp(2.75rem,5vw,4.5rem)] grid items-start gap-[clamp(3rem,6vw,6rem)] lg:grid-cols-[minmax(0,0.9fr)_minmax(24rem,1.1fr)]"
-    >
-      <div
-        class="c27-rise max-w-[58ch] space-y-4 text-[clamp(1rem,1.35vw,1.125rem)] leading-relaxed text-c27-on-deep-2"
-        style="--c27-d:100ms"
+<section class="c27-gradient-blue border-b border-c27-line">
+  <div class="c27-wrap py-[clamp(4rem,8vw,7rem)] text-center">
+    <div class="mx-auto max-w-4xl">
+      <h1 class="c27-rise c27-display mx-auto text-center text-c27-ink">
+        Hire with proof, not promises.
+      </h1>
+      <p
+        class="c27-rise mx-auto mt-6 max-w-[68ch] text-[clamp(1.05rem,1.7vw,1.3rem)] leading-relaxed text-c27-ink-2"
       >
-        <p>
-          We run the people side of delivery: agreeing what the role actually
-          is, finding candidates, assessing them properly, and handling
-          everything that turns an accepted offer into someone working.
-        </p>
-        <p>
-          You interview whoever you want to interview, you choose, and you
-          direct the work from there. Nothing about that changes because we
-          found the person.
-        </p>
+        Every shortlisted candidate completes role-specific work and a
+        practitioner interview before reaching your team.
+      </p>
+      <div class="c27-rise mt-8" style="--c27-d:80ms">
+        <Button href={ROUTES.hire} variant="primary" arrow
+          >Build your team</Button
+        >
       </div>
-
-      <ol
-        class="delivery-path c27-rise relative grid gap-2"
-        aria-label="How we work"
-        style="--c27-d:180ms"
-      >
-        {
-          phases.map((phase) => (
-            <li class="relative grid grid-cols-[3rem_minmax(0,1fr)] gap-4 py-3.5">
-              <span class="relative z-[1] grid size-12 place-items-center rounded-full border border-c27-line-deep bg-c27-deep-2 text-c27-on-deep-accent">
-                <Icon name={phase.icon} size={20} />
-              </span>
-              <div>
-                <h2 class="text-lg tracking-[-0.02em] text-c27-on-deep">
-                  {phase.title}
-                </h2>
-                <p class="mt-1 max-w-[40ch] text-body-sm text-c27-on-deep-2">
-                  {phase.detail}
-                </p>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
     </div>
+
+    <ul
+      class="mt-[clamp(3.5rem,7vw,5.5rem)] grid gap-4 text-left md:grid-cols-3"
+    >
+      {
+        EVIDENCE.map((item, index) => (
+          <li
+            class:list={[
+              "c27-rise c27-feature-card p-[clamp(1.5rem,3vw,2.25rem)]",
+            ]}
+            style={`--c27-d:${index * 60}ms`}
+          >
+            <span
+              class:list={[
+                "grid size-12 place-items-center",
+                item.color,
+                item.tile,
+              ]}
+              aria-hidden="true"
+            >
+              <Icon name={item.icon} size={24} />
+            </span>
+            <h2 class="c27-h3 mt-5 font-semibold">{item.title}</h2>
+            <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
+              {item.body}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
-
-<style>
-  .delivery-path::before {
-    position: absolute;
-    inset-block: 2.25rem;
-    left: 1.5rem;
-    width: 1px;
-    content: "";
-    background: var(--c27-on-deep-accent);
-    opacity: 0.4;
-    transform-origin: top;
-    animation: c27-delivery-line 900ms var(--c27-ease) 280ms both;
-  }
-
-  @keyframes c27-delivery-line {
-    from {
-      transform: scaleY(0);
-    }
-  }
-</style>

@@ -103,20 +103,20 @@ export function faqSchema(items: Faq[]): Schema {
  * rather than `Product` because nothing here is a purchasable unit.
  *
  * Structured data is exempt from invariant rule 0.1 (the legal entity has to be
- * named for the entity graph to be correct) but NOT from rule 0.2 — the
- * previous `serviceType: "employer of record"` and the description that spelled
- * out the employment split were both contractual claims, and are gone.
+ * named for the entity graph to be correct) but NOT from rule 0.2. Previous
+ * contractual service wording and the description of the employment split
+ * were removed.
  */
 export function serviceSchema(): Schema {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
     name: "Managed talent and team building",
-    serviceType: "Technical recruitment and staffing",
+    serviceType: "Managed talent acquisition and team building",
     provider: { "@id": ORGANIZATION_ID },
     areaServed: "Worldwide",
     description:
-      "Finding, assessing and placing engineering, cloud, data, security, quality, design and leadership talent for global companies, with the hiring, onboarding and administration handled.",
+      "Specialists, complete teams and leaders assessed through role-specific work and practitioner interviews.",
     url: absolute(ROUTES.hire),
   };
 }

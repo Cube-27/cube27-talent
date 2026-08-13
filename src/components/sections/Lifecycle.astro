@@ -2,41 +2,40 @@
 import Icon from "@/components/ui/Icon.astro";
 import { LIFECYCLE } from "@/data/process";
 
-/**
- * "What we take off your plate" — plan §9.1.3.
- *
- * This is the section where contractual detail would most naturally creep back
- * in. Invariant rule 0.2 governs every word: benefits only, no mechanics, no
- * equipment, no employment-entity language, no removal or replacement.
- *
- * Four tiles, four tints. The colour IS the elevation (design system rule 2) —
- * these carry no border and no shadow.
- */
-
-const TINTS = {
-  violet: "bg-c27-tint-violet",
-  mint: "bg-c27-tint-mint",
-  peach: "bg-c27-tint-peach",
-  sky: "bg-c27-tint-sky",
+const ICON_STYLES = {
+  violet: "text-c27-icon-violet c27-tile-violet",
+  mint: "text-c27-icon-green c27-tile-mint",
+  peach: "text-c27-icon-orange c27-tile-peach",
+  sky: "text-c27-icon-blue c27-tile-sky",
 } as const;
 ---
 
-<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+<div class="c27-gradient-blue grid border border-c27-line lg:grid-cols-4">
   {
-    LIFECYCLE.map((item, i) => (
-      <div
+    LIFECYCLE.map((item, index) => (
+      <article
         class:list={[
-          "c27-rise grid content-start gap-3 rounded-c27 p-6",
-          TINTS[item.tint],
+          "c27-rise grid content-start gap-4 bg-transparent p-6",
+          index > 0 &&
+            "border-t border-c27-line-deep lg:border-l lg:border-t-0",
         ]}
-        style={`--c27-d:${i * 80}ms`}
+        style={`--c27-d:${index * 60}ms`}
       >
-        <span class="grid size-10 place-items-center rounded-c27-sm bg-c27-surface text-c27-ink">
-          <Icon name={item.icon} size={20} />
+        <span
+          class:list={[
+            "grid size-11 place-items-center",
+            ICON_STYLES[item.tint],
+          ]}
+        >
+          <Icon name={item.icon} size={19} />
         </span>
-        <h3 class="c27-h3 font-bold text-c27-ink">{item.title}</h3>
-        <p class="text-body-sm leading-relaxed text-c27-ink-2">{item.body}</p>
-      </div>
+        <div>
+          <h3 class="c27-h3 font-semibold text-c27-ink">{item.title}</h3>
+          <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
+            {item.body}
+          </p>
+        </div>
+      </article>
     ))
   }
 </div>

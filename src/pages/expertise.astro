@@ -1,17 +1,16 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/ui/Section.astro";
-import SectionHead from "@/components/ui/SectionHead.astro";
 import ExpertiseSelector from "@/components/sections/ExpertiseSelector.astro";
 import SecurityTeams from "@/components/sections/SecurityTeams.astro";
 import LeadershipHiring from "@/components/sections/LeadershipHiring.astro";
-import AudienceSplit from "@/components/sections/AudienceSplit.astro";
+import FinalCta from "@/components/sections/FinalCta.astro";
 import { ROUTES, SITE_CONFIG } from "@/site-config";
 import { breadcrumbSchema } from "@/lib/schema";
 
 const title = `Expertise | ${SITE_CONFIG.brand}`;
 const description =
-  "Engineering and product, cloud and infrastructure, data and AI, security and compliance, quality, design, and leadership up to CXO.";
+  "Cross-functional talent spanning technology, product, security, design, business operations, and leadership through CXO.";
 
 const jsonLd = [
   breadcrumbSchema([{ name: "Expertise", path: ROUTES.expertise }]),
@@ -19,23 +18,22 @@ const jsonLd = [
 ---
 
 <Layout title={title} description={description} jsonLd={jsonLd}>
-  <Section>
-    <span class="c27-label mb-3 block">Expertise</span>
-    <h1 class="c27-h2">Whatever the team is missing</h1>
-    <p class="c27-lede mt-4">
-      We recruit where we can assess properly, which is a wider brief than it
-      sounds. Assessment is always matched to the discipline — an SRE, a
-      compliance lead and a product designer do not sit the same test.
+  <Section tone="violet" bordered>
+    <h1 class="c27-rise c27-display max-w-[14ch]">
+      Hire across every critical function.
+    </h1>
+    <p
+      class="c27-rise c27-lede mt-7 text-[clamp(1.05rem,1.7vw,1.3rem)] leading-relaxed"
+      style="--c27-d:80ms"
+    >
+      Specialists, security teams, operators, and executives.
     </p>
-    <div class="mt-10"><ExpertiseSelector headingLevel={2} /></div>
+    <div class="mt-[clamp(3rem,6vw,5rem)]">
+      <ExpertiseSelector headingLevel={2} />
+    </div>
   </Section>
 
-  {
-    /* Invariant rule 0.3: no out-of-scope list. Requirements we cannot serve
-      are declined in conversation, not pre-empted on the website. */
-  }
-
-  <Section tone="surface" bordered>
+  <Section tone="sky" bordered>
     <SecurityTeams />
   </Section>
 
@@ -43,8 +41,8 @@ const jsonLd = [
     <LeadershipHiring />
   </Section>
 
-  <Section tone="surface" bordered>
-    <SectionHead label="Two ways in" heading="Hiring, or looking?" />
-    <AudienceSplit />
-  </Section>
+  <FinalCta
+    heading="Build the capability you need."
+    body="Tell us the function and seniority."
+  />
 </Layout>

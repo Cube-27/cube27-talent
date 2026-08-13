@@ -10,13 +10,14 @@
   "scripts": {
     "dev": "astro dev --port 3100",
     "build": "astro build",
+    "content:check": "node scripts/check-content.mjs",
     "preview": "wrangler pages dev dist",
     "test": "node --test --experimental-strip-types tests/security.test.ts",
     "check": "astro check",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "verify": "pnpm run format:check && pnpm run lint && pnpm run check && pnpm run test && pnpm run build",
+    "verify": "pnpm run format:check && pnpm run content:check && pnpm run lint && pnpm run check && pnpm run test && pnpm run build",
     "astro": "astro"
   },
   "dependencies": {

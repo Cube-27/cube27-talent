@@ -14,7 +14,7 @@
 @font-face {
   font-family: "Figtree Variable";
   src: url("/fonts/figtree-latin-wght-normal.woff2") format("woff2-variations");
-  font-weight: 300 900;
+  font-weight: 300 600;
   font-display: optional;
   font-style: normal;
   unicode-range:
@@ -27,7 +27,7 @@
   font-family: "Figtree Variable";
   src: url("/fonts/figtree-latin-ext-wght-normal.woff2")
     format("woff2-variations");
-  font-weight: 300 900;
+  font-weight: 300 600;
   font-display: optional;
   font-style: normal;
   unicode-range:
@@ -40,7 +40,7 @@
 @font-face {
   font-family: "Switzer Variable";
   src: url("/fonts/switzer-variable.woff2") format("woff2");
-  font-weight: 100 900;
+  font-weight: 300 600;
   font-display: optional;
   font-style: normal;
 }

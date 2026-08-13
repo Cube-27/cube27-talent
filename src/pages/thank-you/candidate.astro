@@ -2,7 +2,6 @@
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/ui/Section.astro";
 import Button from "@/components/ui/Button.astro";
-import CheckMark from "@/components/ui/CheckMark.astro";
 import { ROUTES, SITE_CONFIG } from "@/site-config";
 
 const title = `Application received | ${SITE_CONFIG.brand}`;
@@ -14,35 +13,22 @@ const title = `Application received | ${SITE_CONFIG.brand}`;
   noindex
   bare
 >
-  <Section narrow>
-    <div class="max-w-[46rem]">
-      <span
-        class="inline-flex items-center gap-2 rounded-full border border-c27-line bg-c27-surface px-3.5 py-1.5 text-caption font-semibold text-c27-accent-d"
+  <Section narrow tone="mint" bordered>
+    <div class="max-w-[50rem] border-t border-c27-line pt-8">
+      <h1 class="c27-h2">Your profile is with our team.</h1>
+      <p
+        class="c27-lede mt-5 text-[clamp(1rem,1.4vw,1.125rem)] leading-relaxed"
       >
-        <CheckMark size={15} />
-        Application received
-      </span>
-      <h1 class="c27-h2 mt-5">Thank you — we have your profile</h1>
-      {
-        /* This page is only reached once the profile itself has been delivered
-           — that step is critical and blocks success. The acknowledgement
-           email is best-effort and can fail silently, so the copy says it is
-           on its way rather than asserting it arrived, and never makes it the
-           only route back to us. */
-      }
-      <p class="c27-lede mt-4">
-        A confirmation is on its way to the email address you supplied, with a
-        reference number. We will read your profile properly and get in touch if
-        there is a relevant next step.
+        Check your email for confirmation. We’ll contact you when your profile
+        matches a relevant role.
       </p>
-      <p class="mt-4 text-body-sm text-c27-ink-2">
-        Sending a profile does not guarantee screening, an interview, employment
-        or an assignment. To correct or delete a profile, write to {
-          SITE_CONFIG.organization.privacyEmail
-        }.
+      <p class="mt-4 text-body-sm leading-relaxed text-c27-ink-2">
+        Submitting a profile does not assure screening, an interview,
+        employment, or an assignment. For a correction or deletion request,
+        write to {SITE_CONFIG.organization.privacyEmail}.
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <Button href={ROUTES.how} variant="line">How we assess</Button>
+        <Button href={ROUTES.join} variant="primary">For talent</Button>
         <Button href={ROUTES.home} variant="line">Back to home</Button>
       </div>
     </div>

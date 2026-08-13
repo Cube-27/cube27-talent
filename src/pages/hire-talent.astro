@@ -2,81 +2,66 @@
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/ui/Section.astro";
 import SectionHead from "@/components/ui/SectionHead.astro";
-import ProcessRail from "@/components/sections/ProcessRail.astro";
-import Lifecycle from "@/components/sections/Lifecycle.astro";
 import EmployerForm from "@/components/forms/EmployerForm.astro";
+import Lifecycle from "@/components/sections/Lifecycle.astro";
 import Faq from "@/components/ui/Faq.astro";
 import { EMPLOYER_FAQS } from "@/data/faqs";
-import { PROCESS_HEADING } from "@/data/process";
 import { ROUTES, SITE_CONFIG } from "@/site-config";
 import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
 
-const title = `Hire talent | ${SITE_CONFIG.brand}`;
+const title = `Build your team | ${SITE_CONFIG.brand}`;
 const description =
-  "Tell us what the team needs. We find the people, assess them on a recorded task with practitioners, and handle everything around the hire.";
+  "Share the roles, level, and location. Get a managed hiring plan for your team.";
 
 const jsonLd = [
-  breadcrumbSchema([{ name: "Hire talent", path: ROUTES.hire }]),
+  breadcrumbSchema([{ name: "Build your team", path: ROUTES.hire }]),
   serviceSchema(),
   faqSchema(EMPLOYER_FAQS),
+];
+
+const EXPECTATIONS = [
+  "One specialist or a complete team",
+  "Role-specific assessment",
+  "Security and leadership hiring",
 ];
 ---
 
 <Layout title={title} description={description} jsonLd={jsonLd}>
-  <Section>
+  <Section tone="violet" bordered>
     <div
-      class="grid gap-[clamp(2rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)]"
+      class="grid gap-[clamp(3rem,7vw,6rem)] lg:grid-cols-[minmax(0,0.8fr)_minmax(30rem,1.2fr)]"
     >
-      <div class="c27-rise">
-        <span class="c27-label mb-3 block">Hire talent</span>
-        <h1 class="c27-h2">Tell us what the team needs</h1>
-        <p class="c27-lede mt-4">
-          One senior specialist, several openings at once, or a team built out
-          over a year. You will get a straight answer on whether we can assess
-          the role properly and how quickly we can move on it.
+      <div class="c27-rise lg:sticky lg:top-28 lg:self-start">
+        <h1 class="c27-h2">Tell us who you need.</h1>
+        <p
+          class="c27-lede mt-5 text-[clamp(1rem,1.4vw,1.125rem)] leading-relaxed"
+        >
+          Share the role, level, location, and target start.
         </p>
-        <ul class="mt-7 grid gap-3">
+        <ul class="mt-8 border-t border-c27-line">
           {
-            [
-              "Engineering, cloud, data, security, quality, design and leadership — and the roles around them.",
-              "Assessed by people who do the work, on a recorded task matched to the discipline.",
-              "Hiring, onboarding, payroll and the admin around it, handled.",
-              "Remote, hybrid, onsite or relocation.",
-            ].map((point) => (
-              <li class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-2.5 text-body-sm leading-relaxed text-c27-ink-2">
-                <span class="font-bold text-c27-accent" aria-hidden="true">
-                  &#10003;
-                </span>
-                <span>{point}</span>
+            EXPECTATIONS.map((item) => (
+              <li class="border-b border-c27-line py-3.5 text-body-sm leading-relaxed text-c27-ink-2">
+                {item}
               </li>
             ))
           }
         </ul>
-        <p class="mt-7 text-caption leading-relaxed text-c27-ink-3">
-          Terms depend on the roles, the seniority and the location, so we price
-          each engagement directly rather than publishing a rate card.
-        </p>
       </div>
-      <div class="c27-rise" style="--c27-d:100ms"><EmployerForm /></div>
+      <div class="c27-rise" style="--c27-d:80ms"><EmployerForm /></div>
     </div>
   </Section>
 
   <Section tone="surface" bordered>
     <SectionHead
-      label="What you hand over"
-      heading="The part that eats your calendar"
-      lede="Finding someone is the visible part. Most of the work is everything either side of it."
+      heading="Support after the hire."
+      lede="Onboarding and ongoing employee support stay covered."
     />
     <Lifecycle />
   </Section>
 
-  <Section tone="deep">
-    <SectionHead label="How it works" heading={PROCESS_HEADING} invert />
-    <ProcessRail />
-  </Section>
-
   <Section narrow>
-    <SectionHead label="FAQ" heading="Questions we get asked" />
+    <SectionHead heading="Before you submit." />
     <Faq items={EMPLOYER_FAQS} />
   </Section>
 </Layout>

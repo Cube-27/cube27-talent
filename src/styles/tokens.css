@@ -2,7 +2,7 @@
    Design tokens — the single source of truth for colour, type,
    spacing, radius, elevation and motion. See docs/design-system.md.
 
-   The system is flat: elevation is a tint step, never a shadow,
+   The system is flat: elevation is a tint or gradient step, never a shadow,
    and nothing lifts on hover. Raw values live on --c27-*.
    Tailwind utilities are generated from the @theme inline block,
    so `bg-c27-surface-2`, `text-c27-ink-2`, `border-c27-line` all
@@ -18,15 +18,32 @@
      on a tinted section, tinted card on a white section. The four
      tints let a set of cards differentiate by colour instead of by
      elevation — cycle them in order, do not add a fifth. */
-  --c27-ground: #ffffff;
+  --c27-ground: #fbfaf7;
   --c27-surface: #ffffff;
-  --c27-surface-2: #f7f7fb;
-  --c27-tint-violet: #ece9fe;
-  --c27-tint-mint: #e4f6ec;
-  --c27-tint-peach: #fdeee4;
-  --c27-tint-sky: #e4eefe;
-  --c27-deep: #171325;
-  --c27-deep-2: #241d3d;
+  --c27-surface-2: #f5f3ef;
+  --c27-tint-violet: #eeeafd;
+  --c27-tint-mint: #e6f5ed;
+  --c27-tint-peach: #fff0e6;
+  --c27-tint-sky: #e7efff;
+  --c27-hero: #e2ebff;
+  --c27-deep: #e2ebff;
+  --c27-deep-2: #d7e4ff;
+
+  /* --- atmospheric surfaces -------------------------------------
+     These are used on a small number of deliberate regions. They do
+     not replace the indigo action fill or the solid blue process field. */
+  --c27-gradient-blue: linear-gradient(
+    135deg,
+    #e9f0ff 0%,
+    #dbe7ff 54%,
+    #ebe7ff 100%
+  );
+  --c27-gradient-warm: linear-gradient(180deg, #eeece7 0%, #faf8f4 100%);
+  --c27-gradient-soft: linear-gradient(180deg, #ffffff 0%, #f6f4ef 100%);
+  --c27-tile-violet: linear-gradient(135deg, #e5d4ff 0%, #becfff 100%);
+  --c27-tile-mint: linear-gradient(135deg, #bce8d1 0%, #8ed6d4 100%);
+  --c27-tile-peach: linear-gradient(135deg, #ffc2dd 0%, #ffc09f 100%);
+  --c27-tile-sky: linear-gradient(135deg, #d3d0ff 0%, #b8dcff 100%);
 
   /* --- ink -------------------------------------------------------
      Ratios given on white first, then on --c27-tint-violet, which is
@@ -54,21 +71,24 @@
      intent so a button's soft state does not read as a panel. */
   --c27-accent-soft: #ece9fe;
 
+  /* Section-icon accents. These identify service categories, not actions. */
+  --c27-icon-violet: #5238e8;
+  --c27-icon-green: #08785b;
+  --c27-icon-orange: #bd4f1d;
+  --c27-icon-blue: #1f5fc4;
+
   /* --- lines -----------------------------------------------------
      A 1px hairline is the default boundary between surfaces. It does
      more work here than any shadow. */
-  --c27-line: #e6e5ee;
-  --c27-line-2: #f1f0f6;
-  --c27-line-deep: rgba(255, 255, 255, 0.12);
+  --c27-line: #dedde3;
+  --c27-line-2: #eceae6;
+  --c27-line-deep: rgba(28, 26, 34, 0.16);
 
-  /* --- on deep panels --- */
-  /* 18.16 on --c27-deep, 15.93 on --c27-deep-2. */
-  --c27-on-deep: #ffffff;
-  --c27-on-deep-2: rgba(255, 255, 255, 0.82);
-  /* Meta only — never body copy. */
-  --c27-on-deep-3: rgba(255, 255, 255, 0.6);
-  /* 9.84 on --c27-deep, 8.63 on --c27-deep-2. */
-  --c27-on-deep-accent: #c4b5fd;
+  /* --- on blue fields --- */
+  --c27-on-deep: #1c1a22;
+  --c27-on-deep-2: #55535f;
+  --c27-on-deep-3: #6b6878;
+  --c27-on-deep-accent: #3d28d4;
 
   /* --- feedback --------------------------------------------------
      The one colour outside the accent, and only because an error must
@@ -82,8 +102,8 @@
   --c27-font-mono:
     ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
 
-  --c27-text-display: clamp(2.4rem, 5vw, 4rem);
-  --c27-text-h2: clamp(1.75rem, 3.2vw, 2.6rem);
+  --c27-text-display: 2.75rem;
+  --c27-text-h2: clamp(2rem, 3vw, 2.5rem);
   --c27-text-h3-lg: 1.5rem;
   --c27-text-h3: 1.0625rem;
   --c27-text-body: 1rem;
@@ -93,18 +113,15 @@
   --c27-text-micro: 0.6875rem;
 
   /* --- layout --- */
-  --c27-gutter: clamp(1.25rem, 4vw, 3.5rem);
-  --c27-pad-section: clamp(4rem, 7vw, 7rem);
-  --c27-container: 78rem;
+  --c27-gutter: clamp(1.25rem, 5vw, 4rem);
+  --c27-pad-section: clamp(3.5rem, 6vw, 6rem);
+  --c27-container: 80rem;
   --c27-container-narrow: 60rem;
 
-  /* --- radius ----------------------------------------------------
-     2px tighter than the previous system at every step. Flat
-     surfaces read sharper with less rounding; the extra softness was
-     doing shadow's job. */
-  --c27-radius-sm: 10px;
-  --c27-radius: 14px;
-  --c27-radius-lg: 20px;
+  /* Functional controls are near-square. Marketing surfaces are square. */
+  --c27-radius-sm: 3px;
+  --c27-radius: 0px;
+  --c27-radius-lg: 0px;
 
   /* --- elevation -------------------------------------------------
      The only shadow in the system, and it belongs to things that
@@ -126,6 +143,7 @@
   --color-c27-tint-mint: var(--c27-tint-mint);
   --color-c27-tint-peach: var(--c27-tint-peach);
   --color-c27-tint-sky: var(--c27-tint-sky);
+  --color-c27-hero: var(--c27-hero);
   --color-c27-deep: var(--c27-deep);
   --color-c27-deep-2: var(--c27-deep-2);
 
@@ -136,6 +154,10 @@
   --color-c27-accent: var(--c27-accent);
   --color-c27-accent-d: var(--c27-accent-d);
   --color-c27-accent-soft: var(--c27-accent-soft);
+  --color-c27-icon-violet: var(--c27-icon-violet);
+  --color-c27-icon-green: var(--c27-icon-green);
+  --color-c27-icon-orange: var(--c27-icon-orange);
+  --color-c27-icon-blue: var(--c27-icon-blue);
 
   --color-c27-line: var(--c27-line);
   --color-c27-line-2: var(--c27-line-2);

@@ -5,81 +5,37 @@ import SectionHead from "@/components/ui/SectionHead.astro";
 import HowItWorksHero from "@/components/sections/HowItWorksHero.astro";
 import ProcessRail from "@/components/sections/ProcessRail.astro";
 import Lifecycle from "@/components/sections/Lifecycle.astro";
-import AudienceSplit from "@/components/sections/AudienceSplit.astro";
-import { PROCESS_HEADING, PROCESS_LEDE } from "@/data/process";
+import FinalCta from "@/components/sections/FinalCta.astro";
+import { PROCESS_LEDE } from "@/data/process";
 import { ROUTES, SITE_CONFIG } from "@/site-config";
 import { breadcrumbSchema } from "@/lib/schema";
 
-const title = `How it works | ${SITE_CONFIG.brand}`;
+const title = `How we hire | ${SITE_CONFIG.brand}`;
 const description =
-  "Nine steps from brief to first day. What we do at each stage, what you decide, and what happens after someone starts.";
+  "Role-specific assessments, practitioner interviews, and focused shortlists for confident hiring decisions.";
 
-/* The candidate's view of the same route. Deliberately plainer than the
-   employer rail — an applicant wants to know what happens next, not how the
-   service is structured. Invariant rules 0.1 and 0.2 apply: no company name,
-   nothing contractual. */
-const candidateFlow = [
-  "You send us a profile",
-  "We read it properly",
-  "First conversation",
-  "A task matched to your discipline, recorded",
-  "Technical interview with a practitioner",
-  "References, with your written consent",
-  "Matched to a live requirement",
-  "You meet the client",
-  "Offer",
-  "Onboarding and first day",
-];
-
-const jsonLd = [breadcrumbSchema([{ name: "How it works", path: ROUTES.how }])];
+const jsonLd = [breadcrumbSchema([{ name: "How we hire", path: ROUTES.how }])];
 ---
 
 <Layout title={title} description={description} jsonLd={jsonLd}>
   <HowItWorksHero />
 
-  <Section tone="deep" bordered>
+  <Section tone="deep">
     <SectionHead
-      label="If you are hiring"
-      heading={PROCESS_HEADING}
+      heading="Evidence at every decision."
       lede={PROCESS_LEDE}
       invert
     />
     <ProcessRail />
   </Section>
 
-  <Section>
-    <SectionHead
-      label="If you are applying"
-      heading="What happens after you send us a profile"
-      lede="No stage is skipped, and no stage guarantees the next one. You will know where you stand at each of them."
-    />
-    <ol
-      class="c27-rise grid gap-px overflow-hidden rounded-c27-lg border border-c27-line bg-c27-line sm:grid-cols-2"
-    >
-      {
-        candidateFlow.map((step, i) => (
-          <li class="flex items-baseline gap-3.5 bg-c27-surface px-5 py-4">
-            <span class="font-display text-caption font-bold tabular-nums text-c27-accent">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <span class="text-body-sm">{step}</span>
-          </li>
-        ))
-      }
-    </ol>
-  </Section>
-
   <Section tone="surface" bordered>
     <SectionHead
-      label="What you hand over"
-      heading="Everything either side of the hire"
-      lede="Finding someone is the visible part. Most of the work is what surrounds it."
+      heading="Support after selection."
+      lede="Onboarding and ongoing employee support stay covered."
     />
     <Lifecycle />
   </Section>
 
-  <Section>
-    <SectionHead label="Two ways in" heading="Hiring, or looking?" />
-    <AudienceSplit />
-  </Section>
+  <FinalCta heading="Hire with evidence." body="Tell us who you need." />
 </Layout>

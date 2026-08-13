@@ -1,0 +1,61 @@
+---
+import Icon from "@/components/ui/Icon.astro";
+
+const VALUES = [
+  {
+    icon: "target",
+    title: "Qualified shortlists",
+    body: "Relevant candidates. No CV flood.",
+  },
+  {
+    icon: "spark",
+    title: "Evidence before interviews",
+    body: "Recorded assessments and practitioner review.",
+  },
+  {
+    icon: "compass",
+    title: "Teams that scale",
+    body: "One specialist, several roles, or a complete function.",
+  },
+];
+
+const ICON_STYLES = [
+  "c27-tile-violet text-c27-icon-violet",
+  "c27-tile-mint text-c27-icon-green",
+  "c27-tile-peach text-c27-icon-orange",
+];
+---
+
+<div
+  class="grid gap-[clamp(2.5rem,6vw,5.5rem)] lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]"
+>
+  <div class="c27-rise">
+    <h2 class="c27-h2">Qualified candidates. Clearer decisions.</h2>
+    <p class="c27-lede mt-5 text-[clamp(1rem,1.4vw,1.125rem)] leading-relaxed">
+      Managed hiring for one critical role or an entire team.
+    </p>
+  </div>
+
+  <div class="border-t border-c27-line">
+    {
+      VALUES.map((item, index) => (
+        <article
+          class="c27-rise grid grid-cols-[2.5rem_minmax(0,1fr)] gap-5 border-b border-c27-line py-6"
+          style={`--c27-d:${index * 60}ms`}
+        >
+          <span
+            class:list={["grid size-11 place-items-center", ICON_STYLES[index]]}
+          >
+            <Icon name={item.icon} size={19} />
+          </span>
+          <div>
+            <h3 class="c27-h3 font-semibold">{item.title}</h3>
+            <p class="mt-2 max-w-[62ch] text-body-sm leading-relaxed text-c27-ink-2">
+              {item.body}
+            </p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</div>

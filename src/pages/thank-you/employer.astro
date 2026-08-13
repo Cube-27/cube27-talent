@@ -2,14 +2,8 @@
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/ui/Section.astro";
 import Button from "@/components/ui/Button.astro";
-import CheckMark from "@/components/ui/CheckMark.astro";
 import { ROUTES, SITE_CONFIG } from "@/site-config";
 
-/**
- * Conversion destination for the employer funnel. Plan §11.3.
- * noindex, and it renders no submitted data — a direct visit sees the same
- * generic confirmation, so nothing leaks through URL, markup or history.
- */
 const title = `Requirement received | ${SITE_CONFIG.brand}`;
 ---
 
@@ -19,32 +13,17 @@ const title = `Requirement received | ${SITE_CONFIG.brand}`;
   noindex
   bare
 >
-  <Section narrow>
-    <div class="max-w-[46rem]">
-      <span
-        class="inline-flex items-center gap-2 rounded-full border border-c27-line bg-c27-surface px-3.5 py-1.5 text-caption font-semibold text-c27-accent-d"
+  <Section narrow tone="violet" bordered>
+    <div class="max-w-[50rem] border-t border-c27-line pt-8">
+      <h1 class="c27-h2">We have your requirement.</h1>
+      <p
+        class="c27-lede mt-5 text-[clamp(1rem,1.4vw,1.125rem)] leading-relaxed"
       >
-        <CheckMark size={15} />
-        Requirement received
-      </span>
-      <h1 class="c27-h2 mt-5">Thank you — we have your requirement</h1>
-      {
-        /* Same as the candidate confirmation: the lead itself is delivered
-           before this page is reached, but the acknowledgement email is
-           best-effort and can fail silently, so this does not assert it
-           arrived. */
-      }
-      <p class="c27-lede mt-4">
-        A confirmation is on its way to the email address you supplied, with a
-        reference number. We will read the requirement properly, work out
-        whether we can assess the role well, and come back to you either way.
-      </p>
-      <p class="mt-4 text-body-sm text-c27-ink-2">
-        Sending a requirement does not by itself start an engagement. Terms are
-        agreed directly before anyone is presented to you.
+        Check your email for confirmation. We’ll review the requirement and
+        contact you directly.
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <Button href={ROUTES.how} variant="line">How it works</Button>
+        <Button href={ROUTES.how} variant="primary">See how we hire</Button>
         <Button href={ROUTES.home} variant="line">Back to home</Button>
       </div>
     </div>

@@ -1,19 +1,20 @@
 # Cube27 Talent
 
-Managed engineering talent and staffing site for `talent.cube27.com`. Astro
+Managed talent and team-building site for `talent.cube27.com`. Astro
 static output plus two Cloudflare Pages Functions for the forms, deployed to an
 **independent** Pages project so it shares no failure domain with `cube27.com`.
 
 ## Reference documents
 
-Priority when they conflict: **invariants → V1 plan → design system → code.**
+Priority when they conflict: **invariants → V1 plan → content strategy → design system → code.**
 
 | Document                                                                                               | Governs                               |
 | ------------------------------------------------------------------------------------------------------ | ------------------------------------- |
 | [`docs/cube27-talent-product-invariants-revised.md`](docs/cube27-talent-product-invariants-revised.md) | Locked business decisions             |
 | [`docs/cube27-talent-v1-plan-revised.md`](docs/cube27-talent-v1-plan-revised.md)                       | Product and implementation plan       |
+| [`docs/content-strategy.md`](docs/content-strategy.md)                                                 | Messaging, page narrative, copy rules |
 | [`docs/design-system.md`](docs/design-system.md)                                                       | Colour, type, components, usage rules |
-| [`docs/mockup/homepage.html`](docs/mockup/homepage.html)                                               | Approved visual reference             |
+| [`PRODUCT.md`](PRODUCT.md)                                                                             | Durable product truth                 |
 
 ## Commands
 
@@ -23,7 +24,7 @@ pnpm dev        # localhost:3100 — static pages only, no Pages Functions
 pnpm build      # static output to dist/
 pnpm preview    # wrangler pages dev dist — the ONLY way to exercise the forms
 pnpm test       # resume and request-body security tests
-pnpm verify     # format:check + lint + astro check + test + build
+pnpm verify     # format:check + content gate + lint + astro check + test + build
 ```
 
 `pnpm dev` does not run `functions/`. Form submissions only work under
@@ -58,8 +59,8 @@ Failing the build is deliberate. `pnpm dev` is exempt.
 src/
   data/            role taxonomy, process, FAQs, proof — the content source of truth
   styles/          fonts.css → tokens.css → globals.css
-  components/ui/   Button, Section, SectionHead, Icon, SnapshotCard, Faq
-  components/sections/  Header, Footer, Hero, ExpertiseSelector, ProcessStepper, …
+  components/ui/   Button, Section, SectionHead, Icon, Faq
+  components/sections/  Header, Footer, Hero, ExpertiseSelector, ProcessRail, …
   components/forms/     EmployerForm, CandidateForm
   lib/form-client.ts    shared submit handling, attribution capture
   pages/           one file per route
@@ -77,11 +78,9 @@ the form handlers are plain TypeScript modules (plan §12.4.5).
 ### Rules the code enforces
 
 - **Proof gating.** Numbers render only when their `src/data/proof.ts` entry is
-  `verified: true`. `200+ positions filled` is currently `false` and does not
-  appear on the site.
-- **The snapshot card is a template.** It always carries the "Template" badge
-  and the "Not a live candidate" line (invariant 32).
-- **Third person in headings.** No "we"/"you" in any `h1`–`h4`.
+  `verified: true`. The three approved figures are recorded with their source.
+- **Content gate.** `pnpm content:check` rejects stale process-count language,
+  engineering-only positioning and prohibited contractual copy in source.
 - **Internal email is the critical send.** If Resend fails on the internal
   notification the endpoint returns an error and the browser never reaches the
   confirmation page. The acknowledgement is best-effort and only logged.

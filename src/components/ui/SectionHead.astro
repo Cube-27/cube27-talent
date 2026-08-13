@@ -1,42 +1,20 @@
 ---
-/**
- * Label → h2 → optional lede. Every content section opens with one.
- *
- * Headings are statements, not labels — design system §8. "Nine steps. One
- * team that stays." not "Our Process".
- */
 interface Props {
-  label: string;
   heading: string;
   lede?: string;
-  /** For sections on a deep ground. */
   invert?: boolean;
-  /** Centres the block; used where the section below it is symmetrical. */
   centered?: boolean;
 }
 
-const { label, heading, lede, invert = false, centered = false } = Astro.props;
+const { heading, lede, invert = false, centered = false } = Astro.props;
 ---
 
 <div
   class:list={[
-    "c27-rise mb-[clamp(2.25rem,4.5vw,3.25rem)] max-w-[44rem]",
+    "c27-rise mb-[clamp(2.5rem,5vw,4rem)] max-w-[52rem]",
     centered && "mx-auto text-center",
   ]}
 >
-  <span
-    class:list={[
-      "c27-label mb-3 inline-flex items-center gap-2",
-      invert && "text-c27-on-deep-accent",
-    ]}
-  >
-    <i
-      class:list={[
-        "size-1.5 rounded-full",
-        invert ? "bg-c27-on-deep-accent" : "bg-c27-accent",
-      ]}></i>
-    {label}
-  </span>
   <h2
     class:list={["c27-h2", invert && "text-c27-on-deep", centered && "mx-auto"]}
   >
@@ -46,7 +24,7 @@ const { label, heading, lede, invert = false, centered = false } = Astro.props;
     lede && (
       <p
         class:list={[
-          "c27-lede mt-3.5 text-body",
+          "c27-lede mt-5 text-[clamp(1rem,1.4vw,1.125rem)] leading-relaxed",
           invert && "text-c27-on-deep-2",
           centered && "mx-auto",
         ]}

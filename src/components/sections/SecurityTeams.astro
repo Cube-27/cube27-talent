@@ -1,92 +1,118 @@
 ---
 import Icon from "@/components/ui/Icon.astro";
 import Button from "@/components/ui/Button.astro";
-import { SECURITY_FRAMEWORKS, SECURITY_DISCLAIMER } from "@/data/roles";
+import { SECURITY_DISCLAIMER } from "@/data/roles";
 import { ROUTES } from "@/site-config";
 
-/**
- * Building a security and compliance team.
- *
- * INVARIANT RULE 0.4 — the whole point of this section, and the one thing that
- * must not drift:
- *  - We build the team that takes an organisation TOWARDS a certification.
- *  - We never state, imply or visually suggest that we hold one.
- *  - Framework names are set TYPOGRAPHICALLY, in the site's own type. Never a
- *    seal, badge, crest or trust mark — a seal reads as an accreditation claim
- *    no matter what the caption says.
- *  - SECURITY_DISCLAIMER ships with them. It is not optional.
- */
-
 const CAPABILITIES = [
-  "Security engineers who harden the product itself",
-  "Application security across the development lifecycle",
-  "Security operations, monitoring and incident response",
-  "Governance, risk and compliance leads who carry the audit",
+  {
+    title: "Application security",
+    body: "Protect products, platforms, and customer data.",
+    icon: "shield" as const,
+    color: "text-c27-icon-violet",
+    tile: "c27-tile-violet",
+  },
+  {
+    title: "Security operations",
+    body: "Build detection, response, and incident readiness.",
+    icon: "target" as const,
+    color: "text-c27-icon-blue",
+    tile: "c27-tile-sky",
+  },
+  {
+    title: "Risk and compliance",
+    body: "Strengthen controls, governance, and audit readiness.",
+    icon: "check" as const,
+    color: "text-c27-icon-green",
+    tile: "c27-tile-mint",
+  },
+  {
+    title: "Security leadership",
+    body: "Hire the people who can set direction and deliver it.",
+    icon: "compass" as const,
+    color: "text-c27-icon-orange",
+    tile: "c27-tile-peach",
+  },
+];
+
+const STANDARDS = [
+  { name: "ISO 27001", note: "Information security" },
+  { name: "SOC 2", note: "Trust services" },
+  { name: "PCI DSS", note: "Payment security" },
+  { name: "HIPAA", note: "Health data" },
+  { name: "GDPR", note: "Data protection" },
 ];
 ---
 
-<div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.85fr)]">
-  <div class="c27-rise">
-    <span class="c27-label mb-3 inline-flex items-center gap-2">
-      <i class="size-1.5 rounded-full bg-c27-accent"></i>
-      Security teams
-    </span>
-    {
-      /* "gets you certified" promised the outcome, which invariant rule 0.4
-        does not allow us to promise — we build the team, the organisation
-        earns the certification. */
-    }
-    <h2 class="c27-h2">
-      Build the team that gets you <span class="c27-mark">audit-ready</span>
-    </h2>
-    <p class="c27-lede mt-4 text-body leading-relaxed">
-      Security hiring is a specialist market most companies enter once every few
-      years, usually against a deadline. We build the function — engineers,
-      operations and the compliance leads who carry the audit — so the programme
-      has people behind it rather than a plan.
-    </p>
-
-    <ul class="mt-7 grid gap-3">
-      {
-        CAPABILITIES.map((item) => (
-          <li class="grid grid-cols-[1.5rem_minmax(0,1fr)] items-start gap-3 text-body-sm leading-relaxed text-c27-ink-2">
-            <span class="mt-0.5 grid size-6 place-items-center rounded-full bg-c27-accent-soft text-c27-accent-d">
-              <Icon name="lock" size={13} />
-            </span>
-            <span>{item}</span>
-          </li>
-        ))
-      }
-    </ul>
-
-    <div class="mt-8">
+<div class="c27-rise">
+  <div
+    class="grid gap-8 border-b border-c27-line-deep pb-[clamp(2rem,4vw,3rem)] lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.65fr)] lg:items-end"
+  >
+    <div>
+      <h2 class="c27-h2 max-w-[24ch]">
+        Build a security team for the standard ahead.
+      </h2>
+      <p
+        class="mt-5 max-w-[58ch] text-[clamp(1rem,1.4vw,1.125rem)] leading-relaxed text-c27-ink-2"
+      >
+        Hire security specialists and leaders who understand the controls,
+        evidence, and operating discipline your business needs.
+      </p>
+    </div>
+    <div class="lg:justify-self-end">
       <Button href={ROUTES.hire} variant="primary" arrow
         >Build a security team</Button
       >
     </div>
   </div>
 
-  {/* Typographic only. Do not replace these with logo files. */}
-  <div
-    class="c27-rise grid content-start gap-5 rounded-c27-lg bg-c27-tint-sky p-[clamp(1.75rem,3.5vw,2.5rem)]"
-    style="--c27-d:100ms"
-  >
-    <h3 class="c27-h3 font-bold text-c27-ink">
-      Programmes our teams work towards
-    </h3>
-    <ul class="grid gap-2.5">
+  <ul class="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+    {
+      CAPABILITIES.map((item) => (
+        <li class:list={["c27-soft-panel p-6 lg:min-h-48"]}>
+          <span
+            class:list={[
+              "grid size-11 place-items-center",
+              item.color,
+              item.tile,
+            ]}
+            aria-hidden="true"
+          >
+            <Icon name={item.icon} size={24} />
+          </span>
+          <h3 class="c27-h3 mt-5 font-semibold">{item.title}</h3>
+          <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
+            {item.body}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="pt-[clamp(2rem,4vw,3rem)]">
+    <div
+      class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between"
+    >
+      <h3 class="c27-h3-lg font-semibold">
+        Standards your team can work toward
+      </h3>
+      <p
+        class="max-w-[48ch] text-caption leading-relaxed text-c27-ink-2 md:text-right"
+      >
+        {SECURITY_DISCLAIMER}
+      </p>
+    </div>
+    <ul class="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
       {
-        SECURITY_FRAMEWORKS.map((name) => (
-          <li class="flex items-center gap-3 rounded-c27-sm bg-c27-surface px-4 py-3">
-            <span class="font-display text-body font-bold tracking-[-0.02em] text-c27-ink">
-              {name}
-            </span>
+        STANDARDS.map((standard) => (
+          <li class="c27-feature-card px-5 py-6">
+            <p class="font-display text-lg font-semibold tracking-[-0.025em] text-c27-accent">
+              {standard.name}
+            </p>
+            <p class="mt-1 text-caption text-c27-ink-2">{standard.note}</p>
           </li>
         ))
       }
     </ul>
-    <p class="text-caption leading-relaxed text-c27-ink-2">
-      {SECURITY_DISCLAIMER}
-    </p>
   </div>
 </div>

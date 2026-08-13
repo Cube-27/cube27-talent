@@ -29,7 +29,7 @@ const {
 } = Astro.props;
 
 const base =
-  "group inline-flex items-center gap-2.5 whitespace-nowrap rounded-c27-sm border font-display font-bold no-underline cursor-pointer transition-[background-color,border-color,color] duration-[var(--c27-dur-fast)] ease-[var(--c27-ease)] disabled:cursor-not-allowed disabled:opacity-60 disabled:pointer-events-none";
+  "group inline-flex items-center gap-2.5 whitespace-nowrap rounded-c27-sm border font-display font-semibold no-underline cursor-pointer transition-[background-color,border-color,color] duration-[var(--c27-dur-fast)] ease-[var(--c27-ease)] disabled:cursor-not-allowed disabled:opacity-60 disabled:pointer-events-none";
 
 const variants = {
   // One accent value serves as fill and as text elsewhere: white on
@@ -39,7 +39,8 @@ const variants = {
   line: "border-c27-line bg-c27-surface text-c27-ink hover:border-c27-accent hover:bg-c27-accent-soft hover:text-c27-accent-d",
   ghost:
     "border-transparent bg-transparent text-c27-ink-2 hover:bg-c27-surface-2 hover:text-c27-ink",
-  "on-deep": "border-transparent bg-white text-c27-deep hover:bg-c27-on-deep-2",
+  "on-deep":
+    "border-transparent bg-c27-accent text-white hover:bg-c27-accent-d",
 };
 
 // min-h-11 keeps every button at the 44px tap-target floor.

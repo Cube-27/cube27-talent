@@ -8,81 +8,72 @@ import { CANDIDATE_FAQS } from "@/data/faqs";
 import { ROUTES, SITE_CONFIG } from "@/site-config";
 import { breadcrumbSchema, faqSchema } from "@/lib/schema";
 
-const title = `Careers | ${SITE_CONFIG.brand}`;
+const title = `For talent | ${SITE_CONFIG.brand}`;
 const description =
-  "Real work with global clients, an assessment matched to what you actually do, and a process that tells you where you stand.";
+  "Apply for specialist, security, operations, and leadership roles with global clients.";
 
-/* Invariant 15: the candidate proposition is a career, not a placement.
-   Every claim below is operationally true today, and none of it is
-   contractual — no equipment, no employment mechanics (rule 0.2). */
-const benefits = [
+const BENEFITS = [
   {
-    title: "Real work, not a listing",
-    body: "Assignments with companies building products people use, across time zones and working models.",
+    title: "Relevant roles",
+    body: "Opportunities matched to your experience and goals.",
   },
   {
-    title: "An assessment that fits what you do",
-    body: "A task matched to your discipline rather than a generic test, and an interview with someone who does the same work.",
+    title: "Fair assessment",
+    body: "Show your ability through work relevant to the role.",
   },
   {
-    title: "Your reasoning goes with you",
-    body: "The assessment is recorded, so what reaches the client is how you think — not a CV and a score out of ten.",
-  },
-  {
-    title: "A process that respects your time",
-    body: "You will know where you stand at each stage, including when the answer is no.",
+    title: "Clear process",
+    body: "Know what the assessment covers and what happens next.",
   },
 ];
 
 const jsonLd = [
-  breadcrumbSchema([{ name: "Careers", path: ROUTES.join }]),
+  breadcrumbSchema([{ name: "For talent", path: ROUTES.join }]),
   faqSchema(CANDIDATE_FAQS),
 ];
 ---
 
 <Layout title={title} description={description} jsonLd={jsonLd}>
-  <Section>
+  <Section tone="surface" bordered>
     <div
-      class="grid gap-[clamp(2rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)]"
+      class="grid gap-[clamp(3rem,7vw,6rem)] lg:grid-cols-[minmax(0,0.8fr)_minmax(30rem,1.2fr)]"
     >
-      <div class="c27-rise">
-        <span class="c27-label mb-3 block">Careers</span>
-        <h1 class="c27-h2">Work worth moving for</h1>
-        <p class="c27-lede mt-4">
-          One proper evaluation, then consideration for suitable roles as they
-          come in. Send us a profile even if nothing is open — that is how most
-          of our placements start.
+      <div class="c27-rise lg:sticky lg:top-28 lg:self-start">
+        <h1 class="c27-h2">Find your next role.</h1>
+        <p
+          class="c27-lede mt-5 text-[clamp(1rem,1.4vw,1.125rem)] leading-relaxed"
+        >
+          Apply once. We contact you when your profile matches a relevant
+          opportunity.
         </p>
 
-        <dl class="mt-8 grid gap-5">
+        <div class="mt-9 border-t border-c27-line">
           {
-            benefits.map((benefit) => (
-              <div class="border-t border-c27-line pt-4">
-                <dt class="c27-h3 font-bold">{benefit.title}</dt>
-                <dd class="mt-1.5 text-body-sm leading-relaxed text-c27-ink-2">
+            BENEFITS.map((benefit) => (
+              <article class="border-b border-c27-line py-5">
+                <h2 class="c27-h3 font-semibold">{benefit.title}</h2>
+                <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
                   {benefit.body}
-                </dd>
-              </div>
+                </p>
+              </article>
             ))
           }
-        </dl>
+        </div>
 
-        {/* Invariant 16 — overseas framing must stay conditional. */}
         <p
-          class="mt-7 rounded-c27-sm bg-c27-tint-mint p-4 text-caption leading-relaxed text-c27-ink-2"
+          class="mt-7 border border-c27-line bg-c27-tint-mint p-4 text-caption leading-relaxed text-c27-ink-2"
         >
-          Some assignments involve overseas work, and we assist with the
-          applicable process where an approved assignment requires it. Overseas
-          travel, relocation and visa approval are never guaranteed.
+          Some roles include overseas work. Availability and approvals depend on
+          the role and client.
         </p>
       </div>
 
-      <div class="c27-rise" style="--c27-d:100ms"><CandidateForm /></div>
+      <div class="c27-rise" style="--c27-d:80ms"><CandidateForm /></div>
     </div>
   </Section>
 
-  <Section tone="surface" bordered narrow>
-    <SectionHead label="FAQ" heading="Questions from candidates" />
+  <Section narrow>
+    <SectionHead heading="Before you apply." />
     <Faq items={CANDIDATE_FAQS} />
   </Section>
 </Layout>

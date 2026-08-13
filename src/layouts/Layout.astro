@@ -11,7 +11,7 @@ interface Props {
   canonical?: string;
   noindex?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
-  /** Suppresses the announcement bar on confirmation pages. */
+  /** Uses the identity-only header on confirmation pages. */
   bare?: boolean;
 }
 
@@ -47,11 +47,8 @@ const canonicalUrl = canonical
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <link rel="icon" href="/favicon.ico" sizes="any" />
-    {
-      /* Matches --c27-deep, the colour of the announcement strip that sits at
-        the very top of the page. */
-    }
-    <meta name="theme-color" content="#171325" />
+    {/* Matches the intentional light-blue hero and footer surface. */}
+    <meta name="theme-color" content="#e2ebff" />
     <meta name="generator" content="Astro" />
 
     {

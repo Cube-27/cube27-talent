@@ -1,15 +1,3 @@
-/**
- * FAQ content.
- *
- * Rewritten in full. Every question in the previous version was unusable under
- * the current copy rules — they named the company, named the legal employer,
- * and answered questions about equipment and removing people.
- *
- * Bound by invariant rules 0.1 and 0.2: first person plural, no company name,
- * and nothing contractual. No percentages, no guarantee periods, no delivery
- * times, no equipment, no removal or replacement.
- */
-
 export interface Faq {
   q: string;
   a: string;
@@ -17,62 +5,54 @@ export interface Faq {
 
 export const EMPLOYER_FAQS: Faq[] = [
   {
-    q: "How do you assess people?",
-    a: "A screen, then a task matched to the discipline, then a technical interview run by someone who does that work. The assessment is recorded and comes to you with the shortlist, so you can see how a person thinks rather than take our word for it.",
+    q: "What makes your assessment useful to our hiring team?",
+    a: "Each candidate completes role-specific work and a practitioner interview. You receive the evidence with the shortlist.",
   },
   {
-    q: "Do you use AI in the process?",
-    a: "For search and for covering ground at volume, yes. Every decision about who is worth your time is made by a person, and every technical interview is run by one.",
+    q: "Where does AI fit into the hiring process?",
+    a: "AI assists sourcing and screening. People review every candidate and make every decision.",
   },
   {
-    q: "Can you help with one hire, or do we need a team?",
-    a: "Either. A single senior specialist is a perfectly good place to start. The work tends to be most useful to teams hiring several people or growing steadily over a year or two.",
+    q: "Can you support one specialist as well as a larger hiring programme?",
+    a: "Yes. Hire one specialist, several roles, a leadership position, or a complete team.",
   },
   {
-    q: "Which roles do you cover?",
-    a: "Engineering and product, cloud and infrastructure, data and AI, security and compliance, quality and delivery, design, and leadership up to CXO. That list is where we start, not where we stop — if we can assess a role properly, we can hire for it.",
+    q: "Which functions and levels can you hire for?",
+    a: "Engineering, product, cloud, data, AI, security, compliance, design, operations, and CXO leadership. These are examples, not limits.",
   },
   {
     q: "Can you build a security team for a certification programme?",
-    a: "Yes. It is one of the things we are asked for most: the security and compliance people an organisation needs to work towards ISO 27001, SOC 2, PCI DSS, HIPAA or GDPR. We build the team; the certification is yours to earn.",
+    a: "Yes. We hire security, operations, GRC, and audit talent for ISO 27001, SOC 2, PCI DSS, HIPAA, and GDPR programmes.",
   },
   {
-    q: "What happens after someone starts?",
-    a: "We handle onboarding, payroll and the administration around it, and we keep checking in for as long as the engagement runs. Your team directs the work.",
-  },
-  {
-    q: "What does it cost?",
-    a: "Terms depend on the roles, the seniority, the location and how many people you are hiring, so we price each engagement directly rather than publishing a rate card. It is a short conversation.",
-  },
-  {
-    q: "How quickly can you move?",
-    a: "It depends entirely on the role and the market for it, and we would rather tell you that honestly than quote a number we cannot stand behind. We will give you a realistic window on the first call, once we know what you are hiring for.",
+    q: "What happens after we select someone?",
+    a: "We can support onboarding, administration, and the employee lifecycle after selection.",
   },
 ];
 
 export const CANDIDATE_FAQS: Faq[] = [
   {
-    q: "What kind of work is this?",
-    a: "Real employment with real clients — global companies building product teams — not gig work and not a job board listing. It is a role with a team behind it, and someone to call while you are in it.",
+    q: "What kind of opportunities do you work on?",
+    a: "Roles span technology, product, security, design, operations, and leadership across global clients.",
   },
   {
-    q: "What does the process involve?",
-    a: "A screen, a task matched to your discipline, and a technical interview with someone who does the work you do. References follow with your separate written consent. You will know where you stand at each stage.",
+    q: "How will I be assessed?",
+    a: "You may complete a role-specific task and a practitioner interview. We explain the format before it begins.",
   },
   {
-    q: "Is the assessment recorded?",
-    a: "Yes, and it works in your favour. It means your reasoning goes to the client alongside the result, instead of a CV and a score.",
+    q: "How is my assessment information used?",
+    a: "We use your profile and assessment results to evaluate fit for a role. We retain your profile for future opportunities only if you choose the optional consent.",
   },
   {
-    q: "What kind of roles do you recruit for?",
-    a: "Engineering and product, cloud and infrastructure, data and AI, security and compliance, quality and delivery, design, and senior leadership roles. If your discipline is not on that list, apply anyway and tell us what you do.",
+    q: "What should I include with my profile?",
+    a: "Send a current resume, target role, and core skills. LinkedIn, GitHub, and portfolio links are optional.",
   },
   {
-    q: "Are there opportunities to work overseas?",
-    a: "Some assignments involve overseas work, and we assist with the applicable process where an approved assignment requires it. It depends on the role and the client, and it is never guaranteed.",
+    q: "Are overseas opportunities available?",
+    a: "Some roles include overseas work. Availability and approvals depend on the role and client.",
   },
   {
-    q: "Does applying guarantee anything?",
-    a: "No. Sending us a profile does not guarantee screening, an interview, employment or an assignment. What we will do is read it properly and be straight with you.",
+    q: "What happens after I apply?",
+    a: "We contact you when your profile matches a relevant role.",
   },
 ];

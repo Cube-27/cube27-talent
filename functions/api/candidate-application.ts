@@ -11,7 +11,7 @@ import {
   methodNotAllowed,
   isAllowedOrigin,
   submissionId,
-} from "../_shared/responses";
+} from "../_shared/responses.ts";
 import {
   MAX_BODY_BYTES,
   MAX_RESUME_BYTES,
@@ -23,19 +23,19 @@ import {
   inAllowList,
   attribution,
   safeFilename,
-} from "../_shared/validation";
-import { validateResumeDocument } from "../_shared/documents";
-import { parseBoundedFormData } from "../_shared/request-body";
-import { verifyTurnstile } from "../_shared/turnstile";
+} from "../_shared/validation.ts";
+import { validateResumeDocument } from "../_shared/documents.ts";
+import { parseBoundedFormData } from "../_shared/request-body.ts";
+import { verifyTurnstile } from "../_shared/turnstile.ts";
 // Single source of truth for the taxonomy — see the note in src/data/roles.ts.
-import { ROLE_FAMILY_IDS } from "../../src/data/roles";
+import { ROLE_FAMILY_IDS } from "../../src/data/roles.ts";
 import {
   sendEmail,
   htmlRows,
   textRows,
   wrapHtml,
   headerSafe,
-} from "../_shared/email";
+} from "../_shared/email.ts";
 
 interface Env {
   ENVIRONMENT?: string;

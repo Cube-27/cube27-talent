@@ -1,97 +1,106 @@
 ---
 import Button from "@/components/ui/Button.astro";
-import Icon from "@/components/ui/Icon.astro";
-import SnapshotCard from "@/components/ui/SnapshotCard.astro";
 import { VERIFIED_PROOF } from "@/data/proof";
 import { ROUTES } from "@/site-config";
 
-/**
- * The hero.
- *
- * Flat rebuild: the radial glow and the gradient heading underline are both
- * gone. Emphasis is now a flat tint block (.c27-mark) and depth is the tint
- * step between the ground and the card.
- */
-
-const stats = VERIFIED_PROOF.slice(0, 3);
-// Proof gating can leave one, two or three points, so the column count has to
-// follow the data — a fixed grid-cols-3 leaves an empty cell. Full class names
-// only, so Tailwind's scanner sees them.
-const statsColumns =
-  stats.length === 1
-    ? "grid-cols-1"
-    : stats.length === 2
-      ? "grid-cols-2"
-      : "grid-cols-3";
+const HERO_CAPABILITIES = [
+  {
+    title: "Qualified shortlists",
+    body: "Candidates assessed for the role",
+  },
+  {
+    title: "Complete team builds",
+    body: "One hire or several functions",
+  },
+  {
+    title: "Security hiring",
+    body: "Engineering, operations, GRC, and audit",
+  },
+  {
+    title: "Leadership search",
+    body: "CTO, CIO, CISO, VPs, and functional heads",
+  },
+];
 ---
 
-<section
-  class="border-b border-c27-line bg-c27-ground pb-[clamp(3.5rem,6vw,5.5rem)] pt-[clamp(3rem,5vw,4.5rem)]"
->
-  <div
-    class="c27-wrap grid items-center gap-[clamp(2.5rem,5vw,4rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(21rem,0.95fr)]"
-  >
-    <div>
-      <span
-        class="c27-rise inline-flex items-center gap-2 rounded-full bg-c27-accent-soft px-3.5 py-1.5 font-display text-caption font-bold tracking-[0.02em] text-c27-accent-d"
+<section class="border-b border-c27-line bg-c27-hero text-c27-ink">
+  <div class="c27-wrap pt-[clamp(3.5rem,6vw,5rem)] text-center">
+    <h1 class="c27-rise c27-display mx-auto">
+      Build the team your business needs.
+    </h1>
+    <p
+      class="c27-rise mx-auto mt-6 max-w-[62ch] text-lg leading-relaxed text-c27-ink-2"
+      style="--c27-d:60ms"
+    >
+      Managed hiring for specialists, complete teams, security functions, and
+      senior leadership. Every shortlist comes with assessment evidence.
+    </p>
+
+    <div
+      class="c27-rise mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-4"
+      style="--c27-d:100ms"
+    >
+      <Button href={ROUTES.hire} variant="primary" arrow>Build your team</Button
       >
-        <Icon name="spark" size={14} />
-        Managed talent &middot; Global
-      </span>
-
-      <h1 class="c27-rise c27-display mt-4 text-c27-ink" style="--c27-d:60ms">
-        Build the team. Then <span class="c27-mark">keep building</span> it.
-      </h1>
-
-      <p
-        class="c27-rise c27-lede mt-5 max-w-[46ch] text-body leading-relaxed"
-        style="--c27-d:140ms"
+      <a
+        href={ROUTES.join}
+        class="font-semibold text-c27-ink-2 underline decoration-c27-ink-3 underline-offset-4 transition-colors hover:text-c27-accent-d"
+        >Looking for your next role?</a
       >
-        We find the people, assess them properly — by practitioners, on a
-        recorded task — and handle everything around the hire. Your team gets
-        someone who is ready to work, and you carry none of the overhead.
-      </p>
-
-      {
-        stats.length > 0 && (
-          <div
-            class={`c27-rise mt-8 grid max-w-[30rem] ${statsColumns} gap-4 border-t border-c27-line pt-6`}
-            style="--c27-d:220ms"
-          >
-            {stats.map((stat) => (
-              <div>
-                <b class="block font-display text-2xl font-bold leading-none tracking-[-0.035em] tabular-nums text-c27-ink">
-                  {stat.value}
-                </b>
-                <span class="mt-1.5 block text-caption font-medium text-c27-ink-2">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        )
-      }
-
-      <div class="c27-rise mt-8 flex flex-wrap gap-3.5" style="--c27-d:300ms">
-        <Button href={ROUTES.hire} variant="primary" arrow>Hire talent</Button>
-        <Button href={ROUTES.join} variant="line">Find a role</Button>
-      </div>
     </div>
 
-    <div class="c27-rise relative px-2 py-5" style="--c27-d:360ms">
-      <span
-        class="absolute -left-3 -top-1 z-[3] hidden items-center gap-2 rounded-full border border-c27-line bg-c27-surface px-3.5 py-1.5 text-caption font-semibold text-c27-ink sm:inline-flex"
-      >
-        <i class="size-2 rounded-full bg-c27-accent"></i>Assessment recorded
-      </span>
-      <span
-        class="absolute -right-4 top-[44%] z-[3] hidden items-center gap-2 rounded-full border border-c27-line bg-c27-surface px-3.5 py-1.5 text-caption font-semibold text-c27-ink sm:inline-flex"
-      >
-        <i class="size-2 rounded-full bg-c27-accent"></i>Interviewed by
-        practitioners
-      </span>
+    <div
+      class="mt-[clamp(2.5rem,5vw,4rem)] grid border-t border-c27-line sm:grid-cols-2 lg:grid-cols-4"
+    >
+      {
+        HERO_CAPABILITIES.map((item, index) => (
+          <div
+            class:list={[
+              "c27-rise py-5 sm:px-5",
+              index > 0 && "border-t border-c27-line sm:border-l",
+              index === 1 && "sm:border-t-0",
+              index === 0 && "sm:pr-5",
+              index === 2 && "sm:border-l-0 lg:border-l",
+              index > 1 && "lg:border-t-0",
+            ]}
+            style={`--c27-d:${120 + index * 40}ms`}
+          >
+            <p class="font-display text-body font-semibold text-c27-ink">
+              {item.title}
+            </p>
+            <p class="mt-1 text-body-sm leading-relaxed text-c27-ink-2">
+              {item.body}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
 
-      <SnapshotCard />
+  <div class="border-t border-c27-line bg-c27-surface text-c27-ink">
+    <div
+      class="c27-wrap grid text-center sm:grid-cols-3"
+      aria-label="Company experience"
+    >
+      {
+        VERIFIED_PROOF.map((proof, index) => (
+          <div
+            class:list={[
+              "c27-rise py-6 sm:px-7 sm:py-7",
+              index > 0 && "border-t border-c27-line sm:border-l sm:border-t-0",
+            ]}
+            style={`--c27-d:${index * 60}ms`}
+            aria-label={`${proof.value} ${proof.label}`}
+          >
+            <p class="font-display text-[clamp(1.75rem,3vw,2rem)] font-semibold leading-none tracking-[-0.035em] tabular-nums">
+              {proof.value}
+            </p>
+            <p class="mt-2 text-body-sm font-medium text-c27-ink-2">
+              {proof.label}
+            </p>
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>

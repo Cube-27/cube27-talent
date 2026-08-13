@@ -13,15 +13,15 @@ const { items } = Astro.props;
     items.map((item, i) => (
       <details
         open={i === 0}
-        class="rounded-c27 border border-c27-line bg-c27-surface transition-[border-color,background-color] duration-[var(--c27-dur-fast)] hover:border-c27-accent/40 open:border-c27-accent/60 open:bg-c27-accent-soft/35"
+        class="c27-soft-panel transition-[border-color,background-color] duration-[var(--c27-dur-fast)] hover:border-c27-accent/40 open:border-c27-accent/60 open:bg-c27-accent-soft/35"
       >
-        <summary class="group flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-display font-bold leading-snug tracking-[-0.015em] text-c27-ink transition-colors group-hover:text-c27-accent-d [&::-webkit-details-marker]:hidden">
+        <summary class="group flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-display font-semibold leading-snug tracking-[-0.015em] text-c27-ink transition-colors group-hover:text-c27-accent-d [&::-webkit-details-marker]:hidden">
           {item.q}
           {/* The +/- glyph is drawn by ::before, not swapped with visibility.
               `transition-all` plus a visibility flip left the old + painted for
               the whole transition while the - was already on top of it. */}
           <span
-            class="grid size-7 shrink-0 place-items-center rounded-full bg-c27-accent-soft font-mono text-base font-bold leading-none text-c27-accent-d transition-[background-color,color] duration-[var(--c27-dur-fast)]"
+            class="grid size-7 shrink-0 place-items-center bg-c27-accent-soft font-mono text-base font-semibold leading-none text-c27-accent-d transition-[background-color,color] duration-[var(--c27-dur-fast)]"
             aria-hidden="true"
           />
         </summary>

@@ -22,7 +22,7 @@ export interface RoleFamily {
   short: string;
   /** Icon key, resolved by components/ui/Icon.astro. */
   icon: string;
-  /** How this family is assessed. Must stay operationally true. Plan §6.3. */
+  /** One-line commercial scope statement for the family. */
   blurb: string;
   roles: string[];
   /** Tint token suffix. Cycles the four panel tints — design system §2.1. */
@@ -37,8 +37,7 @@ export const ROLE_FAMILIES: RoleFamily[] = [
     name: "Engineering & Product",
     short: "Engineering",
     icon: "code",
-    blurb:
-      "Product engineering across the stack, plus the product roles that steer it. Assessed with a build or judgement task matched to the seat.",
+    blurb: "Product, platform, application, and product-management talent.",
     roles: [
       "Frontend",
       "Backend",
@@ -54,8 +53,7 @@ export const ROLE_FAMILIES: RoleFamily[] = [
     name: "Cloud, Infrastructure & Reliability",
     short: "Cloud & Infra",
     icon: "cloud",
-    blurb:
-      "Platform and reliability work, assessed on failure modes and operational design rather than tool trivia.",
+    blurb: "Cloud, platform, infrastructure, and reliability talent.",
     roles: [
       "DevOps",
       "Cloud engineering",
@@ -70,8 +68,7 @@ export const ROLE_FAMILIES: RoleFamily[] = [
     name: "Data & AI",
     short: "Data & AI",
     icon: "chart",
-    blurb:
-      "Pipelines, models and the decisions they feed. Assessed on data reasoning and production realities, not notebook exercises.",
+    blurb: "Data engineering, analytics, machine learning, and AI talent.",
     roles: [
       "Data engineering",
       "Analytics engineering",
@@ -85,8 +82,7 @@ export const ROLE_FAMILIES: RoleFamily[] = [
     name: "Security & Compliance",
     short: "Security",
     icon: "shield",
-    blurb:
-      "The people who harden a product and carry an organisation through an audit. Assessed on threat reasoning and real remediation work.",
+    blurb: "Security engineering, operations, GRC, and audit talent.",
     roles: [
       "Security engineering",
       "Application security",
@@ -100,8 +96,7 @@ export const ROLE_FAMILIES: RoleFamily[] = [
     name: "Quality & Delivery",
     short: "Quality",
     icon: "check",
-    blurb:
-      "Test strategy, automation and the people who keep a release moving. Assessed on coverage design and delivery judgement.",
+    blurb: "Quality engineering, automation, and delivery talent.",
     roles: [
       "QA",
       "Test automation",
@@ -116,8 +111,7 @@ export const ROLE_FAMILIES: RoleFamily[] = [
     name: "Design & Digital Experience",
     short: "Design",
     icon: "pen",
-    blurb:
-      "Product design and the platforms that carry content and commerce. Assessed through portfolio review and a task from real work.",
+    blurb: "Product design, research, content, and commerce talent.",
     roles: [
       "Product design",
       "UX and UI",
@@ -128,12 +122,28 @@ export const ROLE_FAMILIES: RoleFamily[] = [
     tint: "mint",
   },
   {
+    id: "business-operations",
+    name: "Business & Operations",
+    short: "Operations",
+    icon: "briefcase",
+    blurb:
+      "Commercial, customer, finance, people, and business operations talent.",
+    roles: [
+      "Sales and revenue operations",
+      "Customer success",
+      "Finance operations",
+      "People operations",
+      "Procurement and supply chain",
+      "Business operations",
+    ],
+    tint: "sky",
+  },
+  {
     id: "leadership",
     name: "Leadership",
     short: "Leadership",
     icon: "compass",
-    blurb:
-      "Senior and executive hires, run discreetly. Assessed on how someone has actually built and held a team together.",
+    blurb: "CTO, CIO, CISO, VP, and functional leadership search.",
     roles: [
       "CTO",
       "CIO",
@@ -156,7 +166,7 @@ export const ROLE_FAMILY_IDS = ROLE_FAMILIES.map((f) => f.id);
  * not render a role list without it.
  */
 export const OPEN_SCOPE_LINE =
-  "And the roles around them. Tell us what the team needs — if we can assess it properly, we can hire it.";
+  "These roles are examples. We hire beyond these categories.";
 
 /**
  * Compliance frameworks we build teams towards. Homepage security section.
@@ -175,4 +185,4 @@ export const SECURITY_FRAMEWORKS = [
 ] as const;
 
 export const SECURITY_DISCLAIMER =
-  "These are the standards our teams build towards on client programmes.";
+  "We hire teams that work toward these standards; we do not issue certifications.";

@@ -3,12 +3,13 @@ import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/ui/Section.astro";
 import SectionHead from "@/components/ui/SectionHead.astro";
 import Hero from "@/components/sections/Hero.astro";
+import ManagedTeamValue from "@/components/sections/ManagedTeamValue.astro";
 import ProcessRail from "@/components/sections/ProcessRail.astro";
 import Lifecycle from "@/components/sections/Lifecycle.astro";
 import ExpertiseSelector from "@/components/sections/ExpertiseSelector.astro";
 import SecurityTeams from "@/components/sections/SecurityTeams.astro";
 import LeadershipHiring from "@/components/sections/LeadershipHiring.astro";
-import AudienceSplit from "@/components/sections/AudienceSplit.astro";
+import FinalCta from "@/components/sections/FinalCta.astro";
 import Faq from "@/components/ui/Faq.astro";
 import { EMPLOYER_FAQS } from "@/data/faqs";
 import { PROCESS_HEADING, PROCESS_LEDE } from "@/data/process";
@@ -19,8 +20,6 @@ import {
   websiteSchema,
 } from "@/lib/schema";
 
-/* Schemas use only verified facts — no employee counts, ratings or awards.
-   The FAQ payload is built from the same array the page renders. */
 const jsonLd = [
   organizationSchema(),
   websiteSchema(),
@@ -32,53 +31,43 @@ const jsonLd = [
 <Layout jsonLd={jsonLd}>
   <Hero />
 
-  {
-    /* The centrepiece. Sits immediately after the hero and is the largest,
-      most designed section on the site — plan §9.1. */
-  }
+  <Section>
+    <ManagedTeamValue />
+  </Section>
+
   <Section id="process" tone="deep">
-    <SectionHead
-      label="How it works"
-      heading={PROCESS_HEADING}
-      lede={PROCESS_LEDE}
-      invert
-    />
+    <SectionHead heading={PROCESS_HEADING} lede={PROCESS_LEDE} invert />
     <ProcessRail />
   </Section>
 
-  <Section id="lifecycle">
+  <Section id="lifecycle" tone="surface" bordered>
     <SectionHead
-      label="What you hand over"
-      heading="We take the hiring off your plate — and keep it there"
-      lede="Finding someone is the visible part. Most of the work is everything either side of it."
+      heading="Support that continues after the hire."
+      lede="Onboarding and ongoing employee support stay covered."
     />
     <Lifecycle />
   </Section>
 
-  <Section id="expertise" tone="surface" bordered>
+  <Section id="expertise">
     <SectionHead
-      label="Expertise"
-      heading="Whatever the team is missing"
-      lede="Assessment is matched to the discipline. A QA lead, an SRE and a product designer do not sit the same test."
+      heading="Hire across every critical function."
+      lede="Specialists, security teams, operators, and executives."
     />
     <ExpertiseSelector />
   </Section>
 
-  <Section id="security">
+  <Section id="security" tone="sky" bordered>
     <SecurityTeams />
   </Section>
 
-  <Section id="leadership" tone="surface" bordered>
+  <Section id="leadership">
     <LeadershipHiring />
   </Section>
 
-  <Section id="audiences">
-    <SectionHead label="Two ways in" heading="Hiring, or looking?" />
-    <AudienceSplit />
-  </Section>
-
   <Section id="faq" tone="surface" bordered narrow>
-    <SectionHead label="FAQ" heading="Questions we get asked" />
+    <SectionHead heading="Before you hire." />
     <Faq items={EMPLOYER_FAQS} />
   </Section>
+
+  <FinalCta />
 </Layout>

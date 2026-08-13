@@ -1,53 +1,84 @@
 ---
+import Icon from "@/components/ui/Icon.astro";
 import Button from "@/components/ui/Button.astro";
 import { ROUTES } from "@/site-config";
 
-/**
- * Leadership and CXO hiring. Plan §3.3, item 5.
- *
- * Deliberately short. A board hiring a CTO does not want a feature list, and
- * the credibility of this section rests on restraint rather than on claims we
- * cannot yet evidence.
- */
-
-const ROLES = [
-  "CTO",
-  "CIO",
-  "CISO",
-  "VP Engineering",
-  "Head of Product",
-  "Head of Data",
+const LEADERSHIP_AREAS = [
+  {
+    title: "Technology leadership",
+    roles: "CTO · CIO",
+    icon: "cloud" as const,
+    color: "text-c27-icon-blue",
+    tile: "c27-tile-sky",
+  },
+  {
+    title: "Security leadership",
+    roles: "CISO · Head of GRC",
+    icon: "shield" as const,
+    color: "text-c27-icon-violet",
+    tile: "c27-tile-violet",
+  },
+  {
+    title: "Product and engineering",
+    roles: "VP Engineering · Head of Product",
+    icon: "board" as const,
+    color: "text-c27-icon-orange",
+    tile: "c27-tile-peach",
+  },
+  {
+    title: "Data and AI leadership",
+    roles: "Head of Data · VP Data and AI",
+    icon: "chart" as const,
+    color: "text-c27-icon-green",
+    tile: "c27-tile-mint",
+  },
 ];
 ---
 
 <div
-  class="c27-rise grid items-center gap-8 rounded-c27-lg bg-c27-deep p-[clamp(2rem,4.5vw,3.5rem)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]"
+  class="c27-rise c27-gradient-blue px-[clamp(1.5rem,5vw,4.5rem)] py-[clamp(3rem,6vw,5rem)]"
 >
-  <div>
-    <span
-      class="c27-label mb-3 inline-flex items-center gap-2 text-c27-on-deep-accent"
-    >
-      <i class="size-1.5 rounded-full bg-c27-on-deep-accent"></i>
-      Leadership
-    </span>
-    <h2 class="c27-h2 text-c27-on-deep">Hiring the person who runs it</h2>
-    <p class="mt-4 max-w-[52ch] text-body leading-relaxed text-c27-on-deep-2">
-      Senior and executive searches are run discreetly and assessed on the thing
-      that actually matters at that level — how someone has built a team, held
-      it together and made the calls nobody else wanted to make.
-    </p>
-    <div class="mt-8">
-      <Button href={ROUTES.hire} variant="on-deep" arrow
-        >Start a leadership search</Button
-      >
+  <div
+    class="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(22rem,0.7fr)] lg:items-end"
+  >
+    <h2 class="c27-h2 max-w-[22ch] text-c27-on-deep">
+      Hire leaders who can build the function.
+    </h2>
+    <div>
+      <p class="max-w-[52ch] text-body leading-relaxed text-c27-on-deep-2">
+        Executive search for leaders who can set direction, build teams, and own
+        the outcome.
+      </p>
+      <div class="mt-6">
+        <Button href={ROUTES.hire} variant="primary" arrow
+          >Start a leadership search</Button
+        >
+      </div>
     </div>
   </div>
 
-  <ul class="grid gap-2.5 sm:grid-cols-2">
+  <ul
+    class="mt-[clamp(2.5rem,5vw,4rem)] grid gap-3 md:grid-cols-2 lg:grid-cols-4"
+  >
     {
-      ROLES.map((role) => (
-        <li class="rounded-c27-sm border border-c27-line-deep bg-c27-deep-2 px-4 py-3 font-display text-body-sm font-semibold text-c27-on-deep">
-          {role}
+      LEADERSHIP_AREAS.map((area) => (
+        <li class:list={["c27-feature-card p-6 lg:min-h-44"]}>
+          <span
+            class:list={[
+              "grid size-11 place-items-center",
+              area.color,
+              area.tile,
+            ]}
+            aria-hidden="true"
+          >
+            <Icon name={area.icon} size={24} />
+          </span>
+          <h3 class="c27-h3 mt-5 font-semibold text-c27-on-deep">
+            {area.title}
+          </h3>
+          <p class="mt-2 text-body-sm leading-relaxed text-c27-on-deep-2">
+            {area.roles}
+          </p>
         </li>
       ))
     }

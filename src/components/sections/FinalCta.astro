@@ -1,0 +1,31 @@
+---
+import Button from "@/components/ui/Button.astro";
+import { ROUTES } from "@/site-config";
+
+interface Props {
+  heading?: string;
+  body?: string;
+}
+
+const {
+  heading = "Build your team.",
+  body = "Tell us the roles, level, and outcome.",
+} = Astro.props;
+---
+
+<section class="border-y border-c27-line-deep bg-c27-deep text-c27-on-deep">
+  <div
+    class="c27-wrap grid gap-8 py-[clamp(3.5rem,7vw,6rem)] lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end"
+  >
+    <div class="c27-rise">
+      <h2 class="c27-h2 max-w-[18ch]">{heading}</h2>
+      <p class="mt-5 max-w-[62ch] text-body leading-relaxed text-c27-on-deep-2">
+        {body}
+      </p>
+    </div>
+    <div class="c27-rise" style="--c27-d:80ms">
+      <Button href={ROUTES.hire} variant="on-deep" arrow>Build your team</Button
+      >
+    </div>
+  </div>
+</section>

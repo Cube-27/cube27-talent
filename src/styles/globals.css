@@ -33,6 +33,11 @@
     text-wrap: balance;
   }
 
+  strong,
+  b {
+    font-weight: 600;
+  }
+
   /* Focus is never removed. Design system §7. */
   :focus-visible {
     outline: 2px solid var(--c27-accent);
@@ -66,13 +71,11 @@
   }
 
   /* --- type roles -------------------------------------------------- */
-  /* Display carries more negative tracking than the rest: a flat system has
-     no blur softening the letter edges, so it can take it. */
   .c27-display {
     font-size: var(--c27-text-display);
-    line-height: 1.04;
-    letter-spacing: -0.04em;
-    max-width: 17ch;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    max-width: 20ch;
   }
 
   .c27-h2 {
@@ -94,17 +97,9 @@
     letter-spacing: -0.03em;
   }
 
-  .c27-label {
-    font-size: var(--c27-text-label);
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--c27-accent);
-  }
-
   .c27-lede {
     color: var(--c27-ink-2);
-    max-width: 52ch;
+    max-width: 68ch;
   }
 
   /* --- flat surfaces ------------------------------------------------
@@ -136,21 +131,40 @@
     border-color: var(--c27-accent);
   }
 
-  /* --- highlighted words in a heading -------------------------------
-     Replaces the old gradient underline. A flat tint block behind the
-     words, set slightly loose so descenders clear the edge. */
-  .c27-mark {
-    background: var(--c27-accent-soft);
-    color: var(--c27-accent-d);
-    padding-inline: 0.18em;
-    border-radius: 4px;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
+  /* --- authored colour surfaces ------------------------------------ */
+  .c27-gradient-blue {
+    background: var(--c27-gradient-blue);
+  }
+
+  .c27-feature-card {
+    background: var(--c27-gradient-warm);
+    border: 1px solid var(--c27-line);
+  }
+
+  .c27-soft-panel {
+    background: var(--c27-gradient-soft);
+    border: 1px solid var(--c27-line);
+  }
+
+  .c27-tile-violet {
+    background: var(--c27-tile-violet);
+  }
+
+  .c27-tile-mint {
+    background: var(--c27-tile-mint);
+  }
+
+  .c27-tile-peach {
+    background: var(--c27-tile-peach);
+  }
+
+  .c27-tile-sky {
+    background: var(--c27-tile-sky);
   }
 
   /* --- progressive disclosure --------------------------------------- */
   /* Tab panels ship with `hidden` so a scripted visit paints the selected
-     panel immediately instead of flashing all nine and collapsing. Nothing
+     panel immediately instead of flashing every option and collapsing. Nothing
      can undo `hidden` without JS, so it is overridden here — the `.js` class
      is set by Layout.astro before first paint. */
   /* The no-JS panel fallback lives in @layer base, not here. See the block
@@ -193,7 +207,7 @@
    No-JS panel fallback.
 
    Tab panels ship with the `hidden` attribute so a scripted visit paints the
-   selected panel immediately instead of flashing all nine and collapsing. The
+   selected panel immediately instead of flashing every option and collapsing. The
    `.js` class is set by Layout.astro before first paint, so its absence means
    nothing will ever un-hide them and CSS has to.
 
@@ -210,7 +224,7 @@
       the higher-specificity selector wins again, which is this one.
 
    Before this was right, a visitor without JavaScript saw one step panel out
-   of nine and one role family out of seven.
+   process content and one role family out of the full set.
    ============================================================ */
 @layer base {
   html:not(.js) [data-panel][hidden],

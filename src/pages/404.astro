@@ -10,15 +10,16 @@ import { ROUTES, SITE_CONFIG } from "@/site-config";
   description="Page not found."
   noindex
 >
-  <Section narrow>
-    <span class="c27-label mb-3 block">404</span>
-    <h1 class="c27-h2">That page does not exist</h1>
-    <p class="c27-lede mt-4">
-      The link may be out of date. Both routes below still work.
+  <Section narrow tone="surface" bordered>
+    <p class="font-display text-body-sm font-semibold text-c27-accent">404</p>
+    <h1 class="c27-h2 mt-4">This page isn’t here.</h1>
+    <p class="c27-lede mt-5">
+      The link may be out of date. Use one of the working routes below.
     </p>
     <div class="mt-8 flex flex-wrap gap-3">
-      <Button href={ROUTES.hire} variant="primary" arrow>Hire talent</Button>
-      <Button href={ROUTES.join} variant="line">Find a role</Button>
+      <Button href={ROUTES.hire} variant="primary" arrow>Build your team</Button
+      >
+      <Button href={ROUTES.join} variant="line">For talent</Button>
     </div>
   </Section>
 </Layout>

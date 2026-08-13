@@ -21,7 +21,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
   method="post"
   action={ENDPOINTS.employerLead}
   novalidate
-  class="grid gap-4 rounded-c27-lg border border-c27-line bg-c27-surface p-[clamp(1.5rem,3vw,2.25rem)]"
+  class="grid gap-5 border border-c27-line bg-c27-surface p-[clamp(1.5rem,3vw,2.5rem)]"
 >
   {/* Error summary receives focus on failed validation. §6.8. */}
   <div
@@ -29,7 +29,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     role="alert"
     hidden
     tabindex="-1"
-    class="rounded-c27-sm border-l-2 border-c27-danger bg-c27-danger-soft px-4 py-3 text-caption text-c27-danger"
+    class="rounded-c27-sm border border-c27-danger bg-c27-danger-soft px-4 py-3 text-caption text-c27-danger"
   >
   </div>
 
@@ -146,7 +146,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     <div class="flex flex-wrap gap-2">
       {
         ROLE_FAMILIES.map((family, i) => (
-          <label class="relative cursor-pointer select-none rounded-full border border-c27-line bg-c27-surface px-3.5 py-2 text-caption transition-colors has-[:checked]:border-c27-accent has-[:checked]:bg-c27-accent-soft has-[:checked]:font-semibold has-[:checked]:text-c27-accent-d has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-c27-accent">
+          <label class="relative cursor-pointer select-none rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2 text-caption transition-colors has-[:checked]:border-c27-accent has-[:checked]:bg-c27-accent-soft has-[:checked]:font-semibold has-[:checked]:text-c27-accent-d has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-c27-accent">
             <input
               type="checkbox"
               name="roleFamilies"

@@ -4,6 +4,8 @@ import { zipSync, strToU8 } from "fflate";
 import { PDFDocument, PDFName, PDFString } from "pdf-lib";
 import { validateResumeDocument } from "../functions/_shared/documents.ts";
 import { parseBoundedFormData } from "../functions/_shared/request-body.ts";
+import { onRequest as submitCandidate } from "../functions/api/candidate-application.ts";
+import { onRequest as submitEmployer } from "../functions/api/employer-lead.ts";
 
 function asArrayBuffer(bytes: Uint8Array): ArrayBuffer {
   const buffer = new ArrayBuffer(bytes.byteLength);
@@ -317,4 +319,164 @@ test("resume validation rejects a DOCX streaming more entries than it declares",
     ok: false,
     reason: "too-many-entries",
   });
+});
+
+test("candidate submission carries the optional GitHub profile into the recruitment email", async () => {
+  const pdf = await PDFDocument.create();
+  pdf.addPage().drawText("Candidate resume");
+
+  const form = new FormData();
+  form.set("name", "Alex Candidate");
+  form.set("email", "alex@example.com");
+  form.set("phone", "+44 20 7946 0958");
+  form.set("location", "London, UK");
+  form.set("roleFamily", "leadership");
+  form.set("roleTitle", "Chief Technology Officer");
+  form.set("skills", "Technology strategy, platform leadership");
+  form.set("experience", "15");
+  form.set("linkedin", "https://www.linkedin.com/in/alex-candidate");
+  form.set("github", "https://github.com/alex-candidate");
+  form.set("availability", "Within 30 days");
+  form.set("workPreference", "Flexible");
+  form.set("relocation", "Depends on the opportunity");
+  form.set("consent", "yes");
+  form.set("cf-turnstile-response", "verified-test-token");
+  form.set(
+    "resume",
+    new File([asArrayBuffer(await pdf.save())], "alex-resume.pdf", {
+      type: "application/pdf",
+    }),
+  );
+
+  const resendPayloads: Array<Record<string, unknown>> = [];
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input, init) => {
+    const url =
+      typeof input === "string"
+        ? input
+        : input instanceof URL
+          ? input.href
+          : input.url;
+    if (url.includes("challenges.cloudflare.com")) {
+      return Response.json({ success: true });
+    }
+    if (url === "https://api.resend.com/emails") {
+      resendPayloads.push(JSON.parse(String(init?.body)));
+      return Response.json({ id: "email-test" });
+    }
+    throw new Error(`Unexpected request to ${url}`);
+  };
+
+  try {
+    const response = await submitCandidate({
+      request: new Request(
+        "https://talent.cube27.com/api/candidate-application",
+        {
+          method: "POST",
+          headers: {
+            origin: "https://talent.cube27.com",
+            "sec-fetch-site": "same-origin",
+          },
+          body: form,
+        },
+      ),
+      env: {
+        ENVIRONMENT: "test",
+        RESEND_API_KEY: "test-key",
+        RESEND_FROM: "Talent <talent@example.com>",
+        RESEND_REPLY_TO: "talent@example.com",
+        CANDIDATE_APPLICATIONS_TO: "recruitment@example.com",
+        TURNSTILE_SECRET_KEY: "test-secret",
+      },
+    });
+
+    assert.equal(response.status, 200);
+    assert.equal(resendPayloads.length, 2);
+    assert.match(
+      String(resendPayloads[0]?.text),
+      /GitHub \/ portfolio: https:\/\/github\.com\/alex-candidate/,
+    );
+    assert.match(
+      String(resendPayloads[0]?.html),
+      /https:\/\/github\.com\/alex-candidate/,
+    );
+    assert.equal(resendPayloads[1]?.attachments, undefined);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("employer submission carries a managed-team requirement into the sales email", async () => {
+  const form = new FormData();
+  form.set("name", "Priya Raghavan");
+  form.set("email", "priya@example.com");
+  form.set("company", "Example Global");
+  form.set("jobTitle", "VP Talent Acquisition");
+  form.set("country", "Netherlands");
+  form.set("hires", "6–10");
+  form.set("startWindow", "Within 30 days");
+  form.set("engagement", "Full-time employment");
+  form.set("arrangement", "Hybrid");
+  form.append("roleFamilies", "security-compliance");
+  form.append("roleFamilies", "leadership");
+  form.set(
+    "requirement",
+    "Build a security leadership team for a global certification programme.",
+  );
+  form.set("consent", "yes");
+  form.set("cf-turnstile-response", "verified-test-token");
+
+  const resendPayloads: Array<Record<string, unknown>> = [];
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input, init) => {
+    const url =
+      typeof input === "string"
+        ? input
+        : input instanceof URL
+          ? input.href
+          : input.url;
+    if (url.includes("challenges.cloudflare.com")) {
+      return Response.json({ success: true });
+    }
+    if (url === "https://api.resend.com/emails") {
+      resendPayloads.push(JSON.parse(String(init?.body)));
+      return Response.json({ id: "email-test" });
+    }
+    throw new Error(`Unexpected request to ${url}`);
+  };
+
+  try {
+    const response = await submitEmployer({
+      request: new Request("https://talent.cube27.com/api/employer-lead", {
+        method: "POST",
+        headers: {
+          origin: "https://talent.cube27.com",
+          "sec-fetch-site": "same-origin",
+        },
+        body: form,
+      }),
+      env: {
+        ENVIRONMENT: "test",
+        RESEND_API_KEY: "test-key",
+        RESEND_FROM: "Talent <talent@example.com>",
+        RESEND_REPLY_TO: "talent@example.com",
+        EMPLOYER_LEADS_TO: "sales@example.com",
+        TURNSTILE_SECRET_KEY: "test-secret",
+      },
+    });
+
+    assert.equal(response.status, 200);
+    assert.equal(resendPayloads.length, 2);
+    assert.match(
+      String(resendPayloads[0]?.text),
+      /Role families: security-compliance, leadership/,
+    );
+    assert.match(
+      String(resendPayloads[0]?.text),
+      /Build a security leadership team for a global certification programme\./,
+    );
+    assert.deepEqual(resendPayloads[0]?.to, ["sales@example.com"]);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
