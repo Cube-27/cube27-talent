@@ -44,9 +44,9 @@ All combinations meet WCAG AA.
 
 ## 4. Typography
 
-Use the existing local Figtree and Switzer variable fonts.
+Use the existing local Hauora and Switzer variable fonts.
 
-- Display headings: Figtree, strong weight, tight tracking, short line length.
+- Display headings: Hauora, strong weight, tight tracking, short line length.
 - Body and interface copy: Switzer, regular or medium weight.
 - Weight ceiling: 600 across headings, buttons, labels, metrics, and body copy. Do not load or apply 700–900 weights.
 - H1: `2.75rem` (44px). No public heading exceeds 44px.

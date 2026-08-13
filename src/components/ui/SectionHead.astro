@@ -11,12 +11,17 @@ const { heading, lede, invert = false, centered = false } = Astro.props;
 
 <div
   class:list={[
-    "c27-rise mb-[clamp(2.5rem,5vw,4rem)] max-w-[52rem]",
+    "c27-rise mb-[clamp(2.5rem,5vw,4rem)]",
     centered && "mx-auto text-center",
   ]}
 >
   <h2
-    class:list={["c27-h2", invert && "text-c27-on-deep", centered && "mx-auto"]}
+    class:list={[
+      "c27-h2",
+      invert && "text-c27-on-deep",
+      "max-w-none",
+      centered && "mx-auto",
+    ]}
   >
     {heading}
   </h2>

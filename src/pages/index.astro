@@ -3,7 +3,6 @@ import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/ui/Section.astro";
 import SectionHead from "@/components/ui/SectionHead.astro";
 import Hero from "@/components/sections/Hero.astro";
-import ManagedTeamValue from "@/components/sections/ManagedTeamValue.astro";
 import ProcessRail from "@/components/sections/ProcessRail.astro";
 import Lifecycle from "@/components/sections/Lifecycle.astro";
 import ExpertiseSelector from "@/components/sections/ExpertiseSelector.astro";
@@ -29,45 +28,57 @@ const jsonLd = [
 ---
 
 <Layout jsonLd={jsonLd}>
-  <Hero />
+  <div class="landing-scale">
+    <Hero />
 
-  <Section>
-    <ManagedTeamValue />
-  </Section>
+    <Section id="process" tone="deep">
+      <SectionHead
+        heading={PROCESS_HEADING}
+        lede={PROCESS_LEDE}
+        invert
+        centered
+      />
+      <ProcessRail />
+    </Section>
 
-  <Section id="process" tone="deep">
-    <SectionHead heading={PROCESS_HEADING} lede={PROCESS_LEDE} invert />
-    <ProcessRail />
-  </Section>
+    <Section id="lifecycle" tone="surface" bordered>
+      <SectionHead
+        heading="Support that continues after the hire"
+        lede="Onboarding and ongoing employee support stay covered."
+        centered
+      />
+      <Lifecycle />
+    </Section>
 
-  <Section id="lifecycle" tone="surface" bordered>
-    <SectionHead
-      heading="Support that continues after the hire."
-      lede="Onboarding and ongoing employee support stay covered."
-    />
-    <Lifecycle />
-  </Section>
+    <Section id="expertise">
+      <SectionHead
+        heading="Hire across every critical function"
+        lede="Specialists, security teams, operators, and executives."
+        centered
+      />
+      <ExpertiseSelector />
+    </Section>
 
-  <Section id="expertise">
-    <SectionHead
-      heading="Hire across every critical function."
-      lede="Specialists, security teams, operators, and executives."
-    />
-    <ExpertiseSelector />
-  </Section>
+    <Section id="security" tone="sky" bordered>
+      <SecurityTeams />
+    </Section>
 
-  <Section id="security" tone="sky" bordered>
-    <SecurityTeams />
-  </Section>
+    <Section id="leadership">
+      <LeadershipHiring />
+    </Section>
 
-  <Section id="leadership">
-    <LeadershipHiring />
-  </Section>
+    <Section id="faq" tone="surface" bordered narrow>
+      <SectionHead heading="FAQs" centered />
+      <Faq items={EMPLOYER_FAQS} />
+    </Section>
 
-  <Section id="faq" tone="surface" bordered narrow>
-    <SectionHead heading="Before you hire." />
-    <Faq items={EMPLOYER_FAQS} />
-  </Section>
-
-  <FinalCta />
+    <FinalCta />
+  </div>
 </Layout>
+
+<style>
+  .landing-scale {
+    --c27-container: 86rem;
+    --c27-text-display: clamp(2.125rem, 4.2vw, 3.125rem);
+  }
+</style>

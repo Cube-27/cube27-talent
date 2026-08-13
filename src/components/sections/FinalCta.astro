@@ -8,18 +8,20 @@ interface Props {
 }
 
 const {
-  heading = "Build your team.",
+  heading = "Build your team",
   body = "Tell us the roles, level, and outcome.",
 } = Astro.props;
 ---
 
 <section class="border-y border-c27-line-deep bg-c27-deep text-c27-on-deep">
   <div
-    class="c27-wrap grid gap-8 py-[clamp(3.5rem,7vw,6rem)] lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end"
+    class="c27-wrap flex flex-col items-center gap-8 py-[clamp(3.5rem,7vw,6rem)] text-center"
   >
     <div class="c27-rise">
-      <h2 class="c27-h2 max-w-[18ch]">{heading}</h2>
-      <p class="mt-5 max-w-[62ch] text-body leading-relaxed text-c27-on-deep-2">
+      <h2 class="c27-h2 max-w-none">{heading}</h2>
+      <p
+        class="mx-auto mt-5 max-w-[62ch] text-body leading-relaxed text-c27-on-deep-2"
+      >
         {body}
       </p>
     </div>

@@ -29,10 +29,12 @@ const EVIDENCE = [
 ---
 
 <section class="c27-gradient-blue border-b border-c27-line">
-  <div class="c27-wrap py-[clamp(4rem,8vw,7rem)] text-center">
+  <div class="c27-wrap py-[clamp(2.75rem,5vw,4.5rem)] text-center">
     <div class="mx-auto max-w-4xl">
-      <h1 class="c27-rise c27-display mx-auto text-center text-c27-ink">
-        Hire with proof, not promises.
+      <h1
+        class="c27-rise c27-display mx-auto max-w-none text-center text-c27-ink"
+      >
+        Hire with proof, not promises
       </h1>
       <p
         class="c27-rise mx-auto mt-6 max-w-[68ch] text-[clamp(1.05rem,1.7vw,1.3rem)] leading-relaxed text-c27-ink-2"
@@ -40,7 +42,7 @@ const EVIDENCE = [
         Every shortlisted candidate completes role-specific work and a
         practitioner interview before reaching your team.
       </p>
-      <div class="c27-rise mt-8" style="--c27-d:80ms">
+      <div class="c27-rise mt-7" style="--c27-d:80ms">
         <Button href={ROUTES.hire} variant="primary" arrow
           >Build your team</Button
         >
@@ -48,7 +50,7 @@ const EVIDENCE = [
     </div>
 
     <ul
-      class="mt-[clamp(3.5rem,7vw,5.5rem)] grid gap-4 text-left md:grid-cols-3"
+      class="mt-[clamp(2.5rem,4vw,3.5rem)] grid gap-4 text-left md:grid-cols-3"
     >
       {
         EVIDENCE.map((item, index) => (
