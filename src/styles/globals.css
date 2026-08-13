@@ -130,9 +130,12 @@
   }
 
   /* --- reveal on scroll -------------------------------------------- */
-  /* The .in class is added by an IntersectionObserver in Layout.astro, which
-     also sets `.reveal`. That class is narrower than `.js`: content may only
-     be hidden here when the observer that reveals it again actually exists. */
+  /* `.in` is added by an IntersectionObserver in Layout.astro, which also sets
+     `.reveal` on the root — but only after marking everything already on
+     screen as `.in`, and only if the observer exists. Content is therefore
+     never hidden unless something is guaranteed to reveal it again, and the
+     first screen is never painted at opacity 0 (which would cost the LCP
+     candidate outright). */
   .reveal .c27-rise {
     opacity: 0;
     transform: translateY(16px);

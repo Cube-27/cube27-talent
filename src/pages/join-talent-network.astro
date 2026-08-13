@@ -5,7 +5,8 @@ import SectionHead from "@/components/ui/SectionHead.astro";
 import CandidateForm from "@/components/forms/CandidateForm.astro";
 import Faq from "@/components/ui/Faq.astro";
 import { CANDIDATE_FAQS } from "@/data/faqs";
-import { SITE_CONFIG } from "@/site-config";
+import { ROUTES, SITE_CONFIG } from "@/site-config";
+import { breadcrumbSchema, faqSchema } from "@/lib/schema";
 
 const title = `Careers — join the Cube27 talent network | ${SITE_CONFIG.brand}`;
 const description =
@@ -31,9 +32,14 @@ const benefits = [
     body: "Assignments with companies building real products, across time zones and working models.",
   },
 ];
+
+const jsonLd = [
+  breadcrumbSchema([{ name: "Careers", path: ROUTES.join }]),
+  faqSchema(CANDIDATE_FAQS),
+];
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} jsonLd={jsonLd}>
   <Section>
     <div
       class="grid gap-[clamp(2rem,4vw,3.5rem)] lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)]"

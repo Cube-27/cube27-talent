@@ -36,10 +36,17 @@ const year = new Date().getFullYear();
         </p>
       </div>
 
+      {
+        /* h2, not h4. These column titles sit in the footer landmark and are
+           reached after whatever heading level the page happened to end on,
+           so a deep level produced a skipped-level warning on pages whose last
+           section heading was an h2. Size comes from the classes, not the
+           level. */
+      }
       <div class="col-span-2 md:col-span-1">
-        <h4 class="mb-2.5 font-display text-caption font-bold text-white">
+        <h2 class="mb-2.5 font-display text-caption font-bold text-white">
           Companies
-        </h4>
+        </h2>
         <ul>
           <li class="py-0.5">
             <a href={ROUTES.expertise} class="no-underline hover:text-white"
@@ -60,9 +67,9 @@ const year = new Date().getFullYear();
       </div>
 
       <div>
-        <h4 class="mb-2.5 font-display text-caption font-bold text-white">
+        <h2 class="mb-2.5 font-display text-caption font-bold text-white">
           Engineers
-        </h4>
+        </h2>
         <ul>
           <li class="py-0.5">
             <a href={ROUTES.join} class="no-underline hover:text-white"
@@ -78,9 +85,9 @@ const year = new Date().getFullYear();
       </div>
 
       <div>
-        <h4 class="mb-2.5 font-display text-caption font-bold text-white">
+        <h2 class="mb-2.5 font-display text-caption font-bold text-white">
           Company
-        </h4>
+        </h2>
         <ul>
           <li class="py-0.5">
             <a

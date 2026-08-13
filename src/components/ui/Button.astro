@@ -29,8 +29,10 @@ const base =
   "group inline-flex items-center gap-2 whitespace-nowrap rounded-c27-sm border font-display font-bold no-underline cursor-pointer transition-[background-color,border-color,color,transform,box-shadow] duration-200 motion-safe:hover:-translate-y-px disabled:cursor-not-allowed disabled:opacity-60 disabled:pointer-events-none";
 
 const variants = {
+  // green-d, not green: white on #10b45f is 2.72:1 and fails WCAG AA outright.
+  // This is 5.41:1, and the hover step keeps going darker rather than lighter.
   primary:
-    "border-transparent bg-c27-green text-white hover:bg-c27-green-d hover:shadow-[0_8px_18px_-8px_rgb(16_180_95/0.7)]",
+    "border-transparent bg-c27-green-d text-white hover:bg-c27-green-dd hover:shadow-[0_8px_18px_-8px_rgb(13_122_66/0.7)]",
   blue: "border-transparent bg-c27-blue text-white hover:bg-c27-blue-d hover:shadow-[0_8px_18px_-8px_rgb(37_99_235/0.7)]",
   line: "border-[#cbd5e1] bg-c27-surface text-c27-ink hover:border-c27-blue hover:text-c27-blue-d",
   "line-invert":

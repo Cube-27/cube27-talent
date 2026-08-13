@@ -18,11 +18,16 @@ export default [
   ...tseslint.configs.recommended,
   ...astro.configs.recommended,
   {
-    // Config files and Pages Functions run outside the browser.
-    files: ["*.{js,mjs,ts}", "functions/**/*.ts"],
+    // Config files, build scripts and Pages Functions run outside the browser.
+    files: ["*.{js,mjs,ts}", "scripts/**/*.mjs", "functions/**/*.ts"],
     languageOptions: {
       globals: { ...globals.node },
     },
+  },
+  {
+    // Build scripts report what they wrote; that is their only output.
+    files: ["scripts/**/*.mjs"],
+    rules: { "no-console": "off" },
   },
   {
     files: ["**/*.{js,ts,astro}"],

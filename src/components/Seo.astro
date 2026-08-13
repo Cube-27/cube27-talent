@@ -12,16 +12,28 @@ interface Props {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
+// Absolute, because Open Graph consumers do not resolve relative URLs. Built
+// from the canonical origin rather than Astro.site so it is identical on every
+// host the build is served from. Regenerate with scripts/generate-og-image.mjs.
+const DEFAULT_IMAGE = {
+  url: `${SITE_CONFIG.url}/og-image.png`,
+  width: "1200",
+  height: "630",
+  type: "image/png",
+};
+
 const {
   title,
   description,
   canonicalUrl,
-  imageUrl,
+  imageUrl = DEFAULT_IMAGE.url,
   imageAlt = "Cube27 Talent",
   noindex = false,
   type = "website",
   jsonLd,
 } = Astro.props;
+
+const isDefaultImage = imageUrl === DEFAULT_IMAGE.url;
 
 const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 // JSON.stringify does not escape "<", so a value containing "</script" would
@@ -54,6 +66,15 @@ const serialize = (schema: Record<string, unknown>) =>
 {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
 {imageUrl && <meta property="og:image" content={imageUrl} />}
 {imageUrl && <meta property="og:image:alt" content={imageAlt} />}
+{
+  isDefaultImage && (
+    <>
+      <meta property="og:image:type" content={DEFAULT_IMAGE.type} />
+      <meta property="og:image:width" content={DEFAULT_IMAGE.width} />
+      <meta property="og:image:height" content={DEFAULT_IMAGE.height} />
+    </>
+  )
+}
 
 <meta
   name="twitter:card"

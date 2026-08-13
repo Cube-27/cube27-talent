@@ -22,13 +22,20 @@
   /* --- text --- */
   --c27-ink: #111827;
   --c27-ink-2: #56617a;
-  /* Darkened from #8b93ab so tertiary text clears 4.5:1 on --c27-ground. */
-  --c27-ink-3: #6b7590;
+  /* Darkened again: #6b7590 measured 4.40:1 on --c27-ground, which reads as a
+     pass against pure white but misses on the actual page background. This is
+     4.72:1 there. */
+  --c27-ink-3: #67708a;
 
   /* --- accent. One job each: green acts + verifies, blue informs. --- */
+  /* Decorative only — rules, dots and bars. White on #10b45f is 2.72:1, so it
+     must never carry text or be the fill behind a label. */
   --c27-green: #10b45f;
-  /* #10b45f fails contrast as text on white; this is the text/hover value. */
+  /* The readable green: 5.41:1 as text on white, and as the primary button
+     fill under white text. */
   --c27-green-d: #0d7a42;
+  /* Hover for the primary button, one step darker again (7.78:1). */
+  --c27-green-dd: #0a5f33;
   --c27-blue: #2c5fdb;
   --c27-blue-d: #244fb6;
   --c27-blue-soft: #e8eefd;
@@ -99,6 +106,7 @@
 
   --color-c27-green: var(--c27-green);
   --color-c27-green-d: var(--c27-green-d);
+  --color-c27-green-dd: var(--c27-green-dd);
   --color-c27-blue: var(--c27-blue);
   --color-c27-blue-d: var(--c27-blue-d);
   --color-c27-blue-soft: var(--c27-blue-soft);
