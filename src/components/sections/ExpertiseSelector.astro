@@ -30,7 +30,7 @@ const Heading = `h${headingLevel}` as "h2" | "h3";
   data-expertise
 >
   <div
-    class="flex snap-x snap-mandatory gap-1.5 overflow-x-auto scroll-smooth border-b border-c27-line bg-c27-surface-2 p-3 [scrollbar-width:thin] lg:flex-col lg:snap-none lg:overflow-visible lg:border-b-0 lg:border-r lg:p-4"
+    class="flex snap-x snap-mandatory gap-1.5 overflow-x-auto border-b border-c27-line bg-c27-surface-2 p-3 [scrollbar-width:thin] lg:flex-col lg:snap-none lg:overflow-visible lg:border-b-0 lg:border-r lg:p-4"
     role="tablist"
     aria-label="Role families"
   >
@@ -101,7 +101,22 @@ const Heading = `h${headingLevel}` as "h2" | "h3";
       panels.forEach((panel, i) => {
         panel.hidden = i !== index;
       });
-      if (focus) tabs[index].focus();
+      if (focus) {
+        tabs[index].focus();
+        // Smooth scrolling lives here rather than on the strip as
+        // `scroll-behavior: smooth`. A snap container that is also smooth
+        // animates its initial snap during load, and Chrome then reports no
+        // LCP candidate for the whole page at all — Lighthouse fails with
+        // NO_LCP, which also takes TBT and TTI down with it. Doing it on
+        // keyboard selection keeps the behaviour and never runs at load.
+        if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          tabs[index].scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "nearest",
+          });
+        }
+      }
     };
 
     // Only collapse to one visible panel once JS is running.
