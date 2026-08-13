@@ -1,0 +1,18 @@
+# Store every text file with LF in the repository regardless of the platform it
+# was authored on. Without this, a Windows checkout under `core.autocrlf=true`
+# produces a CRLF working tree that `pnpm verify` fails on, because Prettier
+# defaults to LF. `.prettierrc.json` sets `endOfLine: auto` so the check also
+# passes on a clone made before this file existed.
+* text=auto eol=lf
+
+# Binary assets — never touch these.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
+*.docx binary
