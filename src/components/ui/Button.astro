@@ -10,7 +10,7 @@ interface Props {
   href?: string;
   type?: "button" | "submit";
   variant?: "primary" | "line" | "ghost" | "on-deep";
-  size?: "md" | "sm";
+  size?: "md" | "sm" | "header";
   arrow?: boolean;
   class?: string;
   id?: string;
@@ -42,10 +42,12 @@ const variants = {
   "on-deep": "border-transparent bg-white text-c27-deep hover:bg-slate-100",
 };
 
-// min-h-11 keeps every button at the 44px tap-target floor.
+// The compact header size preserves breathing room in the navigation bar;
+// default buttons retain the 44px tap-target floor.
 const sizes = {
   md: "min-h-12 px-5.5 py-3 text-[0.9375rem]",
   sm: "min-h-11 px-4.5 py-2.5 text-[0.875rem]",
+  header: "min-h-[2.625rem] px-4 py-2 text-[0.875rem]",
 };
 
 const cls = `${base} ${variants[variant]} ${sizes[size]} ${className}`;

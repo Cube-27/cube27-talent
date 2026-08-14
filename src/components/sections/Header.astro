@@ -14,9 +14,9 @@ const isActive = (href: string) =>
 
 <header
   id="site-header"
-  class="sticky top-0 z-30 border-b border-c27-line bg-c27-ground/95 backdrop-blur-md"
+  class="sticky top-0 z-30 border-b border-c27-line bg-c27-surface"
 >
-  <div class="c27-wrap flex min-h-[4.75rem] items-center gap-5 lg:gap-8">
+  <div class="c27-wrap flex min-h-[4.5rem] items-center gap-5 lg:gap-8">
     <a
       href={ROUTES.home}
       class="mr-auto flex items-center gap-2 font-display text-base font-semibold tracking-tight text-c27-ink no-underline sm:text-lg"
@@ -53,7 +53,7 @@ const isActive = (href: string) =>
 
     {
       !bare && (
-        <Button href={ROUTES.hire} size="sm">
+        <Button href={ROUTES.hire} size="header">
           Build your team
         </Button>
       )

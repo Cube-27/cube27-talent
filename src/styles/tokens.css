@@ -2,8 +2,9 @@
    Design tokens — the single source of truth for colour, type,
    spacing, radius, elevation and motion. See docs/design-system.md.
 
-   The system is flat: elevation is a tint or gradient step, never a shadow,
-   and nothing lifts on hover. Raw values live on --c27-*.
+   The system is predominantly flat: elevation is usually a tint or gradient
+   step, with a very slight directional shadow reserved for cards. Nothing
+   lifts on hover. Raw values live on --c27-*.
    Tailwind utilities are generated from the @theme inline block,
    so `bg-c27-surface-2`, `text-c27-ink-2`, `border-c27-line` all
    resolve here. Never hard-code a hex value in a component.
@@ -108,9 +109,9 @@
   --c27-radius-lg: 0px;
 
   /* --- elevation -------------------------------------------------
-     The only shadow in the system, and it belongs to things that
-     genuinely float above the page: the stuck header, select menus,
-     the mobile nav sheet. A content card never carries one. */
+     Cards use a restrained downward shadow so their top edge stays crisp.
+     Floating UI uses the stronger overlay elevation. */
+  --c27-shadow-card: 0 3px 5px -3px rgba(23, 19, 37, 0.2);
   --c27-shadow-overlay: 0 8px 28px -12px rgba(23, 19, 37, 0.22);
 
   /* --- motion --- */
@@ -175,6 +176,7 @@
   --radius-c27-lg: var(--c27-radius-lg);
 
   --shadow-c27-overlay: var(--c27-shadow-overlay);
+  --shadow-c27-card: var(--c27-shadow-card);
 
   --ease-c27: var(--c27-ease);
 }

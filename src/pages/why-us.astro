@@ -84,7 +84,7 @@ const HIRING_STANDARDS = [
       </div>
 
       <aside
-        class="c27-rise border border-c27-line bg-c27-surface p-[clamp(1.5rem,4vw,2.75rem)]"
+        class="c27-card-shadow c27-rise border border-c27-line bg-c27-surface p-[clamp(1.5rem,4vw,2.75rem)]"
         style="--c27-d:80ms"
       >
         <h2 class="c27-h3-lg font-semibold">Experience behind the work</h2>
@@ -133,7 +133,7 @@ const HIRING_STANDARDS = [
           OPERATOR_PROOF.map((item, index) => (
             <article
               class:list={[
-                "grid min-h-64 content-between gap-10 border-b border-c27-line p-[clamp(1.75rem,3vw,2.75rem)] last:border-b-0 md:border-b-0",
+                "c27-card-shadow grid min-h-64 content-between gap-10 border-b border-c27-line p-[clamp(1.75rem,3vw,2.75rem)] last:border-b-0 md:border-b-0",
                 index > 0 && "md:border-l",
                 item.surfaceClass,
               ]}
@@ -220,7 +220,7 @@ const HIRING_STANDARDS = [
           VERIFIED_PROOF.map((point, index) => (
             <div
               class:list={[
-                "border-b border-c27-line bg-c27-surface p-6",
+                "c27-card-shadow border-b border-c27-line bg-c27-surface p-6",
                 index > 0 && "sm:border-l",
               ]}
             >

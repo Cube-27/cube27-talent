@@ -102,14 +102,12 @@
     max-width: 68ch;
   }
 
-  /* --- flat surfaces ------------------------------------------------
-     A card is a fill, a hairline and padding. That is the whole recipe.
-     Nothing here carries a shadow — elevation is the tint step between
-     the card and the section it sits on. Design system §1, rules 2-4. */
+  /* --- card surfaces ------------------------------------------------ */
   .c27-card {
     background: var(--c27-surface-2);
     border: 1px solid var(--c27-line);
     border-radius: var(--c27-radius);
+    box-shadow: var(--c27-shadow-card);
   }
 
   /* On a tinted section the card inverts: white on colour. */
@@ -117,6 +115,12 @@
     background: var(--c27-surface);
     border: 1px solid var(--c27-line);
     border-radius: var(--c27-radius);
+    box-shadow: var(--c27-shadow-card);
+  }
+
+  /* Card-like authored panels use the same subtle elevation recipe. */
+  .c27-card-shadow {
+    box-shadow: var(--c27-shadow-card);
   }
 
   /* Interactive cards shift fill and border. They do not move — rule 1. */
@@ -158,11 +162,13 @@
   .c27-feature-card {
     background: var(--c27-gradient-warm);
     border: 1px solid var(--c27-line);
+    box-shadow: var(--c27-shadow-card);
   }
 
   .c27-soft-panel {
     background: var(--c27-gradient-soft);
     border: 1px solid var(--c27-line);
+    box-shadow: var(--c27-shadow-card);
   }
 
   .c27-tile-violet {
