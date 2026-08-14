@@ -417,11 +417,11 @@ test("employer submission carries a managed-team requirement into the sales emai
   form.set("startWindow", "Within 30 days");
   form.set("engagement", "Full-time employment");
   form.set("arrangement", "Hybrid");
-  form.append("roleFamilies", "security-compliance");
+  form.append("roleFamilies", "business-operations");
   form.append("roleFamilies", "leadership");
   form.set(
     "requirement",
-    "Build a security leadership team for a global certification programme.",
+    "Build an operations leadership team across multiple markets.",
   );
   form.set("consent", "yes");
   form.set("cf-turnstile-response", "verified-test-token");
@@ -469,11 +469,11 @@ test("employer submission carries a managed-team requirement into the sales emai
     assert.equal(resendPayloads.length, 2);
     assert.match(
       String(resendPayloads[0]?.text),
-      /Role families: security-compliance, leadership/,
+      /Role families: business-operations, leadership/,
     );
     assert.match(
       String(resendPayloads[0]?.text),
-      /Build a security leadership team for a global certification programme\./,
+      /Build an operations leadership team across multiple markets\./,
     );
     assert.deepEqual(resendPayloads[0]?.to, ["sales@example.com"]);
   } finally {

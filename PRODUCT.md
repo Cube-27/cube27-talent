@@ -28,7 +28,7 @@ The service supports global, remote, hybrid, onsite, and relocation-based hiring
 - Broad cross-functional scope; published role families are illustrative.
 - AI may assist sourcing and screening, but people make every decision.
 - V1 is a lead-generation website for a manual operation, not a marketplace or software platform.
-- Public copy excludes contractual mechanics, pricing, guarantees, fake proof, and certification ownership.
+- Public copy may describe benefit-level coordination of contracts, payroll, applicable local requirements, culture onboarding, and performance reviews. It excludes contractual mechanics, legal advice, pricing, guarantees, fake proof, and certification ownership.
 - Existing forms, Cloudflare Pages Functions, Turnstile, Resend, upload validation, consent, and redirects remain stable.
 
 ## Brand Commitments
@@ -52,6 +52,7 @@ The service supports global, remote, hybrid, onsite, and relocation-based hiring
 3. Present one accountable partner from hiring through ongoing support.
 4. Keep scope broad, claims factual, and decisions human.
 5. Preserve a respectful, complete candidate experience.
+6. Treat compliance as an operating standard across every hire, not a recruitment vertical.
 
 ## Accessibility & Inclusion
 

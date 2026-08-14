@@ -78,20 +78,6 @@ export const ROLE_FAMILIES: RoleFamily[] = [
     tint: "peach",
   },
   {
-    id: "security-compliance",
-    name: "Security & Compliance",
-    short: "Security",
-    icon: "shield",
-    blurb: "Security engineering, operations, GRC, and audit talent.",
-    roles: [
-      "Security engineering",
-      "Application security",
-      "Security operations",
-      "Governance, risk and compliance",
-    ],
-    tint: "sky",
-  },
-  {
     id: "quality-delivery",
     name: "Quality & Delivery",
     short: "Quality",
@@ -143,11 +129,11 @@ export const ROLE_FAMILIES: RoleFamily[] = [
     name: "Leadership",
     short: "Leadership",
     icon: "compass",
-    blurb: "CTO, CIO, CISO, VP, and functional leadership search.",
+    blurb: "CTO, CIO, COO, VP, and functional leadership search.",
     roles: [
       "CTO",
       "CIO",
-      "CISO",
+      "COO",
       "VP Engineering",
       "Head of Product",
       "Head of Data",
@@ -167,22 +153,3 @@ export const ROLE_FAMILY_IDS = ROLE_FAMILIES.map((f) => f.id);
  */
 export const OPEN_SCOPE_LINE =
   "These roles are examples. We hire beyond these categories.";
-
-/**
- * Compliance frameworks we build teams towards. Homepage security section.
- *
- * HARD RULE — invariant 0.4: these are standards our teams build an
- * organisation towards. They are never a claim that we hold them. They must be
- * set typographically, never as a seal, badge, crest or trust mark, and the
- * section must carry SECURITY_DISCLAIMER.
- */
-export const SECURITY_FRAMEWORKS = [
-  "ISO 27001",
-  "SOC 2",
-  "PCI DSS",
-  "HIPAA",
-  "GDPR",
-] as const;
-
-export const SECURITY_DISCLAIMER =
-  "We hire teams that work toward these standards; we do not issue certifications.";

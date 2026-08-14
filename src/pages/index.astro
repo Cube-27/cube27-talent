@@ -6,7 +6,7 @@ import Hero from "@/components/sections/Hero.astro";
 import ProcessRail from "@/components/sections/ProcessRail.astro";
 import Lifecycle from "@/components/sections/Lifecycle.astro";
 import ExpertiseSelector from "@/components/sections/ExpertiseSelector.astro";
-import SecurityTeams from "@/components/sections/SecurityTeams.astro";
+import Compliance from "@/components/sections/Compliance.astro";
 import LeadershipHiring from "@/components/sections/LeadershipHiring.astro";
 import FinalCta from "@/components/sections/FinalCta.astro";
 import Faq from "@/components/ui/Faq.astro";
@@ -53,14 +53,14 @@ const jsonLd = [
     <Section id="expertise">
       <SectionHead
         heading="Hire across every critical function"
-        lede="Specialists, security teams, operators, and executives."
+        lede="Specialists, operators, and executives across critical functions."
         centered
       />
       <ExpertiseSelector />
     </Section>
 
-    <Section id="security" tone="sky" bordered>
-      <SecurityTeams />
+    <Section id="compliance" tone="sky" bordered>
+      <Compliance />
     </Section>
 
     <Section id="leadership">

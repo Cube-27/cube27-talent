@@ -11,8 +11,8 @@ const year = new Date().getFullYear();
     <div class="grid gap-10 md:grid-cols-[minmax(0,1.4fr)_1fr_1fr]">
       <div>
         <a
-          href={SITE_CONFIG.organization.parentSite}
-          aria-label="Cube27 parent site"
+          href={ROUTES.home}
+          aria-label="Cube27 Talent"
           class="inline-flex items-center gap-3 no-underline"
         >
           <img
@@ -24,7 +24,7 @@ const year = new Date().getFullYear();
           />
           <span
             class="font-display text-lg font-semibold tracking-[0.04em] text-c27-on-deep"
-            >CUBE27</span
+            >CUBE<span class="text-c27-on-deep-accent">27</span> | Talent</span
           >
         </a>
         <p class="mt-4 max-w-[42ch] leading-relaxed">
@@ -54,8 +54,8 @@ const year = new Date().getFullYear();
           </li>
           <li>
             <a
-              href={ROUTES.expertise}
-              class="no-underline hover:text-c27-on-deep-accent">Expertise</a
+              href={ROUTES.whyUs}
+              class="no-underline hover:text-c27-on-deep-accent">Why us</a
             >
           </li>
           <li>

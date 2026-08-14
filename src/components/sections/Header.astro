@@ -17,7 +17,11 @@ const isActive = (href: string) =>
   class="sticky top-0 z-30 border-b border-c27-line bg-c27-ground/95 backdrop-blur-md"
 >
   <div class="c27-wrap flex min-h-[4.75rem] items-center gap-5 lg:gap-8">
-    <a href={ROUTES.home} class="mr-auto no-underline" aria-label="Home">
+    <a
+      href={ROUTES.home}
+      class="mr-auto flex items-center gap-2 font-display text-base font-semibold tracking-tight text-c27-ink no-underline sm:text-lg"
+      aria-label="Cube27 Talent"
+    >
       <img
         src="/cube27_logo.png"
         alt="Cube27"
@@ -25,6 +29,7 @@ const isActive = (href: string) =>
         height="109"
         class="h-10 w-auto sm:h-11"
       />
+      <span class="hidden sm:inline">| Talent</span>
     </a>
 
     {

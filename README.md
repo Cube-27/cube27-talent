@@ -103,10 +103,10 @@ places, because this repo ships a Wrangler config file:
 must point at a test inbox — a preview submission must never deliver a resume
 to the live recruitment distribution (plan §13.2).
 
-**One mailbox, two variables.** `EMPLOYER_LEADS_TO` and
-`CANDIDATE_APPLICATIONS_TO` both hold `talent@cube27.com` in production; the
-pair stays split so the two queues can be routed to different people from the
-dashboard without touching code.
+**Separate production queues.** `EMPLOYER_LEADS_TO` holds `talent@cube27.com` and
+`CANDIDATE_APPLICATIONS_TO` holds `talent-apply@cube27.com` in production; the
+two variables keep employer requirements and candidate applications routed
+independently.
 
 **The Resend sending domain is shared.** `mail.cube27.com` serves both this
 project and the main Cube27 site, so send quota and sender reputation are

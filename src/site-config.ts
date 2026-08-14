@@ -12,12 +12,12 @@ export const SITE_CONFIG = {
    * visitor reads as prose is first person plural.
    */
   name: "Cube27 Talent — build the team your business needs",
-  /** Short brand, appended to sub-page titles: "Expertise | Cube27 Talent". */
+  /** Short brand, appended to sub-page titles: "Why us | Cube27 Talent". */
   brand: "Cube27 Talent",
   /** Canonical production origin, no trailing slash. Matches astro.config `site`. */
   url: "https://talent.cube27.com",
   description:
-    "We build specialists, complete teams, and leaders assessed through role-specific work and practitioner interviews.",
+    "We build specialists, complete teams, and leaders through evidence-led hiring and ongoing workforce compliance support.",
   // Entity, privacy contact and address all match the published policy at
   // ROUTES.privacy, which is the notice this site links to from both consent
   // checkboxes. Change them only alongside that page.
@@ -40,17 +40,13 @@ export const SITE_CONFIG = {
 } as const;
 
 /**
- * Master switch for search indexing. `false` until the site is launched: every
- * page renders `noindex, nofollow` and robots.txt stops advertising the
- * sitemap, on production as well as preview.
+ * Master switch for search indexing. Production is launched, so public pages
+ * render `index, follow` and robots.txt advertises the sitemap.
  *
- * To go live, flip this to `true` AND remove the `X-Robots-Tag` line from the
- * `/*` block in `public/_headers`. The header is a backstop that covers
- * non-HTML responses (sitemap, images), and it wins over the meta tag — leaving
- * it in place would keep the whole site out of the index no matter what this
- * flag says. The `/thank-you/*` header block stays either way.
+ * Preview branches remain `noindex` through Layout, while confirmation pages
+ * retain their page-level meta directive and dedicated response header.
  */
-export const INDEXING_ENABLED = false;
+export const INDEXING_ENABLED = true;
 
 /** Every route in V1. Plan §11. */
 export const ROUTES = {
@@ -58,7 +54,7 @@ export const ROUTES = {
   hire: "/hire-talent/",
   join: "/join-talent-network/",
   how: "/how-it-works/",
-  expertise: "/expertise/",
+  whyUs: "/why-us/",
   csr: "https://www.cube27.com/csr/",
   privacy: "https://www.cube27.com/privacy-policy/",
   terms: "https://www.cube27.com/terms-of-service/",
@@ -68,16 +64,9 @@ export const ROUTES = {
 
 export const NAV_LINKS = [
   { label: "How we hire", href: ROUTES.how },
-  { label: "Expertise", href: ROUTES.expertise },
+  { label: "Why us", href: ROUTES.whyUs },
   { label: "For talent", href: ROUTES.join },
 ] as const;
-
-/**
- * Security and leadership are homepage and expertise-page
- * sections rather than routes — adding them here would push the bar past what
- * fits at the `lg` breakpoint, and neither has enough content to justify a page
- * of its own yet.
- */
 
 /**
  * Turnstile site keys, one per deployment environment.

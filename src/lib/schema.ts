@@ -36,11 +36,12 @@ export function organizationSchema(): Schema {
     knowsAbout: [
       "Managed Talent Acquisition",
       "Executive Search",
-      "Cybersecurity Hiring",
       "Software Engineering Staffing",
       "Cloud & Platform Engineering",
       "Data & AI Talent",
-      "SOC 2 & ISO 27001 Team Building",
+      "Workforce Compliance Coordination",
+      "Payroll & Workforce Administration",
+      "Culture Onboarding",
       "Cross-Functional Team Scaling",
     ],
     contactPoint: {
@@ -129,7 +130,7 @@ export function serviceSchema(): Schema {
     provider: { "@id": ORGANIZATION_ID },
     areaServed: "Worldwide",
     description:
-      "Specialists, complete teams and leaders assessed through role-specific work and practitioner interviews.",
+      "Specialists, complete teams and leaders assessed through role-specific work and practitioner interviews, with ongoing workforce compliance support.",
     url: absolute(ROUTES.hire),
     hasOfferCatalog: {
       "@type": "OfferCatalog",

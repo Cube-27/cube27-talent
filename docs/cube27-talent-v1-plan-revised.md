@@ -16,7 +16,7 @@ The primary conversion is a completed employer requirement. Candidate applicatio
 
 ## 2. Positioning and message sequence
 
-The homepage leads with “Build the team your business needs.” It then proves scale, states the commercial value, shows the hiring evidence, lists lifecycle coverage, presents expertise, and ends with a direct requirement CTA.
+The homepage leads with “Build the team your business needs.” It then proves scale, states the commercial value, shows the hiring evidence, lists lifecycle coverage, presents cross-functional hiring scope and compliance support, and ends with a direct requirement CTA.
 
 The sales story is:
 
@@ -31,12 +31,12 @@ Existing routes remain stable:
 
 - `/` — employer-focused homepage
 - `/how-it-works/` — deeper explanation of how we hire and support teams
-- `/expertise/` — cross-functional talent scope, security teams, and leadership search
+- `/why-us/` — operator experience, evidence-led hiring standards, workforce compliance, and approved proof
 - `/hire-talent/` — employer requirement and conversion page
 - `/join-talent-network/` — candidate proposition and application
 - existing thank-you and error routes
 
-Primary navigation is **How we hire**, **Expertise**, **For talent**, and the persistent **Build your team** CTA.
+Primary navigation is **How we hire**, **Why us**, **For talent**, and the persistent **Build your team** CTA.
 
 ## 4. Homepage requirements
 
@@ -47,7 +47,7 @@ Render sections in this order:
 3. Managed-team proposition focused on business outcomes and reduced operational load.
 4. Signature four-phase hiring-process rail.
 5. Employee lifecycle management: hiring, onboarding, payroll and administration, ongoing support.
-6. Broad expertise with focused security and leadership modules.
+6. Broad hiring scope with focused compliance and leadership modules.
 7. Employer FAQ.
 8. Final “Tell us what you need to build” conversion band.
 
@@ -64,7 +64,7 @@ No visible, accessible, metadata, or documentation copy numbers the phases or ca
 ## 6. Supporting pages
 
 - **How we hire:** expand the four phases, explain assessment evidence and human judgment, then show ongoing lifecycle coverage.
-- **Expertise:** present disciplines as examples, not a catalogue boundary. Give security and executive hiring dedicated emphasis.
+- **Why us:** prove operator experience, hiring judgment, workforce compliance, culture alignment, and approved scale without repeating the homepage role catalogue.
 - **Build your team:** use a concise enterprise proposition beside the existing structured requirement form.
 - **For talent:** explain career value, discipline-specific assessment, process clarity, and global work without promises.
 - **Thank-you and error pages:** use direct, specific headings and next actions consistent with the new shell.
@@ -78,9 +78,9 @@ Employer fields remain structured around role, scale, start window, engagement, 
 ## 8. Content constraints
 
 - First-person plural marketing voice; brand name only in identity and legal contexts.
-- No contractual terms, pricing, guarantees, fake candidates, unapproved proof, or engineering-only framing.
+- No contractual mechanics, legal advice, pricing, guarantees, fake candidates, unapproved proof, or engineering-only framing.
 - AI-assisted sourcing and screening must be paired with explicit human decision-making.
-- Certification frameworks are context for teams we build, never accreditations we claim.
+- Compliance language stays at the benefit level: coordination across contracts, payroll, applicable local requirements, culture onboarding, and client-defined reviews.
 - Headings state outcomes or capabilities rather than abstract transitions.
 
 ## 9. Implementation sequence

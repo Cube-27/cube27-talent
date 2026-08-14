@@ -1,8 +1,14 @@
 import { readFileSync } from "node:fs";
 import { globSync } from "node:fs";
+import { certificationFixtures } from "./check-content.fixtures.mjs";
 
 const sourceFiles = globSync("src/**/*.{astro,ts,css}");
 const source = sourceFiles.map((file) => [file, readFileSync(file, "utf8")]);
+
+const certificationPositioningPattern =
+  /\bcertification (?:ownership|program(?:me)?s?)\b/gi;
+const certificationBoundaryPattern =
+  /\b(?:compliance|this) coordination does not (?:imply|constitute) legal advice, certification ownership, or universal legal liability\./gi;
 
 const forbiddenSourcePatterns = [
   [/nine[ -]step/gi, "count-based hiring-process terminology"],
@@ -29,6 +35,15 @@ const forbiddenSourcePatterns = [
     "responsibility matrices",
   ],
   [/managed engineering staffing/gi, "engineering-only positioning"],
+  [
+    /\bsecurity hiring\b|\bsecurity teams?\b|\bsecurity functions?\b/gi,
+    "obsolete security-hiring positioning",
+  ],
+  [
+    certificationPositioningPattern,
+    "obsolete certification-programme positioning",
+  ],
+  [/\/expertise\//gi, "retired expertise route"],
 ];
 
 const staleDocumentationPatterns = [
@@ -43,9 +58,23 @@ const staleDocumentationPatterns = [
 
 const failures = [];
 
+for (const fixture of certificationFixtures) {
+  const matcher = new RegExp(
+    certificationPositioningPattern.source,
+    certificationPositioningPattern.flags,
+  );
+  if (!matcher.test(fixture.text)) {
+    failures.push(`content fixture not rejected: ${fixture.name}`);
+  }
+}
+
 for (const [file, text] of source) {
   for (const [pattern, label] of forbiddenSourcePatterns) {
-    const matches = text.match(pattern);
+    const content =
+      pattern === certificationPositioningPattern
+        ? text.replace(certificationBoundaryPattern, "")
+        : text;
+    const matches = content.match(pattern);
     if (matches) failures.push(`${file}: ${label}: ${matches.join(", ")}`);
   }
 }

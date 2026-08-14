@@ -38,7 +38,7 @@ It does not appear in marketing headings, paragraphs, cards, FAQs, labels, or bu
 
 ### Benefit-led, not contractual
 
-Public pages may say that we manage hiring, onboarding, payroll, administration, and the employee lifecycle. They must not publish:
+Public pages may say that we manage hiring, onboarding, payroll, administration, and the employee lifecycle, and that we coordinate contracts, applicable local labor and IP requirements, culture onboarding, and client-defined performance reviews. They must not publish:
 
 - hardware or equipment terms;
 - removal, replacement, termination, dismissal, or notice terms;
@@ -48,11 +48,11 @@ Public pages may say that we manage hiring, onboarding, payroll, administration,
 
 ### Broad talent scope
 
-Engineering, product, cloud, data, AI, security, compliance, quality, delivery, design, operations, business functions, and leadership are examples rather than limits. No page describes the company as engineering-only.
+Engineering, product, cloud, data, AI, quality, delivery, design, operations, business functions, and leadership are examples rather than limits. Compliance is an operating service across hires rather than a recruitment role family. No page describes the company as engineering-only.
 
-### Security and certification language
+### Compliance language
 
-We may say that we build security teams that help an organization work toward ISO 27001, SOC 2, PCI DSS, HIPAA, GDPR, and related standards. Framework names are rendered typographically. We do not use official seals or imply that we hold a certification.
+We may say that we manage and coordinate benefit-level workforce compliance across contracts, payroll, applicable local labor and IP requirements, culture onboarding, and client-defined performance reviews. We do not publish contractual mechanics, provide legal advice, imply universal legal liability, or claim certification ownership.
 
 ### AI and human judgment
 

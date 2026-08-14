@@ -60,6 +60,7 @@
   --c27-icon-green: #0d9488;
   --c27-icon-orange: #ea580c;
   --c27-icon-blue: #2563eb;
+  --c27-brand-27: #8d296a;
 
   /* --- lines -----------------------------------------------------
      A 1px hairline is the default boundary between surfaces. */
@@ -141,6 +142,7 @@
   --color-c27-icon-green: var(--c27-icon-green);
   --color-c27-icon-orange: var(--c27-icon-orange);
   --color-c27-icon-blue: var(--c27-icon-blue);
+  --color-c27-brand-27: var(--c27-brand-27);
 
   --color-c27-line: var(--c27-line);
   --color-c27-line-2: var(--c27-line-2);

@@ -21,7 +21,7 @@ These patterns inform structure and clarity only. Competitor claims, language, m
 
 **Build the team your business needs.**
 
-Supporting message: Managed hiring for specialists, complete teams, security functions, and senior leadership. Every shortlist comes with assessment evidence.
+Supporting message: Managed hiring for specialists, complete teams, and senior leadership, with evidence-backed shortlists and ongoing workforce compliance support.
 
 Primary CTA: **Build your team**  
 Form submission CTA: **Send requirement**  
@@ -49,15 +49,15 @@ Candidate CTA: **Apply to join**
 
 ### Homepage
 
-Promise → proof → commercial value → hiring evidence → concise lifecycle coverage → breadth → security and leadership → objections → requirement CTA.
+Promise → proof → commercial value → hiring evidence → concise lifecycle coverage → breadth → compliance and leadership → objections → requirement CTA.
 
 ### How we hire
 
 Evidence-led overview → four phases → recorded assessment and practitioner review → human decision-making → lifecycle continuity → CTA.
 
-### Expertise
+### Why us
 
-Cross-functional scope → illustrative disciplines → security-team capability → leadership and CXO search → CTA.
+Enterprise-authority hero → Fortune 500 and C-suite operator experience → evidence-led hiring standards → compliance and culture → approved proof → CTA.
 
 ### Build your team
 
@@ -74,8 +74,8 @@ Career value → fair discipline-specific evaluation → what information to sub
 - How we hire H1: Hire with proof, not promises.
 - Homepage process: Shortlists built for clearer decisions.
 - Lifecycle: Support that continues after the hire.
-- Expertise: Hire across every critical function.
-- Security: Build a security team for the standard ahead.
+- Why us: Built for teams where every hire matters.
+- Compliance: Standards that scale with your team.
 - Leadership: Hire leaders who can build the function.
 - Employer H1: Tell us who you need.
 - Candidate H1: Find your next role.
@@ -86,4 +86,4 @@ Career value → fair discipline-specific evaluation → what information to sub
 
 ## Forbidden content
 
-Do not publish contractual mechanics, equipment terms, removal or replacement language, fees, guarantees, unsupported delivery times, certification ownership, fake profiles, unapproved proof, company-name repetition, role-count claims, engineering-only positioning, or count-based hiring-process terminology.
+Public copy may describe benefit-level coordination of contracts, payroll, applicable local requirements, culture onboarding, and client-defined performance reviews. Do not publish contractual mechanics, legal advice, equipment terms, removal or replacement language, fees, guarantees, unsupported delivery times, certification ownership, fake profiles, unapproved proof, company-name repetition, role-count claims, engineering-only positioning, or count-based hiring-process terminology.

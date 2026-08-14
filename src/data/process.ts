@@ -56,19 +56,19 @@ export const LIFECYCLE = [
   {
     icon: "briefcase",
     title: "Onboarding",
-    body: "Move selected talent into the team.",
+    body: "Bring selected talent into your culture and ways of working.",
     tint: "mint" as const,
   },
   {
     icon: "shield",
-    title: "Payroll and administration",
-    body: "Keep recurring administration covered.",
+    title: "Payroll and compliance",
+    body: "Coordinate contracts, payroll, and applicable local requirements.",
     tint: "peach" as const,
   },
   {
     icon: "chat",
-    title: "Ongoing support",
-    body: "Support people as the team evolves.",
+    title: "Performance support",
+    body: "Facilitate reviews against criteria defined with your team.",
     tint: "sky" as const,
   },
 ];

@@ -23,19 +23,13 @@ RESEND_FROM="Cube27 Talent <talent@mail.cube27.com>"
 # Monitored reply-to for acknowledgement emails. Never no-reply.
 RESEND_REPLY_TO="talent@cube27.com"
 
-# Internal recipients. Both point at the single `talent@` mailbox: this is one
-# team reading both queues, and a second address earns its keep only once a
-# different person handles one of them. They stay two variables so that split
-# costs a dashboard edit rather than a deploy — the endpoints already read them
-# independently.
+# Internal recipients. Employer requirements and candidate applications use
+# separate production queues. The endpoints read these variables independently.
 #
-# Preview MUST point somewhere other than the live mailbox — a preview
-# candidate submission must never deliver a resume to the real recruitment
-# inbox. Plus-addressing (`talent+preview@`) needs no new mailbox but still
-# lands in this one, so it is filterable, not isolated.
-EMPLOYER_LEADS_TO="talent@cube27.com"
-CANDIDATE_APPLICATIONS_TO="talent@cube27.com"
+# Local and preview submissions must use dedicated non-production inboxes.
+# Never use live recruitment mailboxes or plus-addressing variants here.
+EMPLOYER_LEADS_TO="talent-leads-preview@cube27.com"
+CANDIDATE_APPLICATIONS_TO="talent-apply-preview@cube27.com"
 
 # Cloudflare Turnstile. Test keys: https://developers.cloudflare.com/turnstile/troubleshooting/testing/
 # 1x00000000000000000000AA always passes; 2x00000000000000000000AB always blocks.
-

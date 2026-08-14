@@ -86,7 +86,7 @@ Do not combine a hairline and a large card shadow to communicate the same elevat
 
 ### Icons and standards
 
-Functional icons use restrained violet, blue, green, or orange accents on softly graded icon tiles. Standards use one clear name with supporting context, never repeated abbreviations, certification seals, or white logo cards.
+Functional icons use restrained violet, blue, green, or orange accents on softly graded icon tiles. Compliance responsibilities use clear names with supporting context, never seals, badges, or trust-mark treatments.
 
 ### Forms
 
@@ -115,4 +115,4 @@ Every phase is present in the DOM. Desktop uses a vertical spine with scroll-lin
 
 ## 9. Writing inside the interface
 
-Use commercial claims, concrete nouns, and active verbs. Keep supporting paragraphs to one short sentence. Do not narrate internal operations. Buttons name the action: **Build your team**, **Send requirement**, **Apply to join**, **View expertise**.
+Use commercial claims, concrete nouns, and active verbs. Keep supporting paragraphs to one short sentence. Do not narrate internal operations. Buttons name the action: **Build your team**, **Send requirement**, **Apply to join**.

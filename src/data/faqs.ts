@@ -18,11 +18,11 @@ export const EMPLOYER_FAQS: Faq[] = [
   },
   {
     q: "Which functions and levels can you hire for?",
-    a: "Engineering, product, cloud, data, AI, security, compliance, design, operations, and CXO leadership. These are examples, not limits.",
+    a: "Engineering, product, cloud, data, AI, quality, design, operations, and C-suite leadership. These are examples, not limits.",
   },
   {
-    q: "Can you build a security team for a certification programme?",
-    a: "Yes. We hire security, operations, GRC, and audit talent for ISO 27001, SOC 2, PCI DSS, HIPAA, and GDPR programmes.",
+    q: "How do you support compliance after someone is hired?",
+    a: "We coordinate contracts, payroll, applicable local labor and IP requirements, culture onboarding, and reviews against criteria defined with your team.",
   },
   {
     q: "What happens after we select someone?",
@@ -33,7 +33,7 @@ export const EMPLOYER_FAQS: Faq[] = [
 export const CANDIDATE_FAQS: Faq[] = [
   {
     q: "What kind of opportunities do you work on?",
-    a: "Roles span technology, product, security, design, operations, and leadership across global clients.",
+    a: "Roles span technology, product, design, operations, and leadership across global clients.",
   },
   {
     q: "How will I be assessed?",

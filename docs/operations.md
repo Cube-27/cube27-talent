@@ -84,24 +84,20 @@ single-domain plan. See §3.1 for what that sharing costs.
    site uses.
 
 6. Create a separate sending-only API key named `cube27-talent-preview`.
-7. Record the production recipients. Both are the same mailbox — one team reads
-   both queues:
+7. Record the separate production recipients:
 
    ```text
    EMPLOYER_LEADS_TO=talent@cube27.com
-   CANDIDATE_APPLICATIONS_TO=talent@cube27.com
+   CANDIDATE_APPLICATIONS_TO=talent-apply@cube27.com
    ```
 
-   They remain two variables so that routing employer leads and candidate
-   applications to different people later is a dashboard change, not a code
-   change.
+   Keep the variables separate so employer leads and candidate applications
+   remain independently routable.
 
-8. For preview, point both recipient values away from the live mailbox and use a
-   visibly non-production From address such as `talent-preview@mail.cube27.com`.
-   `talent+preview@cube27.com` requires no new mailbox, but it delivers into
-   `talent@` all the same: test resumes land in the real inbox, filterable but
-   not separated. A dedicated test address is the only form that actually holds
-   the §13.2 guarantee.
+8. For preview, use the dedicated `talent-leads-preview@cube27.com` and
+   `talent-apply-preview@cube27.com` recipient inboxes, plus a visibly
+   non-production From address such as `talent-preview@mail.cube27.com`.
+   Do not use a live mailbox or plus-addressing for preview traffic.
 9. Send one manual Resend test message and confirm SPF/DKIM alignment and inbox
    delivery before testing the application.
 
@@ -249,7 +245,7 @@ inherits from the other; an unset variable is simply absent at runtime.
 | `RESEND_FROM`               | `wrangler.jsonc`   | `Cube27 Talent <talent@mail.cube27.com>` |
 | `RESEND_REPLY_TO`           | `wrangler.jsonc`   | `talent@cube27.com`                      |
 | `EMPLOYER_LEADS_TO`         | `wrangler.jsonc`   | `talent@cube27.com`                      |
-| `CANDIDATE_APPLICATIONS_TO` | `wrangler.jsonc`   | `talent@cube27.com`                      |
+| `CANDIDATE_APPLICATIONS_TO` | `wrangler.jsonc`   | `talent-apply@cube27.com`                |
 | `TURNSTILE_SECRET_KEY`      | Dashboard (secret) | Production widget secret                 |
 | `RESEND_API_KEY`            | Dashboard (secret) | Production sending-only key              |
 
@@ -265,8 +261,8 @@ environment for the two secrets.
 | `ALLOWED_HOSTS`             | `wrangler.jsonc`   | Stable preview hostname; add an approved Pages hostname comma-separated |
 | `RESEND_FROM`               | `wrangler.jsonc`   | Clearly labelled preview sender, e.g. `talent-preview@mail.cube27.com`  |
 | `RESEND_REPLY_TO`           | `wrangler.jsonc`   | Test owner                                                              |
-| `EMPLOYER_LEADS_TO`         | `wrangler.jsonc`   | Test inbox only                                                         |
-| `CANDIDATE_APPLICATIONS_TO` | `wrangler.jsonc`   | Test inbox only                                                         |
+| `EMPLOYER_LEADS_TO`         | `wrangler.jsonc`   | `talent-leads-preview@cube27.com`                                       |
+| `CANDIDATE_APPLICATIONS_TO` | `wrangler.jsonc`   | `talent-apply-preview@cube27.com`                                       |
 | `TURNSTILE_SECRET_KEY`      | Dashboard (secret) | Preview widget secret                                                   |
 | `RESEND_API_KEY`            | Dashboard (secret) | Preview sending-only key                                                |
 
