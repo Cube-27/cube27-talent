@@ -160,19 +160,19 @@
     pointer-events: none;
     background:
       radial-gradient(
-        ellipse 62% 68% at 52% 6%,
+        ellipse 100% 50% at 50% 0%,
         var(--c27-sky-glow),
-        transparent 68%
+        transparent 66%
       ),
       linear-gradient(
-        112deg,
+        128deg,
         transparent 0%,
-        transparent 25%,
+        transparent 15%,
         var(--c27-sky-light),
-        transparent 58%
+        transparent 62%
       ),
       radial-gradient(
-        ellipse 70% 82% at 100% 100%,
+        ellipse 85% 72% at 100% 100%,
         transparent 42%,
         var(--c27-sky-vignette) 100%
       );
@@ -181,7 +181,7 @@
   .c27-sky-field::after {
     position: absolute;
     z-index: -1;
-    inset: -18% -12% -24% 54%;
+    inset: -8% -58% 6% 36%;
     content: "";
     pointer-events: none;
     background: linear-gradient(
@@ -189,7 +189,35 @@
       var(--c27-sky-plane) 0%,
       transparent 72%
     );
-    clip-path: polygon(24% 0, 100% 0, 76% 100%, 0 100%);
+    clip-path: polygon(18% 0, 100% 0, 78% 100%, 0 100%);
+  }
+
+  @media (min-width: 40rem) {
+    .c27-sky-field::before {
+      background:
+        radial-gradient(
+          ellipse 62% 68% at 52% 6%,
+          var(--c27-sky-glow),
+          transparent 68%
+        ),
+        linear-gradient(
+          112deg,
+          transparent 0%,
+          transparent 25%,
+          var(--c27-sky-light),
+          transparent 58%
+        ),
+        radial-gradient(
+          ellipse 70% 82% at 100% 100%,
+          transparent 42%,
+          var(--c27-sky-vignette) 100%
+        );
+    }
+
+    .c27-sky-field::after {
+      inset: -18% -12% -24% 54%;
+      clip-path: polygon(24% 0, 100% 0, 76% 100%, 0 100%);
+    }
   }
 
   .c27-feature-card {

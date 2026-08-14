@@ -24,7 +24,7 @@ const HERO_CAPABILITIES = [
 ---
 
 <section class="c27-sky-field border-b border-c27-line text-c27-ink">
-  <div class="c27-wrap pt-[clamp(3.5rem,6vw,5rem)] text-center">
+  <div class="c27-wrap pt-[clamp(3rem,6vw,5rem)] text-center">
     <h1 class="c27-rise c27-display mx-auto">
       Build the team your business needs
     </h1>
@@ -44,7 +44,7 @@ const HERO_CAPABILITIES = [
       >
       <a
         href={ROUTES.join}
-        class="font-semibold text-c27-ink-2 underline decoration-c27-ink-3 underline-offset-4 transition-colors hover:text-c27-accent-d"
+        class="inline-flex min-h-11 items-center justify-center font-semibold text-c27-ink-2 underline decoration-c27-ink-3 underline-offset-4 transition-colors hover:text-c27-accent-d"
         >Looking for your next role?</a
       >
     </div>
@@ -92,8 +92,8 @@ const HERO_CAPABILITIES = [
   .hero-capability-rail {
     display: grid;
     gap: 1.5rem 2rem;
-    margin-top: clamp(3rem, 6vw, 5rem);
-    padding-bottom: clamp(1.75rem, 4vw, 2.75rem);
+    margin-top: 2.5rem;
+    padding-bottom: 2rem;
     text-align: left;
   }
 
@@ -118,8 +118,8 @@ const HERO_CAPABILITIES = [
 
   .hero-proof-grid {
     display: grid;
-    gap: 1.25rem 3rem;
-    padding-block: 1.5rem;
+    gap: 1rem 3rem;
+    padding-block: 1.25rem;
   }
 
   .hero-proof {
@@ -132,10 +132,14 @@ const HERO_CAPABILITIES = [
   @media (min-width: 40rem) {
     .hero-capability-rail {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: clamp(3rem, 6vw, 5rem);
+      padding-bottom: clamp(1.75rem, 4vw, 2.75rem);
     }
 
     .hero-proof-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+      row-gap: 1.25rem;
+      padding-block: 1.5rem;
     }
 
     .hero-proof {
