@@ -17,7 +17,7 @@ export const SITE_CONFIG = {
   /** Canonical production origin, no trailing slash. Matches astro.config `site`. */
   url: "https://talent.cube27.com",
   description:
-    "We build specialists, complete teams, and leaders assessed for the work.",
+    "We build specialists, complete teams, and leaders assessed through role-specific work and practitioner interviews.",
   // Entity, privacy contact and address all match the published policy at
   // ROUTES.privacy, which is the notice this site links to from both consent
   // checkboxes. Change them only alongside that page.

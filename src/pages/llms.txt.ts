@@ -11,6 +11,8 @@ export const GET: APIRoute = () => {
     "",
     `> ${SITE_CONFIG.description}`,
     "",
+    `Full machine-readable knowledge base available at: ${url("/llms-full.txt")}`,
+    "",
     "## What this service is",
     "",
     "- Managed hiring for specialists, complete teams, and leaders.",

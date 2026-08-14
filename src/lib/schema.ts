@@ -11,6 +11,8 @@
 
 import { ROUTES, SITE_CONFIG } from "@/site-config";
 import type { Faq } from "@/data/faqs";
+import { ROLE_FAMILIES } from "@/data/roles";
+import { PROCESS_PHASES } from "@/data/process";
 
 type Schema = Record<string, unknown>;
 
@@ -31,6 +33,22 @@ export function organizationSchema(): Schema {
     logo: `${SITE_CONFIG.url}/og-image.png`,
     description: SITE_CONFIG.description,
     email: SITE_CONFIG.organization.email,
+    knowsAbout: [
+      "Managed Talent Acquisition",
+      "Executive Search",
+      "Cybersecurity Hiring",
+      "Software Engineering Staffing",
+      "Cloud & Platform Engineering",
+      "Data & AI Talent",
+      "SOC 2 & ISO 27001 Team Building",
+      "Cross-Functional Team Scaling",
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: SITE_CONFIG.organization.email,
+      contactType: "customer service",
+      availableLanguage: ["English"],
+    },
     parentOrganization: {
       "@type": "Organization",
       name: SITE_CONFIG.organization.legalName,
@@ -101,11 +119,6 @@ export function faqSchema(items: Faq[]): Schema {
 /**
  * The service, described without pricing or turnaround claims. `Service`
  * rather than `Product` because nothing here is a purchasable unit.
- *
- * Structured data is exempt from invariant rule 0.1 (the legal entity has to be
- * named for the entity graph to be correct) but NOT from rule 0.2. Previous
- * contractual service wording and the description of the employment split
- * were removed.
  */
 export function serviceSchema(): Schema {
   return {
@@ -118,5 +131,38 @@ export function serviceSchema(): Schema {
     description:
       "Specialists, complete teams and leaders assessed through role-specific work and practitioner interviews.",
     url: absolute(ROUTES.hire),
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Talent Acquisition & Team Building Disciplines",
+      itemListElement: ROLE_FAMILIES.map((family) => ({
+        "@type": "OfferCatalog",
+        name: family.name,
+        description: family.blurb,
+      })),
+    },
+  };
+}
+
+/**
+ * The 4-phase assessment and shortlisting process marked up with HowTo schema.
+ */
+export function howToHiringProcessSchema(): Schema {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Evidence-Based Candidate Assessment & Shortlisting",
+    description:
+      "A structured 4-phase process to assess candidates through role-specific work and practitioner interviews.",
+    step: PROCESS_PHASES.map((phase, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: phase.name,
+      itemListElement: [
+        {
+          "@type": "HowToDirection",
+          text: `${phase.summary} Key elements: ${phase.points.join(", ")}.`,
+        },
+      ],
+    })),
   };
 }
