@@ -34,8 +34,17 @@
      These are used on a small number of deliberate regions. They do
      not replace the indigo action fill or the solid charcoal process field. */
   --c27-gradient-blue: linear-gradient(180deg, #f7f7f5 0%, #ebebe8 100%);
-  --c27-sky-glow: rgba(80, 85, 93, 0.08);
-  --c27-sky-light: rgba(255, 255, 255, 0.85);
+  --c27-gradient-hero: linear-gradient(
+    145deg,
+    #fbfbf8 0%,
+    #f0effb 48%,
+    #e2e3e8 100%
+  );
+  --c27-sky-glow: rgba(59, 56, 216, 0.18);
+  --c27-sky-light: rgba(255, 255, 255, 0.72);
+  --c27-sky-vignette: rgba(33, 37, 45, 0.085);
+  --c27-sky-plane: rgba(255, 255, 255, 0.42);
+  --c27-sky-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='73' height='79' viewBox='0 0 73 79'%3E%3Cg fill='%2321252d' fill-opacity='.055'%3E%3Ccircle cx='4' cy='7' r='.55'/%3E%3Ccircle cx='21' cy='3' r='.45'/%3E%3Ccircle cx='39' cy='12' r='.5'/%3E%3Ccircle cx='66' cy='6' r='.4'/%3E%3Ccircle cx='12' cy='25' r='.4'/%3E%3Ccircle cx='31' cy='31' r='.55'/%3E%3Ccircle cx='55' cy='23' r='.45'/%3E%3Ccircle cx='70' cy='37' r='.5'/%3E%3Ccircle cx='7' cy='46' r='.5'/%3E%3Ccircle cx='24' cy='55' r='.4'/%3E%3Ccircle cx='46' cy='44' r='.55'/%3E%3Ccircle cx='61' cy='58' r='.4'/%3E%3Ccircle cx='15' cy='72' r='.45'/%3E%3Ccircle cx='37' cy='68' r='.4'/%3E%3Ccircle cx='68' cy='75' r='.5'/%3E%3C/g%3E%3C/svg%3E");
   --c27-gradient-warm: linear-gradient(180deg, #f3f1ec 0%, #faf8f5 100%);
   --c27-gradient-soft: linear-gradient(180deg, #ffffff 0%, #f6f5f0 100%);
   --c27-tile-violet: linear-gradient(135deg, #f1effe 0%, #e5e2fc 100%);

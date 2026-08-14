@@ -144,19 +144,52 @@
     position: relative;
     isolation: isolate;
     overflow: clip;
-    background: var(--c27-gradient-blue);
+    background-color: var(--c27-hero);
+    background-image: var(--c27-sky-grain), var(--c27-gradient-hero);
+    background-repeat: repeat, no-repeat;
+    background-size:
+      73px 79px,
+      100% 100%;
   }
 
   .c27-sky-field::before {
     position: absolute;
     z-index: -1;
-    inset: -10%;
+    inset: 0;
     content: "";
     pointer-events: none;
     background:
-      radial-gradient(circle at 30% 20%, var(--c27-sky-light), transparent 50%),
-      radial-gradient(circle at 70% 80%, var(--c27-sky-glow), transparent 45%);
-    opacity: 0.85;
+      radial-gradient(
+        ellipse 62% 68% at 52% 6%,
+        var(--c27-sky-glow),
+        transparent 68%
+      ),
+      linear-gradient(
+        112deg,
+        transparent 0%,
+        transparent 25%,
+        var(--c27-sky-light),
+        transparent 58%
+      ),
+      radial-gradient(
+        ellipse 70% 82% at 100% 100%,
+        transparent 42%,
+        var(--c27-sky-vignette) 100%
+      );
+  }
+
+  .c27-sky-field::after {
+    position: absolute;
+    z-index: -1;
+    inset: -18% -12% -24% 54%;
+    content: "";
+    pointer-events: none;
+    background: linear-gradient(
+      152deg,
+      var(--c27-sky-plane) 0%,
+      transparent 72%
+    );
+    clip-path: polygon(24% 0, 100% 0, 76% 100%, 0 100%);
   }
 
   .c27-feature-card {

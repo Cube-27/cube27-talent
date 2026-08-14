@@ -49,20 +49,11 @@ const HERO_CAPABILITIES = [
       >
     </div>
 
-    <div
-      class="mt-[clamp(2.5rem,5vw,4rem)] grid border-t border-c27-line sm:grid-cols-2 lg:grid-cols-4"
-    >
+    <div class="hero-capability-rail">
       {
         HERO_CAPABILITIES.map((item, index) => (
           <div
-            class:list={[
-              "c27-rise py-5 sm:px-5",
-              index > 0 && "border-t border-c27-line sm:border-l",
-              index === 1 && "sm:border-t-0",
-              index === 0 && "sm:pr-5",
-              index === 2 && "sm:border-l-0 lg:border-l",
-              index > 1 && "lg:border-t-0",
-            ]}
+            class="hero-capability c27-rise"
             style={`--c27-d:${120 + index * 40}ms`}
           >
             <p class="font-display text-body font-semibold text-c27-ink">
@@ -77,30 +68,84 @@ const HERO_CAPABILITIES = [
     </div>
   </div>
 
-  <div class="border-t border-c27-line bg-c27-surface text-c27-ink">
-    <div
-      class="c27-wrap grid text-center sm:grid-cols-3"
-      aria-label="Company experience"
-    >
+  <div class="hero-proof-band text-c27-ink">
+    <div class="hero-proof-grid c27-wrap" aria-label="Company experience">
       {
         VERIFIED_PROOF.map((proof, index) => (
           <div
-            class:list={[
-              "c27-rise py-6 sm:px-7 sm:py-7",
-              index > 0 && "border-t border-c27-line sm:border-l sm:border-t-0",
-            ]}
+            class="hero-proof c27-rise"
             style={`--c27-d:${index * 60}ms`}
             aria-label={`${proof.value} ${proof.label}`}
           >
-            <p class="font-display text-[clamp(1.75rem,3vw,2rem)] font-semibold leading-none tracking-[-0.035em] tabular-nums">
+            <p class="font-display text-[clamp(1.75rem,3vw,2.25rem)] font-semibold leading-none tracking-[-0.035em] text-c27-accent-d tabular-nums">
               {proof.value}
             </p>
-            <p class="mt-2 text-body-sm font-medium text-c27-ink-2">
-              {proof.label}
-            </p>
+            <p class="text-body-sm font-medium text-c27-ink-2">{proof.label}</p>
           </div>
         ))
       }
     </div>
   </div>
 </section>
+
+<style>
+  .hero-capability-rail {
+    display: grid;
+    gap: 1.5rem 2rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    padding-bottom: clamp(1.75rem, 4vw, 2.75rem);
+    text-align: left;
+  }
+
+  .hero-capability {
+    position: relative;
+    padding-left: 1.25rem;
+  }
+
+  .hero-capability::before {
+    position: absolute;
+    top: 0.5rem;
+    left: 0;
+    width: 0.4375rem;
+    height: 0.4375rem;
+    background: var(--c27-accent);
+    content: "";
+  }
+
+  .hero-proof-band {
+    background: var(--c27-accent-soft);
+  }
+
+  .hero-proof-grid {
+    display: grid;
+    gap: 1.25rem 3rem;
+    padding-block: 1.5rem;
+  }
+
+  .hero-proof {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.875rem;
+  }
+
+  @media (min-width: 40rem) {
+    .hero-capability-rail {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero-proof-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hero-proof {
+      gap: 0.75rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .hero-capability-rail {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+</style>

@@ -34,7 +34,7 @@ When this system is applied to another Cube27 property without a full visual red
 - **Secondary ink:** muted neutral slate (`#4d535e`) for supporting copy.
 - **Muted ink:** subtle caption slate (`#626875`).
 - **Accent:** deep indigo (`#3b38d8`) for actions, links, focus, and active process state.
-- **Neutral field:** soft grey linear gradient (`#f7f7f5` to `#ebebe8`) for hero and transition regions.
+- **Neutral field:** soft grey linear gradient (`#f7f7f5` to `#ebebe8`) for transition regions. Primary marketing heroes use a stronger asymmetric indigo-and-stone light field, one broad geometric light plane, and extremely fine monochrome grain. Structural separation below them comes from spacing and colour fields rather than decorative guide lines.
 - **Deep field:** charcoal grey (`#25282e`) with high-contrast text (`#f8fafc`) for footer and conversion sections.
 - **Supporting fields:** restrained, monochromatic soft micro-tints (violet, mint, peach, sky) for subtle section differentiation without loud multi-color gradients.
 - **Feature surface:** a pale stone vertical gradient used on selected marketing cards.
