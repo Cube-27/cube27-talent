@@ -166,10 +166,13 @@ export const onRequest = async ({
     );
   }
 
+  // Read the upload once and reuse the bytes for validation and encoding.
+  const bytes = new Uint8Array(await resume.arrayBuffer());
+
   const lowerName = resume.name.toLowerCase();
   const extensionOk = ALLOWED_EXTENSIONS.some((ext) => lowerName.endsWith(ext));
   const mimeOk = ALLOWED_MIME.includes(resume.type);
-  const document = await validateResumeDocument(resume);
+  const document = await validateResumeDocument(bytes);
   const formatMatchesExtension =
     document.ok &&
     ((document.format === "pdf" && lowerName.endsWith(".pdf")) ||
@@ -200,7 +203,6 @@ export const onRequest = async ({
 
   // Base64 in chunks — String.fromCharCode(...bytes) on a 5 MiB array blows
   // the argument limit.
-  const bytes = new Uint8Array(await resume.arrayBuffer());
   let binary = "";
   for (let i = 0; i < bytes.length; i += 0x8000) {
     binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));

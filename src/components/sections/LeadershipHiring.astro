@@ -36,7 +36,7 @@ const LEADERSHIP_AREAS = [
 ---
 
 <div
-  class="c27-rise c27-gradient-blue px-[clamp(1.5rem,5vw,4.5rem)] py-[clamp(3rem,6vw,5rem)]"
+  class="c27-card-shadow c27-rise c27-gradient-blue border border-c27-line px-[clamp(1.5rem,5vw,4.5rem)] py-[clamp(3rem,6vw,5rem)]"
 >
   <div class="flex flex-col items-center gap-8 text-center">
     <h2 class="c27-h2 max-w-none text-c27-ink">
@@ -60,7 +60,7 @@ const LEADERSHIP_AREAS = [
   >
     {
       LEADERSHIP_AREAS.map((area) => (
-        <li class:list={["c27-feature-card p-6 lg:min-h-44"]}>
+        <li class:list={["c27-feature-card c27-card-pad-sm lg:min-h-44"]}>
           <span
             class:list={[
               "grid size-11 place-items-center",
@@ -69,7 +69,7 @@ const LEADERSHIP_AREAS = [
             ]}
             aria-hidden="true"
           >
-            <Icon name={area.icon} size={24} />
+            <Icon name={area.icon} size={20} />
           </span>
           <h3 class="c27-h3 mt-5 font-semibold text-c27-ink">{area.title}</h3>
           <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">

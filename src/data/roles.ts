@@ -27,8 +27,6 @@ export interface RoleFamily {
   roles: string[];
   /** Tint token suffix. Cycles the four panel tints — design system §2.1. */
   tint: "violet" | "mint" | "peach" | "sky";
-  /** Given its own accented treatment on the homepage. */
-  featured?: boolean;
 }
 
 export const ROLE_FAMILIES: RoleFamily[] = [
@@ -139,7 +137,6 @@ export const ROLE_FAMILIES: RoleFamily[] = [
       "Head of Data",
     ],
     tint: "peach",
-    featured: true,
   },
 ];
 

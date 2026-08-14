@@ -5,8 +5,8 @@ import SectionHead from "@/components/ui/SectionHead.astro";
 import CandidateForm from "@/components/forms/CandidateForm.astro";
 import Faq from "@/components/ui/Faq.astro";
 import { CANDIDATE_FAQS } from "@/data/faqs";
-import { ROUTES, SITE_CONFIG } from "@/site-config";
-import { breadcrumbSchema, faqSchema } from "@/lib/schema";
+import { SITE_CONFIG } from "@/site-config";
+import { faqSchema } from "@/lib/schema";
 
 const title = `For talent — Join our global network | ${SITE_CONFIG.brand}`;
 const description =
@@ -27,10 +27,7 @@ const BENEFITS = [
   },
 ];
 
-const jsonLd = [
-  breadcrumbSchema([{ name: "For talent", path: ROUTES.join }]),
-  faqSchema(CANDIDATE_FAQS),
-];
+const jsonLd = [faqSchema(CANDIDATE_FAQS)];
 ---
 
 <Layout title={title} description={description} jsonLd={jsonLd}>
@@ -61,7 +58,7 @@ const jsonLd = [
         </div>
 
         <p
-          class="mt-7 border border-c27-line bg-c27-tint-mint p-4 text-caption leading-relaxed text-c27-ink-2"
+          class="c27-card-shadow mt-7 border border-c27-line bg-c27-tint-mint p-4 text-caption leading-relaxed text-c27-ink-2"
         >
           Some roles include overseas work. Availability and approvals depend on
           the role and client.

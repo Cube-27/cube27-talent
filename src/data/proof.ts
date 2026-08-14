@@ -27,5 +27,3 @@ export const PROOF: ProofPoint[] = [
 ];
 
 export const VERIFIED_PROOF = PROOF.filter((point) => point.verified);
-
-export const TRUST_MODULE_ENABLED = false;

@@ -4,8 +4,10 @@
  * sets its own padding.
  *
  * Tones are the system's elevation mechanism (design system rule 2): a section
- * establishes a ground, and the cards inside it take the opposite fill. There
- * is no shadow anywhere in this component.
+ * establishes a ground, and the cards inside it take the opposite fill. The
+ * section itself is always flat — level 1 of the elevation hierarchy is a
+ * colour field only. Cards inside it carry the hairline and the card shadow
+ * together (rule 3); that pairing belongs to the card, never to this shell.
  */
 interface Props {
   id?: string;

@@ -17,7 +17,7 @@ const ICON_STYLES = {
     LIFECYCLE.map((item, index) => (
       <article
         class:list={[
-          "c27-rise grid content-start gap-4 bg-transparent p-6",
+          "c27-card-pad-sm c27-rise grid content-start gap-4 bg-transparent",
           index > 0 &&
             "border-t border-c27-line-deep lg:border-l lg:border-t-0",
         ]}
@@ -29,7 +29,7 @@ const ICON_STYLES = {
             ICON_STYLES[item.tint],
           ]}
         >
-          <Icon name={item.icon} size={19} />
+          <Icon name={item.icon} size={20} />
         </span>
         <div>
           <h3 class="c27-h3 font-semibold text-c27-ink">{item.title}</h3>

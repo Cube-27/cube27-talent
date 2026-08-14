@@ -2,6 +2,7 @@
 import Button from "@/components/ui/Button.astro";
 import { ROLE_FAMILIES } from "@/data/roles";
 import Select from "@/components/ui/Select.astro";
+import Turnstile from "@/components/ui/Turnstile.astro";
 import { ENDPOINTS, ROUTES, TURNSTILE_SITE_KEY } from "@/site-config";
 
 const siteKey = TURNSTILE_SITE_KEY;
@@ -17,10 +18,8 @@ const RELOCATION = ["Yes", "No", "Depends on the opportunity"];
 
 // h-12 matches the Select so inputs and dropdowns line up in the same row.
 // The textarea takes the base without a fixed height.
-const fieldBase =
-  "w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15";
-const field = `h-12 ${fieldBase}`;
-const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
+const field = "c27-field h-12";
+const fieldArea = "c27-field min-h-[6rem] resize-y";
 ---
 
 <form
@@ -29,8 +28,23 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
   action={ENDPOINTS.candidateApplication}
   enctype="multipart/form-data"
   novalidate
-  class="c27-card-shadow grid gap-5 border border-c27-line bg-c27-surface p-[clamp(1.5rem,3vw,2.5rem)]"
+  class="c27-card-shadow c27-card-pad grid gap-5 border border-c27-line bg-c27-surface"
 >
+  <noscript>
+    <p
+      class="rounded-c27-sm border border-c27-line bg-c27-surface-2 px-4 py-3 text-caption leading-relaxed text-c27-ink-2"
+    >
+      Submitting this form needs JavaScript. With it turned off, email your CV
+      to
+      <a
+        href="mailto:talent-apply@cube27.com"
+        class="text-c27-accent-d underline underline-offset-2"
+        >talent-apply@cube27.com</a
+      > and tell us the role you are after. That reaches the same recruitment team,
+      though we may need to follow up for the details this form would have captured.
+    </p>
+  </noscript>
+
   <div
     id="candidate-errors"
     role="alert"
@@ -226,7 +240,7 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
       type="file"
       required
       accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      class="h-12 w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm file:mr-3 file:rounded-[3px] file:border-0 file:bg-c27-accent-soft file:px-3 file:py-1.5 file:text-caption file:font-semibold file:text-c27-ink"
+      class="c27-field h-12 file:mr-3 file:rounded-[3px] file:border-0 file:bg-c27-accent-soft file:px-3 file:py-1.5 file:text-caption file:font-semibold file:text-c27-ink"
     />
   </div>
 
@@ -297,16 +311,7 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
   <input type="hidden" name="utmContent" />
   <input type="hidden" name="utmTerm" />
 
-  {
-    siteKey && (
-      <div
-        class="cf-turnstile"
-        data-sitekey={siteKey}
-        data-theme="light"
-        data-action="candidate-application"
-      />
-    )
-  }
+  <Turnstile siteKey={siteKey} action="candidate-application" />
 
   <div class="flex flex-wrap items-center gap-3">
     <Button
@@ -330,16 +335,6 @@ const fieldArea = `${fieldBase} min-h-[5rem] resize-y`;
     or an assignment.
   </p>
 </form>
-
-{
-  siteKey && (
-    <script
-      is:inline
-      async
-      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-    />
-  )
-}
 
 <script>
   import { attachFormHandler } from "@/lib/form-client";

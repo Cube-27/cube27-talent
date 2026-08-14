@@ -8,17 +8,64 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   Permissions-Policy: accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
   Cross-Origin-Opener-Policy: same-origin-allow-popups
-  # Turnstile needs its script and frame origins. Cloudflare Web Analytics
-  # injects its beacon from static.cloudflareinsights.com and posts results to
-  # cloudflareinsights.com; without both the beacon is blocked and logs a CSP
-  # error on every page load. Nothing else is allowed.
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://static.cloudflareinsights.com; frame-src https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://cloudflareinsights.com; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'
+  # Matches the API responses in functions/_shared/responses.ts. Both surfaces
+  # share an origin, so a visitor whose first request is an API call must get
+  # the same policy as one who lands on a page.
+  Cross-Origin-Resource-Policy: same-origin
+  # Turnstile needs its script and frame origins. Nothing else is allowed.
+  #
+  # No cloudflareinsights.com entries: Web Analytics is not enabled (README,
+  # "known gaps"), and an allowed script origin that nothing loads is surface
+  # with no benefit. Re-add both — static.cloudflareinsights.com in script-src
+  # and cloudflareinsights.com in connect-src — in the same change that turns
+  # the beacon on.
+  #
+  # script-src still carries 'unsafe-inline', and moving off it is a bigger job
+  # than it looks. Astro inlines every component <script> under its size
+  # threshold straight into the HTML — the home page ships five inline
+  # executable blocks, not just the pre-paint `classList.add("js")` bootstrap —
+  # and each body is re-minified on every build, so their hashes change
+  # whenever the source does. Hashing them would mean regenerating the header
+  # on each deploy. A nonce is not available either: this is a static Pages
+  # build with no per-request layer to mint one.
+  #
+  # The route to a strict policy is to force Astro to emit those scripts as
+  # external files first, then allow 'self' alone. Until then the allow-list
+  # below is not an XSS barrier; it is worth keeping for the origin
+  # restrictions it does enforce.
+  #
+  # style-src keeps 'unsafe-inline' regardless: the reveal stagger sets
+  # `--c27-d` inline per element.
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'
 
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Root-level images are not content-hashed, so they cannot be immutable — a
+# logo change has to be able to land. A day of freshness with a week of
+# stale-while-revalidate keeps the header logo off the revalidate path on
+# every navigation without pinning a stale file.
+#
+# Listed one path at a time on purpose. Cloudflare's splat matches greedily
+# across slashes, so an extension glob like `/*.webp` would also catch any
+# hashed image Astro emits into /_astro/. Both rules would then apply to the
+# same file and Cloudflare JOINS duplicate Cache-Control values rather than
+# letting one win, producing a malformed header. Add a line when you add a root
+# asset.
+/cube27_logo.webp
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/cube27-mark.svg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/og-image.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/favicon.ico
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
 # Confirmation pages must never be indexed, even if the meta tag is missed.
 /thank-you/*

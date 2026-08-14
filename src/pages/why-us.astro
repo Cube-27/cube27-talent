@@ -7,16 +7,13 @@ import Compliance from "@/components/sections/Compliance.astro";
 import FinalCta from "@/components/sections/FinalCta.astro";
 import { VERIFIED_PROOF } from "@/data/proof";
 import { ROUTES, SITE_CONFIG } from "@/site-config";
-import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
+import { serviceSchema } from "@/lib/schema";
 
 const title = `Why us — Enterprise hiring and workforce compliance | ${SITE_CONFIG.brand}`;
 const description =
   "Operator-led hiring shaped by Fortune 500 experience, C-suite leadership, evidence-led assessment, and ongoing workforce compliance.";
 
-const jsonLd = [
-  breadcrumbSchema([{ name: "Why us", path: ROUTES.whyUs }]),
-  serviceSchema(),
-];
+const jsonLd = [serviceSchema()];
 
 const OPERATOR_PROOF = [
   {
@@ -84,7 +81,7 @@ const HIRING_STANDARDS = [
       </div>
 
       <aside
-        class="c27-card-shadow c27-rise border border-c27-line bg-c27-surface p-[clamp(1.5rem,4vw,2.75rem)]"
+        class="c27-card-shadow c27-card-pad c27-rise border border-c27-line bg-c27-surface"
         style="--c27-d:80ms"
       >
         <h2 class="c27-h3-lg font-semibold">Experience behind the work</h2>
@@ -99,7 +96,7 @@ const HIRING_STANDARDS = [
                   ]}
                   aria-hidden="true"
                 >
-                  <Icon name={item.icon} size={21} />
+                  <Icon name={item.icon} size={20} />
                 </span>
                 <p class="font-display text-body font-semibold leading-snug text-c27-ink">
                   {item.title}
@@ -133,7 +130,7 @@ const HIRING_STANDARDS = [
           OPERATOR_PROOF.map((item, index) => (
             <article
               class:list={[
-                "c27-card-shadow grid content-between gap-6 border-b border-c27-line p-[clamp(1.75rem,3vw,2.75rem)] last:border-b-0 md:min-h-64 md:gap-10 md:border-b-0",
+                "c27-card-shadow c27-card-pad grid content-between gap-6 border-b border-c27-line last:border-b-0 md:min-h-64 md:gap-10 md:border-b-0",
                 index > 0 && "md:border-l",
                 item.surfaceClass,
               ]}
@@ -185,7 +182,7 @@ const HIRING_STANDARDS = [
                   class="relative z-10 grid size-12 place-items-center border border-c27-line-deep bg-c27-deep text-c27-on-deep-accent"
                   aria-hidden="true"
                 >
-                  <Icon name={item.icon} size={23} />
+                  <Icon name={item.icon} size={24} />
                 </span>
                 <h3 class="c27-h3-lg mt-6 font-semibold text-c27-on-deep">
                   {item.title}
@@ -220,7 +217,7 @@ const HIRING_STANDARDS = [
           VERIFIED_PROOF.map((point, index) => (
             <div
               class:list={[
-                "c27-card-shadow grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-c27-line bg-c27-surface p-5 sm:block sm:p-6",
+                "c27-card-shadow c27-card-pad-sm grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-c27-line bg-c27-surface sm:block",
                 index > 0 && "sm:border-l",
               ]}
             >

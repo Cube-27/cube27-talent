@@ -6,18 +6,14 @@ import EmployerForm from "@/components/forms/EmployerForm.astro";
 import Lifecycle from "@/components/sections/Lifecycle.astro";
 import Faq from "@/components/ui/Faq.astro";
 import { EMPLOYER_FAQS } from "@/data/faqs";
-import { ROUTES, SITE_CONFIG } from "@/site-config";
-import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
+import { SITE_CONFIG } from "@/site-config";
+import { serviceSchema } from "@/lib/schema";
 
 const title = `Build your team — Managed hiring request | ${SITE_CONFIG.brand}`;
 const description =
   "Share the roles, level, and location. Get a managed hiring plan and assessed candidate shortlists for your team.";
 
-const jsonLd = [
-  breadcrumbSchema([{ name: "Build your team", path: ROUTES.hire }]),
-  serviceSchema(),
-  faqSchema(EMPLOYER_FAQS),
-];
+const jsonLd = [serviceSchema()];
 
 const EXPECTATIONS = [
   "One specialist or a complete team",

@@ -52,7 +52,7 @@ const COMPLIANCE_AREAS = [
       COMPLIANCE_AREAS.map((area, index) => (
         <article
           class:list={[
-            "c27-card-shadow grid grid-cols-[2.75rem_minmax(0,1fr)] content-start gap-4 bg-c27-surface p-[clamp(1.5rem,3vw,2.5rem)] md:min-h-52 md:grid-cols-1 md:gap-5",
+            "c27-card-shadow c27-card-pad grid grid-cols-[2.75rem_minmax(0,1fr)] content-start gap-4 bg-c27-surface md:min-h-52 md:grid-cols-1 md:gap-5",
             index > 0 && "border-t border-c27-line",
             index === 1 && "md:border-l md:border-t-0",
             index === 2 && "md:border-t",
@@ -67,7 +67,7 @@ const COMPLIANCE_AREAS = [
             ]}
             aria-hidden="true"
           >
-            <Icon name={area.icon} size={22} />
+            <Icon name={area.icon} size={20} />
           </span>
           <div>
             <h3 class="c27-h3-lg font-semibold text-c27-ink">{area.title}</h3>

@@ -22,6 +22,7 @@ const absolute = (path: string) =>
 /** Stable @id so the other schemas can reference the same entity. */
 const ORGANIZATION_ID = `${SITE_CONFIG.url}/#organization`;
 const WEBSITE_ID = `${SITE_CONFIG.url}/#website`;
+const SERVICE_ID = `${SITE_CONFIG.url}/#service`;
 
 export function organizationSchema(): Schema {
   return {
@@ -81,27 +82,6 @@ export function websiteSchema(): Schema {
 }
 
 /**
- * The trail always starts at the home page; pass only the pages below it.
- * Every route in V1 is one level deep, so this is normally a single entry.
- */
-export function breadcrumbSchema(
-  trail: { name: string; path: string }[],
-): Schema {
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [{ name: "Home", path: ROUTES.home }, ...trail].map(
-      (crumb, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        name: crumb.name,
-        item: absolute(crumb.path),
-      }),
-    ),
-  };
-}
-
-/**
  * Mirrors the FAQ block rendered on the page. Marking up an answer that is not
  * visible is a guidelines violation, so both must come from the same array.
  */
@@ -125,6 +105,7 @@ export function serviceSchema(): Schema {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": SERVICE_ID,
     name: "Managed talent and team building",
     serviceType: "Managed talent acquisition and team building",
     provider: { "@id": ORGANIZATION_ID },

@@ -1,6 +1,21 @@
 /* Self-hosted variable faces. Both are preloaded in Layout.astro — keep the
    paths in sync with the <link rel="preload"> tags there. Design system §3.
 
+   Both files are SUBSET to Latin. The site is English-only, and the full faces
+   shipped 677 and 385 codepoints for the ~100 characters the copy actually
+   uses — 95 KB on every page, roughly four times the gzipped CSS. Subsetting
+   to the standard Latin range plus the punctuation and arrows used here cut
+   that to 49 KB with no character regression.
+
+   Regenerate after replacing a source font, and re-run the coverage check
+   before committing — a dropped codepoint renders as tofu, silently:
+
+     pyftsubset <src>.woff2 --output-file=<dst>.woff2 --flavor=woff2 \
+       --unicodes=U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,\
+U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD \
+       --layout-features=kern,liga,calt,tnum,ccmp,locl,mark,mkmk \
+       --no-hinting --desubroutinize --name-IDs=1,2,3,4,6 --drop-tables+=DSIG
+
    font-display: optional, not swap. `swap` paints the fallback first and then
    re-renders in the real face, which reads as a flicker on every load that is
    not already warm — the display face sets every heading, so the whole page

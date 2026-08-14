@@ -2,6 +2,7 @@
 import Button from "@/components/ui/Button.astro";
 import { ROLE_FAMILIES } from "@/data/roles";
 import Select from "@/components/ui/Select.astro";
+import Turnstile from "@/components/ui/Turnstile.astro";
 import { ENDPOINTS, ROUTES, TURNSTILE_SITE_KEY } from "@/site-config";
 
 const siteKey = TURNSTILE_SITE_KEY;
@@ -21,8 +22,22 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
   method="post"
   action={ENDPOINTS.employerLead}
   novalidate
-  class="c27-card-shadow grid gap-5 border border-c27-line bg-c27-surface p-[clamp(1.5rem,3vw,2.5rem)]"
+  class="c27-card-shadow c27-card-pad grid gap-5 border border-c27-line bg-c27-surface"
 >
+  <noscript>
+    <p
+      class="rounded-c27-sm border border-c27-line bg-c27-surface-2 px-4 py-3 text-caption leading-relaxed text-c27-ink-2"
+    >
+      Submitting this form needs JavaScript. With it turned off, email
+      <a
+        href="mailto:talent@cube27.com"
+        class="text-c27-accent-d underline underline-offset-2"
+        >talent@cube27.com</a
+      > with the roles you are hiring for. That reaches the same team, though we may
+      need to follow up for the details this form would have captured.
+    </p>
+  </noscript>
+
   {/* Error summary receives focus on failed validation. §6.8. */}
   <div
     id="form-errors"
@@ -44,7 +59,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         maxlength="100"
         autocomplete="name"
         placeholder="Priya Raghavan"
-        class="h-12 w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15"
+        class="c27-field h-12"
       />
     </div>
     <div class="grid min-w-0 gap-1.5">
@@ -58,7 +73,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         maxlength="320"
         autocomplete="email"
         placeholder="you@company.com"
-        class="h-12 w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15"
+        class="c27-field h-12"
       />
     </div>
   </div>
@@ -74,7 +89,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         maxlength="200"
         autocomplete="organization"
         placeholder="Company name"
-        class="h-12 w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15"
+        class="c27-field h-12"
       />
     </div>
     <div class="grid min-w-0 gap-1.5">
@@ -87,7 +102,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         maxlength="120"
         autocomplete="organization-title"
         placeholder="VP Engineering"
-        class="h-12 w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15"
+        class="c27-field h-12"
       />
     </div>
   </div>
@@ -103,7 +118,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         maxlength="80"
         autocomplete="country-name"
         placeholder="Netherlands"
-        class="h-12 w-full rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15"
+        class="c27-field h-12"
       />
     </div>
     <div class="grid min-w-0 gap-1.5">
@@ -146,7 +161,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     <div class="flex flex-wrap gap-2">
       {
         ROLE_FAMILIES.map((family, i) => (
-          <label class="relative cursor-pointer select-none rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2 text-caption transition-colors has-[:checked]:border-c27-accent has-[:checked]:bg-c27-accent-soft has-[:checked]:font-semibold has-[:checked]:text-c27-accent-d has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-c27-accent">
+          <label class="relative flex min-h-11 cursor-pointer select-none items-center rounded-c27-sm border border-transparent bg-c27-field-fill px-3.5 text-caption transition-colors hover:border-c27-line-control has-[:checked]:border-c27-accent has-[:checked]:bg-c27-accent-soft has-[:checked]:font-semibold has-[:checked]:text-c27-accent-d has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-c27-accent">
             <input
               type="checkbox"
               name="roleFamilies"
@@ -172,8 +187,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
       minlength="20"
       maxlength="4000"
       placeholder="Levels, stack, work model, what the team is building."
-      class="min-h-[6rem] w-full resize-y rounded-c27-sm border border-c27-line bg-c27-surface px-3.5 py-2.5 text-body-sm transition-shadow focus:border-c27-accent focus:outline-none focus:ring-[3px] focus:ring-c27-accent/15"
-    ></textarea>
+      class="c27-field min-h-[6rem] resize-y"></textarea>
   </div>
 
   <label
@@ -218,16 +232,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
   <input type="hidden" name="utmContent" />
   <input type="hidden" name="utmTerm" />
 
-  {
-    siteKey && (
-      <div
-        class="cf-turnstile"
-        data-sitekey={siteKey}
-        data-theme="light"
-        data-action="employer-lead"
-      />
-    )
-  }
+  <Turnstile siteKey={siteKey} action="employer-lead" />
 
   <div class="flex flex-wrap items-center gap-3">
     <Button
@@ -246,16 +251,6 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     </p>
   </div>
 </form>
-
-{
-  siteKey && (
-    <script
-      is:inline
-      async
-      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-    />
-  )
-}
 
 <script>
   import { attachFormHandler } from "@/lib/form-client";

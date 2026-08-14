@@ -1,0 +1,70 @@
+---
+interface Props {
+  siteKey: string;
+  action: string;
+}
+
+const { siteKey, action } = Astro.props;
+---
+
+{
+  siteKey && (
+    <div
+      class="min-w-0"
+      data-c27-turnstile
+      data-sitekey={siteKey}
+      data-action={action}
+    />
+  )
+}
+
+<script is:inline>
+  (() => {
+    const container = document.querySelector(
+      "[data-c27-turnstile]:not([data-c27-turnstile-bound])",
+    );
+    if (!(container instanceof HTMLElement)) return;
+    container.setAttribute("data-c27-turnstile-bound", "");
+
+    const compact = window.matchMedia("(max-width: 25rem)");
+    let widgetId = null;
+    let renderedSize = null;
+    const preferredSize = () => (compact.matches ? "compact" : "flexible");
+
+    const render = () => {
+      if (!window.turnstile) return;
+
+      const nextSize = preferredSize();
+      if (widgetId !== null) window.turnstile.remove(widgetId);
+
+      widgetId = window.turnstile.render(container, {
+        sitekey: container.dataset.sitekey,
+        action: container.dataset.action,
+        theme: "light",
+        size: nextSize,
+      });
+      renderedSize = nextSize;
+    };
+
+    // Called by api.js after the explicit-render API is ready.
+    window.c27TurnstileReady = render;
+
+    // A wide widget can become too large after rotation or window resize.
+    // Re-render it compact once; compact remains usable if the viewport widens
+    // again, which avoids invalidating a freshly issued token a second time.
+    compact.addEventListener("change", () => {
+      if (compact.matches && renderedSize === "flexible") render();
+    });
+  })();
+</script>
+
+{
+  siteKey && (
+    <script
+      is:inline
+      async
+      defer
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=c27TurnstileReady"
+    />
+  )
+}

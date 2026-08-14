@@ -55,7 +55,6 @@ export const ROUTES = {
   join: "/join-talent-network/",
   how: "/how-it-works/",
   whyUs: "/why-us/",
-  csr: "https://www.cube27.com/csr/",
   privacy: "https://www.cube27.com/privacy-policy/",
   terms: "https://www.cube27.com/terms-of-service/",
   thankYouEmployer: "/thank-you/employer/",

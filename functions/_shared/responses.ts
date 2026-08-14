@@ -16,7 +16,6 @@ export const SECURITY_HEADERS = {
     "accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()",
   "cross-origin-opener-policy": "same-origin-allow-popups",
   "cross-origin-resource-policy": "same-origin",
-  "x-xss-protection": "0",
 } as const;
 
 export function json(

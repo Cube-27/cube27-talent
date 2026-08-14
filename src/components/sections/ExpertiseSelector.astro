@@ -1,13 +1,6 @@
 ---
 import Icon from "@/components/ui/Icon.astro";
 import { ROLE_FAMILIES, OPEN_SCOPE_LINE } from "@/data/roles";
-
-interface Props {
-  headingLevel?: 2 | 3;
-}
-
-const { headingLevel = 3 } = Astro.props;
-const Heading = `h${headingLevel}` as "h2" | "h3";
 ---
 
 <div
@@ -30,14 +23,14 @@ const Heading = `h${headingLevel}` as "h2" | "h3";
           tabindex={index === 0 ? 0 : -1}
           class="flex min-h-14 shrink-0 snap-start items-center gap-3 whitespace-nowrap border-r border-c27-line px-5 py-3 text-left text-body-sm font-medium text-c27-ink-2 transition-[background-color,color] duration-[var(--c27-dur-fast)] hover:bg-c27-accent-soft hover:text-c27-ink aria-selected:bg-c27-accent aria-selected:font-semibold aria-selected:text-white lg:w-full lg:border-b lg:border-r-0"
         >
-          <Icon name={family.icon} size={18} />
+          <Icon name={family.icon} size={20} />
           <span>{family.short}</span>
         </button>
       ))
     }
   </div>
 
-  <div class="p-[clamp(1.75rem,4vw,3.5rem)]">
+  <div class="c27-card-lg">
     {
       ROLE_FAMILIES.map((family, index) => (
         <div
@@ -47,9 +40,7 @@ const Heading = `h${headingLevel}` as "h2" | "h3";
           hidden={index !== 0}
           data-panel
         >
-          <Heading class="c27-h3-lg font-semibold text-c27-ink">
-            {family.name}
-          </Heading>
+          <h3 class="c27-h3-lg font-semibold text-c27-ink">{family.name}</h3>
           <p class="mt-3 max-w-[58ch] text-body leading-relaxed text-c27-ink-2">
             {family.blurb}
           </p>

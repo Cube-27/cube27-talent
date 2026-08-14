@@ -56,7 +56,7 @@ const EVIDENCE = [
         EVIDENCE.map((item, index) => (
           <li
             class:list={[
-              "c27-rise c27-feature-card grid grid-cols-[3rem_minmax(0,1fr)] items-start gap-x-4 p-[clamp(1.25rem,3vw,2.25rem)] md:block",
+              "c27-rise c27-feature-card c27-card-pad grid grid-cols-[3rem_minmax(0,1fr)] items-start gap-x-4 md:block",
             ]}
             style={`--c27-d:${index * 60}ms`}
           >
@@ -71,6 +71,10 @@ const EVIDENCE = [
               <Icon name={item.icon} size={24} />
             </span>
             <div>
+              {/* h2, not h3, despite matching the card grids elsewhere: these
+                  sit directly under the page h1 with no section heading
+                  between, so h3 would skip a level. Heading rank follows
+                  document position, not visual similarity. */}
               <h2 class="c27-h3 font-semibold md:mt-5">{item.title}</h2>
               <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
                 {item.body}

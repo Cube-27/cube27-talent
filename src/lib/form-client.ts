@@ -16,6 +16,21 @@ interface Options {
   redirectTo: string;
 }
 
+/**
+ * A referring site can carry session identifiers, search terms or occasionally
+ * PII in its query string, and we email this value verbatim. Origin and path
+ * are the whole attribution signal, so drop everything after them.
+ */
+function safeReferrer(): string {
+  if (!document.referrer) return "";
+  try {
+    const url = new URL(document.referrer);
+    return `${url.origin}${url.pathname}`;
+  } catch {
+    return "";
+  }
+}
+
 /** Attribution captured from the URL. Non-PII only. Plan §15.3. */
 function fillAttribution(form: HTMLFormElement) {
   const params = new URLSearchParams(window.location.search);
@@ -25,7 +40,7 @@ function fillAttribution(form: HTMLFormElement) {
   };
 
   set("landingPage", window.location.pathname);
-  set("referrer", document.referrer);
+  set("referrer", safeReferrer());
   set("utmSource", params.get("utm_source") ?? "");
   set("utmMedium", params.get("utm_medium") ?? "");
   set("utmCampaign", params.get("utm_campaign") ?? "");

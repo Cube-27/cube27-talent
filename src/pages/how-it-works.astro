@@ -6,17 +6,14 @@ import HowItWorksHero from "@/components/sections/HowItWorksHero.astro";
 import ProcessRail from "@/components/sections/ProcessRail.astro";
 import Lifecycle from "@/components/sections/Lifecycle.astro";
 import FinalCta from "@/components/sections/FinalCta.astro";
-import { ROUTES, SITE_CONFIG } from "@/site-config";
-import { breadcrumbSchema, howToHiringProcessSchema } from "@/lib/schema";
+import { SITE_CONFIG } from "@/site-config";
+import { howToHiringProcessSchema } from "@/lib/schema";
 
 const title = `How we hire — Evidence-based talent assessment | ${SITE_CONFIG.brand}`;
 const description =
   "Role-specific assessments, practitioner interviews, and focused shortlists for confident hiring decisions.";
 
-const jsonLd = [
-  breadcrumbSchema([{ name: "How we hire", path: ROUTES.how }]),
-  howToHiringProcessSchema(),
-];
+const jsonLd = [howToHiringProcessSchema()];
 ---
 
 <Layout title={title} description={description} jsonLd={jsonLd}>

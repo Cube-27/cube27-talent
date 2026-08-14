@@ -68,6 +68,15 @@ function docx(parts: Record<string, string> = {}): File {
 }
 
 /**
+ * `validateResumeDocument` takes bytes, not a `File`, so the endpoint reads the
+ * upload once. These tests still build `File`s because the endpoint tests below
+ * need them, so unwrap here.
+ */
+async function resumeBytes(file: File): Promise<Uint8Array> {
+  return new Uint8Array(await file.arrayBuffer());
+}
+
+/**
  * Rewrites the end-of-central-directory record so the archive only declares
  * its first `keepCount` entries. The local records left behind are still in
  * the stream, which is how a crafted DOCX gets more entries past a directory
@@ -179,7 +188,7 @@ test("resume validation accepts a clean generated PDF", async () => {
     type: "application/pdf",
   });
 
-  assert.deepEqual(await validateResumeDocument(file), {
+  assert.deepEqual(await validateResumeDocument(await resumeBytes(file)), {
     ok: true,
     format: "pdf",
   });
@@ -199,13 +208,85 @@ test("resume validation rejects an active PDF open action", async () => {
     type: "application/pdf",
   });
 
-  const result = await validateResumeDocument(file);
+  const result = await validateResumeDocument(await resumeBytes(file));
 
   assert.equal(result.ok, false);
 });
 
+test("resume validation rejects a PDF launch action", async () => {
+  const pdf = await PDFDocument.create();
+  pdf.addPage();
+  pdf.catalog.set(
+    PDFName.of("OpenAction"),
+    pdf.context.obj({
+      S: PDFName.of("Launch"),
+      F: PDFString.of("cmd.exe"),
+    }),
+  );
+  const file = new File([asArrayBuffer(await pdf.save())], "resume.pdf", {
+    type: "application/pdf",
+  });
+
+  assert.deepEqual(await validateResumeDocument(await resumeBytes(file)), {
+    ok: false,
+    reason: "active-pdf-action",
+  });
+});
+
+test("resume validation rejects an embedded-files entry", async () => {
+  const pdf = await PDFDocument.create();
+  pdf.addPage();
+  pdf.catalog.set(
+    PDFName.of("Names"),
+    pdf.context.obj({ EmbeddedFiles: pdf.context.obj({ Names: [] }) }),
+  );
+  const file = new File([asArrayBuffer(await pdf.save())], "resume.pdf", {
+    type: "application/pdf",
+  });
+
+  assert.deepEqual(await validateResumeDocument(await resumeBytes(file)), {
+    ok: false,
+    reason: "active-pdf-content",
+  });
+});
+
+/**
+ * The object walk exists precisely because a scan over raw bytes cannot see
+ * names inside compressed object streams. `useObjectStreams: true` puts the
+ * catalog into one, so this asserts two things at once: that the forbidden key
+ * really is invisible in the raw bytes, and that validation catches it anyway.
+ * If this test ever fails, the argument in operations.md §8.4 against replacing
+ * the parser with pattern matching has stopped being true.
+ */
+test("resume validation sees forbidden keys inside a compressed object stream", async () => {
+  const pdf = await PDFDocument.create();
+  pdf.addPage();
+  pdf.catalog.set(
+    PDFName.of("OpenAction"),
+    pdf.context.obj({
+      S: PDFName.of("JavaScript"),
+      JS: PDFString.of("app.alert('opened')"),
+    }),
+  );
+  const bytes = await pdf.save({ useObjectStreams: true });
+
+  const raw = new TextDecoder("latin1").decode(bytes);
+  assert.ok(
+    !raw.includes("/JavaScript"),
+    "expected /JavaScript to be hidden inside a compressed object stream; " +
+      "if it is visible in the raw bytes this test proves nothing",
+  );
+
+  const file = new File([asArrayBuffer(bytes)], "resume.pdf", {
+    type: "application/pdf",
+  });
+
+  const result = await validateResumeDocument(await resumeBytes(file));
+  assert.equal(result.ok, false);
+});
+
 test("resume validation accepts a structurally valid DOCX", async () => {
-  assert.deepEqual(await validateResumeDocument(docx()), {
+  assert.deepEqual(await validateResumeDocument(await resumeBytes(docx())), {
     ok: true,
     format: "docx",
   });
@@ -220,7 +301,7 @@ test("resume validation rejects an arbitrary ZIP renamed as DOCX", async () => {
     },
   );
 
-  const result = await validateResumeDocument(file);
+  const result = await validateResumeDocument(await resumeBytes(file));
 
   assert.equal(result.ok, false);
 });
@@ -230,7 +311,7 @@ test("resume validation rejects a compressed DOCX expansion bomb", async () => {
     "word/media/padding.bin": "a".repeat(1024 * 1024),
   });
 
-  const result = await validateResumeDocument(file);
+  const result = await validateResumeDocument(await resumeBytes(file));
 
   assert.equal(result.ok, false);
 });
@@ -245,7 +326,7 @@ test("resume validation bounds actual DOCX entry output when ZIP metadata lies",
     type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   });
 
-  assert.deepEqual(await validateResumeDocument(file), {
+  assert.deepEqual(await validateResumeDocument(await resumeBytes(file)), {
     ok: false,
     reason: "entry-too-large",
   });
@@ -267,7 +348,7 @@ test("resume validation bounds cumulative DOCX output when ZIP metadata lies", a
     type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   });
 
-  assert.deepEqual(await validateResumeDocument(file), {
+  assert.deepEqual(await validateResumeDocument(await resumeBytes(file)), {
     ok: false,
     reason: "expanded-document-too-large",
   });
@@ -282,7 +363,7 @@ test("resume validation rejects active or externally loaded DOCX relationships",
       "</Relationships>",
   });
 
-  const result = await validateResumeDocument(file);
+  const result = await validateResumeDocument(await resumeBytes(file));
 
   assert.equal(result.ok, false);
 });
@@ -299,7 +380,7 @@ test("resume validation rejects trailing PDF polyglot content", async () => {
     type: "application/pdf",
   });
 
-  const result = await validateResumeDocument(file);
+  const result = await validateResumeDocument(await resumeBytes(file));
 
   assert.equal(result.ok, false);
 });
@@ -315,7 +396,7 @@ test("resume validation rejects a DOCX streaming more entries than it declares",
     type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   });
 
-  assert.deepEqual(await validateResumeDocument(file), {
+  assert.deepEqual(await validateResumeDocument(await resumeBytes(file)), {
     ok: false,
     reason: "too-many-entries",
   });

@@ -396,6 +396,169 @@ Cloudflare references: [Malicious Uploads Detection](https://developers.cloudfla
 [example rules](https://developers.cloudflare.com/waf/detections/malicious-uploads/example-rules/), and
 [setup/testing](https://developers.cloudflare.com/waf/detections/malicious-uploads/get-started/).
 
+### 8.4 Accepted risk — `pdf-lib` parses untrusted uploads
+
+**Recorded 14 August 2026. Review by 14 February 2027, or immediately on any
+published `pdf-lib` advisory.**
+
+`pdf-lib@1.17.1` is both the installed version and the latest published one; the
+package has had no release since 2021. It parses attacker-controlled PDFs in
+`functions/_shared/documents.ts`, and there is no upstream security-patching
+path if a parser vulnerability is disclosed.
+
+The risk is accepted as **moderate**. Two things reduce it and one thing does
+not, and the third is the one that governs.
+
+**Remote code execution is not the threat here.** pdf-lib is pure JavaScript in
+a V8 isolate: no native code, so the memory-safety class of parser bug — the
+reason unmaintained C/C++ parsers are dangerous — has no expression. There is no
+cross-request state in the isolate to corrupt and no filesystem to reach.
+
+**But the parser decides acceptance, so a false negative is a real failure
+mode.** An earlier version of this note claimed the parse output "is never
+trusted" because the endpoint emails the original bytes. That is only half the
+picture and the wrong half. `validatePdf` walks the parsed object graph to
+decide accept or reject: if pdf-lib fails to surface a construct — an object it
+mis-parses, an encoding it handles differently from Acrobat — the document is
+accepted and forwarded to a recruiter's inbox with the active content intact.
+The bytes being original is exactly what makes this matter. **This check is a
+filter, not a guarantee, and it is not a substitute for the independent
+fail-closed malware scanning in §8.3.**
+
+**Resource exhaustion is not currently bounded at the parse itself.** A crafted
+document causing excessive CPU or memory inside `PDFDocument.load` is checked by
+nothing in this code: `MAX_PDF_OBJECTS` and `MAX_PDF_PAGES` are both evaluated
+_after_ `load` returns, so they bound what happens next, not the parse. The
+backstops are the Workers runtime limits and the edge rate limit in §8.2 —
+neither of which has been measured against a deliberately hostile PDF on the
+deployed plan, and the rate limit is per-IP, so it does not constrain a
+distributed source. **Before the next review, measure worst-case parse cost on
+the deployed plan and set a parser-specific CPU or memory budget.** Until that
+exists, treat "the runtime will kill it" as an assumption, not a control.
+
+Bounding controls actually in place:
+
+- Size-capped at 5 MiB before the file is read.
+- Pre-screened for three specific things before `PDFDocument.load` is called: a
+  `%PDF-[12].x` magic header, the presence of `%%EOF`, and no non-whitespace
+  bytes after the final `%%EOF`. That last one rejects append-style polyglots,
+  which is the tested case. It is not general structural validation — every
+  other malformation is caught by `PDFDocument.load` throwing, inside the
+  parser, not before it.
+- Encrypted documents rejected rather than decrypted.
+- Object and page counts capped at 10,000 and 200 — post-parse, as above.
+- Runs in a Worker isolate with no filesystem and no persistent state.
+
+**Do not replace the object walk with a byte-level scan.** An earlier draft of
+this note suggested regex-scanning the raw bytes for `/JavaScript`, `/Launch`
+and the rest, and dropping the dependency. That is strictly weaker: those names
+routinely live inside compressed object streams, where a raw scan cannot see
+them. This is asserted by a test rather than by argument — _"resume validation
+sees forbidden keys inside a compressed object stream"_ in `tests/security.test.ts`
+first proves `/JavaScript` is absent from the raw bytes, then proves validation
+rejects the file anyway. If that test ever fails, this paragraph has stopped
+being true. If the dependency ever has
+to go, it must be replaced by another structural parser, not by pattern
+matching.
+
+**Alternatives assessed 14 August 2026.** None is an improvement today.
+
+| Option                  | Verdict                                                                                                                                                                                                                                                                                                                         |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@cantoo/pdf-lib` 2.8.3 | Actively maintained drop-in fork — but it pulls 8 runtime deps against pdf-lib's 4, including `crypto-js`, whose last real release was October 2023 and which carries a CVE history, plus an HTML parser this use case never touches. Trades one small stale package for a larger one that contains a stale package. **Worse.** |
+| `unpdf` 1.8.1           | Zero deps, edge-native, actively maintained. But it wraps PDF.js, which is a renderer: no object-graph API. `getJSActions()` covers some JavaScript cases and nothing else — misses `/EmbeddedFiles`, `/Launch`, `/XFA`, arbitrary `/AA`. **Strictly weaker for this job.**                                                     |
+| `pdfjs-dist` 6.x        | Mozilla, ships in Firefox, real disclosure process. Same missing object-graph API as `unpdf`, plus a heavier bundle and an awkward worker model. **Same weakness, more weight.**                                                                                                                                                |
+| `mupdf` 1.28            | AGPL-3.0. **Licence blocker.**                                                                                                                                                                                                                                                                                                  |
+| Hand-written inspector  | The only genuine improvement. See below.                                                                                                                                                                                                                                                                                        |
+
+**The dependency is the wrong shape, not the wrong version.** `pdf-lib` is a PDF
+_authoring_ library — 523 KB minified of font embedding, PNG encoding and
+drawing — used here purely to walk an object graph. What this endpoint actually
+needs is a tokenizer: parse the xref (classic tables _and_ xref streams),
+inflate object streams with the `fflate` already in the tree, and scan
+dictionary keys and `/S` action names. That is roughly the same exercise as
+`inspectZipDirectory` in `functions/_shared/documents.ts`, which was hand-written
+for exactly this reason and works well. Budget ~350 lines and a test per PDF
+structure variant.
+
+Do it to remove the dependency, not because the current code is unsafe. Whoever
+picks it up must keep the object-stream inflation: a scan over raw bytes cannot
+see names inside compressed streams, which is why the byte-scan shortcut is
+ruled out above.
+
+**Where the real control lives.** This check is defence-in-depth for the
+_recruiter's_ mail client, not for the server — nothing here ever opens the PDF,
+it is forwarded as bytes. The primary control against a malicious attachment is
+the edge and mail-gateway scanning in §8.3. If any single thing in this section
+must be verified as live, it is that, not this.
+
+**On review:** confirm no advisory has been published, re-confirm the CPU and
+memory ceilings of the candidate endpoint against current Workers limits, and
+re-run the alternatives table above — `unpdf` gaining an object-graph API would
+change the answer.
+
+### 8.5 Candidate retention consent — the manual process
+
+Plan §9.2 requires two separate candidate consents. The first, required, permits
+processing the profile for the current opportunity. The second, optional and
+unticked by default, permits keeping the profile on file for future ones.
+
+**The second consent is recorded, not enforced.** Its answer arrives in the
+internal notification as the `Retention consent` field, next to the submission
+reference. Nothing in the system acts on it — there is no durable store, so both
+answers produce the same email in the same inbox. Acting on it is a mailbox
+task, and it needs an owner or the consent is decorative.
+
+**Consent is not indefinite.** An earlier version of this section defined what
+to do with `Retention consent: No` and left `Yes` unbounded, which is the more
+serious of the two: consent without a stated period is indefinite retention, and
+storage limitation forbids it regardless of how freely the consent was given.
+Both answers need an expiry.
+
+**Blocking before the optional retention consent is enabled in production.**
+These three values must be filled in here. If any cannot be recorded, ship the
+candidate form with the optional retention checkbox removed rather than
+collecting a consent nothing bounds — an unbounded consent is worse than no
+consent, because it creates the appearance of a control that does not exist.
+
+| Value                                          | Status                                                                                                                     |
+| ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Accountable owner of `talent-apply@cube27.com` | **UNASSIGNED — blocking**                                                                                                  |
+| Resend log retention window for the account    | **UNRECORDED — blocking**                                                                                                  |
+| Retention period for `Retention consent: Yes`  | **24 months from submission, then delete or re-consent** — confirm with the privacy owner and record the confirmation date |
+
+Then hold to this:
+
+1. **Cadence.** Review at least quarterly. Put it in a calendar; an unscheduled
+   process is not a process.
+2. **`Retention consent: No`.** Delete once the opportunity applied for is
+   closed. Delete from the mailbox and from anywhere a recruiter has copied the
+   attachment.
+3. **`Retention consent: Yes`.** Delete at 24 months from the submission date,
+   or re-contact the candidate and record fresh consent before that date. The
+   submission reference carries the date (`CAN-YYMMDD-XXXXXXXX`), so a mailbox
+   search by date prefix is the practical way to run this sweep.
+4. **Requests.** Deletion and correction requests arrive by reply, per the
+   acknowledgement email. Search by submission reference, which appears in the
+   subject line of every application, and confirm to the applicant once done.
+5. **Resend.** Deleting from the mailbox does not clear Resend's own logs. A
+   deletion confirmation sent to an applicant is only true if it covers those
+   too, which is why the window above is blocking rather than nice to have.
+
+**Every step here is manual and unauditable.** A mailbox produces no record that
+a specific profile was deleted on a specific date. That is tolerable at current
+volume and is not tolerable as evidence.
+
+**When to replace this with code.** The manual process is defensible at current
+volume. It stops being defensible when application volume outgrows a quarterly
+manual sweep, or when a regulator asks for evidence that a specific profile was
+deleted — a mailbox gives you no audit trail. At that point the fix is not a
+KV/D1 record alongside the email, which just creates a second copy of the same
+PII: it is to stop emailing the attachment at all, store the resume in R2 with
+the retention flag, email recruiters a link plus metadata, and expire the object
+automatically. That is the architecture that makes deletion executable and
+provable.
+
 ## 9. Deploy and smoke-test preview
 
 1. Trigger a preview deployment after all Preview variables are set.

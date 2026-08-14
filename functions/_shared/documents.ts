@@ -465,11 +465,17 @@ async function validatePdf(bytes: Uint8Array): Promise<ResumeValidation> {
   return { ok: true, format: "pdf" };
 }
 
-/** Validate bounded resume bytes as a structurally safe PDF or DOCX. */
+/**
+ * Validate bounded resume bytes as a structurally safe PDF or DOCX.
+ *
+ * Takes the bytes rather than the `File` so the caller reads the upload once.
+ * Reading it here and again for the base64 encode meant two full 5 MiB copies
+ * live at the same time, on top of the buffered request body and the DOCX
+ * inflate budget.
+ */
 export async function validateResumeDocument(
-  file: File,
+  bytes: Uint8Array,
 ): Promise<ResumeValidation> {
-  const bytes = new Uint8Array(await file.arrayBuffer());
   if (bytes[0] === 0x25 && bytes[1] === 0x50) return validatePdf(bytes);
   if (bytes[0] === 0x50 && bytes[1] === 0x4b) return validateDocx(bytes);
   return { ok: false, reason: "unsupported-document" };

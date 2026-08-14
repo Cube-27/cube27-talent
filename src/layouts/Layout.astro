@@ -142,21 +142,11 @@ const canonicalUrl = canonical
         }
       }
 
-      // Header gains a hairline once the page scrolls off the top.
-      const header = document.getElementById("site-header");
-      if (header) {
-        let ticking = false;
-        const onScroll = () => {
-          if (ticking) return;
-          ticking = true;
-          requestAnimationFrame(() => {
-            header.classList.toggle("is-stuck", window.scrollY > 8);
-            ticking = false;
-          });
-        };
-        onScroll();
-        window.addEventListener("scroll", onScroll, { passive: true });
-      }
+      // A scroll listener toggling `is-stuck` on the header used to live here.
+      // No stylesheet ever defined that class, and the header carries its
+      // hairline unconditionally, so it ran on every page and every scroll
+      // frame to no effect. Removed rather than given a rule: the sticky
+      // header reads fine without a state change.
     </script>
   </body>
 </html>
