@@ -56,13 +56,12 @@ const { index = "03", heading, lede } = Astro.props;
 
     <div class="c27-role-panels">
       {
-        ROLE_FAMILIES.map((family, i) => (
+        ROLE_FAMILIES.map((family) => (
           <div
             class="c27-panel"
             role="tabpanel"
             id={`panel-${family.id}`}
             aria-labelledby={`tab-${family.id}`}
-            hidden={i !== 0}
             data-panel
           >
             {/* No index here: the numbered rail on the left already carries

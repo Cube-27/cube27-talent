@@ -170,7 +170,7 @@ Every phase is present in the DOM. Desktop uses a vertical spine with scroll-lin
 - Interaction: 160ms on `--c27-ease-out` (`cubic-bezier(.23,1,.32,1)`).
 - Hover: colour, a 10px indent, and a revealed arrow. Never elevation. The image crop zoom below is the sole hover-scale exception.
 - `:active` presses to `scale(.97)` over 160ms.
-- Image panels scale to 1.025 over 700ms on hover; that is the only scale in the system.
+- Image panels scale to 1.025 over 700ms on hover; with the `:active` press above, that is the only other scale in the system.
 - Process progression: colour and line-length changes tied to viewport position.
 - No autoplay, infinite motion, parallax, or decorative loops.
 - `prefers-reduced-motion` removes transitions, the image zoom, and smooth scrolling.

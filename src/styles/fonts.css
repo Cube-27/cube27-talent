@@ -26,7 +26,9 @@ U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD 
 /* Display face: headings, buttons, and the wordmark. */
 @font-face {
   font-family: "Space Grotesk Variable";
-  src: url("/fonts/space-grotesk-variable.woff2") format("woff2-variations");
+  src:
+    url("/fonts/space-grotesk-variable.woff2") format("woff2") tech(variations),
+    url("/fonts/space-grotesk-variable.woff2") format("woff2-variations");
   font-weight: 300 700;
   font-display: optional;
   font-style: normal;
@@ -35,7 +37,9 @@ U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD 
 /* Body face. */
 @font-face {
   font-family: "DM Sans Variable";
-  src: url("/fonts/dm-sans-variable.woff2") format("woff2-variations");
+  src:
+    url("/fonts/dm-sans-variable.woff2") format("woff2") tech(variations),
+    url("/fonts/dm-sans-variable.woff2") format("woff2-variations");
   font-weight: 300 700;
   font-display: optional;
   font-style: normal;

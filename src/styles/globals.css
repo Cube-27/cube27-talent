@@ -164,6 +164,7 @@
   }
 
   .c27-emphasis-quiet {
+    font-style: normal;
     color: var(--c27-ink);
   }
 
@@ -254,7 +255,7 @@
 
   @media (max-width: 63.999rem) {
     .c27-rule-grid {
-      grid-template-columns: repeat(min(var(--c27-cols, 3), 2), minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .c27-rule-grid > :nth-child(2n) {
@@ -560,6 +561,15 @@
     background: var(--c27-field-fill);
     border-bottom-color: var(--c27-accent);
     box-shadow: inset 0 -1px 0 var(--c27-accent);
+  }
+
+  @media (forced-colors: active) {
+    .c27-field:focus,
+    .c27-field:focus-visible,
+    .c27-field[aria-expanded="true"] {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
   }
 
   /* An FAQ is a heading and a long ruled list, which is exactly the shape the
