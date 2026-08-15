@@ -27,7 +27,11 @@
   --c27-tint-peach: #fdf4ef;
   --c27-tint-sky: #f1f2f3;
   --c27-hero: #f4f4f2;
-  --c27-deep: #25282e;
+  /* The band tone for the process rail, the final CTA and the footer. It is a
+     step deeper than --c27-tint-violet so it still separates from the warm
+     --c27-ground, while staying in the accent's own hue family. Text on it
+     uses the --c27-on-deep ramp below, not the plain ink ramp. */
+  --c27-deep: #e8e6fb;
 
   /* --- atmospheric surfaces -------------------------------------
      These are used on a small number of deliberate regions. They do
@@ -70,15 +74,18 @@
   --c27-icon-orange: #ea580c;
   --c27-icon-blue: #2563eb;
   --c27-brand-27: #8d296a;
-  /* The wordmark numeral on the charcoal footer. #8d296a measures 1.87 there —
-     the brand's own glyph was the least legible thing on the page. 4.91. */
-  --c27-brand-27-on-deep: #d178aa;
+  /* The wordmark numeral on the footer. Now that the deep field is light, the
+     brand plum works there directly: 6.45 on --c27-deep. */
+  --c27-brand-27-on-deep: #8d296a;
 
   /* --- lines -----------------------------------------------------
      A 1px hairline is the default boundary between surfaces. */
   --c27-line: #e2e0e6;
   --c27-line-2: #eceae5;
-  --c27-line-deep: rgba(255, 255, 255, 0.12);
+  /* The hairline inside a deep field. It tracks the ink, not white, because the
+     deep field is a light tint — over --c27-deep it composites to ~#d1cfe2,
+     the same visual weight --c27-line carries over --c27-ground. */
+  --c27-line-deep: rgba(33, 37, 45, 0.12);
   /* Fields are filled and open-sided: a --c27-field-fill well with one bottom
      rule, no box. That rule is the only thing identifying the control, and it
      is adjacent to both the fill above it and the card below, so it clears 3:1
@@ -87,13 +94,16 @@
   --c27-line-control: #8b8891;
   --c27-field-fill: #f4f2ee;
 
-  /* --- on deep fields --- */
-  --c27-on-deep: #f8fafc;
-  --c27-on-deep-2: #94a3b8;
-  /* 4.83 on --c27-deep. The previous #64748b measured 3.10, which fails AA for
-     the 13px footer meta line it sets. */
-  --c27-on-deep-3: #8b94a3;
-  --c27-on-deep-accent: #818cf8;
+  /* --- on deep fields -------------------------------------------
+     The deep field is a light tint, so this ramp mirrors the ink ramp rather
+     than inverting it. Measured on --c27-deep: 12.54 / 6.32 / 4.57. The -3
+     step sets the 13px footer meta line and clears AA with the least room,
+     so re-measure it first if --c27-deep ever moves. */
+  --c27-on-deep: #21252d;
+  --c27-on-deep-2: #4d535e;
+  --c27-on-deep-3: #626875;
+  /* 6.25 on --c27-deep. Link hover and the process progress bar. */
+  --c27-on-deep-accent: #3b38d8;
 
   /* --- feedback --------------------------------------------------
      The one colour outside the accent, and only because an error must
@@ -111,6 +121,19 @@
   --c27-text-h2: clamp(2rem, 3vw, 2.5rem);
   --c27-text-h3-lg: 1.5rem;
   --c27-text-h3: 1.0625rem;
+
+  /* Content tiers. Each has one job, and a paragraph picks its tier by role,
+     never by how important the section feels:
+       -lede-lg  the sentence under a page's <h1>. Hero only.
+       -lede     the sentence under a section's <h2>. One per section.
+       -body     a standalone paragraph that is not attached to a list item.
+       -body-sm  the paragraph describing one item in a list, card or step.
+       -caption  labels, form fields, and item metadata.
+     Both lede tiers interpolate 375px -> 1280px; everything at or below body
+     is fixed, because those sizes never drive the page's silhouette and
+     scaling them only makes card copy drift between breakpoints. */
+  --c27-text-lede-lg: clamp(1.0625rem, 0.9848rem + 0.3315vw, 1.25rem);
+  --c27-text-lede: clamp(1rem, 0.9482rem + 0.221vw, 1.125rem);
   --c27-text-body: 1rem;
   --c27-text-body-sm: 0.9375rem;
   --c27-text-caption: 0.8125rem;
@@ -199,6 +222,8 @@
      raw token was defined above but never exported here, so Tailwind never
      generated the class and those elements silently inherited 1rem from
      `body`. Identical output, zero connection to the token. */
+  --text-lede-lg: var(--c27-text-lede-lg);
+  --text-lede: var(--c27-text-lede);
   --text-body: var(--c27-text-body);
   --text-body-sm: var(--c27-text-body-sm);
   --text-caption: var(--c27-text-caption);

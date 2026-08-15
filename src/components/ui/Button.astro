@@ -9,7 +9,7 @@
 interface Props {
   href?: string;
   type?: "button" | "submit";
-  variant?: "primary" | "line" | "ghost" | "on-deep";
+  variant?: "primary" | "line" | "ghost";
   size?: "md" | "sm" | "header";
   arrow?: boolean;
   class?: string;
@@ -39,7 +39,10 @@ const variants = {
   line: "border-c27-line bg-c27-surface text-c27-ink hover:border-c27-accent hover:bg-c27-accent-soft hover:text-c27-accent-d",
   ghost:
     "border-transparent bg-transparent text-c27-ink-2 hover:bg-c27-surface-2 hover:text-c27-ink",
-  "on-deep": "border-transparent bg-white text-c27-deep hover:bg-slate-100",
+  // There was an `on-deep` variant here — a white fill for the charcoal band.
+  // The deep field is now a light tint, so the accent fill reads on it like it
+  // reads everywhere else, and a second action colour would have been one more
+  // thing to keep in sync for no gain.
 };
 
 // The compact header size preserves breathing room in the navigation bar;

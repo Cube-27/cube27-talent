@@ -97,7 +97,22 @@
     letter-spacing: -0.03em;
   }
 
+  /* The lede owns its own size. It used to set only colour and measure, so
+     every call site supplied the font-size inline — eight hand-copied clamps,
+     and four callers that forgot, leaving those ledes pinned at body size
+     while their neighbours grew to 18px. Size belongs to the role. */
   .c27-lede {
+    font-size: var(--c27-text-lede);
+    line-height: 1.6;
+    color: var(--c27-ink-2);
+    max-width: 68ch;
+  }
+
+  /* The hero variant, under an <h1> only. One step up so a page opening still
+     reads as an opening on a phone, where .c27-lede meets body size. */
+  .c27-lede-lg {
+    font-size: var(--c27-text-lede-lg);
+    line-height: 1.55;
     color: var(--c27-ink-2);
     max-width: 68ch;
   }
