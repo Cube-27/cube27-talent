@@ -36,10 +36,8 @@ const jsonLd = [faqSchema(CANDIDATE_FAQS)];
       class="grid gap-[clamp(3rem,7vw,6rem)] lg:grid-cols-[minmax(0,0.8fr)_minmax(30rem,1.2fr)]"
     >
       <div class="c27-rise lg:sticky lg:top-28 lg:self-start">
-        <h1 class="c27-h2">Find your next role.</h1>
-        <p
-          class="c27-lede mt-5 text-[clamp(1rem,1.4vw,1.125rem)] leading-relaxed"
-        >
+        <h1 class="c27-h1">Find your next role.</h1>
+        <p class="c27-lede mt-5">
           Apply once. We contact you when your profile matches a relevant
           opportunity.
         </p>
@@ -48,7 +46,7 @@ const jsonLd = [faqSchema(CANDIDATE_FAQS)];
           {
             BENEFITS.map((benefit) => (
               <article class="border-b border-c27-line py-5">
-                <h2 class="c27-h3 font-semibold">{benefit.title}</h2>
+                <h2 class="c27-card-title font-semibold">{benefit.title}</h2>
                 <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
                   {benefit.body}
                 </p>

@@ -42,24 +42,45 @@ When this system is applied to another Cube27 property without a full visual red
 
 All combinations meet WCAG AA.
 
-## 4. Typography
+## 4. Typography — The Enterprise Typography Ladder
 
-Use the existing local Hauora and Switzer variable fonts.
+Section designs follow the typography ladder, not the other way around. Typography cannot increase or decrease on an ad-hoc basis to satisfy local component styling. This is an enterprise application; hierarchy and visual parity are strictly governed.
 
-- Display headings: Hauora, strong weight, tight tracking, short line length.
-- Body and interface copy: Switzer, regular or medium weight.
+Use the existing local Hauora and Switzer variable fonts:
+
+- Display & Headings: Hauora, weight 600, tight tracking.
+- Body & Interface copy: Switzer, regular (400) or medium (500) weight.
 - Weight ceiling: 600 across headings, buttons, labels, metrics, and body copy. Do not load or apply 700–900 weights.
-- H1: `2.75rem` (44px) on sub-pages. The landing page runs a larger display scale — `clamp(2.125rem, 4.2vw, 3.125rem)`, topping out at 50px — because at 44px the hero heading sat too small against the width of that page. 50px is the ceiling for the site; no heading exceeds it, and no sub-page uses the landing scale.
-- H2: `clamp(2rem, 3vw, 2.5rem)` with clear separation from body copy.
-- H3: two sizes, assigned by role rather than by component.
-  - `1.5rem` (`.c27-h3-lg`) — cards that carry a title plus a paragraph, and
-    any heading that opens a block of prose. Compliance, ExpertiseSelector,
-    ProcessRail phases, the _why-us_ panels.
-  - `1.0625rem` (`.c27-h3`) — label-scale titles in dense rails where three or
-    four cards sit across and the title is a name, not a sentence. Lifecycle,
-    LeadershipHiring.
-- Non-heading text, including proof metrics, stays below the heading scale.
-- Labels are compact and direct; do not use tracked uppercase as decoration everywhere.
+
+### The 9-Tier Hierarchy
+
+1. **L1: Display / Hero Title (`--c27-text-display` / `.c27-display` / `h1`)**
+   - Size: `clamp(2.125rem, 4.2vw, 2.75rem)` (34px–44px), line-height 1.05, tracking -0.035em.
+   - Used only for the primary hero `<h1>` on main pages (Home, Why Us, How It Works).
+2. **L2: Page Title (`--c27-text-h1` / `.c27-h1` / `h1`)**
+   - Size: `clamp(1.75rem, 3vw, 2.25rem)` (28px–36px), line-height 1.15, tracking -0.03em.
+   - Used for the primary `<h1>` on subpages, form pages, and system pages (`hire-talent`, `join-talent-network`, `404`, thank-you).
+3. **L3: Section Heading (`--c27-text-h2` / `.c27-h2` / `h2`)**
+   - Size: `clamp(1.875rem, 2.8vw, 2.25rem)` (30px–36px), line-height 1.15, tracking -0.03em.
+   - Used for all major section `<h2>` headings and `SectionHead.astro`. Never resized for individual sections.
+4. **L4: Section Lede (`--c27-text-lede` / `.c27-lede`)**
+   - Size: `clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem)` (17px–19px), line-height 1.6, color `--c27-ink-2`.
+   - Exactly one lede sentence under an H1 or H2. No arbitrary inline clamp overrides allowed.
+5. **L5: Card & Feature Title (`--c27-text-card-title` / `.c27-card-title` / `.c27-h3` / `h3`)**
+   - Size: `1.125rem` (18px), line-height 1.3, tracking -0.02em, font-display, weight 600.
+   - **Unified across ALL cards, feature blocks, timeline items, and grids** (Compliance, Lifecycle, Leadership, Why Us, ProcessRail, How It Works). Card titles do not jump between 17px and 24px across different sections.
+6. **L6: Standalone Prose / Body (`--c27-text-body` / `text-body`)**
+   - Size: `1rem` (16px), line-height 1.6.
+   - Standalone narrative paragraphs, continuous reading copy outside cards.
+7. **L7: Card & Dense Item Body (`--c27-text-body-sm` / `.c27-card-body` / `text-body-sm`)**
+   - Size: `0.9375rem` (15px), line-height 1.55, color `--c27-ink-2`.
+   - **Unified across all card descriptions, list items, phase descriptions, and FAQ answers.**
+8. **L8: Form Label, Caption & Meta (`--c27-text-caption` / `text-caption`)**
+   - Size: `0.8125rem` (13px), line-height 1.4.
+   - Form field labels (weight 600), helper text, badges, footer copyright/meta.
+9. **L9: Data Display Metric (`--c27-text-metric` / `.c27-metric`)**
+   - Size: `clamp(1.75rem, 2.8vw, 2.25rem)` (28px–36px), tabular-nums, weight 600, color `--c27-accent-d`.
+   - Numerical proof statistics.
 
 Headings use sentence case and describe an outcome, decision, or capability.
 

@@ -117,26 +117,29 @@
   --c27-font-mono:
     ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
 
-  --c27-text-display: clamp(1.9375rem, 9.6vw, 2.75rem);
-  --c27-text-h2: clamp(2rem, 3vw, 2.5rem);
-  --c27-text-h3-lg: 1.5rem;
-  --c27-text-h3: 1.0625rem;
+  /* Enterprise Typography Ladder:
+     Level 1: Display / Hero Title (H1)
+     Level 2: Sub-page Title (H1)
+     Level 3: Section Heading (H2)
+     Level 4: Section Lede (Subheading)
+     Level 5: Card & Feature Title (H3)
+     Level 6: Standalone Prose / Body
+     Level 7: Card & List Item Body
+     Level 8: Form Label, Caption & Meta
+     Level 9: Metric / Statistic Figure */
+  --c27-text-display: clamp(2.125rem, 4.2vw, 2.75rem);
+  --c27-text-h1: clamp(1.75rem, 3vw, 2.25rem);
+  --c27-text-h2: clamp(1.875rem, 2.8vw, 2.25rem);
+  --c27-text-card-title: 1.125rem;
+  --c27-text-h3: 1.125rem;
+  --c27-text-h3-lg: 1.125rem;
 
-  /* Content tiers. Each has one job, and a paragraph picks its tier by role,
-     never by how important the section feels:
-       -lede-lg  the sentence under a page's <h1>. Hero only.
-       -lede     the sentence under a section's <h2>. One per section.
-       -body     a standalone paragraph that is not attached to a list item.
-       -body-sm  the paragraph describing one item in a list, card or step.
-       -caption  labels, form fields, and item metadata.
-     Both lede tiers interpolate 375px -> 1280px; everything at or below body
-     is fixed, because those sizes never drive the page's silhouette and
-     scaling them only makes card copy drift between breakpoints. */
-  --c27-text-lede-lg: clamp(1.0625rem, 0.9848rem + 0.3315vw, 1.25rem);
-  --c27-text-lede: clamp(1rem, 0.9482rem + 0.221vw, 1.125rem);
+  --c27-text-lede: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --c27-text-lede-lg: var(--c27-text-lede);
   --c27-text-body: 1rem;
   --c27-text-body-sm: 0.9375rem;
   --c27-text-caption: 0.8125rem;
+  --c27-text-metric: clamp(1.75rem, 2.8vw, 2.25rem);
 
   /* --- layout --- */
   --c27-gutter: clamp(1.25rem, 5vw, 4rem);
@@ -144,12 +147,10 @@
   --c27-container: 80rem;
   --c27-container-narrow: 60rem;
 
-  /* Card padding is a token, not a per-component decision. Before this there
-     were eight different clamps across the cards. Three scales, each with a
-     stated job:
-       -sm  dense rails — three or four cards across, little room to give
+  /* Card padding is a token, not a per-component decision.
+       -sm  dense rails — three or four cards across
        (base) the standard card: a title, a paragraph, maybe an icon
-       -lg  panels holding a full sub-layout rather than a single idea */
+       -lg  panels holding a full sub-layout */
   --c27-pad-card-sm: 1.5rem;
   --c27-pad-card: clamp(1.5rem, 3vw, 2.5rem);
   --c27-pad-card-lg: clamp(1.75rem, 4vw, 3.5rem);
@@ -215,18 +216,17 @@
   --font-mono: var(--c27-font-mono);
 
   --text-display: var(--c27-text-display);
+  --text-h1: var(--c27-text-h1);
   --text-h2: var(--c27-text-h2);
-  --text-h3-lg: var(--c27-text-h3-lg);
+  --text-card-title: var(--c27-text-card-title);
   --text-h3: var(--c27-text-h3);
-  /* `text-body` was used by six components for months without existing: the
-     raw token was defined above but never exported here, so Tailwind never
-     generated the class and those elements silently inherited 1rem from
-     `body`. Identical output, zero connection to the token. */
+  --text-h3-lg: var(--c27-text-h3-lg);
   --text-lede-lg: var(--c27-text-lede-lg);
   --text-lede: var(--c27-text-lede);
   --text-body: var(--c27-text-body);
   --text-body-sm: var(--c27-text-body-sm);
   --text-caption: var(--c27-text-caption);
+  --text-metric: var(--c27-text-metric);
 
   --radius-c27-sm: var(--c27-radius-sm);
   --radius-c27: var(--c27-radius);

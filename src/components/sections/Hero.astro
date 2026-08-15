@@ -28,10 +28,7 @@ const HERO_CAPABILITIES = [
     <h1 class="c27-rise c27-display mx-auto">
       Build the team your business needs
     </h1>
-    <p
-      class="c27-rise mx-auto mt-6 max-w-[62ch] text-lg leading-relaxed text-c27-ink-2"
-      style="--c27-d:60ms"
-    >
+    <p class="c27-rise c27-lede-lg mx-auto mt-6" style="--c27-d:60ms">
       Managed hiring for specialists, complete teams, and senior leadership,
       with ongoing workforce support.
     </p>
@@ -56,7 +53,7 @@ const HERO_CAPABILITIES = [
             class="hero-capability c27-rise"
             style={`--c27-d:${120 + index * 40}ms`}
           >
-            <p class="font-display text-body font-semibold text-c27-ink">
+            <p class="c27-card-title font-semibold text-c27-ink">
               {item.title}
             </p>
             <p class="mt-1 text-body-sm leading-relaxed text-c27-ink-2">
@@ -77,9 +74,7 @@ const HERO_CAPABILITIES = [
             style={`--c27-d:${index * 60}ms`}
             aria-label={`${proof.value} ${proof.label}`}
           >
-            <p class="font-display text-[clamp(1.75rem,3vw,2.25rem)] font-semibold leading-none tracking-[-0.035em] text-c27-accent-d tabular-nums">
-              {proof.value}
-            </p>
+            <p class="c27-metric">{proof.value}</p>
             <p class="text-body-sm font-medium text-c27-ink-2">{proof.label}</p>
           </div>
         ))

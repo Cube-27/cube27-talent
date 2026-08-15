@@ -8,7 +8,9 @@ import { PROCESS_PHASES } from "@/data/process";
   data-process-rail
 >
   <div class="c27-rise lg:sticky lg:top-28 lg:self-start">
-    <h3 class="c27-h3 font-semibold text-c27-on-deep lg:whitespace-nowrap">
+    <h3
+      class="c27-card-title font-semibold text-c27-on-deep lg:whitespace-nowrap"
+    >
       From role brief to final selection.
     </h3>
     <p
@@ -39,10 +41,10 @@ import { PROCESS_PHASES } from "@/data/process";
             <Icon name={phase.icon} size={20} />
           </span>
           <div>
-            <h3 class="c27-h3-lg font-semibold text-c27-on-deep">
+            <h3 class="c27-card-title font-semibold text-c27-on-deep">
               {phase.name}
             </h3>
-            <p class="mt-2 text-body font-medium leading-relaxed text-c27-on-deep/80">
+            <p class="mt-2 text-body-sm leading-relaxed text-c27-on-deep/80">
               {phase.summary}
             </p>
             <ul class="mt-5 flex flex-wrap gap-x-6 gap-y-2">

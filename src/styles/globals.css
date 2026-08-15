@@ -70,51 +70,72 @@
     padding-inline: var(--c27-gutter);
   }
 
-  /* --- type roles -------------------------------------------------- */
+  /* --- enterprise typography ladder ------------------------------- */
   .c27-display {
+    font-family: var(--c27-font-display);
     font-size: var(--c27-text-display);
-    line-height: 1.02;
+    font-weight: 600;
+    line-height: 1.05;
     letter-spacing: -0.035em;
     max-width: 20ch;
   }
 
-  .c27-h2 {
-    font-size: var(--c27-text-h2);
-    line-height: 1.12;
-    letter-spacing: -0.032em;
+  .c27-h1 {
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-h1);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
     max-width: 24ch;
   }
 
-  .c27-h3 {
-    font-size: var(--c27-text-h3);
+  .c27-h2 {
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-h2);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    max-width: 24ch;
+  }
+
+  .c27-card-title,
+  .c27-h3,
+  .c27-h3-lg {
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-card-title);
+    font-weight: 600;
     line-height: 1.3;
     letter-spacing: -0.02em;
   }
 
-  .c27-h3-lg {
-    font-size: var(--c27-text-h3-lg);
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-  }
-
-  /* The lede owns its own size. It used to set only colour and measure, so
-     every call site supplied the font-size inline — eight hand-copied clamps,
-     and four callers that forgot, leaving those ledes pinned at body size
-     while their neighbours grew to 18px. Size belongs to the role. */
-  .c27-lede {
+  .c27-lede,
+  .c27-lede-lg {
     font-size: var(--c27-text-lede);
     line-height: 1.6;
     color: var(--c27-ink-2);
-    max-width: 68ch;
+    max-width: 65ch;
   }
 
-  /* The hero variant, under an <h1> only. One step up so a page opening still
-     reads as an opening on a phone, where .c27-lede meets body size. */
-  .c27-lede-lg {
-    font-size: var(--c27-text-lede-lg);
+  .c27-body {
+    font-size: var(--c27-text-body);
+    line-height: 1.6;
+    color: var(--c27-ink);
+  }
+
+  .c27-card-body {
+    font-size: var(--c27-text-body-sm);
     line-height: 1.55;
     color: var(--c27-ink-2);
-    max-width: 68ch;
+  }
+
+  .c27-metric {
+    color: var(--c27-accent-d);
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-metric);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    font-variant-numeric: tabular-nums;
   }
 
   /* --- card surfaces ------------------------------------------------
