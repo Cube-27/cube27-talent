@@ -1,5 +1,12 @@
 ---
 import Icon from "@/components/ui/Icon.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+
+interface Props {
+  index?: string;
+}
+
+const { index } = Astro.props;
 
 const COMPLIANCE_AREAS = [
   {
@@ -25,39 +32,25 @@ const COMPLIANCE_AREAS = [
 ];
 ---
 
-<div class="c27-rise">
-  <div
-    class="grid gap-8 border-b border-c27-line pb-[clamp(2rem,4vw,3rem)] lg:grid-cols-[minmax(0,0.85fr)_minmax(28rem,1.15fr)] lg:items-end"
-  >
-    <h2 class="c27-h2 max-w-[18ch]">Standards that scale with your team</h2>
-    <p class="c27-lede">
-      We coordinate the standards behind every hire—from contracts and payroll
-      to local labor and IP requirements, culture onboarding, and client-defined
-      performance reviews.
-    </p>
-  </div>
+<div>
+  <SectionHead
+    index={index}
+    label="Operating standard"
+    heading="Standards that scale with your team"
+    lede="We coordinate the standards behind every hire—from contracts and payroll to local labor and IP requirements, culture onboarding, and client-defined performance reviews."
+  />
 
-  <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="c27-rule-grid" style="--c27-cols:4">
     {
-      COMPLIANCE_AREAS.map((area, index) => (
-        <article
-          class="c27-card-shadow c27-rise flex flex-col justify-start border border-c27-line bg-c27-surface p-5 sm:p-6"
-          style={`--c27-d:${index * 60}ms`}
-        >
-          <span
-            class="c27-tile-accent grid size-10 place-items-center border border-c27-accent/15 text-c27-accent"
-            aria-hidden="true"
-          >
-            <Icon name={area.icon} size={20} />
-          </span>
-          <div class="mt-4">
-            <h3 class="c27-card-title font-semibold text-c27-ink">
-              {area.title}
-            </h3>
-            <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
-              {area.body}
-            </p>
-          </div>
+      COMPLIANCE_AREAS.map((area, i) => (
+        <article class="c27-rise" style={`--c27-d:${i * 60}ms`}>
+          <Icon name={area.icon} size={24} class="text-c27-accent" />
+          <h3 class="c27-card-title mt-4 font-semibold text-c27-ink">
+            {area.title}
+          </h3>
+          <p class="mt-2 max-w-[34ch] text-body-sm leading-relaxed text-c27-ink-2">
+            {area.body}
+          </p>
         </article>
       ))
     }

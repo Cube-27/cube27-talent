@@ -1,0 +1,31 @@
+---
+/**
+ * Rows divided by rules, with the numeral in its own narrow gutter and the
+ * description re-entering at column 2 so it aligns under the title rather than
+ * under the number.
+ *
+ * Numbers are generated from position — unlike IndexRail, these count within
+ * the list rather than across the page, so they can never drift out of sync
+ * with the items above them.
+ */
+interface Props {
+  items: { title: string; detail: string }[];
+  class?: string;
+}
+
+const { items, class: className = "" } = Astro.props;
+---
+
+<ol class:list={["c27-numbered", className]}>
+  {
+    items.map((item, i) => (
+      <li>
+        <span class="c27-numbered-index" aria-hidden="true">
+          {String(i + 1).padStart(2, "0")}
+        </span>
+        <b class="text-[0.875rem] font-semibold">{item.title}</b>
+        <p>{item.detail}</p>
+      </li>
+    ))
+  }
+</ol>

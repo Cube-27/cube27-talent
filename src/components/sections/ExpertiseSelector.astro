@@ -1,69 +1,101 @@
 ---
+import Button from "@/components/ui/Button.astro";
 import Icon from "@/components/ui/Icon.astro";
+import Pill from "@/components/ui/Pill.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
 import { ROLE_FAMILIES, OPEN_SCOPE_LINE } from "@/data/roles";
+import { ROUTES } from "@/site-config";
+
+/**
+ * The capability map: a numbered rail of functions on the left, and the
+ * selected function's panel on the right as a filled lavender field.
+ *
+ * The rail is a real tablist — roving tabindex, arrow keys with wraparound,
+ * and every panel present in the DOM so a visitor without JavaScript reads all
+ * of them rather than one.
+ */
+interface Props {
+  index?: string;
+  heading: string;
+  lede: string;
+}
+
+const { index = "03", heading, lede } = Astro.props;
 ---
 
-<div
-  class="c27-card-shadow c27-rise grid overflow-hidden border border-c27-line bg-c27-surface lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]"
-  data-expertise
->
-  <div
-    class="expertise-tabs flex snap-x snap-mandatory overflow-x-auto border-b border-c27-line bg-c27-surface-2 [scrollbar-width:none] lg:flex-col lg:snap-none lg:overflow-visible lg:border-b-0 lg:border-r"
-    role="tablist"
-    aria-label="Areas of expertise"
-  >
-    {
-      ROLE_FAMILIES.map((family, index) => (
-        <button
-          type="button"
-          role="tab"
-          id={`tab-${family.id}`}
-          aria-controls={`panel-${family.id}`}
-          aria-selected={index === 0 ? "true" : "false"}
-          tabindex={index === 0 ? 0 : -1}
-          class="flex min-h-14 shrink-0 snap-start items-center gap-3 whitespace-nowrap border-r border-c27-line px-5 py-3 text-left text-body-sm font-medium text-c27-ink-2 transition-[background-color,color] duration-[var(--c27-dur-fast)] hover:bg-c27-accent-soft hover:text-c27-ink aria-selected:bg-c27-accent aria-selected:font-semibold aria-selected:text-white lg:w-full lg:border-b lg:border-r-0"
-        >
-          <Icon name={family.icon} size={20} />
-          <span>{family.short}</span>
-        </button>
-      ))
-    }
+<div class="c27-roles">
+  <SectionHead
+    index={index}
+    label="Capability map"
+    heading={heading}
+    lede={lede}
+  />
+
+  <div class="c27-roles-grid c27-rise" data-expertise>
+    <div class="c27-role-nav" role="tablist" aria-label="Talent functions">
+      {
+        ROLE_FAMILIES.map((family, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`tab-${family.id}`}
+            aria-controls={`panel-${family.id}`}
+            aria-selected={i === 0 ? "true" : "false"}
+            tabindex={i === 0 ? 0 : -1}
+            class="c27-indent"
+          >
+            <span class="c27-role-nav-index" aria-hidden="true">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span>{family.short}</span>
+            <Icon name="arrow-up-right" size={16} data-arrow />
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="c27-role-panels">
+      {
+        ROLE_FAMILIES.map((family, i) => (
+          <div
+            class="c27-panel"
+            role="tabpanel"
+            id={`panel-${family.id}`}
+            aria-labelledby={`tab-${family.id}`}
+            hidden={i !== 0}
+            data-panel
+          >
+            {/* No index here: the numbered rail on the left already carries
+                the position and marks the selected one. */}
+            <div class="c27-role-head">
+              <h3 class="c27-h2 c27-role-statement">{family.statement}</h3>
+              <p class="c27-role-metric">
+                <span>{family.metric}</span>
+                {family.metricLabel}
+              </p>
+            </div>
+
+            <p class="c27-role-blurb">{family.blurb}</p>
+
+            <ul class="c27-role-pills">
+              {family.roles.map((role) => (
+                <li>
+                  <Pill>{role}</Pill>
+                </li>
+              ))}
+            </ul>
+
+            <Button href={ROUTES.hire} variant="link" arrow>
+              Talk about this function
+            </Button>
+          </div>
+        ))
+      }
+    </div>
   </div>
 
-  <div class="c27-card-lg">
-    {
-      ROLE_FAMILIES.map((family, index) => (
-        <div
-          role="tabpanel"
-          id={`panel-${family.id}`}
-          aria-labelledby={`tab-${family.id}`}
-          hidden={index !== 0}
-          data-panel
-        >
-          <h3 class="c27-card-title font-semibold text-c27-ink">
-            {family.name}
-          </h3>
-          <p class="mt-3 max-w-[58ch] text-body-sm leading-relaxed text-c27-ink-2">
-            {family.blurb}
-          </p>
-          <ul class="mt-7 grid gap-3 sm:grid-cols-2">
-            {family.roles.map((role) => (
-              <li class="c27-feature-card px-4 py-3 text-body-sm font-medium text-c27-ink">
-                {role}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))
-    }
-  </div>
+  <p class="c27-roles-scope c27-rise">{OPEN_SCOPE_LINE}</p>
 </div>
-
-<p
-  class="c27-rise mt-6 max-w-[68ch] text-body-sm leading-relaxed text-c27-ink-2"
->
-  {OPEN_SCOPE_LINE}
-</p>
 
 <script>
   for (const root of document.querySelectorAll<HTMLElement>(
@@ -103,7 +135,173 @@ import { ROLE_FAMILIES, OPEN_SCOPE_LINE } from "@/data/roles";
 </script>
 
 <style>
-  .expertise-tabs::-webkit-scrollbar {
-    display: none;
+  .c27-roles-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    border-top: 1px solid var(--c27-line-3);
+  }
+
+  .c27-role-nav {
+    padding: 0.625rem 2.2vw 0 0;
+  }
+
+  .c27-role-nav button {
+    display: grid;
+    grid-template-columns: 35px minmax(0, 1fr) 20px;
+    align-items: center;
+    gap: 0.4375rem;
+    width: 100%;
+    padding: 1.125rem 0;
+    border: 0;
+    border-bottom: 1px solid var(--c27-line);
+    background: transparent;
+    text-align: left;
+    font-size: 0.875rem;
+    color: var(--c27-ink-2);
+    cursor: pointer;
+  }
+
+  .c27-role-nav-index {
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-label);
+    font-weight: 600;
+    letter-spacing: var(--c27-track-index);
+    color: var(--c27-ink-3);
+  }
+
+  /* The active/hover treatment has to live here, not on `.c27-indent` alone:
+     the rule above sets `color` from this component's unlayered scoped sheet,
+     which outranks anything in @layer components regardless of specificity. */
+  .c27-role-nav button:hover,
+  .c27-role-nav button[aria-selected="true"] {
+    color: var(--c27-accent-d);
+    padding-left: 0.625rem;
+  }
+
+  .c27-role-nav button[aria-selected="true"] {
+    font-weight: 600;
+  }
+
+  .c27-role-nav button[aria-selected="true"] .c27-role-nav-index,
+  .c27-role-nav button:hover .c27-role-nav-index {
+    color: var(--c27-accent);
+  }
+
+  /* Pulls the panel over the grid's top rule so the fill appears to sit on it
+     rather than below it. Tall enough that the panel does not resize as you
+     switch functions — the longest copy sets it — without leaving dead fill
+     under the shortest. */
+  .c27-role-panels > .c27-panel {
+    margin-top: -1px;
+    min-height: 24rem;
+  }
+
+  /* The statement and its tag share a row, so the heading starts at the panel's
+     top padding instead of below a separate head block. */
+  .c27-role-head {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .c27-role-statement {
+    margin: 0;
+    max-width: 20ch;
+  }
+
+  /* An actual tag: a white chip on the lavender field, holding the figure and
+     what it counts. It reads as an annotation on the statement beside it rather
+     than as a second headline competing with it. */
+  .c27-role-metric {
+    flex: none;
+    max-width: 100%;
+    display: inline-flex;
+    align-items: baseline;
+    /* The longest values ("End-to-end", "C-level") plus their label exceed the
+       panel's inner width at 320px. Wrapping the label under the figure keeps
+       every one of the seven inside the panel without shrinking the type. */
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--c27-surface);
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-index);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: var(--c27-track-index);
+    text-transform: uppercase;
+    color: var(--c27-ink-3);
+  }
+
+  .c27-role-metric > span {
+    font-size: var(--c27-text-card-title);
+    letter-spacing: -0.02em;
+    text-transform: none;
+    color: var(--c27-accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .c27-role-blurb {
+    max-width: 46ch;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--c27-ink-2);
+  }
+
+  .c27-role-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.5625rem 0 2.1875rem;
+  }
+
+  .c27-roles-scope {
+    margin-top: 1.75rem;
+    max-width: 68ch;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--c27-ink-2);
+  }
+
+  @media (max-width: 56.25rem) {
+    .c27-roles-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .c27-role-nav {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 0.9375rem;
+      padding-right: 0;
+    }
+
+    .c27-role-nav button {
+      grid-template-columns: 21px minmax(0, 1fr);
+      font-size: 0.8125rem;
+    }
+
+    .c27-role-nav button [data-arrow] {
+      display: none;
+    }
+
+    .c27-role-panels > .c27-panel {
+      margin-top: 1.875rem;
+      min-height: 0;
+    }
+  }
+
+  @media (max-width: 32.5rem) {
+    .c27-role-nav {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* No room for a heading and a tag side by side at this width. */
+    .c27-role-head {
+      flex-direction: column;
+      align-items: start;
+      gap: 1rem;
+    }
   }
 </style>

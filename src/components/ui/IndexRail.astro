@@ -1,0 +1,23 @@
+---
+/**
+ * The section index: a cobalt numeral and the name of the field it opens.
+ *
+ * This is the "research document" motif — it tells the reader where they are
+ * in the argument the page is making. Numbers run in document order across the
+ * page and must be kept in sync when sections are reordered; they are passed in
+ * rather than derived so a section can move between pages without renumbering
+ * itself.
+ */
+interface Props {
+  index: string;
+  label: string;
+  class?: string;
+}
+
+const { index, label, class: className = "" } = Astro.props;
+---
+
+<p class:list={["c27-index", className]}>
+  <span>{index}</span>
+  <span>{label}</span>
+</p>

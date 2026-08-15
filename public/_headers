@@ -61,6 +61,12 @@
 /cube27-mark.svg
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
+/cube27-talent-hero.webp
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/cube27-leadership.webp
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
 /og-image.png
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 

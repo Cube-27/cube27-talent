@@ -24,8 +24,7 @@ const EXPECTATIONS = [
 
 <Layout title={title} description={description} jsonLd={jsonLd}>
   <Section
-    class="c27-sky-field -mt-[4.5rem] pt-[calc(var(--c27-pad-section)+4.5rem)]"
-    bordered
+    class="c27-blueprint -mt-[4.5rem] pt-[calc(var(--c27-pad-section)+4.5rem)]"
   >
     <div
       class="grid gap-[clamp(3rem,7vw,6rem)] lg:grid-cols-[minmax(0,0.8fr)_minmax(30rem,1.2fr)]"
@@ -49,7 +48,7 @@ const EXPECTATIONS = [
     </div>
   </Section>
 
-  <Section tone="surface" bordered>
+  <Section tone="surface">
     <SectionHead
       heading="Support after the hire."
       lede="Onboarding and ongoing employee support stay covered."
@@ -57,8 +56,10 @@ const EXPECTATIONS = [
     <Lifecycle />
   </Section>
 
-  <Section narrow>
-    <SectionHead heading="FAQs" centered />
-    <Faq items={EMPLOYER_FAQS} />
+  <Section>
+    <div class="c27-faq-split">
+      <SectionHead heading="FAQs" align="stack" />
+      <Faq items={EMPLOYER_FAQS} />
+    </div>
   </Section>
 </Layout>

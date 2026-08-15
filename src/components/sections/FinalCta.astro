@@ -1,7 +1,17 @@
 ---
-import Button from "@/components/ui/Button.astro";
+import Eyebrow from "@/components/ui/Eyebrow.astro";
+import Icon from "@/components/ui/Icon.astro";
 import { ROUTES } from "@/site-config";
 
+/**
+ * The closing section: the statement on the left, and the page's two exits as
+ * ruled rows on the right.
+ *
+ * Both audiences leave from here, so neither gets a filled button — a primary
+ * fill beside a secondary link would rank the visitor's own intent for them.
+ * The rows are equal in weight and separated by rules; the arrow and the indent
+ * on hover carry the affordance.
+ */
 interface Props {
   heading?: string;
   body?: string;
@@ -11,20 +21,109 @@ const {
   heading = "Build your team",
   body = "Tell us the roles, level, and outcome.",
 } = Astro.props;
+
+const EXITS = [
+  {
+    label: "For hiring teams",
+    title: "Build your team",
+    href: ROUTES.hire,
+  },
+  {
+    label: "For candidates",
+    title: "Join the talent network",
+    href: ROUTES.join,
+  },
+];
 ---
 
-<section class="border-y border-c27-line-deep bg-c27-deep text-c27-on-deep">
-  <div
-    class="c27-wrap flex flex-col items-center gap-8 py-[clamp(3.5rem,7vw,6rem)] text-center"
-  >
+<section class="c27-final bg-c27-deep">
+  <div class="c27-wrap c27-final-grid">
     <div class="c27-rise">
-      <h2 class="c27-h2 max-w-none">{heading}</h2>
-      <p class="c27-lede mx-auto mt-5 text-c27-on-deep-2">
-        {body}
-      </p>
+      <Eyebrow>Start here</Eyebrow>
+      <h2 class="c27-h2 mt-6 max-w-[16ch] text-c27-on-deep">{heading}</h2>
+      <p class="c27-lede mt-5 max-w-[38ch] text-c27-on-deep-2">{body}</p>
     </div>
-    <div class="c27-rise" style="--c27-d:80ms">
-      <Button href={ROUTES.hire} arrow>Build your team</Button>
-    </div>
+
+    <ul class="c27-rise c27-final-exits" style="--c27-d:80ms">
+      {
+        EXITS.map((exit) => (
+          <li>
+            <a href={exit.href}>
+              <span class="c27-final-exit-text">
+                <span class="c27-side-label">{exit.label}</span>
+                <span class="c27-final-exit-title">{exit.title}</span>
+              </span>
+              {/* Wrapped: a scoped class on a component does not reach the
+                  element it renders, so the arrow could not be placed. */}
+              <span class="c27-final-arrow">
+                <Icon name="arrow-up-right" size={22} />
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
+
+<style>
+  .c27-final-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 6vw;
+    align-items: center;
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  .c27-final-exits {
+    border-top: 1px solid var(--c27-line-deep);
+  }
+
+  .c27-final-exits a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--c27-line-deep);
+    color: var(--c27-on-deep);
+    text-decoration: none;
+    transition:
+      color var(--c27-dur-fast) var(--c27-ease-out),
+      padding-left var(--c27-dur-fast) var(--c27-ease-out);
+  }
+
+  .c27-final-exit-text {
+    display: grid;
+    gap: 0.4375rem;
+  }
+
+  .c27-final-exit-title {
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-card-title);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .c27-final-arrow {
+    display: grid;
+    flex: none;
+    place-items: center;
+  }
+
+  /* Scoped, not `.c27-indent`: the `color` above comes from this unlayered
+     sheet and would outrank anything in @layer components. */
+  .c27-final-exits a:hover,
+  .c27-final-exits a:focus-visible {
+    color: var(--c27-accent-d);
+    padding-left: 0.75rem;
+  }
+
+  @media (max-width: 56.25rem) {
+    .c27-final-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2.5rem;
+    }
+  }
+</style>

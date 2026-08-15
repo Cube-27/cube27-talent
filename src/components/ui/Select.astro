@@ -33,7 +33,7 @@ const { id, name, required = false, class: className = "" } = Astro.props;
 
   {/* Chevron for the un-upgraded native control only. */}
   <span
-    class="c27-select-native-arrow pointer-events-none absolute right-1.5 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-c27-sm bg-c27-surface text-c27-ink-2"
+    class="c27-select-native-arrow pointer-events-none absolute right-0 top-1/2 grid size-9 -translate-y-1/2 place-items-center bg-transparent text-c27-accent"
   >
     <svg
       width="16"
@@ -115,7 +115,7 @@ const { id, name, required = false, class: className = "" } = Astro.props;
     value.className = "flex-1 truncate";
     const arrow = document.createElement("span");
     arrow.className =
-      "grid size-9 shrink-0 place-items-center rounded-c27-sm bg-c27-surface text-c27-ink-2 transition-[background-color,color,transform] duration-200";
+      "grid size-9 shrink-0 place-items-center bg-transparent text-c27-accent transition-[background-color,color,transform] duration-200";
     arrow.innerHTML = CHEVRON;
     button.append(value, arrow);
 
@@ -126,7 +126,7 @@ const { id, name, required = false, class: className = "" } = Astro.props;
     list.tabIndex = -1;
     list.hidden = true;
     list.className =
-      "absolute inset-x-0 top-full z-40 mt-1.5 max-h-64 overflow-y-auto rounded-c27-sm border border-c27-line bg-c27-surface p-1.5 shadow-c27-overlay";
+      "absolute inset-x-0 top-full z-40 mt-1.5 max-h-64 overflow-y-auto border border-c27-line bg-c27-surface p-1.5 shadow-c27-overlay";
 
     /** Position within `choices` of the currently selected native option. */
     const activeFromSelection = () =>
@@ -143,7 +143,7 @@ const { id, name, required = false, class: className = "" } = Astro.props;
       item.id = `${select.id}-opt-${index}`;
       item.setAttribute("role", "option");
       item.className =
-        "flex min-h-11 cursor-pointer items-center justify-between gap-2 rounded-c27-sm px-3 py-2 text-body-sm text-c27-ink";
+        "flex min-h-11 cursor-pointer items-center justify-between gap-2 px-3 py-2 text-body-sm text-c27-ink";
       const label = document.createElement("span");
       label.textContent = option.textContent;
       const tick = document.createElement("span");
@@ -178,7 +178,7 @@ const { id, name, required = false, class: className = "" } = Astro.props;
       list.hidden = false;
       button.setAttribute("aria-expanded", "true");
       arrow.classList.add("bg-c27-accent", "text-white", "rotate-180");
-      arrow.classList.remove("bg-c27-surface", "text-c27-ink-2");
+      arrow.classList.remove("bg-transparent", "text-c27-accent");
       paint();
       items[activeIndex]?.item.scrollIntoView({ block: "nearest" });
       button.setAttribute(
@@ -192,7 +192,7 @@ const { id, name, required = false, class: className = "" } = Astro.props;
       button.setAttribute("aria-expanded", "false");
       button.removeAttribute("aria-activedescendant");
       arrow.classList.remove("bg-c27-accent", "text-white", "rotate-180");
-      arrow.classList.add("bg-c27-surface", "text-c27-ink-2");
+      arrow.classList.add("bg-transparent", "text-c27-accent");
     }
 
     /** Takes a native option index. A disabled option is never selectable. */

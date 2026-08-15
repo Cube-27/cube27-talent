@@ -3,16 +3,12 @@
  * Section shell. Owns all vertical rhythm and background tone so no page file
  * sets its own padding.
  *
- * Tones are the system's elevation mechanism (design system rule 2): a section
- * establishes a ground, and the cards inside it take the opposite fill. The
- * section itself is always flat — level 1 of the elevation hierarchy is a
- * colour field only. Cards inside it carry the hairline and the card shadow
- * together (rule 3); that pairing belongs to the card, never to this shell.
+ * A section is a colour field and nothing else — never a border box, never a
+ * shadow. Separation between sections is a step in tone.
  */
 interface Props {
   id?: string;
-  tone?: "ground" | "surface" | "violet" | "mint" | "peach" | "sky" | "deep";
-  bordered?: boolean;
+  tone?: "ground" | "surface" | "deep";
   narrow?: boolean;
   class?: string;
 }
@@ -20,7 +16,6 @@ interface Props {
 const {
   id,
   tone = "ground",
-  bordered = false,
   narrow = false,
   class: className = "",
 } = Astro.props;
@@ -28,23 +23,13 @@ const {
 const tones = {
   ground: "bg-c27-ground",
   surface: "bg-c27-surface-2",
-  violet: "bg-c27-tint-violet",
-  mint: "bg-c27-tint-mint",
-  peach: "bg-c27-tint-peach",
-  sky: "bg-c27-tint-sky",
   deep: "bg-c27-deep text-c27-on-deep",
 };
 ---
 
 <section
   id={id}
-  class:list={[
-    "py-[var(--c27-pad-section)]",
-    tones[tone],
-    bordered && "border-y",
-    bordered && (tone === "deep" ? "border-c27-line-deep" : "border-c27-line"),
-    className,
-  ]}
+  class:list={["py-[var(--c27-pad-section)]", tones[tone], className]}
 >
   <div class={narrow ? "c27-wrap-narrow" : "c27-wrap"}>
     <slot />

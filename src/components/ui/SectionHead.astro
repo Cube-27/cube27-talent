@@ -1,41 +1,119 @@
 ---
+import IndexRail from "./IndexRail.astro";
+
+/**
+ * The section header.
+ *
+ * The default is a split: index rail and heading on the left, lede on the
+ * right, closed by a rule. Nothing in this system is centred — an off-axis
+ * header is what makes a page read as an editorial field rather than a stack
+ * of marketing blocks — so `stack` is the only alternative, for headers that
+ * are a heading alone or that sit above a narrow column.
+ *
+ * `index` and `label` are the section's position in the page's argument. They
+ * run in document order and are passed in rather than derived, so a section can
+ * move between pages without renumbering itself. Keep them in sync when
+ * sections are reordered.
+ */
 interface Props {
   heading: string;
   lede?: string;
+  index?: string;
+  label?: string;
   invert?: boolean;
-  centered?: boolean;
+  align?: "split" | "stack";
+  class?: string;
 }
 
-const { heading, lede, invert = false, centered = false } = Astro.props;
+const {
+  heading,
+  lede,
+  index,
+  label,
+  invert = false,
+  align = "split",
+  class: className = "",
+} = Astro.props;
+
+const split = align === "split" && Boolean(lede);
 ---
 
 <div
   class:list={[
-    "c27-rise mb-[clamp(2.5rem,5vw,4rem)]",
-    centered && "mx-auto text-center",
+    "c27-rise c27-section-head",
+    split && "c27-section-head-split",
+    className,
   ]}
 >
-  <h2
-    class:list={[
-      "c27-h2",
-      invert && "text-c27-on-deep",
-      "max-w-none",
-      centered && "mx-auto",
-    ]}
-  >
-    {heading}
-  </h2>
+  <div>
+    {index && label && <IndexRail index={index} label={label} class="mb-5" />}
+    {
+      /* Keeps the ladder's 24ch measure when stacked; the split variant lifts
+        the cap in CSS so the heading fills its half. */
+    }
+    <h2 class:list={["c27-h2", invert && "text-c27-on-deep"]}>{heading}</h2>
+  </div>
   {
     lede && (
-      <p
-        class:list={[
-          "c27-lede mt-5",
-          invert && "text-c27-on-deep-2",
-          centered && "mx-auto",
-        ]}
-      >
-        {lede}
-      </p>
+      <p class:list={["c27-lede", invert && "text-c27-on-deep-2"]}>{lede}</p>
     )
   }
 </div>
+
+<style>
+  .c27-section-head {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  /* Two equal halves. The previous 0.9/1.1 split sized each track from the
+     viewport while the text inside was capped at its own measure, so on wide
+     screens the difference pooled as dead space against the right edge. */
+  .c27-section-head-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5vw;
+    align-items: end;
+  }
+
+  .c27-section-head-split > div {
+    min-width: 0;
+  }
+
+  /* The heading fills its half. The ladder's 24ch cap is what the stacked
+     variant needs, but inside a 50% column it left the heading using only half
+     of its own half — opening a gap in the middle of the row. With every head
+     on the same 50/50 grid, the column is what makes the wrap consistent. */
+  .c27-section-head-split :global(.c27-h2) {
+    max-width: none;
+  }
+
+  /* A measured side note, not a lede: at 14px it reads as an annotation on the
+     heading rather than as a second headline, and it matches the note in the
+     capability map. Set flush right so it closes on the page's right gutter,
+     mirroring the heading against the left one. */
+  .c27-section-head-split > p {
+    max-width: none;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    text-align: right;
+  }
+
+  /* Stacked heads keep the lede on its own line under the heading. */
+  .c27-section-head:not(.c27-section-head-split) > p {
+    margin-top: 1.25rem;
+  }
+
+  @media (max-width: 56.25rem) {
+    .c27-section-head-split {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    /* Stacked, there is no heading beside it to mirror, so ragged-left body
+       copy would just be harder to read. */
+    .c27-section-head-split > p {
+      text-align: left;
+    }
+  }
+</style>

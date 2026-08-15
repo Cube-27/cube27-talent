@@ -1,164 +1,164 @@
-# Design System — Sharp, Flat, Enterprise
+# Design System — Editorial Signal
 
 ## 1. Visual direction
 
-The interface is direct, commercial, and restrained. Compact headings, generous whitespace, colour fields, and hairlines create structure. It must feel like a credible enterprise service rather than a card-based SaaS template.
+The interface is a contemporary Swiss editorial field applied to high-end B2B: precise, high-trust, and structured like a considered business journal rather than an agency website. Strong typography, generous whitespace, off-axis columns, and 1px rules create structure. Cobalt is an information signal, never decoration.
+
+It must not read as a card-based SaaS template. The failure mode this system exists to prevent is a page that turns every paragraph into a bordered, shadowed, rounded box.
 
 ## 2. Non-negotiable rules
 
-1. Content panels, marketing cards, and tiles use a 4px corner radius (`--c27-radius: 4px`).
-2. Buttons, inputs, selects, and other functional controls use a 2–4px radius (3px default).
-3. Cards and content panels combine a 1px hairline with the single restrained card shadow (`--c27-shadow-card`). Overlays use the stronger overlay shadow (`--c27-shadow-overlay`). Section bands, controls, and icon tiles stay flat.
-4. Gradients are limited to authored neutral atmosphere fields, warm feature-card surfaces, and icon tiles. No gradient text, glass effects, floating badges, decorative pills, hover translation, or hover scaling.
-5. One indigo accent carries actions and state. Supporting tints create page-level rhythm rather than isolated decoration.
-6. A 1px hairline is the default separator.
-7. The hiring-process rail owns the most expressive motion.
+1. **Radius is `0`.** Every surface is a hard rectangle: panels, buttons, chips, fields, images, menus, tiles. There is no rounded variant and no exception.
+2. **There is no card shadow.** Depth comes from colour fields, 1px rules, and offset blocks. The only shadow is `--c27-shadow-overlay`, reserved for menus and listboxes; never apply it to a section or content panel.
+3. **A set of related items is a rule-divided lattice, not a row of boxes.** Use `.c27-rule-grid`. See §6.
+4. **One cobalt accent carries actions, state, indices, and directional marks.** It is a signal colour: never use it to fill a decorative shape.
+5. **A 1px rule is the only separator.** Three weights by structural role — see §3.
+6. Gradients are limited to the hero's two-tone field and the blueprint grid overlays. No gradient text, glass, floating badges, decorative pills, or hover lifts.
+7. **The primary hover idiom is colour + indent + arrow reveal.** Nothing lifts or gains a shadow. A restrained `ImagePanel` crop zoom is the only hover-scale exception; `:active` on a pressable control is the only other scale.
+8. The hiring-process rail owns the most expressive motion.
 
 ### Portable flat subset
 
 When this system is applied to another Cube27 property without a full visual redesign, transfer only these rules:
 
-- Marketing sections, cards, panels, tables, and navigation regions use `0px` corner radius.
-- Buttons, form fields, selects, toggles, and other functional controls use a `2–4px` radius; `3px` is the default.
-- A `1px` hairline supplies structure. Borders must use that property’s existing colour tokens.
-- Cards and content panels carry a 1px hairline and one restrained downward card shadow together; the two are a single elevation step, not competing ones. Menus, mobile navigation, and popovers take the heavier overlay shadow. Section bands, form controls, and icon tiles carry no shadow.
-- Hover and active states may change colour, border, or underline, but never translate, lift, or scale.
-- Decorative pills, floating badges, glass panels, and nested cards are removed unless the component’s meaning requires the shape.
+- Marketing sections, cards, panels, tables, navigation regions, and functional controls use `0` corner radius.
+- A `1px` rule supplies structure. Borders must use that property's existing colour tokens.
+- Content panels carry a fill **or** a rule, never a shadow. Menus, mobile navigation, and popovers take the overlay shadow.
+- Hover and active states may change colour, border, or underline, but never lift or add elevation. A deliberate image crop may use the documented `ImagePanel` zoom when reduced motion disables it.
+- Decorative pills, floating badges, glass panels, and nested cards are removed unless the component's meaning requires the shape.
 - Existing colours, fonts, type scale, copy, information architecture, and media remain unchanged unless the project receives a separate redesign brief.
 
 ## 3. Colour roles
 
-- **Ground:** warm ivory (`#faf9f5`) for the main reading surface.
-- **Surface:** crisp white or pale stone (`#f4f2ee`) for grouped content.
-- **Ink:** softened deep charcoal slate (`#21252d`) for display and body text to reduce eye strain while maintaining > 13:1 WCAG AA contrast.
-- **Secondary ink:** muted neutral slate (`#4d535e`) for supporting copy.
-- **Muted ink:** subtle caption slate (`#626875`).
-- **Accent:** deep indigo (`#3b38d8`) for actions, links, focus, and active process state.
-- **Neutral field:** soft grey linear gradient (`#f7f7f5` to `#ebebe8`) for transition regions. Primary marketing heroes use a stronger asymmetric indigo-and-stone light field, one broad geometric light plane, and extremely fine monochrome grain. Structural separation below them comes from spacing and colour fields rather than decorative guide lines.
-- **Deep field:** soft indigo tint (`#e8e6fb`) with ink text (`#21252d`, 12.54:1) for the process rail, conversion sections, and the footer. A step deeper than the violet micro-tint so it still separates from ground, and in the accent's own hue family. Its own text ramp lives on `--c27-on-deep*`.
-- **Supporting fields:** restrained, monochromatic soft micro-tints (violet, mint, peach, sky) for subtle section differentiation without loud multi-color gradients.
-- **Feature surface:** a pale stone vertical gradient used on selected marketing cards.
+Every ratio below is measured, not estimated. Recompute before changing a value.
+
+- **Ground:** warm paper (`#f7f5ef`) — the main reading surface.
+- **Surface:** white (`#ffffff`) for pills, menus, and overlay surfaces.
+- **Surface 2:** warm grey (`#e8e9e5`) — the alternating band tone.
+- **Hero:** lavender (`#e9eafa`) — the hero's right-hand field only.
+- **Deep:** lavender (`#e6e9fb`) for the process rail, the final CTA, and the capability panel. It is a **light** tint, so its text ramp (`--c27-on-deep*`) mirrors the ink ramp rather than inverting it. Measured on it: 13.46 / 5.60 / 4.88 / 4.92.
+- **Ink:** deep navy-slate (`#12203a`), with `#4f5c73` and `#59657a` beneath it. Measured minimum across all five grounds: 13.31 / 5.53 / 4.83.
+- **Accent — Signal Cobalt (`#284bff`):** actions, links, focus, active state, index numerals, eyebrow squares, directional marks. 5.44 on ground and 5.93 for white-on-cobalt, so it is safe as both a fill and as text. `--c27-accent-d` (`#173bcf`, 8.19 on white) is the hover and pressed step.
+- **Rules:** `--c27-line` (`#d3d8e0`) for list rows and control edges, `--c27-line-2` (`#c8ced9`) for column dividers, `--c27-line-3` (`#b7becc`) for the rule that opens a grid. These are deliberately stronger than a decorative hairline because they do the work a card border and shadow used to do.
+- **Line control (`#737e95`):** the single bottom rule identifying a form field. It sits between the fill above and the surface below so it must clear 3:1 against **both** (WCAG 1.4.11) — measured 3.46 on the fill, 3.74 on ground, 4.08 on surface, 3.38 on deep.
+- **Footer (`#18223c`):** the one dark band, and only ever the footer — it closes the document rather than continuing the light rhythm, so it is never used as a section tone. Its ramp (`--c27-on-footer*`) inverts the ink ramp: measured on it, 15.75 / 8.71 / 5.58, with the link hover (`#aebcff`) at 8.26 and the wordmark numeral (`#de8abe`) at 6.39. Cobalt measures 2.65 there, so the focus ring steps up to `--c27-on-footer-accent`.
+- **Image caption (`#12203a`):** the bar under a photograph. It sits below the frame, not over it, so it never covers the image and the fill is solid: 16.23 for white text, 10.34 for the index.
 - **Danger:** reserved for validation and errors.
+
+> The reference palette this system is derived from uses `#68748a`, `#8390a4`, and `#718097` for its 9–10px uppercase labels. Those measure 3.5–3.9 on this ground and **fail AA**. They were rejected; use the ink ramp.
 
 All combinations meet WCAG AA.
 
 ## 4. Typography — The Enterprise Typography Ladder
 
-Section designs follow the typography ladder, not the other way around. Typography cannot increase or decrease on an ad-hoc basis to satisfy local component styling. This is an enterprise application; hierarchy and visual parity are strictly governed.
+Section designs follow the typography ladder, not the other way around. Typography cannot increase or decrease on an ad-hoc basis to satisfy local component styling. Hierarchy and visual parity are strictly governed.
 
-Use the existing local Hauora and Switzer variable fonts:
+Use the local Space Grotesk and DM Sans variable fonts:
 
-- Display & Headings: Hauora, weight 600, tight tracking.
-- Body & Interface copy: Switzer, regular (400) or medium (500) weight.
-- Weight ceiling: 600 across headings, buttons, labels, metrics, and body copy. Do not load or apply 700–900 weights.
+- Display & Headings: Space Grotesk, weight 600, tight tracking.
+- Body & Interface copy: DM Sans, regular (400) or medium (500).
+- Both variable files expose weights 300–700. Components use 400, 500, or 600; 600 is the applied weight ceiling.
 
-### The 9-Tier Hierarchy
+### The 11-tier hierarchy
 
-1. **L1: Display / Hero Title (`--c27-text-display` / `.c27-display` / `h1`)**
-   - Size: `clamp(2.125rem, 4.2vw, 2.75rem)` (34px–44px), line-height 1.05, tracking -0.035em.
-   - Used only for the primary hero `<h1>` on main pages (Home, Why Us, How It Works).
-2. **L2: Page Title (`--c27-text-h1` / `.c27-h1` / `h1`)**
-   - Size: `clamp(1.75rem, 3vw, 2.25rem)` (28px–36px), line-height 1.15, tracking -0.03em.
-   - Used for the primary `<h1>` on subpages, form pages, and system pages (`hire-talent`, `join-talent-network`, `404`, thank-you).
-3. **L3: Section Heading (`--c27-text-h2` / `.c27-h2` / `h2`)**
-   - Size: `clamp(1.875rem, 2.8vw, 2.25rem)` (30px–36px), line-height 1.15, tracking -0.03em.
-   - Used for all major section `<h2>` headings and `SectionHead.astro`. Never resized for individual sections.
-4. **L4: Section Lede (`--c27-text-lede` / `.c27-lede`)**
-   - Size: `clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem)` (17px–19px), line-height 1.6, color `--c27-ink-2`.
-   - Exactly one lede sentence under an H1 or H2. No arbitrary inline clamp overrides allowed.
-5. **L5: Card & Feature Title (`--c27-text-card-title` / `.c27-card-title` / `.c27-h3` / `h3`)**
-   - Size: `1.125rem` (18px), line-height 1.3, tracking -0.02em, font-display, weight 600.
-   - **Unified across ALL cards, feature blocks, timeline items, and grids** (Compliance, Lifecycle, Leadership, Why Us, ProcessRail, How It Works). Card titles do not jump between 17px and 24px across different sections.
-6. **L6: Standalone Prose / Body (`--c27-text-body` / `text-body`)**
-   - Size: `1rem` (16px), line-height 1.6.
-   - Standalone narrative paragraphs, continuous reading copy outside cards.
-7. **L7: Card & Dense Item Body (`--c27-text-body-sm` / `.c27-card-body` / `text-body-sm`)**
-   - Size: `0.9375rem` (15px), line-height 1.55, color `--c27-ink-2`.
-   - **Unified across all card descriptions, list items, phase descriptions, and FAQ answers.**
-8. **L8: Form Label, Caption & Meta (`--c27-text-caption` / `text-caption`)**
-   - Size: `0.8125rem` (13px), line-height 1.4.
-   - Form field labels (weight 600), helper text, badges, footer copyright/meta.
-9. **L9: Data Display Metric (`--c27-text-metric` / `.c27-metric`)**
-   - Size: `clamp(1.75rem, 2.8vw, 2.25rem)` (28px–36px), tabular-nums, weight 600, color `--c27-accent-d`.
-   - Numerical proof statistics.
+1. **L1: Display (`--c27-text-display`, 38–48px / 1.05 / `-.035em`)** — homepage and campaign-scale H1s, capped at 20ch.
+2. **L2: Page title (`--c27-text-h1`, 32–40px / 1.15 / `-.03em`)** — supporting-page H1s, capped at 24ch.
+3. **L3: Section heading (`--c27-text-h2`, 30–40px / 1.15 / `-.03em`)** — H2s and the selected capability statement, capped at 24ch unless a split column supplies the measure.
+4. **L4: Section lede (`--c27-text-lede`, 17–19px / 1.6)** — one short explanatory paragraph, capped at 65ch.
+5. **L5: Feature title (`--c27-text-card-title`, 22px / 1.3 / `-.02em`)** — H2/H3 titles inside ruled groups and compact sections.
+6. **L6: Body (`--c27-text-body`, 16px / 1.55–1.6)** — standalone prose, form values, and interface copy.
+7. **L7: Compact body (`--c27-text-body-sm`, 15px / 1.55–1.65)** — list descriptions and supporting component copy.
+8. **L8: Caption (`--c27-text-caption`, 13px / component-specific leading)** — metadata, form help, and compact annotations.
+9. **L9: Metric (`--c27-text-metric`, 32–40px / 1 / `-.035em`)** — approved proof figures, in cobalt with tabular numerals.
+
+Two tiers were added for the structural marks this system runs on. Neither is prose — never set a sentence at these sizes:
+
+10. **L10: Eyebrow (`--c27-text-label`, 10px / `.15em` / uppercase)** — `.c27-label`, via `Eyebrow.astro`. Names the field a section sits in, opened by an 8×8px solid cobalt square. One per section, two or three words.
+11. **L11: Index rail (`--c27-text-index`, 9px / `.14em` / uppercase)** — `.c27-index` via `IndexRail.astro`, and `.c27-side-label` for the bare variant. Numbers the section's place in the page's argument, with the numeral in cobalt.
+
+### The emphasis clause
+
+Headlines close on a second clause that shifts **colour**, never face. Cobalt (`.c27-emphasis`) is reserved for the page's opening statement — the hero. Everywhere else the clause is quiet ink (`.c27-emphasis-quiet`); the line break alone carries the rhythm.
+
+Keep it upright so emphasis stays structural rather than decorative.
 
 Headings use sentence case and describe an outcome, decision, or capability.
 
 ## 5. Layout
 
-- Maximum content width: approximately 80rem.
-- Main gutter: fluid from 1.25rem to 4rem.
-- Section padding: fluid from 3.5rem to 6rem.
-- Use full-width colour bands, asymmetrical grids, and editorial dividers instead of collections of floating cards.
+- **Full-bleed. There is no container and no max-width wrapper.** Sections run edge to edge and hold their own gutter via `.c27-wrap`.
+- Line length is held by a `max-width` on the paragraph itself, not on an ancestor. This is what lets a section run edge to edge while its prose still sets at a readable measure.
+- `.c27-wrap-narrow` (60rem, centred) is the single exception, for pages that are genuinely one column of text or fields.
+- Main gutter: `clamp(1.25rem, 4.1vw, 5rem)`. Section padding: `clamp(4.5rem, 9vw, 10rem)`.
+- **Layout splits are lopsided**, never 50/50: `7.25fr 5.75fr` (hero), `.8fr 1.2fr` (capability map), `.75fr 1.25fr` (FAQ), `.85fr 1.15fr` (final CTA). Executive search is the exception in kind rather than degree — its copy column is capped at a measure (`44rem`) and the image takes the remaining width, because a fraction there outgrew its own text.
+- **Section heads are the one 50/50 split**, and deliberately so — see §6.
+- **Nothing is centred.** An off-axis header is what makes a page read as an editorial field rather than a stack of marketing blocks. `SectionHead` offers `split` (default) and `stack`; there is no centred variant.
+- **Cap the column, not the text.** Where a column is sized as a viewport fraction but its contents carry a `max-width` measure, the difference pools as dead space against the right edge on wide screens. Size the track to the content instead.
+- Breakpoints: layout collapses at `56.25rem` (900px) and `32.5rem` (520px). **`.c27-rule-grid` collapses on its own thresholds** — `63.999rem` (1024px) for 4/3 columns → 2, and `40rem` (640px) → 1 — because four columns are already cramped well above 900px. Both sets are load-bearing; check all four.
 - Mobile order follows reading priority, never desktop decoration.
 
 ## 6. Components
 
+### Section heads
+
+Every section opens the same way, through `SectionHead`. One pattern, no exceptions — the capability map had its own topline and executive search stacked an index rail on top of an eyebrow, and side by side they read as three different systems.
+
+- **One label per section.** An `IndexRail` — a cobalt numeral and the name of the field, running in document order across the page. Never an index and an eyebrow together; `Eyebrow` is for sections that have no place in the numbered argument (the hero, the closing CTA).
+- **A 50/50 split.** Heading in the left half flush to the left gutter, note in the right half flush to the right, `align-items: end`. This is the one place the system splits evenly: both halves close on a gutter, so nothing pools in between.
+- **The heading fills its half** — the ladder's 24ch cap is lifted in the split variant. With every head on the same grid the column is what makes the wrap consistent; a cap inside a half-width column leaves the heading using half of its own half.
+- **The right side is a note, not a lede.** 14px, right-aligned. At lede size it reads as a second headline competing with the first. The reference sets these at 14–15px throughout.
+- `stack` is for heads that are a heading alone, or that sit above a single narrow column. It keeps the 24ch cap and left-aligns the note.
+
+### Rule-divided columns — the card replacement
+
+`.c27-rule-grid` is the core primitive and the reason this system has no card. One rule opens the group, one rule divides each column, and the last column clears both. Padding is asymmetric — nothing on the left, the full gutter on the right — so content sits flush to the rule on its left and the columns read as a single ruled field rather than as separate objects.
+
+Set the desktop column count with `--c27-cols`. The class handles both step-downs (4/3 → 2 → 1) itself, so a consumer never matches Tailwind breakpoints to the rule logic.
+
+### Filled panels
+
+`.c27-panel` is a colour field holding a full sub-layout: no border, no shadow, no radius — the fill is the whole treatment.
+
 ### Buttons
 
-Primary buttons use solid indigo, white text, 3px radius, and a colour-only hover/pressed state. Secondary actions use text links or hairline buttons. Buttons never lift or scale.
-
-### Content panels
-
-Padding is a token, not a per-panel choice: `--c27-pad-card-sm` for dense rails,
-`--c27-pad-card` for the standard card, `--c27-pad-card-lg` for panels holding a
-full sub-layout. Reach for the `.c27-card*` classes rather than re-assembling
-fill, hairline, shadow and padding as utilities.
-
-Panels use 4px rounded corners, a fill or hairline, and deliberate padding. A page should not turn every paragraph into a card.
+`primary` is a solid cobalt fill with white text. `line` is a ruled outline. `link` is a ruled text link — the underline is a real border so it sits at a controlled distance from the baseline rather than through the descenders — and is the only element that moves its arrow (3px on hover). All variants press to `scale(.97)` on `:active`.
 
 ### Elevation hierarchy
 
-1. **Page and section:** colour field only. Never a shadow.
-2. **Inline panel or card:** fill, a 1px hairline, and `--c27-shadow-card`. All three together, applied consistently — a card surface that carries the hairline without the shadow reads as a different level than the card beside it, which is the failure mode to watch for.
-3. **Functional control** — button, input, select, chip: fill and 1px boundary only. Controls stay flat so the card they sit on remains the raised object.
-4. **Selected or interactive state:** existing accent fill or border; no movement.
-5. **Overlay:** existing surface fill, 1px boundary where useful, and `--c27-shadow-overlay`.
+1. **Page and section:** colour field only. Never a shadow, never a border box.
+2. **Content panel:** a fill (`.c27-panel`) **or** a rule. Not both plus a shadow.
+3. **Grouped items:** rules, via `.c27-rule-grid`.
+4. **Functional control** — button, input, select, chip: fill and/or 1px boundary. Flat.
+5. **Selected or interactive state:** colour and indent. No movement.
+6. **Overlay:** surface fill, 1px boundary, and `--c27-shadow-overlay`.
 
-The card shadow is deliberately slight and directional so the top edge stays crisp. Do not reach for the overlay shadow on a card, and do not introduce a third shadow value.
+### Image panels
 
-**Grid-lattice cards.** Where cards form a contiguous lattice sharing borders (Compliance, the _why-us_ proof rows), the shared hairlines are the lattice and each cell still takes the card shadow. Do not add a full border per cell — that doubles the seam.
+Photography is evidence, not decoration: a hard rectangle flush to the grid, carrying a contained label that ties the people in it to the process being described. `ImagePanel.astro` composes a dark caption bar, a cobalt corner chip, and one corner mark — either the tight coordinate grid or the cobalt bracket. `caption` and `chip` both occupy the bottom edge; use one or the other. Required dimensions establish the frame's intrinsic aspect ratio and reserve space before the image loads; callers with a definite editorial crop may override that ratio with `auto`.
 
-### Icons and standards
+### Competency coordinates
 
-Icon tiles come in three sizes, each with a fixed glyph size. Pick a pair; do
-not interpolate.
+`.c27-blueprint` lays a 68px cobalt grid at 8% behind an editorial field, masked so it fades out by 48% and never competes with copy set over it. `.c27-rule-mark` is the masthead flag: a 6×84px solid cobalt bar opening a page.
 
-| Tile                | Glyph | Used for                              |
-| ------------------- | ----- | ------------------------------------- |
-| `size-11` (2.75rem) | 20px  | Card and list icons — the default     |
-| `size-12` (3rem)    | 24px  | Feature cards and process nodes       |
-| `size-14` (3.5rem)  | 26px  | The single lead icon in a large panel |
+### Icons
 
-Functional icons use restrained violet, blue, green, or orange accents on softly graded icon tiles. Compliance responsibilities use clear names with supporting context, never seals, badges, or trust-mark treatments.
+Icons sit directly on the ground at 24px in cobalt. **There are no icon tiles.** The graded tile behind an icon was the last surviving piece of the card system and it made every list item look like a widget.
+
+### Capability panel
+
+The selected function's panel opens on its statement — no index inside it, because the numbered rail beside it already carries the position and marks the selected one. The metric sits beside the statement as a **tag**: a white chip holding a scope descriptor and what it covers. It annotates the statement rather than competing with it, so it is set at card-title size, not metric size.
+
+A metric is a scope descriptor — `24/7`, `1→N`, `360°`, `C-level` — never a quantity we have delivered. Anything a reader could take as a tally of our work is an evidence claim and belongs in `data/proof.ts`, behind the approval path (PRODUCT.md, "Evidence on Hand").
 
 ### Forms
 
-**Fields are wells, not boxes.** A `--c27-field-fill` tint with one 1px bottom
-rule in `--c27-line-control`, no top or side border, and radius on the top
-corners only. A boxed field was tried and rejected: four dark sides on fifteen
-stacked inputs reads as a grid of cages on a page whose whole character is flat
-hairlines.
+**A form is part of the page field, never a card placed on top of it.** The shell has no fill, inset padding, enclosing border, radius, or shadow. One stronger top rule opens the region and the submit area closes with the same rule.
 
-The fill carries the visual read — a field looks like a field at a glance. The
-bottom rule is what formally identifies it as a control, and because it sits
-between the fill above and the card below it must clear 3:1 against **both**
-(WCAG 1.4.11). The decorative `--c27-line` hairline cannot do this job at all;
-it measures 1.31 on white.
+**Controls are open ruled lines at rest.** Each has one 1px bottom rule in `--c27-line-control`, no top or side border, square corners, and a transparent background. On focus, `--c27-field-fill` creates a subtle active well and the rule turns cobalt, thickened with an inset shadow rather than a wider border so nothing shifts while tabbing.
 
-Focus lifts the fill to white and turns the rule accent, thickened with an inset
-shadow rather than a wider border so nothing shifts by a pixel while tabbing.
+Labels use the display face at 11px, uppercase with `0.1em` tracking. Entered values use the body face at 16px. Related controls may share columns, with a compact 24px row gap and individual baselines keeping them legible as fields rather than a spreadsheet. Multi-select choices use a rule-divided grid; selection is shown with the accent tint and text, not a pill.
 
-Buttons and chips keep the 3px radius on all corners and a 1px boundary — they
-are pressable objects, not wells. Everything else holds: generous target height,
-explicit labels, visible focus, inline help, grouped section rhythm, and
-validation copy that is concise and actionable.
-
-**Third-party widgets are a layout risk the tokens cannot reach.** The Turnstile
-iframe has a 300px minimum width and is the only fixed-width element in either
-form, which put both into horizontal scroll below a ~388px viewport until it was
-switched to its 150px compact size there. Any embedded widget needs checking at
-320px in a real browser; a source-level read of the grid cannot see it.
+**Third-party widgets are a layout risk the tokens cannot reach.** The Turnstile iframe has a 300px minimum width and is the only fixed-width element in either form. Any embedded widget needs checking at 320px in a real browser; a source-level read of the grid cannot see it.
 
 ### Hiring-process rail
 
@@ -166,20 +166,25 @@ Every phase is present in the DOM. Desktop uses a vertical spine with scroll-lin
 
 ## 7. Motion
 
-- Entry motion: opacity with no more than 16px translation.
+- Entry: opacity with no more than 16px translation, `--c27-ease`, 500ms.
+- Interaction: 160ms on `--c27-ease-out` (`cubic-bezier(.23,1,.32,1)`).
+- Hover: colour, a 10px indent, and a revealed arrow. Never elevation. The image crop zoom below is the sole hover-scale exception.
+- `:active` presses to `scale(.97)` over 160ms.
+- Image panels scale to 1.025 over 700ms on hover; that is the only scale in the system.
 - Process progression: colour and line-length changes tied to viewport position.
-- Duration: 160ms for controls and 500ms for entry/progress.
 - No autoplay, infinite motion, parallax, or decorative loops.
-- `prefers-reduced-motion` removes transitions and smooth scrolling.
+- `prefers-reduced-motion` removes transitions, the image zoom, and smooth scrolling.
 
 ## 8. Accessibility and resilience
 
 - Maintain visible focus and logical keyboard order.
+- Tablists implement what their role promises: roving tabindex, arrow keys with wraparound, and `aria-controls`/`aria-labelledby` wired both ways.
 - Use semantic headings and landmarks.
 - Interactive controls expose current state without relying on colour alone.
 - Ensure 44px minimum interactive targets where practical.
-- Preserve content and navigation without JavaScript.
-- Test at narrow mobile, standard mobile, tablet, and desktop widths.
+- Preserve content and navigation without JavaScript — every capability panel renders unhidden.
+- Test at 320, 375, 520, **640**, 768, 900, **1024**, 1280, and 1920. 640 and 1024 are where `.c27-rule-grid` collapses; the layout breakpoints alone do not cover them.
+- **Exercise every state, not just the default one.** A width sweep of the capability map only ever measures the first function — the other six panels ship `hidden`, so their content is never laid out and an overflow in one of them will not show up.
 
 ## 9. Writing inside the interface
 

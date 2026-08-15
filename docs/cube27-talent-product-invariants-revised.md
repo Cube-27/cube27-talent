@@ -97,15 +97,14 @@ The words “nine steps,” numbered stages, and count-based process claims are 
 
 ## Design invariants
 
-1. Marketing surfaces and section boundaries are square.
-2. Functional controls may use only 2–4px corner radii.
-3. Colour fields and hairlines establish hierarchy; content cards do not use shadows.
-4. Shadows are reserved for genuine overlays.
-5. One indigo accent carries actions, links, focus, and active state.
-6. Selective surface gradients follow the design system. No gradient text, decorative pills, hover lifts, hover scaling, or autoplay carousels.
-7. Meaningful motion is concentrated in the hiring-process rail and restrained entry transitions.
-8. All content remains readable without JavaScript and with reduced motion.
-9. Contrast, focus visibility, keyboard navigation, and responsive readability are not traded for style.
+1. Marketing surfaces, section boundaries, and functional controls are square.
+2. Colour fields and hairlines establish hierarchy; content panels do not use shadows.
+3. Shadows are reserved for genuine overlays.
+4. One cobalt accent carries actions, links, focus, and active state.
+5. Selective surface gradients follow the design system. No gradient text, decorative pills, hover lifts, or autoplay carousels. The documented image-panel crop zoom is the only hover-scale exception.
+6. Meaningful motion is concentrated in the hiring-process rail, image crop zoom, and restrained entry transitions.
+7. All content remains readable without JavaScript and with reduced motion.
+8. Contrast, focus visibility, keyboard navigation, and responsive readability are not traded for style.
 
 ## Change control
 

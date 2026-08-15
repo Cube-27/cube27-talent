@@ -4,9 +4,7 @@ import { SITE_CONFIG, ROUTES } from "@/site-config";
 const year = new Date().getFullYear();
 ---
 
-<footer
-  class="site-footer border-t border-c27-line-deep bg-c27-deep text-body-sm text-c27-on-deep-2"
->
+<footer class="site-footer bg-c27-footer text-body-sm text-c27-on-footer-2">
   <div class="c27-wrap py-12">
     <div class="grid gap-10 md:grid-cols-[minmax(0,1.4fr)_1fr_1fr]">
       <div>
@@ -23,8 +21,8 @@ const year = new Date().getFullYear();
             class="size-9"
           />
           <span
-            class="font-display text-lg font-extrabold tracking-[0.04em] text-c27-on-deep"
-            >CUBE<span class="text-c27-brand-27-on-deep">27</span> | Talent</span
+            class="font-display text-lg font-semibold tracking-[0.04em] text-c27-on-footer"
+            >CUBE<span class="text-c27-on-footer-brand-27">27</span> | Talent</span
           >
         </a>
         <p class="mt-4 max-w-[42ch] leading-relaxed">
@@ -34,7 +32,7 @@ const year = new Date().getFullYear();
 
       <div>
         <h2
-          class="mb-3 font-display text-body-sm font-semibold text-c27-on-deep"
+          class="mb-3 font-display text-body-sm font-semibold text-c27-on-footer"
         >
           Work with us
         </h2>
@@ -42,26 +40,27 @@ const year = new Date().getFullYear();
           <li>
             <a
               href={ROUTES.hire}
-              class="no-underline hover:text-c27-on-deep-accent"
+              class="no-underline hover:text-c27-on-footer-accent"
               >Build your team</a
             >
           </li>
           <li>
             <a
               href={ROUTES.how}
-              class="no-underline hover:text-c27-on-deep-accent">How we hire</a
+              class="no-underline hover:text-c27-on-footer-accent"
+              >How we hire</a
             >
           </li>
           <li>
             <a
               href={ROUTES.whyUs}
-              class="no-underline hover:text-c27-on-deep-accent">Why us</a
+              class="no-underline hover:text-c27-on-footer-accent">Why us</a
             >
           </li>
           <li>
             <a
               href={ROUTES.join}
-              class="no-underline hover:text-c27-on-deep-accent">For talent</a
+              class="no-underline hover:text-c27-on-footer-accent">For talent</a
             >
           </li>
         </ul>
@@ -69,7 +68,7 @@ const year = new Date().getFullYear();
 
       <div>
         <h2
-          class="mb-3 font-display text-body-sm font-semibold text-c27-on-deep"
+          class="mb-3 font-display text-body-sm font-semibold text-c27-on-footer"
         >
           Company
         </h2>
@@ -77,25 +76,25 @@ const year = new Date().getFullYear();
           <li>
             <a
               href={SITE_CONFIG.organization.parentSite}
-              class="no-underline hover:text-c27-on-deep-accent">cube27.com</a
+              class="no-underline hover:text-c27-on-footer-accent">cube27.com</a
             >
           </li>
           <li>
             <a
               href={ROUTES.privacy}
-              class="no-underline hover:text-c27-on-deep-accent">Privacy</a
+              class="no-underline hover:text-c27-on-footer-accent">Privacy</a
             >
           </li>
           <li>
             <a
               href={ROUTES.terms}
-              class="no-underline hover:text-c27-on-deep-accent">Terms</a
+              class="no-underline hover:text-c27-on-footer-accent">Terms</a
             >
           </li>
           <li>
             <a
               href={`mailto:${SITE_CONFIG.organization.email}`}
-              class="no-underline hover:text-c27-on-deep-accent"
+              class="no-underline hover:text-c27-on-footer-accent"
               >{SITE_CONFIG.organization.email}</a
             >
           </li>
@@ -104,7 +103,7 @@ const year = new Date().getFullYear();
     </div>
 
     <p
-      class="mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-c27-line-deep pt-5 text-caption text-c27-on-deep-3"
+      class="mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-c27-line-footer pt-5 text-caption text-c27-on-footer-3"
     >
       <span>&copy; {year} {SITE_CONFIG.organization.legalName}</span>
       <span

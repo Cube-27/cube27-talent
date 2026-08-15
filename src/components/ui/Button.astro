@@ -1,17 +1,21 @@
 ---
+import Icon from "./Icon.astro";
+
 /**
- * The only button in the system. Design system §5.1.
+ * The only button in the system.
  *
- * Nothing here transforms on hover — design system rule 1. Colour and border
- * carry the entire interaction, and no variant has a shadow: a button is a
- * flat fill against its ground.
+ * Every surface here is a hard rectangle with no shadow: a button is a flat
+ * fill or a rule against its ground. Colour carries the hover state. The one
+ * movement permitted anywhere in the system is `:active` — a pressable object
+ * should acknowledge the press — plus the 3px arrow nudge on the `link`
+ * variant, which reinforces direction rather than decorating it.
  */
 interface Props {
   href?: string;
   type?: "button" | "submit";
-  variant?: "primary" | "line" | "ghost";
-  size?: "md" | "sm" | "header";
-  arrow?: boolean;
+  variant?: "primary" | "line" | "link";
+  size?: "md" | "header";
+  arrow?: boolean | "right" | "up-right" | "down-right";
   class?: string;
   id?: string;
   disabled?: boolean;
@@ -29,49 +33,56 @@ const {
 } = Astro.props;
 
 const base =
-  "group inline-flex items-center gap-2.5 whitespace-nowrap rounded-c27-sm border font-display font-semibold no-underline cursor-pointer transition-[background-color,border-color,color] duration-[var(--c27-dur-fast)] ease-[var(--c27-ease)] disabled:cursor-not-allowed disabled:opacity-60 disabled:pointer-events-none";
+  "group inline-flex items-center whitespace-nowrap font-display font-semibold no-underline cursor-pointer transition-[background-color,border-color,color,transform] duration-[var(--c27-dur-fast)] ease-[var(--c27-ease-out)] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-60 disabled:pointer-events-none";
 
 const variants = {
-  // One accent value serves as fill and as text elsewhere: white on
-  // --c27-accent is 6.46:1, and the hover step goes darker (8.56:1), never
-  // lighter.
-  primary: "border-transparent bg-c27-accent text-white hover:bg-c27-accent-d",
-  line: "border-c27-line bg-c27-surface text-c27-ink hover:border-c27-accent hover:bg-c27-accent-soft hover:text-c27-accent-d",
-  ghost:
-    "border-transparent bg-transparent text-c27-ink-2 hover:bg-c27-surface-2 hover:text-c27-ink",
-  // There was an `on-deep` variant here — a white fill for the charcoal band.
-  // The deep field is now a light tint, so the accent fill reads on it like it
-  // reads everywhere else, and a second action colour would have been one more
-  // thing to keep in sync for no gain.
+  // White on --c27-accent measures 5.93:1; the hover step goes darker
+  // (8.19:1), never lighter.
+  primary:
+    "gap-2.5 border border-transparent bg-c27-accent text-c27-on-fill hover:bg-c27-accent-d",
+  line: "gap-2.5 border border-c27-line-control bg-transparent text-c27-ink hover:border-c27-accent hover:text-c27-accent-d",
+  // A ruled text link, not a box: the underline is a real border so it sits at
+  // a controlled distance from the baseline rather than through the descenders.
+  link: "gap-2.5 border-b border-current pb-[3px] text-c27-ink hover:text-c27-accent-d",
 };
 
 // The compact header size preserves breathing room in the navigation bar;
-// default buttons retain the 44px tap-target floor.
+// default buttons retain the 44px tap-target floor. `link` opts out of the
+// box sizes entirely — it is text, so padding would break its alignment with
+// the copy above it.
 const sizes = {
   md: "min-h-12 px-5.5 py-3 text-[0.9375rem]",
-  sm: "min-h-11 px-4.5 py-2.5 text-[0.875rem]",
   header: "min-h-[2.625rem] px-4 py-2 text-[0.875rem]",
 };
 
-const cls = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
+const cls = `${base} ${variants[variant]} ${
+  variant === "link" ? "text-[0.875rem]" : sizes[size]
+} ${className}`;
 
-// No hover transform on the arrow either. A sliding arrow was the last
-// survivor of the old system, and keeping it would have made rule 1 a rule
-// with an exception — which is the same as not having it. The arrow still
-// carries the direction; it just does it without moving.
-const arrowCls = "font-mono";
+const arrowName =
+  arrow === true || arrow === "right" ? "arrow-right" : `arrow-${arrow}`;
+// The arrow tracks the label it sits beside. At the compact header size an
+// 18px mark reads as an icon stuck onto the button rather than as punctuation
+// at the end of the text.
+const arrowSize = variant === "link" ? 17 : size === "header" ? 16 : 18;
+// Only the ruled text link moves its arrow. On a filled button the whole
+// object already responds to the press, so a second moving part is noise.
+const arrowCls =
+  variant === "link"
+    ? "flex-none transition-transform duration-[var(--c27-dur-fast)] ease-[var(--c27-ease-out)] group-hover:translate-x-[3px]"
+    : "flex-none";
 ---
 
 {
   href ? (
     <a href={href} class={cls} id={id}>
       <slot />
-      {arrow && <span class={arrowCls}>&rarr;</span>}
+      {arrow && <Icon name={arrowName} size={arrowSize} class={arrowCls} />}
     </a>
   ) : (
     <button type={type} class={cls} id={id} disabled={disabled}>
       <slot />
-      {arrow && <span class={arrowCls}>&rarr;</span>}
+      {arrow && <Icon name={arrowName} size={arrowSize} class={arrowCls} />}
     </button>
   )
 }

@@ -3,27 +3,17 @@ import Icon from "@/components/ui/Icon.astro";
 import { LIFECYCLE } from "@/data/process";
 ---
 
-<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+<div class="c27-rule-grid" style="--c27-cols:4">
   {
     LIFECYCLE.map((item, index) => (
-      <article
-        class="c27-card-shadow c27-rise flex flex-col justify-start border border-c27-line bg-c27-surface p-5 sm:p-6"
-        style={`--c27-d:${index * 60}ms`}
-      >
-        <span
-          class="c27-tile-accent grid size-10 place-items-center border border-c27-accent/15 text-c27-accent"
-          aria-hidden="true"
-        >
-          <Icon name={item.icon} size={20} />
-        </span>
-        <div class="mt-4">
-          <h3 class="c27-card-title font-semibold text-c27-ink">
-            {item.title}
-          </h3>
-          <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
-            {item.body}
-          </p>
-        </div>
+      <article class="c27-rise" style={`--c27-d:${index * 60}ms`}>
+        <Icon name={item.icon} size={24} class="text-c27-accent" />
+        <h3 class="c27-card-title mt-4 font-semibold text-c27-ink">
+          {item.title}
+        </h3>
+        <p class="mt-2 max-w-[34ch] text-body-sm leading-relaxed text-c27-ink-2">
+          {item.body}
+        </p>
       </article>
     ))
   }
