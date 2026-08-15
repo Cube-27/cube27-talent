@@ -1,7 +1,9 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/ui/Section.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
 import Button from "@/components/ui/Button.astro";
+import Eyebrow from "@/components/ui/Eyebrow.astro";
 import Icon from "@/components/ui/Icon.astro";
 import Compliance from "@/components/sections/Compliance.astro";
 import FinalCta from "@/components/sections/FinalCta.astro";
@@ -54,173 +56,107 @@ const HIRING_STANDARDS = [
 
 <Layout title={title} description={description} jsonLd={jsonLd}>
   <Section
-    class="c27-sky-field -mt-[4.5rem] pt-[calc(var(--c27-pad-section)+4.5rem)]"
-    bordered
+    class="c27-blueprint -mt-[4.5rem] pt-[calc(var(--c27-pad-section)+4.5rem)]"
   >
-    <div
-      class="grid gap-[clamp(2.25rem,7vw,6rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(24rem,0.95fr)] lg:items-center"
-    >
+    <div class="why-hero">
       <div class="c27-rise">
-        <h1 class="c27-display max-w-[15ch]">
+        <Eyebrow>Operator-led hiring</Eyebrow>
+        <h1 class="c27-display mt-6 max-w-[15ch]">
           Built for teams where every hire matters
         </h1>
-        <p class="c27-lede-lg mt-7">
+      </div>
+      <div class="c27-rise why-hero-aside" style="--c27-d:80ms">
+        <p class="c27-lede">
           Enterprise leadership experience and evidence-led hiring discipline
           shape every team we build.
         </p>
-        <div class="mt-8">
-          <Button href={ROUTES.hire} variant="primary" arrow
-            >Build your team</Button
-          >
-        </div>
-      </div>
-
-      <aside
-        class="c27-card-shadow c27-card-pad c27-rise border border-c27-line bg-c27-surface"
-        style="--c27-d:80ms"
-      >
-        <h2 class="c27-card-title font-semibold">Experience behind the work</h2>
-        <ul class="mt-6 border-t border-c27-line sm:mt-7">
-          {
-            OPERATOR_PROOF.map((item) => (
-              <li class="grid grid-cols-[2.75rem_minmax(0,1fr)] items-center gap-4 border-b border-c27-line py-4 sm:py-5">
-                <span
-                  class="c27-tile-accent grid size-10 place-items-center border border-c27-accent/15 text-c27-accent"
-                  aria-hidden="true"
-                >
-                  <Icon name={item.icon} size={20} />
-                </span>
-                <p class="c27-card-title font-semibold text-c27-ink">
-                  {item.title}
-                </p>
-              </li>
-            ))
-          }
-        </ul>
-        <p class="mt-6 text-body-sm leading-relaxed text-c27-ink-2">
-          That operator perspective informs how roles are defined, candidates
-          are assessed, and teams are supported after selection.
-        </p>
-      </aside>
-    </div>
-  </Section>
-
-  <Section id="operator-proof">
-    <div class="c27-rise">
-      <div
-        class="grid gap-7 border-b border-c27-line pb-[clamp(2.5rem,5vw,4rem)] lg:grid-cols-[minmax(0,0.8fr)_minmax(28rem,1.2fr)] lg:items-end"
-      >
-        <h2 class="c27-h2">Leadership experience behind every search</h2>
-        <p class="c27-lede">
-          We approach hiring as operators who have been accountable for the
-          teams and functions being built.
-        </p>
-      </div>
-
-      <div class="mt-8 grid gap-4 md:grid-cols-3">
-        {
-          OPERATOR_PROOF.map((item, index) => (
-            <article
-              class="c27-card-shadow c27-rise flex flex-col justify-start border border-c27-line bg-c27-surface p-6"
-              style={`--c27-d:${index * 60}ms`}
-            >
-              <span
-                class="c27-tile-accent grid size-10 place-items-center border border-c27-accent/15 text-c27-accent"
-                aria-hidden="true"
-              >
-                <Icon name={item.icon} size={20} />
-              </span>
-              <div class="mt-4">
-                <h3 class="c27-card-title font-semibold text-c27-ink">
-                  {item.title}
-                </h3>
-                <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
-                  {item.body}
-                </p>
-              </div>
-            </article>
-          ))
-        }
+        <Button href={ROUTES.hire} variant="primary" arrow class="mt-8">
+          Build your team
+        </Button>
       </div>
     </div>
   </Section>
 
-  <Section id="hiring-standards" tone="deep" bordered>
-    <div class="c27-rise">
-      <div
-        class="grid gap-7 border-b border-c27-line-deep pb-[clamp(2.5rem,5vw,4rem)] lg:grid-cols-[minmax(0,0.85fr)_minmax(28rem,1.15fr)] lg:items-end"
-      >
-        <h2 class="c27-h2 text-c27-on-deep">Evidence-led hiring, end to end</h2>
-        <p class="c27-lede text-c27-on-deep-2">
-          AI can assist sourcing and screening. People review the evidence and
-          make every assessment and hiring decision.
-        </p>
-      </div>
+  <Section id="operator-proof" tone="surface">
+    <SectionHead
+      heading="Leadership experience behind every search"
+      lede="We approach hiring as operators who have been accountable for the teams and functions being built."
+    />
 
-      <div class="relative mt-[clamp(2.5rem,5vw,4rem)]">
-        <div
-          class="absolute left-6 right-6 top-6 hidden h-px bg-c27-line-deep lg:block"
-          aria-hidden="true"
-        >
-        </div>
-        <ol class="grid gap-8 lg:grid-cols-3 lg:gap-12">
-          {
-            HIRING_STANDARDS.map((item) => (
-              <li class="relative">
-                <span
-                  class="relative z-10 grid size-12 place-items-center rounded-c27 border border-c27-line-deep bg-c27-deep text-c27-on-deep-accent"
-                  aria-hidden="true"
-                >
-                  <Icon name={item.icon} size={24} />
-                </span>
-                <h3 class="c27-card-title mt-6 font-semibold text-c27-on-deep">
-                  {item.title}
-                </h3>
-                <p class="mt-3 max-w-[36ch] text-body-sm leading-relaxed text-c27-on-deep-2">
-                  {item.body}
-                </p>
-              </li>
-            ))
-          }
-        </ol>
-      </div>
+    <div class="c27-rule-grid" style="--c27-cols:3">
+      {
+        OPERATOR_PROOF.map((item, index) => (
+          <article class="c27-rise" style={`--c27-d:${index * 60}ms`}>
+            <Icon name={item.icon} size={24} class="text-c27-accent" />
+            <h3 class="c27-card-title mt-4 font-semibold text-c27-ink">
+              {item.title}
+            </h3>
+            <p class="mt-2 max-w-[34ch] text-body-sm leading-relaxed text-c27-ink-2">
+              {item.body}
+            </p>
+          </article>
+        ))
+      }
     </div>
+
+    <p
+      class="c27-rise mt-[clamp(2rem,4vw,3rem)] max-w-[58ch] text-body-sm leading-relaxed text-c27-ink-2"
+    >
+      That operator perspective informs how roles are defined, candidates are
+      assessed, and teams are supported after selection.
+    </p>
   </Section>
 
-  <Section id="compliance" tone="surface" bordered>
+  <Section id="hiring-standards" tone="deep">
+    <SectionHead
+      heading="Evidence-led hiring, end to end"
+      lede="AI can assist sourcing and screening. People review the evidence and make every assessment and hiring decision."
+      invert
+    />
+
+    <ol class="c27-rule-grid" style="--c27-cols:3">
+      {
+        HIRING_STANDARDS.map((item, index) => (
+          <li class="c27-rise" style={`--c27-d:${index * 60}ms`}>
+            <span class="why-standard-index" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <Icon
+              name={item.icon}
+              size={24}
+              class="mt-5 text-c27-on-deep-accent"
+            />
+            <h3 class="c27-card-title mt-4 font-semibold text-c27-on-deep">
+              {item.title}
+            </h3>
+            <p class="mt-2 max-w-[34ch] text-body-sm leading-relaxed text-c27-on-deep-2">
+              {item.body}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </Section>
+
+  <Section id="compliance" tone="surface">
     <Compliance />
   </Section>
 
-  <Section tone="surface" bordered>
-    <div
-      class="c27-rise grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(30rem,1.2fr)] lg:items-end"
-    >
-      <div>
-        <h2 class="c27-h2">A track record built over time</h2>
-        <p class="c27-lede mt-5">
-          Approved scale metrics from the work behind our hiring practice.
-        </p>
-      </div>
-      <dl
-        class="c27-card-shadow grid overflow-hidden rounded-c27 border border-c27-line bg-c27-surface sm:grid-cols-3"
-      >
-        {
-          VERIFIED_PROOF.map((point, index) => (
-            <div
-              class:list={[
-                "c27-card-pad-sm grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-c27-line bg-c27-surface sm:block sm:border-b-0",
-                index > 0 && "sm:border-l",
-              ]}
-            >
-              <dt class="text-body-sm leading-relaxed text-c27-ink-2">
-                {point.label}
-              </dt>
-              <dd class="c27-metric sm:mt-3">{point.value}</dd>
-            </div>
-          ))
-        }
-      </dl>
-    </div>
+  <Section>
+    <SectionHead
+      heading="A track record built over time"
+      lede="Approved scale metrics from the work behind our hiring practice."
+    />
+    <dl class="c27-rule-grid" style="--c27-cols:3">
+      {
+        VERIFIED_PROOF.map((point, index) => (
+          <div class="c27-rise" style={`--c27-d:${index * 60}ms`}>
+            <dt class="c27-side-label">{point.label}</dt>
+            <dd class="c27-metric mt-3">{point.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
   </Section>
 
   <FinalCta
@@ -228,3 +164,32 @@ const HIRING_STANDARDS = [
     body="Tell us the roles, standards, and outcomes that matter."
   />
 </Layout>
+
+<style>
+  .why-hero {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2.25rem, 6vw, 5rem);
+    align-items: end;
+  }
+
+  .why-hero-aside {
+    max-width: 34rem;
+  }
+
+  .why-standard-index {
+    display: block;
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-label);
+    font-weight: 600;
+    letter-spacing: var(--c27-track-index);
+    color: var(--c27-on-deep-accent);
+  }
+
+  @media (max-width: 56.25rem) {
+    .why-hero {
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+    }
+  }
+</style>

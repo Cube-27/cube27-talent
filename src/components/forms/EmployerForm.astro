@@ -22,11 +22,11 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
   method="post"
   action={ENDPOINTS.employerLead}
   novalidate
-  class="c27-card-shadow c27-card-pad grid gap-5 border border-c27-line bg-c27-surface"
+  class="c27-form-shell grid gap-6"
 >
   <noscript>
     <p
-      class="rounded-c27-sm border border-c27-line bg-c27-surface-2 px-4 py-3 text-caption leading-relaxed text-c27-ink-2"
+      class="border border-c27-line bg-c27-surface-2 px-4 py-3 text-caption leading-relaxed text-c27-ink-2"
     >
       Submitting this form needs JavaScript. With it turned off, email
       <a
@@ -44,12 +44,12 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     role="alert"
     hidden
     tabindex="-1"
-    class="rounded-c27-sm border border-c27-danger bg-c27-danger-soft px-4 py-3 text-caption text-c27-danger"
+    class="border border-c27-danger bg-c27-danger-soft px-4 py-3 text-caption text-c27-danger"
   >
   </div>
 
-  <div class="grid gap-4 sm:grid-cols-2">
-    <div class="grid min-w-0 gap-1.5">
+  <div class="c27-form-row grid sm:grid-cols-2">
+    <div class="c27-form-control grid min-w-0 gap-1.5">
       <label for="ef-name" class="text-caption font-semibold">Name</label>
       <input
         id="ef-name"
@@ -62,7 +62,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         class="c27-field h-12"
       />
     </div>
-    <div class="grid min-w-0 gap-1.5">
+    <div class="c27-form-control grid min-w-0 gap-1.5">
       <label for="ef-email" class="text-caption font-semibold">Work email</label
       >
       <input
@@ -78,8 +78,8 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     </div>
   </div>
 
-  <div class="grid gap-4 sm:grid-cols-2">
-    <div class="grid min-w-0 gap-1.5">
+  <div class="c27-form-row grid sm:grid-cols-2">
+    <div class="c27-form-control grid min-w-0 gap-1.5">
       <label for="ef-company" class="text-caption font-semibold">Company</label>
       <input
         id="ef-company"
@@ -92,7 +92,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         class="c27-field h-12"
       />
     </div>
-    <div class="grid min-w-0 gap-1.5">
+    <div class="c27-form-control grid min-w-0 gap-1.5">
       <label for="ef-title" class="text-caption font-semibold">Job title</label>
       <input
         id="ef-title"
@@ -107,8 +107,8 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     </div>
   </div>
 
-  <div class="grid gap-4 sm:grid-cols-3">
-    <div class="grid min-w-0 gap-1.5">
+  <div class="c27-form-row grid sm:grid-cols-3">
+    <div class="c27-form-control grid min-w-0 gap-1.5">
       <label for="ef-country" class="text-caption font-semibold">Country</label>
       <input
         id="ef-country"
@@ -121,13 +121,13 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         class="c27-field h-12"
       />
     </div>
-    <div class="grid min-w-0 gap-1.5">
+    <div class="c27-form-control grid min-w-0 gap-1.5">
       <label for="ef-hires" class="text-caption font-semibold">Positions</label>
       <Select id="ef-hires" name="hires" required>
         {HIRE_COUNTS.map((n) => <option selected={n === "2–5"}>{n}</option>)}
       </Select>
     </div>
-    <div class="grid min-w-0 gap-1.5">
+    <div class="c27-form-control grid min-w-0 gap-1.5">
       <label for="ef-start" class="text-caption font-semibold"
         >Target start</label
       >
@@ -137,8 +137,8 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     </div>
   </div>
 
-  <div class="grid gap-4 sm:grid-cols-2">
-    <div class="grid min-w-0 gap-1.5">
+  <div class="c27-form-row grid sm:grid-cols-2">
+    <div class="c27-form-control grid min-w-0 gap-1.5">
       <label for="ef-engagement" class="text-caption font-semibold"
         >Engagement</label
       >
@@ -146,7 +146,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
         {ENGAGEMENTS.map((e) => <option>{e}</option>)}
       </Select>
     </div>
-    <div class="grid min-w-0 gap-1.5">
+    <div class="c27-form-control grid min-w-0 gap-1.5">
       <label for="ef-arrangement" class="text-caption font-semibold"
         >Work arrangement</label
       >
@@ -156,12 +156,12 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     </div>
   </div>
 
-  <fieldset class="grid min-w-0 gap-1.5">
-    <legend class="mb-1 text-caption font-semibold">Role families</legend>
-    <div class="flex flex-wrap gap-2">
+  <fieldset class="grid min-w-0 gap-3">
+    <legend class="text-caption font-semibold">Role families</legend>
+    <div class="c27-choice-grid grid sm:grid-cols-2 sm:gap-x-8">
       {
         ROLE_FAMILIES.map((family, i) => (
-          <label class="relative flex min-h-11 cursor-pointer select-none items-center rounded-c27-sm border border-transparent bg-c27-field-fill px-3.5 text-caption transition-colors hover:border-c27-line-control has-[:checked]:border-c27-accent has-[:checked]:bg-c27-accent-soft has-[:checked]:font-semibold has-[:checked]:text-c27-accent-d has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-c27-accent">
+          <label class="c27-choice relative flex min-h-11 cursor-pointer select-none items-center px-1 text-caption has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-c27-accent">
             <input
               type="checkbox"
               name="roleFamilies"
@@ -176,7 +176,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
     </div>
   </fieldset>
 
-  <div class="grid min-w-0 gap-1.5">
+  <div class="c27-form-control grid min-w-0 gap-1.5">
     <label for="ef-detail" class="text-caption font-semibold"
       >The requirement</label
     >
@@ -234,7 +234,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
 
   <Turnstile siteKey={siteKey} action="employer-lead" />
 
-  <div class="flex flex-wrap items-center gap-3">
+  <div class="c27-form-actions flex flex-wrap items-center gap-3">
     <Button
       type="submit"
       variant="primary"

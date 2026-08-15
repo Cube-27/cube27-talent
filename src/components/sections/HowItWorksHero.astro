@@ -1,6 +1,7 @@
 ---
 import Icon from "@/components/ui/Icon.astro";
 import Button from "@/components/ui/Button.astro";
+import Eyebrow from "@/components/ui/Eyebrow.astro";
 import { ROUTES } from "@/site-config";
 
 const EVIDENCE = [
@@ -22,57 +23,65 @@ const EVIDENCE = [
 ];
 ---
 
-<section
-  class="c27-sky-field -mt-[4.5rem] border-b border-c27-line pt-[4.5rem]"
->
-  <div class="c27-wrap py-[clamp(2.5rem,4vw,3.5rem)] text-center">
-    <div class="mx-auto max-w-4xl">
-      <h1
-        class="c27-rise c27-display mx-auto max-w-none text-center text-c27-ink"
-      >
-        Hire with proof, not promises
-      </h1>
-      <p class="c27-rise c27-lede-lg mx-auto mt-6">
-        Every shortlisted candidate completes role-specific work and a
-        practitioner interview before reaching your team.
-      </p>
-      <div class="c27-rise mt-7" style="--c27-d:80ms">
-        <Button href={ROUTES.hire} variant="primary" arrow
-          >Build your team</Button
-        >
+<section class="c27-blueprint -mt-[4.5rem] pt-[4.5rem]">
+  <div class="c27-wrap py-[clamp(3rem,5vw,4.5rem)]">
+    <div class="c27-hiw-head">
+      <div class="c27-rise">
+        <Eyebrow>Evidence-led hiring</Eyebrow>
+        <h1 class="c27-display mt-6 max-w-[16ch] text-c27-ink">
+          Hire with proof, not promises
+        </h1>
+      </div>
+      <div class="c27-rise c27-hiw-aside" style="--c27-d:80ms">
+        <p class="c27-lede">
+          Every shortlisted candidate completes role-specific work and a
+          practitioner interview before reaching your team.
+        </p>
+        <Button href={ROUTES.hire} variant="primary" arrow class="mt-7">
+          Build your team
+        </Button>
       </div>
     </div>
 
-    <ul
-      class="mt-[clamp(2.5rem,4vw,3.5rem)] grid gap-4 text-left md:grid-cols-3"
-    >
+    <ul class="c27-rule-grid mt-[clamp(3rem,5vw,4.5rem)]" style="--c27-cols:3">
       {
         EVIDENCE.map((item, index) => (
-          <li
-            class="c27-card-shadow c27-rise flex flex-col justify-start border border-c27-line bg-c27-surface p-5 sm:p-6 text-left"
-            style={`--c27-d:${index * 60}ms`}
-          >
-            <span
-              class="c27-tile-accent grid size-10 place-items-center border border-c27-accent/15 text-c27-accent"
-              aria-hidden="true"
-            >
-              <Icon name={item.icon} size={20} />
-            </span>
-            <div class="mt-4">
-              {/* h2, not h3, despite matching the card grids elsewhere: these
-                  sit directly under the page h1 with no section heading
-                  between, so h3 would skip a level. Heading rank follows
-                  document position, not visual similarity. */}
-              <h2 class="c27-card-title font-semibold text-c27-ink">
-                {item.title}
-              </h2>
-              <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
-                {item.body}
-              </p>
-            </div>
+          <li class="c27-rise" style={`--c27-d:${index * 60}ms`}>
+            <Icon name={item.icon} size={24} class="text-c27-accent" />
+            {/* h2, not h3, despite matching the grids elsewhere: these sit
+                directly under the page h1 with no section heading between, so
+                h3 would skip a level. Heading rank follows document position,
+                not visual similarity. */}
+            <h2 class="c27-card-title mt-4 font-semibold text-c27-ink">
+              {item.title}
+            </h2>
+            <p class="mt-2 max-w-[34ch] text-body-sm leading-relaxed text-c27-ink-2">
+              {item.body}
+            </p>
           </li>
         ))
       }
     </ul>
   </div>
 </section>
+
+<style>
+  .c27-hiw-head {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 4vw;
+    align-items: end;
+  }
+
+  .c27-hiw-aside {
+    max-width: 34rem;
+  }
+
+  @media (max-width: 56.25rem) {
+    .c27-hiw-head {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.75rem;
+      align-items: start;
+    }
+  }
+</style>

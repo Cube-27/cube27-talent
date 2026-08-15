@@ -1,0 +1,79 @@
+---
+/**
+ * A photograph treated as evidence: a hard rectangle flush to the grid,
+ * carrying a contained label that ties the people in it to the process being
+ * described.
+ *
+ * Three optional marks, and a panel takes at most one corner mark since both
+ * `grid` and `bracket` render into the same corner:
+ *   grid     a tight cobalt coordinate mesh over the top-right corner
+ *   bracket  a cobalt corner bracket at portrait scale
+ *   caption  a dark bar directly beneath the frame. It sits below the
+ *            photograph rather than over it, so it never covers the bottom of
+ *            the image and its contrast does not depend on what is behind it
+ *   chip     a cobalt block flush into the bottom-left corner, over the image
+ *
+ * A captioned panel is the frame plus the bar, so size the frame — not the
+ * panel — when a specific aspect ratio is wanted.
+ *
+ * Dimensions are required. They set the frame's intrinsic aspect ratio and
+ * reserve its layout space before the image loads. A caller that supplies a
+ * definite panel height may override `--c27-image-aspect` with `auto`.
+ */
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  eager?: boolean;
+  corner?: "grid" | "bracket" | "none";
+  caption?: string;
+  chip?: string;
+  zoom?: boolean;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  eager = false,
+  corner = "none",
+  caption,
+  chip,
+  zoom = false,
+  class: className = "",
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    "c27-image",
+    zoom && "c27-image-zoom",
+    corner === "grid" && "c27-image-grid",
+    corner === "bracket" && "c27-image-bracket",
+    className,
+  ]}
+  style={`--c27-image-aspect:${width} / ${height}`}
+>
+  <div class="c27-image-frame">
+    <img
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      loading={eager ? "eager" : "lazy"}
+      decoding={eager ? "sync" : "async"}
+      fetchpriority={eager ? "high" : "auto"}
+    />
+    {chip && <div class="c27-image-chip">{chip}</div>}
+  </div>
+  {
+    caption && (
+      <div class="c27-image-caption">
+        <span>{caption}</span>
+      </div>
+    )
+  }
+</div>

@@ -1,0 +1,20 @@
+---
+import Icon from "./Icon.astro";
+
+/**
+ * A white square chip with a cobalt check.
+ *
+ * It lists something that is true, so it has no hover state and is never a
+ * link. Pills read as a set — use them in a wrapped row, never singly.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<span class:list={["c27-pill", className]}>
+  <Icon name="badge-check" size={14} />
+  <slot />
+</span>

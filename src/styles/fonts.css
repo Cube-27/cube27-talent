@@ -1,11 +1,10 @@
 /* Self-hosted variable faces. Both are preloaded in Layout.astro — keep the
    paths in sync with the <link rel="preload"> tags there. Design system §3.
 
-   Both files are SUBSET to Latin. The site is English-only, and the full faces
-   shipped 677 and 385 codepoints for the ~100 characters the copy actually
-   uses — 95 KB on every page, roughly four times the gzipped CSS. Subsetting
-   to the standard Latin range plus the punctuation and arrows used here cut
-   that to 49 KB with no character regression.
+   Both files are SUBSET to Latin. Space Grotesk carries 236 codepoints and DM
+   Sans 222, for a combined 46 KB. Their cmap tables cover every printable
+   character in the built English pages; re-run that coverage check whenever
+   the copy or source fonts change.
 
    Regenerate after replacing a source font, and re-run the coverage check
    before committing — a dropped codepoint renders as tofu, silently:
@@ -24,21 +23,20 @@ U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD 
    win that window; the files are same-origin and cached immutably for a year
    (public/_headers), so repeat views are instant. */
 
-/* Display face: headings, buttons, and the wordmark. The source HauoraGX
-   variable font is converted locally to WOFF2 and covers weights 200–800. */
+/* Display face: headings, buttons, and the wordmark. */
 @font-face {
-  font-family: "Hauora Variable";
-  src: url("/fonts/hauora-variable.woff2") format("woff2-variations");
-  font-weight: 200 800;
+  font-family: "Space Grotesk Variable";
+  src: url("/fonts/space-grotesk-variable.woff2") format("woff2-variations");
+  font-weight: 300 700;
   font-display: optional;
   font-style: normal;
 }
 
 /* Body face. */
 @font-face {
-  font-family: "Switzer Variable";
-  src: url("/fonts/switzer-variable.woff2") format("woff2");
-  font-weight: 300 600;
+  font-family: "DM Sans Variable";
+  src: url("/fonts/dm-sans-variable.woff2") format("woff2-variations");
+  font-weight: 300 700;
   font-display: optional;
   font-style: normal;
 }

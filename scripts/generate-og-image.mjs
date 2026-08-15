@@ -7,20 +7,24 @@
  * Run it again after changing the logo or the background:
  *
  *   node scripts/generate-og-image.mjs
+ *
+ * The PNG source lives beside the script rather than under public/: it is build
+ * input, not a second logo that the deployed site needs to serve.
  */
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { inflateSync, deflateSync, crc32 } from "node:zlib";
 
-const SOURCE = "public/cube27_logo.png";
+const SOURCE = "scripts/assets/cube27_logo.png";
 const OUTPUT = "public/og-image.png";
 const WIDTH = 1200;
 const HEIGHT = 630;
 /**
- * --c27-surface in src/styles/tokens.css. The wordmark is near-black and was
- * drawn for light ground; on the navy field it loses almost all its contrast.
+ * --c27-ground in src/styles/tokens.css — the warm paper the whole site reads
+ * on. The wordmark is near-black and drawn for a light ground, so it holds its
+ * contrast here; it would lose almost all of it on a dark field.
  */
-const BACKGROUND = [0xff, 0xff, 0xff];
+const BACKGROUND = [0xf7, 0xf5, 0xef];
 /**
  * Logo width as a share of the card. The source is only 300px wide, so this is
  * held down to limit upscaling artefacts — link cards render around 500px, at

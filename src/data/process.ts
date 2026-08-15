@@ -51,24 +51,20 @@ export const LIFECYCLE = [
     icon: "search",
     title: "Hiring",
     body: "Search, screen, and assess for the role.",
-    tint: "violet" as const,
   },
   {
     icon: "briefcase",
     title: "Onboarding",
     body: "Bring selected talent into your culture and ways of working.",
-    tint: "mint" as const,
   },
   {
     icon: "shield",
     title: "Payroll and compliance",
     body: "Coordinate contracts, payroll, and applicable local requirements.",
-    tint: "peach" as const,
   },
   {
     icon: "chat",
     title: "Performance support",
     body: "Facilitate reviews against criteria defined with your team.",
-    tint: "sky" as const,
   },
 ];

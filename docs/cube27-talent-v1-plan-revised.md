@@ -98,7 +98,7 @@ Employer fields remain structured around role, scale, start window, engagement, 
 - The first viewport explains the offer and exposes **Build your team**.
 - Every public heading is specific and commercially useful.
 - No count-based hiring-process terminology remains.
-- Marketing surfaces are square; controls use no more than 4px radius.
+- Marketing surfaces and controls are square.
 - The homepage contains no fake product or candidate interface.
 - The three approved metrics appear with exact wording and no unsupported proof appears.
 - All public routes work at mobile and desktop widths with keyboard, reduced motion, and no JavaScript.

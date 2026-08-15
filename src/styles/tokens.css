@@ -2,9 +2,9 @@
    Design tokens — the single source of truth for colour, type,
    spacing, radius, elevation and motion. See docs/design-system.md.
 
-   The system is predominantly flat: elevation is usually a tint or gradient
-   step, with a very slight directional shadow reserved for cards. Nothing
-   lifts on hover. Raw values live on --c27-*.
+   The system is flat and editorial: there is no card shadow and no
+   corner radius. Depth comes from colour fields, 1px rules, and
+   offset blocks. Raw values live on --c27-*.
    Tailwind utilities are generated from the @theme inline block,
    so `bg-c27-surface-2`, `text-c27-ink-2`, `border-c27-line` all
    resolve here. Never hard-code a hex value in a component.
@@ -15,108 +15,108 @@
 
 :root {
   /* --- grounds ---------------------------------------------------
-     A raised surface is a tint step against its ground: white card
-     on a tinted section, tinted card on a white section. The four
-     tints let a set of cards differentiate by colour instead of by
-     elevation — cycle them in order, do not add a fifth. */
-  --c27-ground: #fafaf9;
-  --c27-surface: #ffffff;
-  --c27-surface-2: #f4f4f6;
-  --c27-tint-violet: #f0effe;
-  --c27-tint-mint: #eef5f2;
-  --c27-tint-peach: #fcf4ee;
-  --c27-tint-sky: #f1f3f6;
-  --c27-hero: #f4f4f2;
-  /* The band tone for the process rail, the final CTA and the footer. It is a
-     step deeper than --c27-tint-violet so it still separates from the warm
-     --c27-ground, while staying in the accent's own hue family. Text on it
-     uses the --c27-on-deep ramp below, not the plain ink ramp. */
-  --c27-deep: #e8e6fb;
-
-  /* --- atmospheric surfaces -------------------------------------
-     These are used on a small number of deliberate regions. They do
-     not replace the indigo action fill or the solid charcoal process field. */
-  --c27-gradient-blue: linear-gradient(180deg, #f8f9fa 0%, #edf0f3 100%);
-  --c27-gradient-hero: linear-gradient(
-    145deg,
-    #fbfbf8 0%,
-    #f0effb 48%,
-    #e2e3e8 100%
-  );
-  --c27-sky-glow: rgba(59, 56, 216, 0.18);
-  --c27-sky-light: rgba(255, 255, 255, 0.72);
-  --c27-sky-vignette: rgba(33, 37, 45, 0.085);
-  --c27-sky-plane: rgba(255, 255, 255, 0.42);
-  --c27-sky-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='73' height='79' viewBox='0 0 73 79'%3E%3Cg fill='%2321252d' fill-opacity='.055'%3E%3Ccircle cx='4' cy='7' r='.55'/%3E%3Ccircle cx='21' cy='3' r='.45'/%3E%3Ccircle cx='39' cy='12' r='.5'/%3E%3Ccircle cx='66' cy='6' r='.4'/%3E%3Ccircle cx='12' cy='25' r='.4'/%3E%3Ccircle cx='31' cy='31' r='.55'/%3E%3Ccircle cx='55' cy='23' r='.45'/%3E%3Ccircle cx='70' cy='37' r='.5'/%3E%3Ccircle cx='7' cy='46' r='.5'/%3E%3Ccircle cx='24' cy='55' r='.4'/%3E%3Ccircle cx='46' cy='44' r='.55'/%3E%3Ccircle cx='61' cy='58' r='.4'/%3E%3Ccircle cx='15' cy='72' r='.45'/%3E%3Ccircle cx='37' cy='68' r='.4'/%3E%3Ccircle cx='68' cy='75' r='.5'/%3E%3C/g%3E%3C/svg%3E");
-  --c27-gradient-warm: linear-gradient(180deg, #f8f8fa 0%, #f1f2f6 100%);
-  --c27-gradient-soft: linear-gradient(180deg, #ffffff 0%, #f6f6f8 100%);
-  --c27-tile-accent: linear-gradient(135deg, #f0effe 0%, #e4e2fc 100%);
-  --c27-tile-violet: linear-gradient(135deg, #f0effe 0%, #e4e2fc 100%);
-  --c27-tile-mint: linear-gradient(135deg, #eef5f2 0%, #deede7 100%);
-  --c27-tile-peach: linear-gradient(135deg, #fcf4ee 0%, #f7e6dc 100%);
-  --c27-tile-sky: linear-gradient(135deg, #f0f2f5 0%, #e0e3e7 100%);
+     Five light fields, no dark bands. Separation between sections is
+     a step in tone, never a shadow and never a border box. Cycle
+     ground → surface-2 → deep for page rhythm; --c27-hero and
+     --c27-surface are component fills, not section tones. */
+  --c27-ground: #f7f5ef; /* warm paper — the main reading surface */
+  --c27-surface: #ffffff; /* pills, menus, and overlay surfaces */
+  --c27-surface-2: #e8e9e5; /* warm grey band */
+  --c27-hero: #e9eafa; /* the hero's right-hand lavender field */
+  /* The band tone for the process rail, the final CTA, and the capability
+     panel. Text on it uses the --c27-on-deep ramp below.
+     Measured against the ink ramp: 13.46 / 5.60 / 4.88. */
+  --c27-deep: #e6e9fb;
 
   /* --- ink -------------------------------------------------------
-     Softened charcoal slate tones to avoid pitch-black eye strain while
-     maintaining > 13:1 WCAG AA contrast ratio. */
-  --c27-ink: #21252d;
-  --c27-ink-2: #4d535e;
-  --c27-ink-3: #626875;
+     Deep navy-slate. Measured minimum across all five grounds above:
+     ink 13.31, ink-2 5.53, ink-3 4.83. All clear WCAG AA at every size.
+     Note the reference's own label greys (#68748a, #8390a4, #718097)
+     measure 3.5–3.9 on this ground and were rejected for that reason. */
+  --c27-ink: #12203a;
+  --c27-ink-2: #4f5c73;
+  --c27-ink-3: #59657a;
 
   /* --- accent ----------------------------------------------------
-     One accent, one job: actions, links and active state. */
-  --c27-accent: #3b38d8;
-  --c27-accent-d: #2d29c4;
-  --c27-accent-soft: #eeeefe;
-
-  /* Section-icon accents. These identify service categories, not actions. */
-  --c27-icon-violet: #4f46e5;
-  --c27-icon-green: #0d9488;
-  --c27-icon-orange: #ea580c;
-  --c27-icon-blue: #2563eb;
-  --c27-brand-27: #8d296a;
-  /* The wordmark numeral on the footer. Now that the deep field is light, the
-     brand plum works there directly: 6.45 on --c27-deep. */
-  --c27-brand-27-on-deep: #8d296a;
-
+     Signal Cobalt. One accent, one job: actions, links, active state,
+     index numerals, and the directional marks. It is a signal colour,
+     not decoration — never use it to fill a decorative shape.
+     --c27-accent measures 5.44 on ground and 5.93 white-on-cobalt, so
+     it is safe as both a fill and as text. --c27-accent-d (8.19 on
+     white) is the pressed/hover step. */
+  --c27-accent: #284bff;
+  --c27-accent-d: #173bcf;
+  --c27-accent-soft: #e9edff;
   /* --- lines -----------------------------------------------------
-     A 1px hairline is the default boundary between surfaces. */
-  --c27-line: #e2e0e6;
-  --c27-line-2: #eceae5;
-  /* The hairline inside a deep field. It tracks the ink, not white, because the
-     deep field is a light tint — over --c27-deep it composites to ~#d1cfe2,
-     the same visual weight --c27-line carries over --c27-ground. */
-  --c27-line-deep: rgba(33, 37, 45, 0.12);
-  /* Fields are filled and open-sided: a --c27-field-fill well with one bottom
-     rule, no box. That rule is the only thing identifying the control, and it
-     is adjacent to both the fill above it and the card below, so it clears 3:1
-     against both — 3.48 on white, 3.12 on the fill, 3.31 on ground.
-     WCAG 1.4.11. Never use this as a decorative separator; that is --c27-line. */
-  --c27-line-control: #8b8891;
-  --c27-field-fill: #f4f2ee;
+     A 1px rule is the only separator in this system, and it does the
+     work a card border and shadow used to do — so it is deliberately
+     stronger than the old hairline. Three weights, by structural role. */
+  --c27-line: #d3d8e0; /* default: list rows, control edges */
+  --c27-line-2: #c8ced9; /* column dividers inside a rule grid */
+  --c27-line-3: #b7becc; /* the top rule that opens a rule grid */
+  --c27-line-deep: rgba(18, 32, 58, 0.17); /* rules inside a deep field */
+  /* Form controls are open at rest and use --c27-field-fill only as their
+     active well. The bottom rule must therefore clear 3:1 against both the
+     focus fill and every page surface (WCAG 1.4.11) — measured 3.46 on the
+     fill, 3.74 on ground, 4.08 on surface, 3.38 on deep. Never use the control
+     rule as a decorative separator; that is --c27-line. */
+  --c27-line-control: #737e95;
+  --c27-field-fill: #efece4;
 
   /* --- on deep fields -------------------------------------------
-     The deep field is a light tint, so this ramp mirrors the ink ramp rather
-     than inverting it. Measured on --c27-deep: 12.54 / 6.32 / 4.57. The -3
-     step sets the 13px footer meta line and clears AA with the least room,
-     so re-measure it first if --c27-deep ever moves. */
-  --c27-on-deep: #21252d;
-  --c27-on-deep-2: #4d535e;
-  --c27-on-deep-3: #626875;
-  /* 6.25 on --c27-deep. Link hover and the process progress bar. */
-  --c27-on-deep-accent: #3b38d8;
+     The deep field is a light tint, so this ramp mirrors the ink ramp
+     rather than inverting it. Measured on --c27-deep: 13.46 / 5.60 /
+     4.88 / 4.92. Re-measure all four first if --c27-deep ever moves. */
+  --c27-on-deep: #12203a;
+  --c27-on-deep-2: #4f5c73;
+  --c27-on-deep-3: #59657a;
+  --c27-on-deep-accent: #284bff;
+
+  /* --- footer ----------------------------------------------------
+     The one dark band in the system, and the last thing on every page:
+     it closes the document rather than continuing the light rhythm, so
+     it does not participate in the ground → surface-2 → deep cycle and
+     is never used as a section tone. Its text ramp inverts the ink ramp
+     and is measured on --c27-footer: 15.75 / 8.71 / 5.58, with the link
+     hover at 8.26 and the wordmark numeral at 6.39. Re-measure all five
+     first if --c27-footer ever moves. */
+  --c27-footer: #18223c;
+  --c27-on-footer: #ffffff;
+  --c27-on-footer-2: #b8c1d4;
+  --c27-on-footer-3: #8e9ab4;
+  --c27-on-footer-accent: #aebcff;
+  --c27-on-footer-brand-27: #de8abe;
+  --c27-line-footer: rgba(255, 255, 255, 0.14);
+
+  /* --- image furniture -------------------------------------------
+     The caption bar under a photograph. It sits below the frame rather
+     than over it, so nothing shows through and the fill is solid: white
+     text measures 16.23 on it. */
+  --c27-image-caption: #12203a;
+  /* Text laid directly on a cobalt or caption fill. */
+  --c27-on-fill: #ffffff;
+  /* Competency coordinates: the faint blueprint grid behind editorial
+     fields, and the tighter, brighter grid over image corners. */
+  --c27-grid-line: rgba(40, 75, 255, 0.08);
+  --c27-grid-line-hi: rgba(40, 75, 255, 0.82);
+  --c27-grid-tint: rgba(238, 241, 255, 0.26);
+  /* The cobalt corner bracket on a portrait panel. */
+  --c27-bracket: rgba(40, 75, 255, 0.8);
+  --c27-bracket-fill: rgba(40, 75, 255, 0.11);
+  /* The scrolled header: the ground colour at 93% behind a blur. */
+  --c27-header-fill: rgba(247, 245, 239, 0.93);
 
   /* --- feedback --------------------------------------------------
      The one colour outside the accent, and only because an error must
-     not read as an action. 6.05 on its own tint, 6.57 on white. */
+     not read as an action. 5.91 on its own tint, 6.03 on ground. */
   --c27-danger: #b42318;
-  --c27-danger-soft: #fef3f2;
+  --c27-danger-soft: #fdf0ee;
 
   /* --- type --- */
-  --c27-font-display: "Hauora Variable", ui-sans-serif, system-ui, sans-serif;
-  --c27-font-body: "Switzer Variable", ui-sans-serif, system-ui, sans-serif;
-  --c27-font-mono:
-    ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+  --c27-font-display:
+    "Space Grotesk Variable", "Arial", ui-sans-serif, system-ui, sans-serif;
+  --c27-font-body:
+    "DM Sans Variable", "Arial", ui-sans-serif, system-ui, sans-serif;
 
   /* Enterprise Typography Ladder:
      Level 1: Display / Hero Title (H1)
@@ -127,59 +127,65 @@
      Level 6: Standalone Prose / Body
      Level 7: Card & List Item Body
      Level 8: Form Label, Caption & Meta
-     Level 9: Metric / Statistic Figure */
-  --c27-text-display: clamp(2.125rem, 4.2vw, 2.75rem);
-  --c27-text-h1: clamp(1.75rem, 3vw, 2.25rem);
-  --c27-text-h2: clamp(1.875rem, 2.8vw, 2.25rem);
-  --c27-text-card-title: 1.125rem;
-  --c27-text-h3: 1.125rem;
-  --c27-text-h3-lg: 1.125rem;
+     Level 9: Metric / Statistic Figure
+     Level 10/11: Eyebrow label and index rail (uppercase, tracked) */
+  /* The headline, card-title, and metric tiers are larger than the retired
+     card-grid scale; supporting-copy tiers stay compact for readable density. */
+  --c27-text-display: clamp(2.375rem, 4.6vw, 3rem);
+  --c27-text-h1: clamp(2rem, 3.3vw, 2.5rem);
+  /* The floor stays below --c27-text-h1's so a section heading never outgrows
+     the page title above it at narrow widths. */
+  --c27-text-h2: clamp(1.875rem, 3.1vw, 2.5rem);
+  --c27-text-card-title: 1.375rem;
 
   --c27-text-lede: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
-  --c27-text-lede-lg: var(--c27-text-lede);
   --c27-text-body: 1rem;
   --c27-text-body-sm: 0.9375rem;
   --c27-text-caption: 0.8125rem;
-  --c27-text-metric: clamp(1.75rem, 2.8vw, 2.25rem);
+  --c27-text-metric: clamp(2rem, 3.1vw, 2.5rem);
 
-  /* --- layout --- */
-  --c27-gutter: clamp(1.25rem, 5vw, 4rem);
-  --c27-pad-section: clamp(3.5rem, 6vw, 6rem);
-  --c27-container: 80rem;
+  /* Uppercase marks. These carry structure, not prose — an eyebrow names
+     the field a section sits in, an index numbers it. Never set a sentence
+     at these sizes. */
+  --c27-text-label: 0.625rem; /* 10px eyebrow */
+  --c27-text-index: 0.5625rem; /* 9px index rail / side label */
+  --c27-track-label: 0.15em;
+  --c27-track-index: 0.14em;
+
+  /* --- layout ----------------------------------------------------
+     The system is full-bleed: there is no centred container and no
+     max-width wrapper. Sections run edge to edge and hold their own
+     gutter; line length is controlled with a max-width on the paragraph
+     itself, not on an ancestor. --c27-container-narrow is the single
+     exception, for genuinely measure-bound pages (FAQ, forms, thank-you). */
+  --c27-gutter: clamp(1.25rem, 4.1vw, 5rem);
+  --c27-pad-section: clamp(4.5rem, 9vw, 10rem);
   --c27-container-narrow: 60rem;
 
-  /* Card padding is a token, not a per-component decision.
-       -sm  dense rails — three or four cards across
-       (base) the standard card: a title, a paragraph, maybe an icon
-       -lg  panels holding a full sub-layout */
-  --c27-pad-card-sm: 1.25rem;
-  --c27-pad-card: clamp(1.25rem, 2vw, 1.75rem);
-  --c27-pad-card-lg: clamp(1.5rem, 3vw, 2.75rem);
-
-  /* Functional controls (3px). Marketing surfaces & cards use a 4px radius. */
-  --c27-radius-sm: 3px;
-  --c27-radius: 4px;
+  /* Panel padding is a token, not a per-component decision. */
+  --c27-pad-panel: clamp(1.875rem, 5vw, 4.75rem);
+  /* The gutter between rule-divided columns. The rule sits at the far
+     edge of the padding; the margin re-opens the gap after it. */
+  --c27-rule-gap: clamp(1.25rem, 2.4vw, 2.1875rem);
 
   /* --- elevation -------------------------------------------------
-     Cards use a restrained downward shadow so their top edge stays crisp.
-     Floating UI uses the stronger overlay elevation. */
-  --c27-shadow-card: 0 3px 5px -3px rgba(23, 19, 37, 0.2);
-  --c27-shadow-overlay: 0 8px 28px -12px rgba(23, 19, 37, 0.22);
+     There is no card shadow. A panel is a fill or a rule, never a lifted
+     object. The sole shadow is for menus and listboxes that genuinely float
+     above the page; never put it on a section or content panel. */
+  --c27-shadow-overlay: 0 8px 28px -12px rgba(18, 32, 58, 0.22);
 
   /* --- motion --- */
   --c27-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --c27-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --c27-dur: 500ms;
   --c27-dur-fast: 160ms;
+  --c27-dur-image: 700ms;
 }
 
 @theme inline {
   --color-c27-ground: var(--c27-ground);
   --color-c27-surface: var(--c27-surface);
   --color-c27-surface-2: var(--c27-surface-2);
-  --color-c27-tint-violet: var(--c27-tint-violet);
-  --color-c27-tint-mint: var(--c27-tint-mint);
-  --color-c27-tint-peach: var(--c27-tint-peach);
-  --color-c27-tint-sky: var(--c27-tint-sky);
   --color-c27-hero: var(--c27-hero);
   --color-c27-deep: var(--c27-deep);
 
@@ -190,15 +196,9 @@
   --color-c27-accent: var(--c27-accent);
   --color-c27-accent-d: var(--c27-accent-d);
   --color-c27-accent-soft: var(--c27-accent-soft);
-  --color-c27-icon-violet: var(--c27-icon-violet);
-  --color-c27-icon-green: var(--c27-icon-green);
-  --color-c27-icon-orange: var(--c27-icon-orange);
-  --color-c27-icon-blue: var(--c27-icon-blue);
-  --color-c27-brand-27: var(--c27-brand-27);
-  --color-c27-brand-27-on-deep: var(--c27-brand-27-on-deep);
-
   --color-c27-line: var(--c27-line);
   --color-c27-line-2: var(--c27-line-2);
+  --color-c27-line-3: var(--c27-line-3);
   --color-c27-line-deep: var(--c27-line-deep);
   --color-c27-line-control: var(--c27-line-control);
   --color-c27-field-fill: var(--c27-field-fill);
@@ -208,30 +208,38 @@
   --color-c27-on-deep-3: var(--c27-on-deep-3);
   --color-c27-on-deep-accent: var(--c27-on-deep-accent);
 
+  --color-c27-footer: var(--c27-footer);
+  --color-c27-on-footer: var(--c27-on-footer);
+  --color-c27-on-footer-2: var(--c27-on-footer-2);
+  --color-c27-on-footer-3: var(--c27-on-footer-3);
+  --color-c27-on-footer-accent: var(--c27-on-footer-accent);
+  --color-c27-on-footer-brand-27: var(--c27-on-footer-brand-27);
+  --color-c27-line-footer: var(--c27-line-footer);
+
+  --color-c27-image-caption: var(--c27-image-caption);
+  --color-c27-on-fill: var(--c27-on-fill);
+
   --color-c27-danger: var(--c27-danger);
   --color-c27-danger-soft: var(--c27-danger-soft);
 
   --font-display: var(--c27-font-display);
   --font-body: var(--c27-font-body);
   --font-sans: var(--c27-font-body);
-  --font-mono: var(--c27-font-mono);
 
   --text-display: var(--c27-text-display);
   --text-h1: var(--c27-text-h1);
   --text-h2: var(--c27-text-h2);
   --text-card-title: var(--c27-text-card-title);
-  --text-h3: var(--c27-text-h3);
-  --text-h3-lg: var(--c27-text-h3-lg);
-  --text-lede-lg: var(--c27-text-lede-lg);
   --text-lede: var(--c27-text-lede);
   --text-body: var(--c27-text-body);
   --text-body-sm: var(--c27-text-body-sm);
   --text-caption: var(--c27-text-caption);
   --text-metric: var(--c27-text-metric);
-
-  --radius-c27-sm: var(--c27-radius-sm);
-  --radius-c27: var(--c27-radius);
+  --text-label: var(--c27-text-label);
+  --text-index: var(--c27-text-index);
 
   --shadow-c27-overlay: var(--c27-shadow-overlay);
-  --shadow-c27-card: var(--c27-shadow-card);
+
+  --ease-c27: var(--c27-ease);
+  --ease-c27-out: var(--c27-ease-out);
 }

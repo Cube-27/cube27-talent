@@ -20,13 +20,27 @@ export interface RoleFamily {
   name: string;
   /** Short label for form chips, where the full name is too long. */
   short: string;
-  /** Icon key, resolved by components/ui/Icon.astro. */
-  icon: string;
+  /**
+   * The outcome headline for the family, shown as the capability panel's H2.
+   * States what hiring into this function achieves — never what the function
+   * is. Product principle 1: the commercial outcome before the process.
+   */
+  statement: string;
   /** One-line commercial scope statement for the family. */
   blurb: string;
+  /**
+   * A compact scope descriptor for the panel — "24/7", "1→N", "360°",
+   * "C-level". It states the shape of the coverage a function needs, never a
+   * quantity we have delivered.
+   *
+   * The boundary is countability: a value a reader could take as a tally of our
+   * work ("50+", "200 hires") is an evidence claim, and every one of those has
+   * to be an approved figure routed through data/proof.ts. Descriptive values
+   * carry no such claim and belong here.
+   */
+  metric: string;
+  metricLabel: string;
   roles: string[];
-  /** Tint token suffix. Cycles the four panel tints — design system §2.1. */
-  tint: "violet" | "mint" | "peach" | "sky";
 }
 
 export const ROLE_FAMILIES: RoleFamily[] = [
@@ -34,8 +48,11 @@ export const ROLE_FAMILIES: RoleFamily[] = [
     id: "engineering-product",
     name: "Engineering & Product",
     short: "Engineering",
-    icon: "code",
-    blurb: "Product, platform, application, and product-management talent.",
+    statement: "Build the product team that carries the roadmap.",
+    blurb:
+      "From core platform engineering to the product leaders who shape what gets built next.",
+    metric: "Full-stack",
+    metricLabel: "Build coverage",
     roles: [
       "Frontend",
       "Backend",
@@ -44,14 +61,16 @@ export const ROLE_FAMILIES: RoleFamily[] = [
       "Product management",
       "Business analysis",
     ],
-    tint: "violet",
   },
   {
     id: "cloud-infrastructure",
     name: "Cloud, Infrastructure & Reliability",
     short: "Cloud & Infra",
-    icon: "cloud",
-    blurb: "Cloud, platform, infrastructure, and reliability talent.",
+    statement: "Put resilient foundations under the work that matters.",
+    blurb:
+      "Cloud, DevOps, security, and infrastructure specialists ready for the environment you operate.",
+    metric: "24/7",
+    metricLabel: "Critical systems",
     roles: [
       "DevOps",
       "Cloud engineering",
@@ -59,28 +78,32 @@ export const ROLE_FAMILIES: RoleFamily[] = [
       "Platform engineering",
       "Infrastructure automation",
     ],
-    tint: "mint",
   },
   {
     id: "data-ai",
     name: "Data & AI",
     short: "Data & AI",
-    icon: "chart",
-    blurb: "Data engineering, analytics, machine learning, and AI talent.",
+    statement: "Turn scattered signals into teams that create leverage.",
+    blurb:
+      "Data, analytics, machine learning, and AI expertise assessed against the work in front of you.",
+    metric: "AI+",
+    metricLabel: "Specialist focus",
     roles: [
       "Data engineering",
       "Analytics engineering",
       "Machine learning",
       "AI engineering",
     ],
-    tint: "peach",
   },
   {
     id: "quality-delivery",
     name: "Quality & Delivery",
     short: "Quality",
-    icon: "check",
-    blurb: "Quality engineering, automation, and delivery talent.",
+    statement: "Deliver with the confidence of a team built for release.",
+    blurb:
+      "Test, delivery, and programme talent that brings clarity from definition through deployment.",
+    metric: "1→N",
+    metricLabel: "Team readiness",
     roles: [
       "QA",
       "Test automation",
@@ -88,14 +111,16 @@ export const ROLE_FAMILIES: RoleFamily[] = [
       "Performance testing",
       "Delivery and project management",
     ],
-    tint: "violet",
   },
   {
     id: "design-experience",
     name: "Design & Digital Experience",
     short: "Design",
-    icon: "pen",
-    blurb: "Product design, research, content, and commerce talent.",
+    statement: "Make the customer experience a competitive advantage.",
+    blurb:
+      "Product design and research talent that connects strong thinking to useful outcomes.",
+    metric: "360°",
+    metricLabel: "Experience layers",
     roles: [
       "Product design",
       "UX and UI",
@@ -103,15 +128,16 @@ export const ROLE_FAMILIES: RoleFamily[] = [
       "Content platforms",
       "Commerce platforms",
     ],
-    tint: "mint",
   },
   {
     id: "business-operations",
     name: "Business & Operations",
     short: "Operations",
-    icon: "briefcase",
+    statement: "Staff the functions that keep commitments moving.",
     blurb:
-      "Commercial, customer, finance, people, and business operations talent.",
+      "Revenue, customer, finance, and people operators who hold the day-to-day together as you scale.",
+    metric: "End-to-end",
+    metricLabel: "Operating cover",
     roles: [
       "Sales and revenue operations",
       "Customer success",
@@ -120,14 +146,16 @@ export const ROLE_FAMILIES: RoleFamily[] = [
       "Procurement and supply chain",
       "Business operations",
     ],
-    tint: "sky",
   },
   {
     id: "leadership",
     name: "Leadership",
     short: "Leadership",
-    icon: "compass",
-    blurb: "CTO, CIO, COO, VP, and functional leadership search.",
+    statement: "Appoint the people who set the direction.",
+    blurb:
+      "Executive search for the leaders who own a function and the mandate that comes with it.",
+    metric: "C-level",
+    metricLabel: "Search mandates",
     roles: [
       "CTO",
       "CIO",
@@ -136,7 +164,6 @@ export const ROLE_FAMILIES: RoleFamily[] = [
       "Head of Product",
       "Head of Data",
     ],
-    tint: "peach",
   },
 ];
 

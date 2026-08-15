@@ -44,6 +44,13 @@
     outline-offset: 3px;
   }
 
+  /* Cobalt measures 2.65 on the footer's dark band and would fail the 3:1
+     floor for a focus indicator (WCAG 1.4.11), so the ring steps up to the
+     footer's own accent there. */
+  .site-footer :focus-visible {
+    outline-color: var(--c27-on-footer-accent);
+  }
+
   /* The skip-link target is programmatically focusable but never a tab stop,
      so the ring would only ever appear on that jump. */
   main[tabindex="-1"]:focus {
@@ -58,29 +65,31 @@
 
 @layer components {
   /* --- navigation header ------------------------------------------- */
-  #site-header {
-    background-color: transparent;
+  #site-header.c27-header {
+    background-color: var(--c27-ground);
     border-bottom-color: transparent;
-    box-shadow: none;
     transition:
-      background-color var(--c27-dur-fast) ease,
-      border-color var(--c27-dur-fast) ease,
-      box-shadow var(--c27-dur-fast) ease;
+      background-color var(--c27-dur-fast) var(--c27-ease-out),
+      border-color var(--c27-dur-fast) var(--c27-ease-out);
   }
 
   #site-header.is-scrolled,
   #site-header:has(#mobile-menu[open]) {
-    background-color: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom-color: var(--c27-line);
-    box-shadow: 0 4px 20px -4px rgba(23, 19, 37, 0.05);
+    background-color: var(--c27-header-fill);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: var(--c27-line-deep);
   }
 
-  /* --- container --------------------------------------------------- */
+  /* --- container ----------------------------------------------------
+     The system is full-bleed. `.c27-wrap` supplies a gutter and nothing
+     else: no max-width, no centring. Line length is held by a max-width
+     on the paragraph itself, which lets a section run edge to edge while
+     its prose still sets at a readable measure.
+
+     `.c27-wrap-narrow` is the one exception, for pages that are genuinely
+     a single column of text or fields — FAQ, forms, thank-you. */
   .c27-wrap {
-    max-width: var(--c27-container);
-    margin-inline: auto;
     padding-inline: var(--c27-gutter);
   }
 
@@ -118,9 +127,7 @@
     max-width: 24ch;
   }
 
-  .c27-card-title,
-  .c27-h3,
-  .c27-h3-lg {
+  .c27-card-title {
     font-family: var(--c27-font-display);
     font-size: var(--c27-text-card-title);
     font-weight: 600;
@@ -128,28 +135,15 @@
     letter-spacing: -0.02em;
   }
 
-  .c27-lede,
-  .c27-lede-lg {
+  .c27-lede {
     font-size: var(--c27-text-lede);
     line-height: 1.6;
     color: var(--c27-ink-2);
     max-width: 65ch;
   }
 
-  .c27-body {
-    font-size: var(--c27-text-body);
-    line-height: 1.6;
-    color: var(--c27-ink);
-  }
-
-  .c27-card-body {
-    font-size: var(--c27-text-body-sm);
-    line-height: 1.55;
-    color: var(--c27-ink-2);
-  }
-
   .c27-metric {
-    color: var(--c27-accent-d);
+    color: var(--c27-accent);
     font-family: var(--c27-font-display);
     font-size: var(--c27-text-metric);
     font-weight: 600;
@@ -158,84 +152,390 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* --- card surfaces ------------------------------------------------
-     Design system §6: fill, hairline and card shadow are ONE elevation
-     step and always travel together. These classes carry all three plus
-     the padding token, so a card is a class rather than four utilities
-     re-typed per component. */
-  .c27-card {
-    background: var(--c27-surface-2);
-    border: 1px solid var(--c27-line);
-    border-radius: var(--c27-radius);
-    box-shadow: var(--c27-shadow-card);
-    padding: var(--c27-pad-card);
+  /* --- emphasis clause ----------------------------------------------
+     Headlines in this system close on a second clause that shifts colour
+     rather than face. Cobalt is reserved for the page's opening statement
+     — the hero — where it reads as the brand signal. Everywhere else the
+     clause is quiet: same ink, the line break alone carries the rhythm.
+     Keep it upright so emphasis stays structural rather than decorative. */
+  .c27-emphasis {
+    font-style: normal;
+    color: var(--c27-accent);
   }
 
-  /* On a tinted section the card inverts: white on colour. */
-  .c27-card-on-tint {
+  .c27-emphasis-quiet {
+    color: var(--c27-ink);
+  }
+
+  /* --- uppercase marks ----------------------------------------------
+     Two structural labels, neither of which is prose. The eyebrow names
+     the field a section sits in and carries a solid cobalt square; the
+     index rail numbers the section and colours its numeral. */
+  .c27-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-label);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: var(--c27-track-label);
+    text-transform: uppercase;
+    color: var(--c27-ink-3);
+  }
+
+  .c27-label::before {
+    content: "";
+    flex: none;
+    width: 8px;
+    height: 8px;
+    background: var(--c27-accent);
+  }
+
+  .c27-index {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-index);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: var(--c27-track-index);
+    text-transform: uppercase;
+    color: var(--c27-ink-3);
+  }
+
+  .c27-index > :first-child {
+    color: var(--c27-accent);
+  }
+
+  /* A bare tracked label with no numeral and no square — the "we help
+     with" rail head, and column captions inside a rule grid. */
+  .c27-side-label {
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-index);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: var(--c27-track-index);
+    text-transform: uppercase;
+    color: var(--c27-ink-3);
+  }
+
+  /* --- rule-divided columns -----------------------------------------
+     This is the card replacement, and the reason the system has no card.
+     A set of related items is a lattice of 1px rules, not a row of lifted
+     boxes: one rule opens the group, one rule divides each column, and the
+     last column clears both. Content sits flush to the rule on its left,
+     so the padding is asymmetric — nothing on the left, the full gutter on
+     the right — which is what makes the columns read as a single ruled
+     field rather than as separate objects.
+
+     Set the desktop column count with `--c27-cols`; the class handles both
+     step-downs itself so a consumer never has to match Tailwind's
+     breakpoints to the rule logic. */
+  .c27-rule-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--c27-cols, 3), minmax(0, 1fr));
+    row-gap: clamp(1.75rem, 3vw, 2.5rem);
+    border-top: 1px solid var(--c27-line-3);
+  }
+
+  .c27-rule-grid > * {
+    padding: clamp(1.25rem, 2.2vw, 1.5625rem) var(--c27-rule-gap) 0 0;
+    margin-right: var(--c27-rule-gap);
+    border-right: 1px solid var(--c27-line-2);
+  }
+
+  .c27-rule-grid > :last-child {
+    padding-right: 0;
+    margin-right: 0;
+    border-right: 0;
+  }
+
+  @media (max-width: 63.999rem) {
+    .c27-rule-grid {
+      grid-template-columns: repeat(min(var(--c27-cols, 3), 2), minmax(0, 1fr));
+    }
+
+    .c27-rule-grid > :nth-child(2n) {
+      padding-right: 0;
+      margin-right: 0;
+      border-right: 0;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .c27-rule-grid {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 0;
+    }
+
+    .c27-rule-grid > * {
+      padding: 1.375rem 0;
+      margin-right: 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--c27-line-2);
+    }
+
+    .c27-rule-grid > :last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+  }
+
+  /* --- numbered list ------------------------------------------------
+     Rows divided by rules, with the numeral in its own narrow gutter. The
+     description re-enters at column 2 so it aligns under the title rather
+     than under the number. */
+  .c27-numbered {
+    border-top: 1px solid var(--c27-line-2);
+  }
+
+  .c27-numbered > li {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    padding: 0.875rem 0;
+    border-bottom: 1px solid var(--c27-line-2);
+  }
+
+  .c27-numbered-index {
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-label);
+    font-weight: 600;
+    letter-spacing: var(--c27-track-index);
+    color: var(--c27-accent);
+    /* Optically aligns the 10px numeral to the cap height of the 14px title
+       beside it. */
+    padding-top: 3px;
+  }
+
+  .c27-numbered > li > p {
+    grid-column: 2;
+    margin-top: 0.25rem;
+    font-size: var(--c27-text-caption);
+    line-height: 1.5;
+    color: var(--c27-ink-2);
+  }
+
+  /* --- filled panel --------------------------------------------------
+     A colour field holding a full sub-layout. No border, no shadow, no
+     radius — the fill is the whole treatment. */
+  .c27-panel {
+    background: var(--c27-deep);
+    padding: var(--c27-pad-panel);
+  }
+
+  /* --- pill ----------------------------------------------------------
+     A white square chip with a cobalt check. Not a badge and not a button:
+     it lists something that is true, so it has no hover state. */
+  .c27-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3125rem;
+    padding: 0.4375rem 0.5625rem;
     background: var(--c27-surface);
-    border: 1px solid var(--c27-line);
-    border-radius: var(--c27-radius);
-    box-shadow: var(--c27-shadow-card);
-    padding: var(--c27-pad-card);
+    color: var(--c27-ink);
+    font-size: var(--c27-text-caption);
+    line-height: 1.2;
   }
 
-  /* Panels holding a full sub-layout rather than a title and a paragraph. */
-  .c27-card-lg {
-    padding: var(--c27-pad-card-lg);
+  .c27-pill svg {
+    flex: none;
+    color: var(--c27-accent);
   }
 
-  /* Cards whose borders come from a shared grid lattice supply their own
-     fill and border; this adds only the elevation and padding. */
-  .c27-card-shadow {
-    box-shadow: var(--c27-shadow-card);
-    border-radius: var(--c27-radius);
+  /* --- competency coordinates ----------------------------------------
+     A faint blueprint grid behind an editorial field, faded out to the
+     right so it never competes with copy set over it. */
+  .c27-blueprint {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
   }
 
-  .c27-card-pad {
-    padding: var(--c27-pad-card);
+  .c27-blueprint::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(90deg, var(--c27-grid-line) 1px, transparent 1px),
+      linear-gradient(180deg, var(--c27-grid-line) 1px, transparent 1px);
+    background-size: 68px 68px;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.2),
+      transparent 48%
+    );
+    mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.2), transparent 48%);
   }
 
-  .c27-card-pad-sm {
-    padding: var(--c27-pad-card-sm);
+  /* The masthead flag: a solid cobalt bar that opens a page. */
+  .c27-rule-mark {
+    display: block;
+    width: 6px;
+    height: 84px;
+    background: var(--c27-accent);
   }
 
-  /* Interactive cards shift fill and border. They do not move — rule 1. */
-  .c27-card-link {
-    transition:
-      background-color var(--c27-dur-fast) ease,
-      border-color var(--c27-dur-fast) ease;
+  /* --- image panels ---------------------------------------------------
+     Photography is treated as evidence, not decoration: a hard rectangle,
+     flush to the grid, carrying a contained label that ties the person in
+     it to the process being described. */
+  /* A panel is the frame plus whatever sits under it, stacked: the caption bar
+     is a row of the panel, not an overlay, so it never covers the bottom of the
+     photograph. The frame is the cropping window — it owns the overflow and any
+     aspect ratio — and the panel is as tall as the two together. */
+  .c27-image {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    isolation: isolate;
+    background: var(--c27-deep);
   }
 
-  .c27-card-link:hover {
-    background: var(--c27-accent-soft);
-    border-color: var(--c27-accent);
+  .c27-image-frame {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    aspect-ratio: var(--c27-image-aspect);
+    overflow: hidden;
   }
 
-  /* --- form fields --------------------------------------------------
-     Fields are wells, not boxes: a tinted fill with one bottom rule and no
-     side or top border. The fill separates the field from the white card at a
-     glance; the rule is what formally identifies it as a control, so it clears
-     3:1 against the fill above it and the card below (WCAG 1.4.11).
+  .c27-image-frame > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-     A boxed field was tried and rejected — four dark sides on fifteen stacked
-     inputs reads as a grid of cages on a page whose whole character is flat
-     hairlines. Focus thickens the rule with an inset shadow rather than a
-     wider border, so nothing shifts by a pixel when you tab through. */
+  .c27-image-zoom img {
+    transition: transform var(--c27-dur-image) var(--c27-ease-out);
+  }
+
+  .c27-image-zoom:hover img {
+    transform: scale(1.025);
+  }
+
+  /* Dark bar, full width, directly beneath the frame. */
+  .c27-image-caption {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.8125rem 1.125rem;
+    background: var(--c27-image-caption);
+    color: var(--c27-on-fill);
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-label);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Cobalt chip, flush into the bottom-left corner of the frame. */
+  .c27-image-chip {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 0.8125rem 1rem;
+    background: var(--c27-accent);
+    color: var(--c27-on-fill);
+    font-family: var(--c27-font-display);
+    font-size: var(--c27-text-label);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* A tighter, brighter coordinate grid over the top-right corner of an
+     image. Screen blending keeps it legible on a dark photograph and
+     invisible on a blown-out one. */
+  .c27-image-grid::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 42%;
+    height: 42%;
+    opacity: 0.72;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    background-color: var(--c27-grid-tint);
+    background-image:
+      linear-gradient(90deg, var(--c27-grid-line-hi) 1px, transparent 1px),
+      linear-gradient(180deg, var(--c27-grid-line-hi) 1px, transparent 1px);
+    background-size: 17px 17px;
+  }
+
+  /* A cobalt corner bracket — the same motif at portrait scale. */
+  .c27-image-bracket::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    pointer-events: none;
+    border-left: 1px solid var(--c27-bracket);
+    border-bottom: 1px solid var(--c27-bracket);
+    background: var(--c27-bracket-fill);
+  }
+
+  /* --- editorial forms ----------------------------------------------
+     The form is part of the page field, not a card placed on top of it. One
+     strong rule opens the region; each control supplies its own baseline.
+     Labels use the display face as compact navigational metadata while entered
+     values stay large and relaxed in the body face. */
+  .c27-form-shell {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--c27-line-3);
+    background: transparent;
+  }
+
+  .c27-form-shell :is(label[for], legend) {
+    color: var(--c27-ink-2);
+    font-family: var(--c27-font-display);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .c27-form-row {
+    column-gap: clamp(1.25rem, 2.5vw, 2rem);
+    row-gap: 1.5rem;
+  }
+
+  .c27-form-control {
+    align-content: start;
+  }
+
+  /* Controls are open at rest and become a subtle well only while active.
+     Focus thickens the cobalt baseline with an inset shadow, so keyboard
+     navigation never shifts the layout by a pixel. */
   .c27-field {
     width: 100%;
     min-width: 0;
-    padding: 0.625rem 0.875rem;
-    font-size: var(--c27-text-body-sm);
+    padding: 0.5rem 0;
+    font-size: var(--c27-text-body);
+    line-height: 1.4;
     color: var(--c27-ink);
-    background: var(--c27-field-fill);
+    background: transparent;
     border: 0;
     border-bottom: 1px solid var(--c27-line-control);
-    border-radius: var(--c27-radius-sm) var(--c27-radius-sm) 0 0;
+    border-radius: 0;
     transition:
-      background-color var(--c27-dur-fast) ease,
-      border-color var(--c27-dur-fast) ease,
-      box-shadow var(--c27-dur-fast) ease;
+      background-color var(--c27-dur-fast) var(--c27-ease-out),
+      border-color var(--c27-dur-fast) var(--c27-ease-out),
+      box-shadow var(--c27-dur-fast) var(--c27-ease-out);
   }
 
   .c27-field::placeholder {
@@ -243,13 +543,13 @@
   }
 
   .c27-field:hover:not(:focus) {
-    border-bottom-color: var(--c27-ink-3);
+    border-bottom-color: var(--c27-accent);
   }
 
   .c27-field:focus,
   .c27-field:focus-visible {
     outline: none;
-    background: var(--c27-surface);
+    background: var(--c27-field-fill);
     border-bottom-color: var(--c27-accent);
     box-shadow: inset 0 -1px 0 var(--c27-accent);
   }
@@ -257,140 +557,96 @@
   /* The upgraded select trigger is a button, so it focuses on :focus-visible
      only — but it must look identical to a field at rest. */
   .c27-field[aria-expanded="true"] {
-    background: var(--c27-surface);
+    background: var(--c27-field-fill);
     border-bottom-color: var(--c27-accent);
     box-shadow: inset 0 -1px 0 var(--c27-accent);
   }
 
-  /* --- authored colour surfaces ------------------------------------ */
-  .c27-gradient-blue {
-    background: var(--c27-gradient-blue);
+  /* An FAQ is a heading and a long ruled list, which is exactly the shape the
+     split grid is for: the heading holds the narrow column and the answers get
+     the wide one. Centring it in a narrow wrapper would be the only centred
+     block on an otherwise edge-to-edge page. */
+  .c27-faq-split {
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr;
+    gap: 7vw;
+    align-items: start;
   }
 
-  .c27-sky-field {
-    position: relative;
-    isolation: isolate;
-    overflow: clip;
-    background-color: var(--c27-hero);
-    background-image: var(--c27-sky-grain), var(--c27-gradient-hero);
-    background-repeat: repeat, no-repeat;
-    background-size:
-      73px 79px,
-      100% 100%;
+  .c27-faq-split > :first-child {
+    margin-bottom: 0;
   }
 
-  .c27-sky-field::before {
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    content: "";
-    pointer-events: none;
-    background:
-      radial-gradient(
-        ellipse 100% 50% at 50% 0%,
-        var(--c27-sky-glow),
-        transparent 66%
-      ),
-      linear-gradient(
-        128deg,
-        transparent 0%,
-        transparent 15%,
-        var(--c27-sky-light),
-        transparent 62%
-      ),
-      radial-gradient(
-        ellipse 85% 72% at 100% 100%,
-        transparent 42%,
-        var(--c27-sky-vignette) 100%
-      );
-  }
-
-  .c27-sky-field::after {
-    position: absolute;
-    z-index: -1;
-    inset: -8% -58% 6% 36%;
-    content: "";
-    pointer-events: none;
-    background: linear-gradient(
-      152deg,
-      var(--c27-sky-plane) 0%,
-      transparent 72%
-    );
-    clip-path: polygon(18% 0, 100% 0, 78% 100%, 0 100%);
-  }
-
-  @media (min-width: 40rem) {
-    .c27-sky-field::before {
-      background:
-        radial-gradient(
-          ellipse 62% 68% at 52% 6%,
-          var(--c27-sky-glow),
-          transparent 68%
-        ),
-        linear-gradient(
-          112deg,
-          transparent 0%,
-          transparent 25%,
-          var(--c27-sky-light),
-          transparent 58%
-        ),
-        radial-gradient(
-          ellipse 70% 82% at 100% 100%,
-          transparent 42%,
-          var(--c27-sky-vignette) 100%
-        );
-    }
-
-    .c27-sky-field::after {
-      inset: -18% -12% -24% 54%;
-      clip-path: polygon(24% 0, 100% 0, 76% 100%, 0 100%);
+  @media (max-width: 56.25rem) {
+    .c27-faq-split {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem;
     }
   }
 
-  .c27-feature-card {
-    background: var(--c27-gradient-warm);
-    border: 1px solid var(--c27-line);
-    border-radius: var(--c27-radius);
-    box-shadow: var(--c27-shadow-card);
+  .c27-choice-grid {
+    border-top: 1px solid var(--c27-line-2);
   }
 
-  .c27-soft-panel {
-    background: var(--c27-gradient-soft);
-    border: 1px solid var(--c27-line);
-    border-radius: var(--c27-radius);
-    box-shadow: var(--c27-shadow-card);
+  .c27-choice {
+    border-bottom: 1px solid var(--c27-line-2);
+    background: transparent;
+    transition:
+      background-color var(--c27-dur-fast) var(--c27-ease-out),
+      color var(--c27-dur-fast) var(--c27-ease-out);
   }
 
-  .c27-tile-accent {
-    background: var(--c27-tile-accent);
-    border-radius: var(--c27-radius);
+  .c27-choice:hover {
+    background: var(--c27-field-fill);
   }
 
-  .c27-tile-violet {
-    background: var(--c27-tile-violet);
-    border-radius: var(--c27-radius);
+  .c27-choice:has(:checked) {
+    background: var(--c27-accent-soft);
+    color: var(--c27-accent-d);
+    font-weight: 600;
   }
 
-  .c27-tile-mint {
-    background: var(--c27-tile-mint);
-    border-radius: var(--c27-radius);
+  .c27-form-actions {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--c27-line-3);
   }
 
-  .c27-tile-peach {
-    background: var(--c27-tile-peach);
-    border-radius: var(--c27-radius);
+  .c27-form-note {
+    padding-top: 1rem;
   }
 
-  .c27-tile-sky {
-    background: var(--c27-tile-sky);
-    border-radius: var(--c27-radius);
+  /* --- interaction ---------------------------------------------------
+     The system's primary hover idiom replaces every card hover: the row shifts
+     colour, indents, and reveals its arrow. Nothing lifts or gains a shadow.
+     ImagePanel's restrained crop zoom is the only hover-scale exception;
+     `:active` on a pressable control is the only other scale. */
+  .c27-indent {
+    transition:
+      color var(--c27-dur-fast) var(--c27-ease-out),
+      padding-left var(--c27-dur-fast) var(--c27-ease-out);
+  }
+
+  /* `aria-current` carries a token, not a boolean — "page" and "step" are as
+     current as "true". Match anything except an explicit "false". */
+  .c27-indent:hover,
+  .c27-indent[aria-selected="true"],
+  .c27-indent[aria-current]:not([aria-current="false"]) {
+    color: var(--c27-accent-d);
+    padding-left: 0.625rem;
+  }
+
+  .c27-indent [data-arrow] {
+    opacity: 0;
+    transition: opacity var(--c27-dur-fast) var(--c27-ease-out);
+  }
+
+  .c27-indent:hover [data-arrow],
+  .c27-indent[aria-selected="true"] [data-arrow],
+  .c27-indent[aria-current]:not([aria-current="false"]) [data-arrow] {
+    opacity: 1;
   }
 
   /* --- progressive disclosure --------------------------------------- */
-  /* Tab panels ship with `hidden` so a scripted visit paints the selected
-     panel immediately instead of flashing every option and collapsing. Nothing
-     can undo `hidden` without JS, so it is overridden here — the `.js` class
-     is set by Layout.astro before first paint. */
   /* The no-JS panel fallback lives in @layer base, not here. See the block
      below the components layer for why. */
 
@@ -402,7 +658,7 @@
      first screen is never painted at opacity 0 (which would cost the LCP
      candidate outright).
 
-     The translate here is on ENTRY, which rule 1 permits. Rule 1 bans
+     The translate here is on ENTRY, which the motion rules permit. They ban
      transforms on :hover. */
   .reveal .c27-rise {
     opacity: 0;
@@ -419,8 +675,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .c27-sky-field::before {
-      animation: none;
+    .c27-image-zoom:hover img {
       transform: none;
     }
 

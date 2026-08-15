@@ -1,152 +1,303 @@
 ---
 import Button from "@/components/ui/Button.astro";
+import Eyebrow from "@/components/ui/Eyebrow.astro";
+import Icon from "@/components/ui/Icon.astro";
+import ImagePanel from "@/components/ui/ImagePanel.astro";
 import { VERIFIED_PROOF } from "@/data/proof";
 import { ROUTES } from "@/site-config";
 
+/**
+ * The homepage hero is a wide asymmetric field rather than a centred stack:
+ * copy left on warm paper, image right on lavender, with the split landing in
+ * the column gap so a sliver of lavender shows beside the image. The image runs
+ * off the right edge of the page, which is what puts the layout off-axis.
+ */
 const HERO_CAPABILITIES = [
-  {
-    title: "Qualified shortlists",
-    body: "Candidates assessed for the role",
-  },
-  {
-    title: "Complete team builds",
-    body: "One hire or several functions",
-  },
-  {
-    title: "Compliance",
-    body: "Coordination across payroll, local requirements, and culture",
-  },
-  {
-    title: "Leadership search",
-    body: "CTO, CIO, COO, VPs, and functional heads",
-  },
+  "Qualified shortlists",
+  "Complete team builds",
+  "Compliance",
+  "Leadership search",
 ];
 ---
 
-<section
-  class="c27-sky-field -mt-[4.5rem] border-b border-c27-line pt-[4.5rem] text-c27-ink"
->
-  <div class="c27-wrap pt-[clamp(2.5rem,5vw,4.5rem)] text-center">
-    <h1 class="c27-rise c27-display mx-auto">
-      Build the team your business needs
+<section class="c27-hero c27-blueprint">
+  {
+    /* The lavender half is a grid item rather than a background gradient, so
+      its edge is the column edge. As a gradient it landed at a fixed 51% and
+      the "we help with" rule ran past it into the lavender. */
+  }
+  <span class="c27-hero-field" aria-hidden="true"></span>
+
+  <div class="c27-hero-copy c27-rise">
+    {
+      /* Inside the copy, not the section: the copy is vertically centred, so a
+        mark pinned to the section's top padding drifts away from it. */
+    }
+    <span class="c27-rule-mark c27-hero-mark" aria-hidden="true"></span>
+    <Eyebrow>Managed hiring &middot; Ongoing support</Eyebrow>
+
+    <h1 class="c27-display c27-hero-title">
+      Build the team<br /><em class="c27-emphasis">your business needs</em>
     </h1>
-    <p class="c27-rise c27-lede-lg mx-auto mt-6" style="--c27-d:60ms">
+
+    <p class="c27-lede c27-hero-intro">
       Managed hiring for specialists, complete teams, and senior leadership,
       with ongoing workforce support.
     </p>
 
-    <div
-      class="c27-rise mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-4"
-      style="--c27-d:100ms"
-    >
+    <div class="c27-hero-actions">
       <Button href={ROUTES.hire} variant="primary" arrow>Build your team</Button
       >
-      <a
-        href={ROUTES.join}
-        class="inline-flex min-h-11 items-center justify-center font-semibold text-c27-ink-2 underline decoration-c27-ink-3 underline-offset-4 transition-colors hover:text-c27-accent-d"
-        >Looking for your next role?</a
-      >
-    </div>
-
-    <div class="hero-capability-rail">
-      {
-        HERO_CAPABILITIES.map((item, index) => (
-          <div
-            class="hero-capability c27-rise"
-            style={`--c27-d:${120 + index * 40}ms`}
-          >
-            <p class="c27-card-title font-semibold text-c27-ink">
-              {item.title}
-            </p>
-            <p class="mt-1 text-body-sm leading-relaxed text-c27-ink-2">
-              {item.body}
-            </p>
-          </div>
-        ))
-      }
+      <Button href={ROUTES.join} variant="link" arrow="down-right">
+        Looking for your next role?
+      </Button>
     </div>
   </div>
 
-  <div class="hero-proof-band text-c27-ink">
-    <div class="hero-proof-grid c27-wrap" aria-label="Company experience">
-      {
-        VERIFIED_PROOF.map((proof, index) => (
-          <div
-            class="hero-proof c27-rise"
-            style={`--c27-d:${index * 60}ms`}
-            aria-label={`${proof.value} ${proof.label}`}
-          >
-            <p class="c27-metric">{proof.value}</p>
-            <p class="text-body-sm font-medium text-c27-ink-2">{proof.label}</p>
-          </div>
-        ))
-      }
-    </div>
+  <div class="c27-hero-image c27-rise" style="--c27-d:70ms">
+    <ImagePanel
+      src="/cube27-talent-hero.webp"
+      alt="Three colleagues in discussion around a table in a bright office"
+      width={1920}
+      height={1080}
+      eager
+      zoom
+      corner="grid"
+      caption="Built for better decisions"
+    />
+  </div>
+
+  <div class="c27-hero-sidelist c27-rise" style="--c27-d:140ms">
+    <p class="c27-side-label">We help with</p>
+    {
+      HERO_CAPABILITIES.map((item) => (
+        <div class="c27-hero-sideitem">
+          <Icon name="badge-check" size={17} class="text-c27-accent" />
+          <span>{item}</span>
+        </div>
+      ))
+    }
   </div>
 </section>
 
+<div class="c27-proof-band">
+  <dl class="c27-wrap c27-proof-grid">
+    {
+      VERIFIED_PROOF.map((proof) => (
+        <div class="c27-proof">
+          <dt class="c27-side-label">{proof.label}</dt>
+          <dd class="c27-metric">{proof.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</div>
+
 <style>
-  .hero-capability-rail {
-    display: grid;
-    gap: 1.5rem 2rem;
-    margin-top: 2.5rem;
-    padding-bottom: 2rem;
-    text-align: left;
-  }
+  .c27-hero {
+    --c27-hero-pad-top: calc(5.5vw + 4.5rem);
+    --c27-hero-pad-bottom: 3.4vw;
+    --c27-hero-gap: 4.5vw;
 
-  .hero-capability {
     position: relative;
-    padding-left: 1.25rem;
-  }
-
-  .hero-capability::before {
-    position: absolute;
-    top: 0.5rem;
-    left: 0;
-    width: 0.4375rem;
-    height: 0.4375rem;
-    background: var(--c27-accent);
-    content: "";
-  }
-
-  .hero-proof-band {
-    background: var(--c27-accent-soft);
-  }
-
-  .hero-proof-grid {
     display: grid;
-    gap: 1rem 3rem;
-    padding-block: 1.25rem;
+    grid-template-columns: 7.25fr 5.75fr;
+    /* The copy row takes the slack so the capability rail stays anchored to the
+       bottom edge rather than floating up under the copy. */
+    grid-template-rows: 1fr auto;
+    column-gap: var(--c27-hero-gap);
+    /* Fills the viewport exactly. The hero starts at y=0 — it is pulled up
+       under the transparent sticky header — so the band below it lands on the
+       fold instead of showing a strip of the next tone above it. `svh` rather
+       than `vh` so mobile browser chrome cannot push it past the fold. */
+    min-height: 100vh;
+    min-height: 100svh;
+    /* The header is sticky and transparent at rest, so the hero starts beneath
+       it and pads its own content back down. */
+    margin-top: -4.5rem;
+    padding: var(--c27-hero-pad-top) var(--c27-gutter)
+      var(--c27-hero-pad-bottom);
+    background: var(--c27-ground);
   }
 
-  .hero-proof {
+  .c27-hero-field {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    z-index: -1;
+    background: var(--c27-hero);
+    /* Cancels the section padding so the field runs the full height and bleeds
+       off the right edge. The left offset is half the column gap, which puts
+       the boundary between the two columns and leaves the sliver of lavender
+       beside the image. */
+    margin: calc(-1 * var(--c27-hero-pad-top)) calc(-1 * var(--c27-gutter))
+      calc(-1 * var(--c27-hero-pad-bottom)) calc(-0.5 * var(--c27-hero-gap));
+  }
+
+  .c27-hero-copy {
+    position: relative;
+    grid-column: 1;
+    grid-row: 1;
+    /* Top-aligned, matching the image beside it: both start on the padding
+       line, so the two columns open at the same height at every viewport size.
+       Centred, the copy's top drifted with the row height and never lined up
+       with the photograph. The slack falls between the copy and the capability
+       rail, which is anchored to the bottom edge. */
+    align-self: start;
+    /* Clears the rule mark, which sits in the gutter beside the copy. */
+    padding-left: clamp(25px, 3.4vw, 65px);
+    max-width: 780px;
+  }
+
+  /* Left of the padding, top-aligned with the eyebrow. */
+  .c27-hero-mark {
+    position: absolute;
+    top: 0.125rem;
+    left: 0;
+  }
+
+  .c27-hero-title {
+    margin-top: 1.5rem;
+  }
+
+  .c27-hero-intro {
+    margin: 1.75rem 0 1.8125rem;
+  }
+
+  .c27-hero-actions {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    gap: 0.875rem;
+    gap: 1.625rem;
   }
 
-  @media (min-width: 40rem) {
-    .hero-capability-rail {
+  .c27-hero-image {
+    grid-column: 2;
+    /* Spans the whole field so the lavender runs past the photograph to the
+       bottom of the hero, but starts at the top of the row: the top edge of the
+       image lands on the same line as the top of the copy column's content. */
+    grid-row: 1 / -1;
+    align-self: start;
+  }
+
+  .c27-hero-sidelist {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    display: grid;
+    grid-template-columns: 1.15fr repeat(4, minmax(0, 1fr));
+    gap: 1.125rem;
+    /* Aligns with the copy column's own indent. */
+    margin-left: clamp(25px, 3.4vw, 65px);
+    padding-top: 2.125rem;
+    border-top: 1px solid var(--c27-line-deep);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+  }
+
+  .c27-hero-sideitem {
+    display: flex;
+    gap: 0.4375rem;
+    max-width: 8.75rem;
+  }
+
+  .c27-hero-sideitem :global(svg) {
+    flex: none;
+    margin-top: 0.0625rem;
+  }
+
+  /* A solid cobalt rule across the page: the numbers are the hero's proof, and
+     on the warm grey they read as another quiet band between two light fields.
+     Filled, they land as one statement and separate the hero from the lavender
+     process rail below without needing a tone step. Cobalt is a signal colour,
+     so this is the only place it fills a section — text on it is --c27-on-fill
+     (measured 5.93). */
+  .c27-proof-band {
+    background: var(--c27-accent);
+    padding-block: clamp(2.25rem, 4vw, 3.25rem);
+  }
+
+  .c27-proof-band :global(.c27-metric),
+  .c27-proof-band :global(.c27-side-label) {
+    color: var(--c27-on-fill);
+  }
+
+  /* No rules and no dividers — the band is a single measured statement, and
+     ruling it into three cells made it read as a table of unrelated numbers.
+     The figure leads; its label sits under it as a caption. */
+  .c27-proof-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem 4vw;
+  }
+
+  .c27-proof dd {
+    margin-top: 0.375rem;
+  }
+
+  @media (max-width: 40rem) {
+    .c27-proof-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 56.25rem) {
+    .c27-hero {
+      --c27-hero-pad-top: calc(12vw + 4.5rem);
+      --c27-hero-pad-bottom: 0px;
+
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto auto;
+      /* Stacked, the content is already taller than the viewport; forcing the
+         viewport height here would only add dead space above the fold. */
+      min-height: 0;
+    }
+
+    /* One column, so there is no second column for the field to sit in. */
+    .c27-hero-field {
+      display: none;
+    }
+
+    .c27-hero-mark {
+      height: 57px;
+    }
+
+    .c27-hero-copy {
+      grid-row: auto;
+      /* Not zero: the rule mark sits in the gutter, and the eyebrow's own
+         cobalt square would land directly on top of it. */
+      padding-left: 1.5rem;
+    }
+
+    .c27-hero-image {
+      grid-column: 1;
+      grid-row: auto;
+      margin-top: 2.5rem;
+    }
+
+    .c27-hero-sidelist {
+      grid-column: 1;
+      grid-row: auto;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      margin-top: clamp(3rem, 6vw, 5rem);
-      padding-bottom: clamp(1.75rem, 4vw, 2.75rem);
+      margin-left: 1.5rem;
+      margin-block: 2.5rem;
     }
 
-    .hero-proof-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      row-gap: 1.25rem;
-      padding-block: 1.5rem;
+    .c27-hero-sidelist > .c27-side-label {
+      grid-column: 1 / -1;
     }
 
-    .hero-proof {
-      gap: 0.75rem;
+    .c27-hero-sideitem {
+      max-width: none;
     }
   }
 
-  @media (min-width: 64rem) {
-    .hero-capability-rail {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+  @media (max-width: 32.5rem) {
+    .c27-hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.125rem;
     }
   }
 </style>

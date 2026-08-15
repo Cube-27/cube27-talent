@@ -12,7 +12,10 @@ const isActive = (href: string) =>
   href === "/" ? path === "/" : path === href || path.startsWith(href);
 ---
 
-<header id="site-header" class="sticky top-0 z-30 border-b border-transparent">
+<header
+  id="site-header"
+  class="c27-header sticky top-0 z-30 border-b border-transparent"
+>
   <div class="c27-wrap flex min-h-[4.5rem] items-center gap-5 lg:gap-8">
     <a
       href={ROUTES.home}
@@ -50,7 +53,7 @@ const isActive = (href: string) =>
 
     {
       !bare && (
-        <Button href={ROUTES.hire} size="header">
+        <Button href={ROUTES.hire} size="header" arrow="up-right">
           Build your team
         </Button>
       )

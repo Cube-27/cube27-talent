@@ -1,74 +1,139 @@
 ---
-import Icon from "@/components/ui/Icon.astro";
 import Button from "@/components/ui/Button.astro";
+import ImagePanel from "@/components/ui/ImagePanel.astro";
+import IndexRail from "@/components/ui/IndexRail.astro";
+import NumberedList from "@/components/ui/NumberedList.astro";
 import { ROUTES } from "@/site-config";
 
+/**
+ * Executive search. A tall portrait on the left, the mandate on the right.
+ *
+ * The section carries no top padding — it hugs the capability map above it, so
+ * the two read as one continuous argument about scope rather than as separate
+ * offers.
+ */
+interface Props {
+  index?: string;
+}
+
+const { index = "05" } = Astro.props;
+
 const LEADERSHIP_AREAS = [
-  {
-    title: "Technology leadership",
-    roles: "CTO · CIO",
-    icon: "cloud" as const,
-  },
-  {
-    title: "Business and operations",
-    roles: "COO · Functional heads",
-    icon: "briefcase" as const,
-  },
-  {
-    title: "Product and engineering",
-    roles: "VP Engineering · Head of Product",
-    icon: "board" as const,
-  },
-  {
-    title: "Data and AI leadership",
-    roles: "Head of Data · VP Data and AI",
-    icon: "chart" as const,
-  },
+  { title: "Technology leadership", detail: "CTO · CIO · VP Engineering" },
+  { title: "Business & operations", detail: "COO · Functional heads" },
+  { title: "Data & AI leadership", detail: "Head of Data · VP Data & AI" },
 ];
 ---
 
-<div
-  class="c27-card-shadow c27-rise border border-c27-line bg-c27-surface-2 px-[clamp(1.5rem,4vw,3.5rem)] py-[clamp(2.5rem,5vw,4rem)]"
->
-  <div class="flex flex-col items-center gap-6 text-center">
-    <h2 class="c27-h2 max-w-none text-c27-ink">
-      Hire leaders who can build the function
-    </h2>
-    <div>
-      <p class="c27-lede mx-auto">
-        Executive search for leaders who can set direction, build teams, and own
-        the outcome.
-      </p>
-      <div class="mt-6">
-        <Button href={ROUTES.hire} variant="primary" arrow
-          >Start a leadership search</Button
-        >
-      </div>
-    </div>
+<div class="c27-support">
+  <div class="c27-support-image c27-rise">
+    <ImagePanel
+      src="/cube27-leadership.webp"
+      alt="A senior leader standing beside a window in a contemporary office"
+      width={1536}
+      height={1920}
+      corner="bracket"
+      chip="Leadership, with direction."
+      class="h-full"
+    />
   </div>
 
-  <ul
-    class="mt-[clamp(2rem,4vw,3.5rem)] grid gap-4 md:grid-cols-2 lg:grid-cols-4"
-  >
+  <div class="c27-support-content c27-rise" style="--c27-d:80ms">
     {
-      LEADERSHIP_AREAS.map((area) => (
-        <li class="c27-card-shadow flex flex-col justify-between border border-c27-line bg-c27-surface p-5 sm:p-6">
-          <span
-            class="c27-tile-accent grid size-10 place-items-center border border-c27-accent/15 text-c27-accent"
-            aria-hidden="true"
-          >
-            <Icon name={area.icon} size={20} />
-          </span>
-          <div class="mt-4">
-            <h3 class="c27-card-title font-semibold text-c27-ink">
-              {area.title}
-            </h3>
-            <p class="mt-1 text-body-sm leading-relaxed text-c27-ink-2">
-              {area.roles}
-            </p>
-          </div>
-        </li>
-      ))
+      /* One label, matching every other section. This carried an index rail and
+        an eyebrow stacked on top of each other — two labels saying the same
+        thing, and the only section that did it. */
     }
-  </ul>
+    <IndexRail index={index} label="Executive search" />
+
+    <h2 class="c27-h2 c27-support-title">
+      Hire leaders who can <em class="c27-emphasis c27-emphasis-quiet"
+        >build the function.</em
+      >
+    </h2>
+
+    <p class="c27-support-body">
+      For the roles that set direction, we look for more than a functional
+      match. We help find the people who can make the mandate real—across
+      technology, product, operations, data, and AI.
+    </p>
+
+    {
+      /* Wrapped rather than styled through the component: a scoped rule does not
+        reliably reach a child component's root element. */
+    }
+    <div class="c27-support-list">
+      <NumberedList items={LEADERSHIP_AREAS} />
+    </div>
+
+    <Button href={ROUTES.hire} variant="link" arrow>
+      Start a leadership search
+    </Button>
+  </div>
 </div>
+
+<style>
+  .c27-support {
+    display: grid;
+    /* The content column is capped at its reading measure rather than at a
+       fraction of the viewport, so the heading and body end where the numbered
+       list's rules end. As a fraction it outgrew its own text on wide screens
+       and left a gap between the copy and those rules. The image absorbs the
+       remaining width. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 44rem);
+    gap: 5.5vw;
+    align-items: center;
+  }
+
+  .c27-support-image {
+    min-height: 580px;
+  }
+
+  .c27-support-image :global(.c27-image) {
+    height: 100%;
+    min-height: inherit;
+  }
+
+  /* This panel has a definite height from the editorial grid, so it crops the
+     portrait into that space instead of taking the source image's 4:5 ratio. */
+  .c27-support-image :global(.c27-image-frame) {
+    aspect-ratio: auto;
+  }
+
+  /* Both fill the capped column — the column is the measure now, so a second
+     cap here would only reopen the gap it was introduced to close. */
+  .c27-support-title {
+    margin: 1.375rem 0 1.4375rem;
+    max-width: none;
+  }
+
+  .c27-support-body {
+    max-width: none;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--c27-ink-2);
+  }
+
+  /* The CTA is a ruled text link, so without real space below the list it reads
+     as a fourth row of the list rather than as the section's action. */
+  .c27-support-list {
+    margin: 2.25rem 0 3.25rem;
+  }
+
+  @media (max-width: 56.25rem) {
+    .c27-support {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 3.125rem;
+    }
+
+    .c27-support-image {
+      min-height: 530px;
+    }
+  }
+
+  @media (max-width: 32.5rem) {
+    .c27-support-image {
+      min-height: 430px;
+    }
+  }
+</style>

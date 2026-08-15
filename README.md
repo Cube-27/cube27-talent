@@ -59,7 +59,7 @@ Failing the build is deliberate. `pnpm dev` is exempt.
 src/
   data/            role taxonomy, process, FAQs, proof — the content source of truth
   styles/          fonts.css → tokens.css → globals.css
-  components/ui/   Button, Section, SectionHead, Icon, Faq
+  components/ui/   controls, section shells, image and editorial primitives
   components/sections/  Header, Footer, Hero, ExpertiseSelector, ProcessRail, …
   components/forms/     EmployerForm, CandidateForm
   lib/form-client.ts    shared submit handling, attribution capture
@@ -69,7 +69,7 @@ functions/
   api/             employer-lead.ts, candidate-application.ts
 public/
   _headers         CSP and cache rules
-  fonts/           self-hosted woff2 — Hauora (display) + Switzer (body)
+  fonts/           self-hosted woff2 — Space Grotesk (display) + DM Sans (body)
 ```
 
 **No UI framework.** No React, Vue, CMS or database — the two tab selectors and
