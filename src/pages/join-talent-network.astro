@@ -31,7 +31,10 @@ const jsonLd = [faqSchema(CANDIDATE_FAQS)];
 ---
 
 <Layout title={title} description={description} jsonLd={jsonLd}>
-  <Section tone="surface" bordered>
+  <Section
+    class="c27-sky-field -mt-[4.5rem] pt-[calc(var(--c27-pad-section)+4.5rem)]"
+    bordered
+  >
     <div
       class="grid gap-[clamp(3rem,7vw,6rem)] lg:grid-cols-[minmax(0,0.8fr)_minmax(30rem,1.2fr)]"
     >
@@ -56,7 +59,7 @@ const jsonLd = [faqSchema(CANDIDATE_FAQS)];
         </div>
 
         <p
-          class="c27-card-shadow mt-7 border border-c27-line bg-c27-tint-mint p-4 text-caption leading-relaxed text-c27-ink-2"
+          class="c27-card-shadow mt-7 border border-c27-line bg-c27-surface p-4 text-caption leading-relaxed text-c27-ink-2"
         >
           Some roles include overseas work. Availability and approvals depend on
           the role and client.
@@ -67,7 +70,7 @@ const jsonLd = [faqSchema(CANDIDATE_FAQS)];
     </div>
   </Section>
 
-  <Section narrow>
+  <Section tone="surface" narrow bordered>
     <SectionHead heading="FAQs" centered />
     <Faq items={CANDIDATE_FAQS} />
   </Section>

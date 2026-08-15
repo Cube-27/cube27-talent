@@ -57,6 +57,26 @@
 }
 
 @layer components {
+  /* --- navigation header ------------------------------------------- */
+  #site-header {
+    background-color: transparent;
+    border-bottom-color: transparent;
+    box-shadow: none;
+    transition:
+      background-color var(--c27-dur-fast) ease,
+      border-color var(--c27-dur-fast) ease,
+      box-shadow var(--c27-dur-fast) ease;
+  }
+
+  #site-header.is-scrolled,
+  #site-header:has(#mobile-menu[open]) {
+    background-color: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom-color: var(--c27-line);
+    box-shadow: 0 4px 20px -4px rgba(23, 19, 37, 0.05);
+  }
+
   /* --- container --------------------------------------------------- */
   .c27-wrap {
     max-width: var(--c27-container);
@@ -169,6 +189,7 @@
      fill and border; this adds only the elevation and padding. */
   .c27-card-shadow {
     box-shadow: var(--c27-shadow-card);
+    border-radius: var(--c27-radius);
   }
 
   .c27-card-pad {
@@ -329,29 +350,40 @@
   .c27-feature-card {
     background: var(--c27-gradient-warm);
     border: 1px solid var(--c27-line);
+    border-radius: var(--c27-radius);
     box-shadow: var(--c27-shadow-card);
   }
 
   .c27-soft-panel {
     background: var(--c27-gradient-soft);
     border: 1px solid var(--c27-line);
+    border-radius: var(--c27-radius);
     box-shadow: var(--c27-shadow-card);
+  }
+
+  .c27-tile-accent {
+    background: var(--c27-tile-accent);
+    border-radius: var(--c27-radius);
   }
 
   .c27-tile-violet {
     background: var(--c27-tile-violet);
+    border-radius: var(--c27-radius);
   }
 
   .c27-tile-mint {
     background: var(--c27-tile-mint);
+    border-radius: var(--c27-radius);
   }
 
   .c27-tile-peach {
     background: var(--c27-tile-peach);
+    border-radius: var(--c27-radius);
   }
 
   .c27-tile-sky {
     background: var(--c27-tile-sky);
+    border-radius: var(--c27-radius);
   }
 
   /* --- progressive disclosure --------------------------------------- */

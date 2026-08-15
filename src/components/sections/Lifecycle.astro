@@ -1,36 +1,22 @@
 ---
 import Icon from "@/components/ui/Icon.astro";
 import { LIFECYCLE } from "@/data/process";
-
-const ICON_STYLES = {
-  violet: "text-c27-icon-violet c27-tile-violet",
-  mint: "text-c27-icon-green c27-tile-mint",
-  peach: "text-c27-icon-orange c27-tile-peach",
-  sky: "text-c27-icon-blue c27-tile-sky",
-} as const;
 ---
 
-<div
-  class="c27-card-shadow c27-gradient-blue grid border border-c27-line lg:grid-cols-4"
->
+<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
   {
     LIFECYCLE.map((item, index) => (
       <article
-        class:list={[
-          "c27-card-pad-sm c27-rise grid content-start gap-4 bg-transparent",
-          index > 0 && "border-t border-c27-line lg:border-l lg:border-t-0",
-        ]}
+        class="c27-card-shadow c27-rise flex flex-col justify-start border border-c27-line bg-c27-surface p-5 sm:p-6"
         style={`--c27-d:${index * 60}ms`}
       >
         <span
-          class:list={[
-            "grid size-11 place-items-center",
-            ICON_STYLES[item.tint],
-          ]}
+          class="c27-tile-accent grid size-10 place-items-center border border-c27-accent/15 text-c27-accent"
+          aria-hidden="true"
         >
           <Icon name={item.icon} size={20} />
         </span>
-        <div>
+        <div class="mt-4">
           <h3 class="c27-card-title font-semibold text-c27-ink">
             {item.title}
           </h3>

@@ -8,28 +8,24 @@ const EVIDENCE = [
     title: "Relevant work",
     body: "Assessment built around the role.",
     icon: "briefcase" as const,
-    color: "text-c27-icon-violet",
-    tile: "c27-tile-violet",
   },
   {
     title: "Practitioner review",
     body: "Experienced domain practitioners evaluate the evidence and conduct in-depth interviews.",
     icon: "person" as const,
-    color: "text-c27-icon-green",
-    tile: "c27-tile-mint",
   },
   {
     title: "Decision-ready shortlist",
     body: "See strengths and gaps before interview.",
     icon: "check" as const,
-    color: "text-c27-icon-blue",
-    tile: "c27-tile-sky",
   },
 ];
 ---
 
-<section class="c27-sky-field border-b border-c27-line">
-  <div class="c27-wrap py-[clamp(2.75rem,5vw,4.5rem)] text-center">
+<section
+  class="c27-sky-field -mt-[4.5rem] border-b border-c27-line pt-[4.5rem]"
+>
+  <div class="c27-wrap py-[clamp(2.5rem,4vw,3.5rem)] text-center">
     <div class="mx-auto max-w-4xl">
       <h1
         class="c27-rise c27-display mx-auto max-w-none text-center text-c27-ink"
@@ -53,27 +49,23 @@ const EVIDENCE = [
       {
         EVIDENCE.map((item, index) => (
           <li
-            class:list={[
-              "c27-rise c27-feature-card c27-card-pad grid grid-cols-[3rem_minmax(0,1fr)] items-start gap-x-4 md:block",
-            ]}
+            class="c27-card-shadow c27-rise flex flex-col justify-start border border-c27-line bg-c27-surface p-5 sm:p-6 text-left"
             style={`--c27-d:${index * 60}ms`}
           >
             <span
-              class:list={[
-                "grid size-12 place-items-center",
-                item.color,
-                item.tile,
-              ]}
+              class="c27-tile-accent grid size-10 place-items-center border border-c27-accent/15 text-c27-accent"
               aria-hidden="true"
             >
-              <Icon name={item.icon} size={24} />
+              <Icon name={item.icon} size={20} />
             </span>
-            <div>
+            <div class="mt-4">
               {/* h2, not h3, despite matching the card grids elsewhere: these
                   sit directly under the page h1 with no section heading
                   between, so h3 would skip a level. Heading rank follows
                   document position, not visual similarity. */}
-              <h2 class="c27-card-title font-semibold md:mt-5">{item.title}</h2>
+              <h2 class="c27-card-title font-semibold text-c27-ink">
+                {item.title}
+              </h2>
               <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
                 {item.body}
               </p>

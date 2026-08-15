@@ -19,13 +19,13 @@
      on a tinted section, tinted card on a white section. The four
      tints let a set of cards differentiate by colour instead of by
      elevation — cycle them in order, do not add a fifth. */
-  --c27-ground: #faf9f5;
+  --c27-ground: #fafaf9;
   --c27-surface: #ffffff;
-  --c27-surface-2: #f4f2ee;
-  --c27-tint-violet: #f1effe;
-  --c27-tint-mint: #edf6f3;
-  --c27-tint-peach: #fdf4ef;
-  --c27-tint-sky: #f1f2f3;
+  --c27-surface-2: #f4f4f6;
+  --c27-tint-violet: #f0effe;
+  --c27-tint-mint: #eef5f2;
+  --c27-tint-peach: #fcf4ee;
+  --c27-tint-sky: #f1f3f6;
   --c27-hero: #f4f4f2;
   /* The band tone for the process rail, the final CTA and the footer. It is a
      step deeper than --c27-tint-violet so it still separates from the warm
@@ -36,7 +36,7 @@
   /* --- atmospheric surfaces -------------------------------------
      These are used on a small number of deliberate regions. They do
      not replace the indigo action fill or the solid charcoal process field. */
-  --c27-gradient-blue: linear-gradient(180deg, #f7f7f5 0%, #ebebe8 100%);
+  --c27-gradient-blue: linear-gradient(180deg, #f8f9fa 0%, #edf0f3 100%);
   --c27-gradient-hero: linear-gradient(
     145deg,
     #fbfbf8 0%,
@@ -48,12 +48,13 @@
   --c27-sky-vignette: rgba(33, 37, 45, 0.085);
   --c27-sky-plane: rgba(255, 255, 255, 0.42);
   --c27-sky-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='73' height='79' viewBox='0 0 73 79'%3E%3Cg fill='%2321252d' fill-opacity='.055'%3E%3Ccircle cx='4' cy='7' r='.55'/%3E%3Ccircle cx='21' cy='3' r='.45'/%3E%3Ccircle cx='39' cy='12' r='.5'/%3E%3Ccircle cx='66' cy='6' r='.4'/%3E%3Ccircle cx='12' cy='25' r='.4'/%3E%3Ccircle cx='31' cy='31' r='.55'/%3E%3Ccircle cx='55' cy='23' r='.45'/%3E%3Ccircle cx='70' cy='37' r='.5'/%3E%3Ccircle cx='7' cy='46' r='.5'/%3E%3Ccircle cx='24' cy='55' r='.4'/%3E%3Ccircle cx='46' cy='44' r='.55'/%3E%3Ccircle cx='61' cy='58' r='.4'/%3E%3Ccircle cx='15' cy='72' r='.45'/%3E%3Ccircle cx='37' cy='68' r='.4'/%3E%3Ccircle cx='68' cy='75' r='.5'/%3E%3C/g%3E%3C/svg%3E");
-  --c27-gradient-warm: linear-gradient(180deg, #f3f1ec 0%, #faf8f5 100%);
-  --c27-gradient-soft: linear-gradient(180deg, #ffffff 0%, #f6f5f0 100%);
-  --c27-tile-violet: linear-gradient(135deg, #f1effe 0%, #e5e2fc 100%);
-  --c27-tile-mint: linear-gradient(135deg, #edf6f3 0%, #dff0e9 100%);
-  --c27-tile-peach: linear-gradient(135deg, #fdf4ef 0%, #f9e8e0 100%);
-  --c27-tile-sky: linear-gradient(135deg, #f0f1f2 0%, #dfe1e3 100%);
+  --c27-gradient-warm: linear-gradient(180deg, #f8f8fa 0%, #f1f2f6 100%);
+  --c27-gradient-soft: linear-gradient(180deg, #ffffff 0%, #f6f6f8 100%);
+  --c27-tile-accent: linear-gradient(135deg, #f0effe 0%, #e4e2fc 100%);
+  --c27-tile-violet: linear-gradient(135deg, #f0effe 0%, #e4e2fc 100%);
+  --c27-tile-mint: linear-gradient(135deg, #eef5f2 0%, #deede7 100%);
+  --c27-tile-peach: linear-gradient(135deg, #fcf4ee 0%, #f7e6dc 100%);
+  --c27-tile-sky: linear-gradient(135deg, #f0f2f5 0%, #e0e3e7 100%);
 
   /* --- ink -------------------------------------------------------
      Softened charcoal slate tones to avoid pitch-black eye strain while
@@ -151,13 +152,13 @@
        -sm  dense rails — three or four cards across
        (base) the standard card: a title, a paragraph, maybe an icon
        -lg  panels holding a full sub-layout */
-  --c27-pad-card-sm: 1.5rem;
-  --c27-pad-card: clamp(1.5rem, 3vw, 2.5rem);
-  --c27-pad-card-lg: clamp(1.75rem, 4vw, 3.5rem);
+  --c27-pad-card-sm: 1.25rem;
+  --c27-pad-card: clamp(1.25rem, 2vw, 1.75rem);
+  --c27-pad-card-lg: clamp(1.5rem, 3vw, 2.75rem);
 
-  /* Functional controls are near-square. Marketing surfaces are square. */
+  /* Functional controls (3px). Marketing surfaces & cards use a 4px radius. */
   --c27-radius-sm: 3px;
-  --c27-radius: 0px;
+  --c27-radius: 4px;
 
   /* --- elevation -------------------------------------------------
      Cards use a restrained downward shadow so their top edge stays crisp.

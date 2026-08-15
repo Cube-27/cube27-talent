@@ -6,36 +6,28 @@ const COMPLIANCE_AREAS = [
     title: "Contracts and local requirements",
     body: "Coordinate contract execution and applicable local labor and IP requirements.",
     icon: "doc" as const,
-    color: "text-c27-icon-violet",
-    tile: "c27-tile-violet",
   },
   {
     title: "Payroll and administration",
     body: "Keep recurring payroll and workforce administration consistent.",
     icon: "briefcase" as const,
-    color: "text-c27-icon-blue",
-    tile: "c27-tile-sky",
   },
   {
     title: "Culture onboarding",
     body: "Our HR specialists translate each client's culture, expectations, and ways of working into onboarding and ongoing support.",
     icon: "users" as const,
-    color: "text-c27-icon-orange",
-    tile: "c27-tile-peach",
   },
   {
     title: "Performance standards",
     body: "Facilitate reviews against criteria defined with the client.",
     icon: "chart" as const,
-    color: "text-c27-icon-green",
-    tile: "c27-tile-mint",
   },
 ];
 ---
 
 <div class="c27-rise">
   <div
-    class="grid gap-8 border-b border-c27-line pb-[clamp(2.5rem,5vw,4rem)] lg:grid-cols-[minmax(0,0.85fr)_minmax(28rem,1.15fr)] lg:items-end"
+    class="grid gap-8 border-b border-c27-line pb-[clamp(2rem,4vw,3rem)] lg:grid-cols-[minmax(0,0.85fr)_minmax(28rem,1.15fr)] lg:items-end"
   >
     <h2 class="c27-h2 max-w-[18ch]">Standards that scale with your team</h2>
     <p class="c27-lede">
@@ -45,33 +37,24 @@ const COMPLIANCE_AREAS = [
     </p>
   </div>
 
-  <div class="grid border-x border-b border-c27-line md:grid-cols-2">
+  <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
     {
       COMPLIANCE_AREAS.map((area, index) => (
         <article
-          class:list={[
-            "c27-card-shadow c27-card-pad grid grid-cols-[2.75rem_minmax(0,1fr)] content-start gap-4 bg-c27-surface md:min-h-52 md:grid-cols-1 md:gap-5",
-            index > 0 && "border-t border-c27-line",
-            index === 1 && "md:border-l md:border-t-0",
-            index === 2 && "md:border-t",
-            index === 3 && "md:border-l",
-          ]}
+          class="c27-card-shadow c27-rise flex flex-col justify-start border border-c27-line bg-c27-surface p-5 sm:p-6"
+          style={`--c27-d:${index * 60}ms`}
         >
           <span
-            class:list={[
-              "grid size-11 place-items-center",
-              area.color,
-              area.tile,
-            ]}
+            class="c27-tile-accent grid size-10 place-items-center border border-c27-accent/15 text-c27-accent"
             aria-hidden="true"
           >
             <Icon name={area.icon} size={20} />
           </span>
-          <div>
+          <div class="mt-4">
             <h3 class="c27-card-title font-semibold text-c27-ink">
               {area.title}
             </h3>
-            <p class="mt-3 max-w-[52ch] text-body-sm leading-relaxed text-c27-ink-2">
+            <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
               {area.body}
             </p>
           </div>

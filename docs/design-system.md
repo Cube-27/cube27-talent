@@ -6,8 +6,8 @@ The interface is direct, commercial, and restrained. Compact headings, generous 
 
 ## 2. Non-negotiable rules
 
-1. Section bands, content panels, and marketing cards have square corners.
-2. Buttons, inputs, selects, and other functional controls use a 2–4px radius.
+1. Content panels, marketing cards, and tiles use a 4px corner radius (`--c27-radius: 4px`).
+2. Buttons, inputs, selects, and other functional controls use a 2–4px radius (3px default).
 3. Cards and content panels combine a 1px hairline with the single restrained card shadow (`--c27-shadow-card`). Overlays use the stronger overlay shadow (`--c27-shadow-overlay`). Section bands, controls, and icon tiles stay flat.
 4. Gradients are limited to authored neutral atmosphere fields, warm feature-card surfaces, and icon tiles. No gradient text, glass effects, floating badges, decorative pills, hover translation, or hover scaling.
 5. One indigo accent carries actions and state. Supporting tints create page-level rhythm rather than isolated decoration.
@@ -105,7 +105,7 @@ Padding is a token, not a per-panel choice: `--c27-pad-card-sm` for dense rails,
 full sub-layout. Reach for the `.c27-card*` classes rather than re-assembling
 fill, hairline, shadow and padding as utilities.
 
-Panels use square corners, a fill or hairline, and deliberate padding. A page should not turn every paragraph into a card.
+Panels use 4px rounded corners, a fill or hairline, and deliberate padding. A page should not turn every paragraph into a card.
 
 ### Elevation hierarchy
 

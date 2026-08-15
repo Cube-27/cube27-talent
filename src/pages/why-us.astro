@@ -20,22 +20,16 @@ const OPERATOR_PROOF = [
     title: "Fortune 500 experience",
     body: "Our core team has led and built teams serving Fortune 500 companies.",
     icon: "users" as const,
-    surfaceClass: "bg-c27-tint-violet",
-    iconClass: "text-c27-icon-violet c27-tile-violet",
   },
   {
     title: "C-suite perspective",
     body: "Core team members have held CTO and other C-suite roles, with direct accountability for people and outcomes.",
     icon: "compass" as const,
-    surfaceClass: "bg-c27-surface",
-    iconClass: "text-c27-icon-blue c27-tile-sky",
   },
   {
     title: "Functions built from the ground up",
     body: "We know how to define a function, hire its early team, and establish the standards that help it perform.",
     icon: "chart" as const,
-    surfaceClass: "bg-c27-tint-mint",
-    iconClass: "text-c27-icon-green c27-tile-mint",
   },
 ];
 
@@ -59,7 +53,10 @@ const HIRING_STANDARDS = [
 ---
 
 <Layout title={title} description={description} jsonLd={jsonLd}>
-  <Section class="c27-sky-field" bordered>
+  <Section
+    class="c27-sky-field -mt-[4.5rem] pt-[calc(var(--c27-pad-section)+4.5rem)]"
+    bordered
+  >
     <div
       class="grid gap-[clamp(2.25rem,7vw,6rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(24rem,0.95fr)] lg:items-center"
     >
@@ -88,10 +85,7 @@ const HIRING_STANDARDS = [
             OPERATOR_PROOF.map((item) => (
               <li class="grid grid-cols-[2.75rem_minmax(0,1fr)] items-center gap-4 border-b border-c27-line py-4 sm:py-5">
                 <span
-                  class:list={[
-                    "grid size-11 place-items-center",
-                    item.iconClass,
-                  ]}
+                  class="c27-tile-accent grid size-10 place-items-center border border-c27-accent/15 text-c27-accent"
                   aria-hidden="true"
                 >
                   <Icon name={item.icon} size={20} />
@@ -123,27 +117,24 @@ const HIRING_STANDARDS = [
         </p>
       </div>
 
-      <div class="grid border-x border-b border-c27-line md:grid-cols-3">
+      <div class="mt-8 grid gap-4 md:grid-cols-3">
         {
           OPERATOR_PROOF.map((item, index) => (
             <article
-              class:list={[
-                "c27-card-shadow c27-card-pad grid content-between gap-6 border-b border-c27-line last:border-b-0 md:min-h-64 md:gap-10 md:border-b-0",
-                index > 0 && "md:border-l",
-                item.surfaceClass,
-              ]}
+              class="c27-card-shadow c27-rise flex flex-col justify-start border border-c27-line bg-c27-surface p-6"
+              style={`--c27-d:${index * 60}ms`}
             >
               <span
-                class:list={["grid size-14 place-items-center", item.iconClass]}
+                class="c27-tile-accent grid size-10 place-items-center border border-c27-accent/15 text-c27-accent"
                 aria-hidden="true"
               >
-                <Icon name={item.icon} size={26} />
+                <Icon name={item.icon} size={20} />
               </span>
-              <div>
+              <div class="mt-4">
                 <h3 class="c27-card-title font-semibold text-c27-ink">
                   {item.title}
                 </h3>
-                <p class="mt-3 max-w-[48ch] text-body-sm leading-relaxed text-c27-ink-2">
+                <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
                   {item.body}
                 </p>
               </div>
@@ -177,7 +168,7 @@ const HIRING_STANDARDS = [
             HIRING_STANDARDS.map((item) => (
               <li class="relative">
                 <span
-                  class="relative z-10 grid size-12 place-items-center border border-c27-line-deep bg-c27-deep text-c27-on-deep-accent"
+                  class="relative z-10 grid size-12 place-items-center rounded-c27 border border-c27-line-deep bg-c27-deep text-c27-on-deep-accent"
                   aria-hidden="true"
                 >
                   <Icon name={item.icon} size={24} />
@@ -196,7 +187,7 @@ const HIRING_STANDARDS = [
     </div>
   </Section>
 
-  <Section id="compliance" tone="sky" bordered>
+  <Section id="compliance" tone="surface" bordered>
     <Compliance />
   </Section>
 
@@ -210,12 +201,14 @@ const HIRING_STANDARDS = [
           Approved scale metrics from the work behind our hiring practice.
         </p>
       </div>
-      <dl class="grid border-x border-t border-c27-line sm:grid-cols-3">
+      <dl
+        class="c27-card-shadow grid overflow-hidden rounded-c27 border border-c27-line bg-c27-surface sm:grid-cols-3"
+      >
         {
           VERIFIED_PROOF.map((point, index) => (
             <div
               class:list={[
-                "c27-card-shadow c27-card-pad-sm grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-c27-line bg-c27-surface sm:block",
+                "c27-card-pad-sm grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-c27-line bg-c27-surface sm:block sm:border-b-0",
                 index > 0 && "sm:border-l",
               ]}
             >

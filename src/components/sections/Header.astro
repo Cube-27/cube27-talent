@@ -12,10 +12,7 @@ const isActive = (href: string) =>
   href === "/" ? path === "/" : path === href || path.startsWith(href);
 ---
 
-<header
-  id="site-header"
-  class="sticky top-0 z-30 border-b border-c27-line bg-c27-surface"
->
+<header id="site-header" class="sticky top-0 z-30 border-b border-transparent">
   <div class="c27-wrap flex min-h-[4.5rem] items-center gap-5 lg:gap-8">
     <a
       href={ROUTES.home}
@@ -146,6 +143,31 @@ const isActive = (href: string) =>
 </style>
 
 <script>
+  const header = document.getElementById("site-header");
+  if (header) {
+    let ticking = false;
+    const updateHeader = () => {
+      if (window.scrollY > 16) {
+        header.classList.add("is-scrolled");
+      } else {
+        header.classList.remove("is-scrolled");
+      }
+      ticking = false;
+    };
+
+    updateHeader();
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(updateHeader);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+  }
+
   const menu = document.getElementById(
     "mobile-menu",
   ) as HTMLDetailsElement | null;

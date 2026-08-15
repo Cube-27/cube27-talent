@@ -8,37 +8,29 @@ const LEADERSHIP_AREAS = [
     title: "Technology leadership",
     roles: "CTO · CIO",
     icon: "cloud" as const,
-    color: "text-c27-icon-blue",
-    tile: "c27-tile-sky",
   },
   {
     title: "Business and operations",
     roles: "COO · Functional heads",
     icon: "briefcase" as const,
-    color: "text-c27-icon-violet",
-    tile: "c27-tile-violet",
   },
   {
     title: "Product and engineering",
     roles: "VP Engineering · Head of Product",
     icon: "board" as const,
-    color: "text-c27-icon-orange",
-    tile: "c27-tile-peach",
   },
   {
     title: "Data and AI leadership",
     roles: "Head of Data · VP Data and AI",
     icon: "chart" as const,
-    color: "text-c27-icon-green",
-    tile: "c27-tile-mint",
   },
 ];
 ---
 
 <div
-  class="c27-card-shadow c27-rise c27-gradient-blue border border-c27-line px-[clamp(1.5rem,5vw,4.5rem)] py-[clamp(3rem,6vw,5rem)]"
+  class="c27-card-shadow c27-rise border border-c27-line bg-c27-surface-2 px-[clamp(1.5rem,4vw,3.5rem)] py-[clamp(2.5rem,5vw,4rem)]"
 >
-  <div class="flex flex-col items-center gap-8 text-center">
+  <div class="flex flex-col items-center gap-6 text-center">
     <h2 class="c27-h2 max-w-none text-c27-ink">
       Hire leaders who can build the function
     </h2>
@@ -56,27 +48,25 @@ const LEADERSHIP_AREAS = [
   </div>
 
   <ul
-    class="mt-[clamp(2.5rem,5vw,4rem)] grid gap-3 md:grid-cols-2 lg:grid-cols-4"
+    class="mt-[clamp(2rem,4vw,3.5rem)] grid gap-4 md:grid-cols-2 lg:grid-cols-4"
   >
     {
       LEADERSHIP_AREAS.map((area) => (
-        <li class:list={["c27-feature-card c27-card-pad-sm lg:min-h-44"]}>
+        <li class="c27-card-shadow flex flex-col justify-between border border-c27-line bg-c27-surface p-5 sm:p-6">
           <span
-            class:list={[
-              "grid size-11 place-items-center",
-              area.color,
-              area.tile,
-            ]}
+            class="c27-tile-accent grid size-10 place-items-center border border-c27-accent/15 text-c27-accent"
             aria-hidden="true"
           >
             <Icon name={area.icon} size={20} />
           </span>
-          <h3 class="c27-card-title mt-5 font-semibold text-c27-ink">
-            {area.title}
-          </h3>
-          <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
-            {area.roles}
-          </p>
+          <div class="mt-4">
+            <h3 class="c27-card-title font-semibold text-c27-ink">
+              {area.title}
+            </h3>
+            <p class="mt-1 text-body-sm leading-relaxed text-c27-ink-2">
+              {area.roles}
+            </p>
+          </div>
         </li>
       ))
     }
