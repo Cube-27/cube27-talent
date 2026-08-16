@@ -1,10 +1,9 @@
-/* Self-hosted variable faces. Both are preloaded in Layout.astro — keep the
+/* Self-hosted variable font (DM Sans). Preloaded in Layout.astro — keep the
    paths in sync with the <link rel="preload"> tags there. Design system §3.
 
-   Both files are SUBSET to Latin. Space Grotesk carries 236 codepoints and DM
-   Sans 222, for a combined 46 KB. Their cmap tables cover every printable
-   character in the built English pages; re-run that coverage check whenever
-   the copy or source fonts change.
+   The file is SUBSET to Latin (222 codepoints, ~22 KB). Its cmap table covers
+   every printable character in the built English pages; re-run that coverage check
+   whenever the copy or source font changes.
 
    Regenerate after replacing a source font, and re-run the coverage check
    before committing — a dropped codepoint renders as tofu, silently:
@@ -17,24 +16,12 @@ U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD 
 
    font-display: optional, not swap. `swap` paints the fallback first and then
    re-renders in the real face, which reads as a flicker on every load that is
-   not already warm — the display face sets every heading, so the whole page
-   jumps. `optional` gives the font a short window to arrive and then commits
+   not already warm. `optional` gives the font a short window to arrive and then commits
    to whatever it has, never swapping mid-view. Preloading is what makes it
    win that window; the files are same-origin and cached immutably for a year
    (public/_headers), so repeat views are instant. */
 
-/* Display face: headings, buttons, and the wordmark. */
-@font-face {
-  font-family: "Space Grotesk Variable";
-  src:
-    url("/fonts/space-grotesk-variable.woff2") format("woff2") tech(variations),
-    url("/fonts/space-grotesk-variable.woff2") format("woff2-variations");
-  font-weight: 300 700;
-  font-display: optional;
-  font-style: normal;
-}
-
-/* Body face. */
+/* Unified type face for display, headings, buttons, and body prose. */
 @font-face {
   font-family: "DM Sans Variable";
   src:

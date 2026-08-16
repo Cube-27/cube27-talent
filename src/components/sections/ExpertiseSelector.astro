@@ -67,11 +67,11 @@ const { index = "03", heading, lede } = Astro.props;
             {/* No index here: the numbered rail on the left already carries
                 the position and marks the selected one. */}
             <div class="c27-role-head">
-              <h3 class="c27-h2 c27-role-statement">{family.statement}</h3>
-              <p class="c27-role-metric">
-                <span>{family.metric}</span>
-                {family.metricLabel}
-              </p>
+              <h3 class="c27-role-statement">{family.statement}</h3>
+              <div class="c27-role-metric">
+                <span class="c27-role-metric-label">{family.metricLabel}</span>
+                <span class="c27-role-metric-val">{family.metric}</span>
+              </div>
             </div>
 
             <p class="c27-role-blurb">{family.blurb}</p>
@@ -207,37 +207,43 @@ const { index = "03", heading, lede } = Astro.props;
 
   .c27-role-statement {
     margin: 0;
-    max-width: 20ch;
-  }
-
-  /* An actual tag: a white chip on the lavender field, holding the figure and
-     what it counts. It reads as an annotation on the statement beside it rather
-     than as a second headline competing with it. */
-  .c27-role-metric {
-    flex: none;
-    max-width: 100%;
-    display: inline-flex;
-    align-items: baseline;
-    /* The longest values ("End-to-end", "C-level") plus their label exceed the
-       panel's inner width at 320px. Wrapping the label under the figure keeps
-       every one of the seven inside the panel without shrinking the type. */
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    padding: 0.5rem 0.75rem;
-    background: var(--c27-surface);
+    max-width: 22ch;
     font-family: var(--c27-font-display);
-    font-size: var(--c27-text-index);
+    font-size: clamp(1.5rem, 2.4vw, 1.875rem);
     font-weight: 600;
     line-height: 1.2;
+    letter-spacing: -0.025em;
+    color: var(--c27-ink);
+  }
+
+  /* Spec metadata badge: a clean warm grey chip with uppercase label and value */
+  .c27-role-metric {
+    flex: none;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    padding: 0.5rem 0.8125rem;
+    background: var(--c27-ground);
+    border: 1px solid var(--c27-line);
+  }
+
+  .c27-role-metric-label {
+    font-family: var(--c27-font-body);
+    font-size: var(--c27-text-index);
+    font-weight: 600;
+    line-height: 1;
     letter-spacing: var(--c27-track-index);
     text-transform: uppercase;
     color: var(--c27-ink-3);
   }
 
-  .c27-role-metric > span {
-    font-size: var(--c27-text-card-title);
-    letter-spacing: -0.02em;
-    text-transform: none;
+  .c27-role-metric-val {
+    font-family: var(--c27-font-display);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
     color: var(--c27-accent);
     font-variant-numeric: tabular-nums;
   }

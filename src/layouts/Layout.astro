@@ -52,17 +52,8 @@ const canonicalUrl = canonical
     <meta name="generator" content="Astro" />
 
     {
-      /* Both faces are used above the fold. Preloading is what lets
-         font-display: optional commit to the real face on first paint
-         instead of falling back — see the note in fonts.css. */
+      /* DM Sans variable face is preloaded for above-the-fold display and body rendering. */
     }
-    <link
-      rel="preload"
-      href="/fonts/space-grotesk-variable.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
     <link
       rel="preload"
       href="/fonts/dm-sans-variable.woff2"

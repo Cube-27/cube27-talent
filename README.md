@@ -69,7 +69,7 @@ functions/
   api/             employer-lead.ts, candidate-application.ts
 public/
   _headers         CSP and cache rules
-  fonts/           self-hosted woff2 — Space Grotesk (display) + DM Sans (body)
+  fonts/           self-hosted woff2 — DM Sans Variable (display + body)
 ```
 
 **No UI framework.** No React, Vue, CMS or database — the two tab selectors and

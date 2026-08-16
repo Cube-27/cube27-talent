@@ -53,19 +53,19 @@ All combinations meet WCAG AA.
 
 Section designs follow the typography ladder, not the other way around. Typography cannot increase or decrease on an ad-hoc basis to satisfy local component styling. Hierarchy and visual parity are strictly governed.
 
-Use the local Space Grotesk and DM Sans variable fonts:
+Use the local DM Sans variable font:
 
-- Display & Headings: Space Grotesk, weight 600, tight tracking.
+- Display & Headings: DM Sans, weight 600, tight tracking.
 - Body & Interface copy: DM Sans, regular (400) or medium (500).
-- Both variable files expose weights 300–700. Components use 400, 500, or 600; 600 is the applied weight ceiling.
+- The variable file exposes weights 300–700. Components use 400, 500, or 600; 600 is the applied weight ceiling.
 
 ### The 11-tier hierarchy
 
 1. **L1: Display (`--c27-text-display`, 38–48px / 1.05 / `-.035em`)** — homepage and campaign-scale H1s, capped at 20ch.
 2. **L2: Page title (`--c27-text-h1`, 32–40px / 1.15 / `-.03em`)** — supporting-page H1s, capped at 24ch.
-3. **L3: Section heading (`--c27-text-h2`, 30–40px / 1.15 / `-.03em`)** — H2s and the selected capability statement, capped at 24ch unless a split column supplies the measure.
+3. **L3: Section heading (`--c27-text-h2`, 30–40px / 1.15 / `-.03em`)** — main section H2s, capped at 24ch unless a split column supplies the measure.
 4. **L4: Section lede (`--c27-text-lede`, 17–19px / 1.6)** — one short explanatory paragraph, capped at 65ch.
-5. **L5: Feature title (`--c27-text-card-title`, 22px / 1.3 / `-.02em`)** — H2/H3 titles inside ruled groups and compact sections.
+5. **L5: Feature title & capability statement (`--c27-text-card-title` / 20–24px / 1.25–1.3 / `-.025em`)** — H3 titles inside ruled groups, panels, and compact sections.
 6. **L6: Body (`--c27-text-body`, 16px / 1.55–1.6)** — standalone prose, form values, and interface copy.
 7. **L7: Compact body (`--c27-text-body-sm`, 15px / 1.55–1.65)** — list descriptions and supporting component copy.
 8. **L8: Caption (`--c27-text-caption`, 13px / component-specific leading)** — metadata, form help, and compact annotations.

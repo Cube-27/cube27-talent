@@ -114,18 +114,11 @@ const HIRING_STANDARDS = [
       invert
     />
 
-    <ol class="c27-rule-grid" style="--c27-cols:3">
+    <ul class="c27-rule-grid" style="--c27-cols:3">
       {
         HIRING_STANDARDS.map((item, index) => (
           <li class="c27-rise" style={`--c27-d:${index * 60}ms`}>
-            <span class="why-standard-index" aria-hidden="true">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <Icon
-              name={item.icon}
-              size={24}
-              class="mt-5 text-c27-on-deep-accent"
-            />
+            <Icon name={item.icon} size={24} class="text-c27-on-deep-accent" />
             <h3 class="c27-card-title mt-4 font-semibold text-c27-on-deep">
               {item.title}
             </h3>
@@ -135,7 +128,7 @@ const HIRING_STANDARDS = [
           </li>
         ))
       }
-    </ol>
+    </ul>
   </Section>
 
   <Section id="compliance" tone="surface">
@@ -175,15 +168,6 @@ const HIRING_STANDARDS = [
 
   .why-hero-aside {
     max-width: 34rem;
-  }
-
-  .why-standard-index {
-    display: block;
-    font-family: var(--c27-font-display);
-    font-size: var(--c27-text-label);
-    font-weight: 600;
-    letter-spacing: var(--c27-track-index);
-    color: var(--c27-on-deep-accent);
   }
 
   @media (max-width: 56.25rem) {
