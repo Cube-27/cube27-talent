@@ -8,13 +8,11 @@ import { PROCESS_PHASES } from "@/data/process";
   data-process-rail
 >
   <div class="c27-rise lg:sticky lg:top-28 lg:self-start">
-    <h3
-      class="c27-card-title font-semibold text-c27-on-deep lg:whitespace-nowrap"
-    >
+    <h3 class="c27-card-title font-semibold text-c27-ink lg:whitespace-nowrap">
       From role brief to final selection.
     </h3>
     <p
-      class="mt-7 border-t border-c27-line-deep pt-5 text-body-sm leading-relaxed text-c27-on-deep-2"
+      class="mt-7 border-t border-c27-line pt-5 text-body-sm leading-relaxed text-c27-ink-2"
     >
       AI supports the search. People make every decision.
     </p>
@@ -23,33 +21,33 @@ import { PROCESS_PHASES } from "@/data/process";
   <div class="process-list relative" data-phase-list>
     <span
       aria-hidden="true"
-      class="process-track absolute bottom-0 left-[1.375rem] top-0 w-px bg-c27-line-deep"
+      class="process-track absolute bottom-0 left-[1.375rem] top-0 w-px bg-c27-line"
     >
       <i
-        class="block h-[var(--process-progress,25%)] w-full bg-c27-on-deep-accent transition-[height] duration-500 ease-[var(--c27-ease)]"
+        class="block h-[var(--process-progress,25%)] w-full bg-c27-accent transition-[height] duration-500 ease-[var(--c27-ease)]"
       ></i>
     </span>
 
     {
       PROCESS_PHASES.map((phase, index) => (
         <article
-          class="process-phase relative grid min-h-40 grid-cols-[2.75rem_minmax(0,1fr)] content-center gap-5 border-t border-c27-line-deep py-8 first:border-t-0 first:pt-0 last:pb-0"
+          class="process-phase relative grid min-h-40 grid-cols-[2.75rem_minmax(0,1fr)] content-center gap-5 border-t border-c27-line py-8 first:border-t-0 first:pt-0 last:pb-0"
           data-phase
           data-active={index === 0 ? "true" : "false"}
         >
-          <span class="process-node relative z-[1] grid size-11 place-items-center border border-c27-line-deep bg-c27-deep text-c27-on-deep-3 transition-[background-color,border-color,color] duration-300">
+          <span class="process-node relative z-[1] grid size-11 place-items-center border border-c27-line bg-c27-surface text-c27-ink-3 transition-[background-color,border-color,color] duration-300">
             <Icon name={phase.icon} size={20} />
           </span>
           <div>
-            <h3 class="c27-card-title font-semibold text-c27-on-deep">
+            <h3 class="c27-card-title font-semibold text-c27-ink">
               {phase.name}
             </h3>
-            <p class="mt-2 text-body-sm leading-relaxed text-c27-on-deep/80">
+            <p class="mt-2 text-body-sm leading-relaxed text-c27-ink-2">
               {phase.summary}
             </p>
             <ul class="mt-5 flex flex-wrap gap-x-6 gap-y-2">
               {phase.points.map((point) => (
-                <li class="text-body-sm text-c27-on-deep-2">{point}</li>
+                <li class="text-body-sm text-c27-ink-2">{point}</li>
               ))}
             </ul>
           </div>
@@ -126,8 +124,8 @@ import { PROCESS_PHASES } from "@/data/process";
     }
 
     .process-phase .process-node {
-      border-color: var(--c27-on-deep-accent);
-      color: var(--c27-on-deep-accent);
+      border-color: var(--c27-accent);
+      color: var(--c27-accent);
     }
   }
 </style>

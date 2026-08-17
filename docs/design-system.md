@@ -34,9 +34,9 @@ Every ratio below is measured, not estimated. Recompute before changing a value.
 
 - **Ground:** white (`#ffffff`) — the main reading surface.
 - **Surface:** white (`#ffffff`) for pills, menus, and overlay surfaces.
-- **Surface 2:** warm grey (`#e8e9e5`) — the alternating band tone.
-- **Hero:** lavender (`#e9eafa`) — the hero's right-hand field only.
-- **Deep:** lavender (`#e6e9fb`) for the process rail, the final CTA, and the capability panel. It is a **light** tint, so its text ramp (`--c27-on-deep*`) mirrors the ink ramp rather than inverting it. Measured on it: 13.46 / 5.60 / 4.88 / 4.92.
+- **Surface 2:** cool slate (`#f4f6fa`) — the consistent alternating band tone across pages.
+- **Hero:** soft cobalt (`#e8ecfc`) — the hero's right-hand field only.
+- **Deep:** soft cobalt (`#e8ecfc`) for the final CTA and the capability panel. It is a **light** tint, so its text ramp (`--c27-on-deep*`) mirrors the ink ramp rather than inverting it. Measured on it: 13.46 / 5.60 / 4.88 / 4.92.
 - **Ink:** deep navy-slate (`#12203a`), with `#4f5c73` and `#59657a` beneath it. Measured minimum across all five grounds: 13.31 / 5.53 / 4.83.
 - **Accent — Signal Cobalt (`#284bff`):** actions, links, focus, active state, index numerals, eyebrow squares, directional marks. 5.44 on ground and 5.93 for white-on-cobalt, so it is safe as both a fill and as text. `--c27-accent-d` (`#173bcf`, 8.19 on white) is the hover and pressed step.
 - **Rules:** `--c27-line` (`#d3d8e0`) for list rows and control edges, `--c27-line-2` (`#c8ced9`) for column dividers, `--c27-line-3` (`#b7becc`) for the rule that opens a grid. These are deliberately stronger than a decorative hairline because they do the work a card border and shadow used to do.

@@ -21,12 +21,10 @@
      --c27-surface are component fills, not section tones. */
   --c27-ground: #ffffff; /* white — the main reading surface */
   --c27-surface: #ffffff; /* pills, menus, and overlay surfaces */
-  --c27-surface-2: #e8e9e5; /* warm grey band */
-  --c27-hero: #e9eafa; /* the hero's right-hand lavender field */
-  /* The band tone for the process rail, the final CTA, and the capability
-     panel. Text on it uses the --c27-on-deep ramp below.
-     Measured against the ink ramp: 13.46 / 5.60 / 4.88. */
-  --c27-deep: #e6e9fb;
+  --c27-surface-2: #f4f6fa; /* cool slate band tone */
+  --c27-hero: #e8ecfc; /* the hero's right-hand subtle cobalt/lavender field */
+  /* The signature accent band tone for the final CTA and capability panel. */
+  --c27-deep: #e8ecfc;
 
   /* --- ink -------------------------------------------------------
      Deep navy-slate. Measured minimum across all five grounds above:
@@ -61,7 +59,7 @@
      fill, 3.74 on ground, 4.08 on surface, 3.38 on deep. Never use the control
      rule as a decorative separator; that is --c27-line. */
   --c27-line-control: #737e95;
-  --c27-field-fill: #efece4;
+  --c27-field-fill: #f1f4f9;
 
   /* --- on deep fields -------------------------------------------
      The deep field is a light tint, so this ramp mirrors the ink ramp

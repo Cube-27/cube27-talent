@@ -107,22 +107,21 @@ const HIRING_STANDARDS = [
     </p>
   </Section>
 
-  <Section id="hiring-standards" tone="deep">
+  <Section id="hiring-standards">
     <SectionHead
       heading="Evidence-led hiring, end to end"
       lede="AI can assist sourcing and screening. People review the evidence and make every assessment and hiring decision."
-      invert
     />
 
     <ul class="c27-rule-grid" style="--c27-cols:3">
       {
         HIRING_STANDARDS.map((item, index) => (
           <li class="c27-rise" style={`--c27-d:${index * 60}ms`}>
-            <Icon name={item.icon} size={24} class="text-c27-on-deep-accent" />
-            <h3 class="c27-card-title mt-4 font-semibold text-c27-on-deep">
+            <Icon name={item.icon} size={24} class="text-c27-accent" />
+            <h3 class="c27-card-title mt-4 font-semibold text-c27-ink">
               {item.title}
             </h3>
-            <p class="mt-2 max-w-[34ch] text-body-sm leading-relaxed text-c27-on-deep-2">
+            <p class="mt-2 max-w-[34ch] text-body-sm leading-relaxed text-c27-ink-2">
               {item.body}
             </p>
           </li>
