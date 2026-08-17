@@ -1,7 +1,9 @@
 dist
 node_modules
 .astro
+.astro/**
 .wrangler
+.wrangler/**
 pnpm-lock.yaml
 public/fonts
 docs/mockup

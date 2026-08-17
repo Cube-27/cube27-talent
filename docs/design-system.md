@@ -32,7 +32,7 @@ When this system is applied to another Cube27 property without a full visual red
 
 Every ratio below is measured, not estimated. Recompute before changing a value.
 
-- **Ground:** warm paper (`#f7f5ef`) — the main reading surface.
+- **Ground:** white (`#ffffff`) — the main reading surface.
 - **Surface:** white (`#ffffff`) for pills, menus, and overlay surfaces.
 - **Surface 2:** warm grey (`#e8e9e5`) — the alternating band tone.
 - **Hero:** lavender (`#e9eafa`) — the hero's right-hand field only.

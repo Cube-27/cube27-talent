@@ -19,7 +19,7 @@
      a step in tone, never a shadow and never a border box. Cycle
      ground → surface-2 → deep for page rhythm; --c27-hero and
      --c27-surface are component fills, not section tones. */
-  --c27-ground: #f7f5ef; /* warm paper — the main reading surface */
+  --c27-ground: #ffffff; /* white — the main reading surface */
   --c27-surface: #ffffff; /* pills, menus, and overlay surfaces */
   --c27-surface-2: #e8e9e5; /* warm grey band */
   --c27-hero: #e9eafa; /* the hero's right-hand lavender field */
@@ -104,7 +104,7 @@
   --c27-bracket: rgba(40, 75, 255, 0.8);
   --c27-bracket-fill: rgba(40, 75, 255, 0.11);
   /* The scrolled header: the ground colour at 93% behind a blur. */
-  --c27-header-fill: rgba(247, 245, 239, 0.93);
+  --c27-header-fill: rgba(255, 255, 255, 0.93);
 
   /* --- feedback --------------------------------------------------
      The one colour outside the accent, and only because an error must
