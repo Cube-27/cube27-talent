@@ -4,12 +4,12 @@ import Section from "@/components/ui/Section.astro";
 import Button from "@/components/ui/Button.astro";
 import { ROUTES, SITE_CONFIG } from "@/site-config";
 
-const title = `Requirement received | ${SITE_CONFIG.brand}`;
+const title = `Thank you | ${SITE_CONFIG.brand}`;
 ---
 
 <Layout
   title={title}
-  description="Your hiring requirement has been received."
+  description="Thank you for your interest. Your hiring requirement has been received."
   noindex
   bare
 >
@@ -18,10 +18,10 @@ const title = `Requirement received | ${SITE_CONFIG.brand}`;
     class="c27-blueprint -mt-[4.5rem] pt-[calc(var(--c27-pad-section)+4.5rem)]"
   >
     <div class="max-w-[50rem] border-t border-c27-line pt-8">
-      <h1 class="c27-h1">We have your requirement.</h1>
+      <h1 class="c27-h1">Thank you for your interest.</h1>
       <p class="c27-lede mt-5">
-        Check your email for confirmation. We’ll review the requirement and
-        contact you directly.
+        We have received your requirement. Check your email for confirmation.
+        We’ll review the details and contact you directly.
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
         <Button href={ROUTES.how} variant="primary">See how we hire</Button>

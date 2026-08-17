@@ -19,7 +19,7 @@ export const PROOF: ProofPoint[] = [
     verified: true,
   },
   {
-    value: "10+ years",
+    value: "15+ years",
     label: "Serving global clients",
     source: "Approved for publication on 13 August 2026",
     verified: true,

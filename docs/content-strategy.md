@@ -33,7 +33,7 @@ Candidate CTA: **Apply to join**
 2. Interview conducted by someone who does the work.
 3. Curated shortlist with decision context.
 4. Employee lifecycle management after selection.
-5. Approved scale metrics: 200+ positions, 150+ brands, 10+ years.
+5. Approved scale metrics: 200+ positions, 150+ brands, 15+ years.
 
 ## Voice
 
@@ -79,9 +79,9 @@ Career value → fair discipline-specific evaluation → what information to sub
 - Leadership: Hire leaders who can build the function.
 - Employer H1: Tell us who you need.
 - Candidate H1: Find your next role.
-- Final CTA: Build your team.
-- Employer confirmation: We have your requirement.
-- Candidate confirmation: Your profile is with our team.
+- Final CTA: Take the next step.
+- Employer confirmation: Thank you for your interest.
+- Candidate confirmation: Thank you for your interest.
 - Error page: This page isn’t here.
 
 ## Forbidden content

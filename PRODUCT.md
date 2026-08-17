@@ -42,7 +42,7 @@ The service supports global, remote, hybrid, onsite, and relocation-based hiring
 
 - 200+ positions filled — approved.
 - 150+ brands served — approved and previously sourced from the parent site.
-- 10+ years serving global clients — approved.
+- 15+ years serving global clients — approved.
 - No approved client-logo set, testimonials, case studies, ratings, or delivery-time claims.
 
 ## Product Principles

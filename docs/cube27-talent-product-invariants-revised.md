@@ -64,7 +64,7 @@ The following exact claims are approved for public use:
 
 - **200+** — Positions filled
 - **150+** — Brands served
-- **10+ years** — Serving global clients
+- **15+ years** — Serving global clients
 
 Do not add client logos, testimonials, case studies, ratings, delivery-time claims, or other metrics without an approved source.
 

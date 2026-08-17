@@ -265,7 +265,7 @@ export const onRequest = async ({
     text: [
       `Hello ${name},`,
       "",
-      "Your profile has reached us.",
+      "Thank you for your interest in Cube27 Talent. Your profile has reached us.",
       "",
       "We will read it properly and get in touch if there is a relevant next step. Sending a profile does not guarantee screening, an interview, employment or an assignment.",
       "",
@@ -276,10 +276,14 @@ export const onRequest = async ({
       "— Cube27 Talent",
     ].join("\n"),
     html: wrapHtml(
-      "Application received",
+      "Thank you — Application received",
       htmlRows([
         ["Reference", id],
         ["Target role", roleTitle],
+        [
+          "Status",
+          "Thank you for your interest in Cube27 Talent. Your profile has reached us.",
+        ],
         [
           "Next",
           "We will read it properly and get in touch if there is a relevant next step. Sending a profile does not guarantee screening, an interview, employment or an assignment.",

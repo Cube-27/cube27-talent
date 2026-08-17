@@ -28,7 +28,7 @@ export const GET: APIRoute = () => {
     "",
     "- 200+ positions filled.",
     "- 150+ brands served.",
-    "- 10+ years serving global clients.",
+    "- 15+ years serving global clients.",
     "",
     "## Not claimed",
     "",

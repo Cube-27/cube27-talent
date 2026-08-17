@@ -212,7 +212,7 @@ export const onRequest = async ({
     text: [
       `Hello ${name},`,
       "",
-      "Your hiring requirement has reached us.",
+      "Thank you for your interest in Cube27 Talent. Your hiring requirement has reached us.",
       "",
       "We will read it properly, work out whether we can assess the role well, and come back to you either way using the details you supplied. Sending a requirement does not by itself start an engagement.",
       "",
@@ -221,10 +221,14 @@ export const onRequest = async ({
       "— Cube27 Talent",
     ].join("\n"),
     html: wrapHtml(
-      "Requirement received",
+      "Thank you — Requirement received",
       htmlRows([
         ["Reference", id],
         ["Company", company],
+        [
+          "Status",
+          "Thank you for your interest in Cube27 Talent. We have received your requirement.",
+        ],
         [
           "Next",
           "We will read it properly, work out whether we can assess the role well, and come back to you either way using the details you supplied. Sending a requirement does not by itself start an engagement.",
