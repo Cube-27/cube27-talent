@@ -111,8 +111,7 @@
   --c27-danger-soft: #fdf0ee;
 
   /* --- type --- */
-  --c27-font-display:
-    "DM Sans Variable", "Arial", ui-sans-serif, system-ui, sans-serif;
+  --c27-font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
   --c27-font-body:
     "DM Sans Variable", "Arial", ui-sans-serif, system-ui, sans-serif;
 

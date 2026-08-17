@@ -23,10 +23,11 @@ const EVIDENCE = [
 ];
 ---
 
-<section class="c27-blueprint -mt-[4.5rem] pt-[4.5rem]">
-  <div class="c27-wrap py-[clamp(3rem,5vw,4.5rem)]">
+<section class="c27-hiw-hero c27-blueprint">
+  <div class="c27-wrap">
     <div class="c27-hiw-head">
-      <div class="c27-rise">
+      <div class="c27-rise c27-hiw-copy">
+        <span class="c27-rule-mark c27-hero-mark" aria-hidden="true"></span>
         <Eyebrow>Evidence-led hiring</Eyebrow>
         <h1 class="c27-display mt-6 max-w-[16ch] text-c27-ink">
           Hire with proof, not promises
@@ -66,11 +67,32 @@ const EVIDENCE = [
 </section>
 
 <style>
+  .c27-hiw-hero {
+    --c27-hero-pad-top: calc(5.5vw + 4.5rem);
+    --c27-hero-pad-bottom: clamp(3rem, 5vw, 4.5rem);
+
+    margin-top: -4.5rem;
+    padding-top: var(--c27-hero-pad-top);
+    padding-bottom: var(--c27-hero-pad-bottom);
+    background: var(--c27-ground);
+  }
+
   .c27-hiw-head {
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
     gap: 4vw;
-    align-items: end;
+    align-items: start;
+  }
+
+  .c27-hiw-copy {
+    position: relative;
+    padding-left: clamp(25px, 3.4vw, 65px);
+  }
+
+  .c27-hero-mark {
+    position: absolute;
+    top: 0.125rem;
+    left: 0;
   }
 
   .c27-hiw-aside {
@@ -78,10 +100,22 @@ const EVIDENCE = [
   }
 
   @media (max-width: 56.25rem) {
+    .c27-hiw-hero {
+      --c27-hero-pad-top: calc(12vw + 4.5rem);
+    }
+
     .c27-hiw-head {
       grid-template-columns: minmax(0, 1fr);
       gap: 1.75rem;
       align-items: start;
+    }
+
+    .c27-hero-mark {
+      height: 57px;
+    }
+
+    .c27-hiw-copy {
+      padding-left: 1.5rem;
     }
   }
 </style>

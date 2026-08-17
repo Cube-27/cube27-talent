@@ -52,8 +52,15 @@ const canonicalUrl = canonical
     <meta name="generator" content="Astro" />
 
     {
-      /* DM Sans variable face is preloaded for above-the-fold display and body rendering. */
+      /* Source Serif 4 and DM Sans variable faces are preloaded for fast first paint without layout shift. */
     }
+    <link
+      rel="preload"
+      href="/fonts/source-serif-4-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link
       rel="preload"
       href="/fonts/dm-sans-variable.woff2"

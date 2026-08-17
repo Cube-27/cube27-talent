@@ -55,27 +55,28 @@ const HIRING_STANDARDS = [
 ---
 
 <Layout title={title} description={description} jsonLd={jsonLd}>
-  <Section
-    class="c27-blueprint -mt-[4.5rem] pt-[calc(var(--c27-pad-section)+4.5rem)]"
-  >
-    <div class="why-hero">
-      <div class="c27-rise">
-        <Eyebrow>Operator-led hiring</Eyebrow>
-        <h1 class="c27-display mt-6 max-w-[15ch]">
-          Built for teams where every hire matters
-        </h1>
-      </div>
-      <div class="c27-rise why-hero-aside" style="--c27-d:80ms">
-        <p class="c27-lede">
-          Enterprise leadership experience and evidence-led hiring discipline
-          shape every team we build.
-        </p>
-        <Button href={ROUTES.hire} variant="primary" arrow class="mt-8">
-          Build your team
-        </Button>
+  <section class="why-hero-section c27-blueprint">
+    <div class="c27-wrap">
+      <div class="why-hero">
+        <div class="c27-rise why-hero-copy">
+          <span class="c27-rule-mark c27-hero-mark" aria-hidden="true"></span>
+          <Eyebrow>Operator-led hiring</Eyebrow>
+          <h1 class="c27-display mt-6 max-w-[24ch]">
+            Built for teams<br />where every hire matters
+          </h1>
+        </div>
+        <div class="c27-rise why-hero-aside" style="--c27-d:80ms">
+          <p class="c27-lede">
+            Enterprise leadership experience and evidence-led hiring discipline
+            shape every team we build.
+          </p>
+          <Button href={ROUTES.hire} variant="primary" arrow class="mt-8">
+            Build your team
+          </Button>
+        </div>
       </div>
     </div>
-  </Section>
+  </section>
 
   <Section id="operator-proof" tone="surface">
     <SectionHead
@@ -155,11 +156,32 @@ const HIRING_STANDARDS = [
 </Layout>
 
 <style>
+  .why-hero-section {
+    --c27-hero-pad-top: calc(5.5vw + 4.5rem);
+    --c27-hero-pad-bottom: clamp(3rem, 5vw, 4.5rem);
+
+    margin-top: -4.5rem;
+    padding-top: var(--c27-hero-pad-top);
+    padding-bottom: var(--c27-hero-pad-bottom);
+    background: var(--c27-ground);
+  }
+
   .why-hero {
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
     gap: clamp(2.25rem, 6vw, 5rem);
-    align-items: end;
+    align-items: start;
+  }
+
+  .why-hero-copy {
+    position: relative;
+    padding-left: clamp(25px, 3.4vw, 65px);
+  }
+
+  .c27-hero-mark {
+    position: absolute;
+    top: 0.125rem;
+    left: 0;
   }
 
   .why-hero-aside {
@@ -167,9 +189,21 @@ const HIRING_STANDARDS = [
   }
 
   @media (max-width: 56.25rem) {
+    .why-hero-section {
+      --c27-hero-pad-top: calc(12vw + 4.5rem);
+    }
+
     .why-hero {
       grid-template-columns: minmax(0, 1fr);
       align-items: start;
+    }
+
+    .c27-hero-mark {
+      height: 57px;
+    }
+
+    .why-hero-copy {
+      padding-left: 1.5rem;
     }
   }
 </style>
