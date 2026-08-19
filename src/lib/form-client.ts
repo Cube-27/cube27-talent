@@ -63,6 +63,20 @@ export function attachFormHandler(options: Options) {
 
   let pending = false;
 
+  const clearValidControls = () => {
+    const invalidControls = form.querySelectorAll<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >("[aria-invalid='true']");
+    invalidControls.forEach((el) => {
+      if (typeof el.checkValidity === "function" && el.checkValidity()) {
+        el.removeAttribute("aria-invalid");
+      }
+    });
+  };
+
+  form.addEventListener("input", clearValidControls);
+  form.addEventListener("change", clearValidControls);
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     // Duplicate-submit guard. Plan §11.2.
@@ -76,6 +90,19 @@ export function attachFormHandler(options: Options) {
       errors.textContent =
         "Some required details are missing or invalid. Please check the highlighted fields.";
       errors.focus();
+
+      // Highlight all invalid controls
+      const elements = [...form.elements] as (
+        | HTMLInputElement
+        | HTMLSelectElement
+        | HTMLTextAreaElement
+      )[];
+      elements.forEach((el) => {
+        if (el.checkValidity && !el.checkValidity()) {
+          el.setAttribute("aria-invalid", "true");
+        }
+      });
+
       form.reportValidity();
       return;
     }

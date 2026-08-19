@@ -48,9 +48,15 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
   >
   </div>
 
+  <p class="text-caption text-c27-ink-3">
+    <span class="text-c27-accent font-bold" aria-hidden="true">*</span> Required fields
+  </p>
+
   <div class="c27-form-row grid sm:grid-cols-2">
     <div class="c27-form-control grid min-w-0 gap-1.5">
-      <label for="ef-name" class="text-caption font-semibold">Name</label>
+      <label for="ef-name" class="text-caption font-semibold">
+        Name <span class="text-c27-accent font-bold" aria-hidden="true">*</span>
+      </label>
       <input
         id="ef-name"
         name="name"
@@ -63,8 +69,9 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
       />
     </div>
     <div class="c27-form-control grid min-w-0 gap-1.5">
-      <label for="ef-email" class="text-caption font-semibold">Work email</label
-      >
+      <label for="ef-email" class="text-caption font-semibold">
+        Work email <span class="text-c27-accent font-bold" aria-hidden="true">*</span>
+      </label>
       <input
         id="ef-email"
         name="email"
@@ -80,7 +87,9 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
 
   <div class="c27-form-row grid sm:grid-cols-2">
     <div class="c27-form-control grid min-w-0 gap-1.5">
-      <label for="ef-company" class="text-caption font-semibold">Company</label>
+      <label for="ef-company" class="text-caption font-semibold">
+        Company <span class="text-c27-accent font-bold" aria-hidden="true">*</span>
+      </label>
       <input
         id="ef-company"
         name="company"
@@ -93,7 +102,9 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
       />
     </div>
     <div class="c27-form-control grid min-w-0 gap-1.5">
-      <label for="ef-title" class="text-caption font-semibold">Job title</label>
+      <label for="ef-title" class="text-caption font-semibold">
+        Job title <span class="text-c27-accent font-bold" aria-hidden="true">*</span>
+      </label>
       <input
         id="ef-title"
         name="jobTitle"
@@ -109,7 +120,9 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
 
   <div class="c27-form-row grid sm:grid-cols-3">
     <div class="c27-form-control grid min-w-0 gap-1.5">
-      <label for="ef-country" class="text-caption font-semibold">Country</label>
+      <label for="ef-country" class="text-caption font-semibold">
+        Country <span class="text-c27-accent font-bold" aria-hidden="true">*</span>
+      </label>
       <input
         id="ef-country"
         name="country"
@@ -122,15 +135,17 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
       />
     </div>
     <div class="c27-form-control grid min-w-0 gap-1.5">
-      <label for="ef-hires" class="text-caption font-semibold">Positions</label>
+      <label for="ef-hires" class="text-caption font-semibold">
+        Positions <span class="text-c27-accent font-bold" aria-hidden="true">*</span>
+      </label>
       <Select id="ef-hires" name="hires" required>
         {HIRE_COUNTS.map((n) => <option selected={n === "2–5"}>{n}</option>)}
       </Select>
     </div>
     <div class="c27-form-control grid min-w-0 gap-1.5">
-      <label for="ef-start" class="text-caption font-semibold"
-        >Target start</label
-      >
+      <label for="ef-start" class="text-caption font-semibold">
+        Target start <span class="text-c27-accent font-bold" aria-hidden="true">*</span>
+      </label>
       <Select id="ef-start" name="startWindow" required>
         {START_WINDOWS.map((w) => <option>{w}</option>)}
       </Select>
@@ -139,17 +154,17 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
 
   <div class="c27-form-row grid sm:grid-cols-2">
     <div class="c27-form-control grid min-w-0 gap-1.5">
-      <label for="ef-engagement" class="text-caption font-semibold"
-        >Engagement</label
-      >
+      <label for="ef-engagement" class="text-caption font-semibold">
+        Engagement <span class="text-c27-accent font-bold" aria-hidden="true">*</span>
+      </label>
       <Select id="ef-engagement" name="engagement" required>
         {ENGAGEMENTS.map((e) => <option>{e}</option>)}
       </Select>
     </div>
     <div class="c27-form-control grid min-w-0 gap-1.5">
-      <label for="ef-arrangement" class="text-caption font-semibold"
-        >Work arrangement</label
-      >
+      <label for="ef-arrangement" class="text-caption font-semibold">
+        Work arrangement <span class="text-c27-accent font-bold" aria-hidden="true">*</span>
+      </label>
       <Select id="ef-arrangement" name="arrangement" required>
         {ARRANGEMENTS.map((a) => <option>{a}</option>)}
       </Select>
@@ -157,11 +172,13 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
   </div>
 
   <fieldset class="grid min-w-0 gap-3">
-    <legend class="text-caption font-semibold">Role families</legend>
-    <div class="c27-choice-grid grid sm:grid-cols-2 sm:gap-x-8">
+    <legend class="text-caption font-semibold">
+      Role families <span class="text-c27-accent font-bold" aria-hidden="true">*</span>
+    </legend>
+    <div class="c27-choice-grid grid sm:grid-cols-2">
       {
         ROLE_FAMILIES.map((family, i) => (
-          <label class="c27-choice relative flex min-h-11 cursor-pointer select-none items-center px-1 text-caption has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-c27-accent">
+          <label class="c27-choice relative flex min-h-11 cursor-pointer select-none items-center justify-between px-3.5 py-2.5 text-caption has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-c27-accent">
             <input
               type="checkbox"
               name="roleFamilies"
@@ -169,7 +186,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
               required={i === 0}
               class="pointer-events-none absolute opacity-0"
             />
-            {family.short}
+            <span>{family.short}</span>
           </label>
         ))
       }
@@ -177,9 +194,9 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
   </fieldset>
 
   <div class="c27-form-control grid min-w-0 gap-1.5">
-    <label for="ef-detail" class="text-caption font-semibold"
-      >The requirement</label
-    >
+    <label for="ef-detail" class="text-caption font-semibold">
+      The requirement <span class="text-c27-accent font-bold" aria-hidden="true">*</span>
+    </label>
     <textarea
       id="ef-detail"
       name="requirement"
@@ -187,11 +204,12 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
       minlength="20"
       maxlength="4000"
       placeholder="Levels, stack, work model, what the team is building."
-      class="c27-field min-h-[6rem] resize-y"></textarea>
+      class="c27-field min-h-[6.5rem] resize-y p-3.5"></textarea>
+    <p class="text-caption text-c27-ink-3">Minimum 20 characters.</p>
   </div>
 
   <label
-    class="grid grid-cols-[1.1rem_minmax(0,1fr)] items-start gap-2.5 text-caption text-c27-ink-2"
+    class="c27-consent grid grid-cols-[1.1rem_minmax(0,1fr)] items-start gap-2.5 text-caption text-c27-ink-2"
   >
     <input
       type="checkbox"
@@ -204,7 +222,7 @@ const ARRANGEMENTS = ["Remote", "Hybrid", "Onsite", "Relocation", "Flexible"];
       We may use these details to respond to this enquiry, as described in the <a
         href={ROUTES.privacy}
         class="text-c27-accent-d underline underline-offset-2">privacy notice</a
-      >.
+      >. <span class="text-c27-accent font-bold" aria-hidden="true">*</span>
     </span>
   </label>
 

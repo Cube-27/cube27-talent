@@ -503,37 +503,35 @@
   }
 
   .c27-form-shell :is(label[for], legend) {
-    color: var(--c27-ink-2);
+    color: var(--c27-ink);
     font-family: var(--c27-font-body);
-    font-size: 0.6875rem;
+    font-size: var(--c27-text-caption);
     font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    line-height: 1.3;
+    letter-spacing: normal;
+    text-transform: none;
   }
 
   .c27-form-row {
     column-gap: clamp(1.25rem, 2.5vw, 2rem);
-    row-gap: 1.5rem;
+    row-gap: 1.25rem;
   }
 
   .c27-form-control {
     align-content: start;
   }
 
-  /* Controls are open at rest and become a subtle well only while active.
-     Focus thickens the cobalt baseline with an inset shadow, so keyboard
-     navigation never shifts the layout by a pixel. */
+  /* Crisp enclosed boxed inputs: 4-sided border against white ground,
+     comfortable inner padding, 0px radius, and solid focus ring. */
   .c27-field {
     width: 100%;
     min-width: 0;
-    padding: 0.5rem 0;
-    font-size: var(--c27-text-body);
+    padding: 0.625rem 0.875rem;
+    font-size: var(--c27-text-body-sm);
     line-height: 1.4;
     color: var(--c27-ink);
-    background: transparent;
-    border: 0;
-    border-bottom: 1px solid var(--c27-line-control);
+    background: #ffffff;
+    border: 1px solid var(--c27-line);
     border-radius: 0;
     transition:
       background-color var(--c27-dur-fast) var(--c27-ease-out),
@@ -546,23 +544,38 @@
   }
 
   .c27-field:hover:not(:focus) {
-    border-bottom-color: var(--c27-accent);
+    border-color: var(--c27-line-control);
   }
 
   .c27-field:focus,
   .c27-field:focus-visible {
     outline: none;
-    background: var(--c27-field-fill);
-    border-bottom-color: var(--c27-accent);
-    box-shadow: inset 0 -1px 0 var(--c27-accent);
+    background: #ffffff;
+    border-color: var(--c27-accent);
+    box-shadow: 0 0 0 1px var(--c27-accent);
   }
 
   /* The upgraded select trigger is a button, so it focuses on :focus-visible
-     only — but it must look identical to a field at rest. */
+     only — matching the boxed input container at rest. */
   .c27-field[aria-expanded="true"] {
-    background: var(--c27-field-fill);
-    border-bottom-color: var(--c27-accent);
-    box-shadow: inset 0 -1px 0 var(--c27-accent);
+    background: #ffffff;
+    border-color: var(--c27-accent);
+    box-shadow: 0 0 0 1px var(--c27-accent);
+  }
+
+  /* Field validation error states */
+  .c27-field:user-invalid,
+  .c27-field[aria-invalid="true"] {
+    background: var(--c27-danger-soft);
+    border-color: var(--c27-danger);
+  }
+
+  .c27-field:user-invalid:focus,
+  .c27-field[aria-invalid="true"]:focus {
+    outline: none;
+    background: var(--c27-danger-soft);
+    border-color: var(--c27-danger);
+    box-shadow: 0 0 0 1px var(--c27-danger);
   }
 
   @media (forced-colors: active) {
@@ -597,25 +610,55 @@
   }
 
   .c27-choice-grid {
-    border-top: 1px solid var(--c27-line-2);
+    gap: 0.625rem;
   }
 
   .c27-choice {
-    border-bottom: 1px solid var(--c27-line-2);
-    background: transparent;
+    border: 1px solid var(--c27-line);
+    background: #ffffff;
     transition:
       background-color var(--c27-dur-fast) var(--c27-ease-out),
+      border-color var(--c27-dur-fast) var(--c27-ease-out),
       color var(--c27-dur-fast) var(--c27-ease-out);
   }
 
   .c27-choice:hover {
-    background: var(--c27-field-fill);
+    border-color: var(--c27-line-control);
+    background: var(--c27-surface-2);
+  }
+
+  .c27-choice:has([aria-invalid="true"]),
+  .c27-choice:has(:user-invalid),
+  .c27-choice[aria-invalid="true"] {
+    border-color: var(--c27-danger);
+    background: var(--c27-danger-soft);
   }
 
   .c27-choice:has(:checked) {
     background: var(--c27-accent-soft);
+    border-color: var(--c27-accent);
     color: var(--c27-accent-d);
     font-weight: 600;
+  }
+
+  .c27-consent {
+    border: 1px solid transparent;
+    padding: 0.25rem 0.375rem;
+    margin: -0.25rem -0.375rem;
+    transition:
+      background-color var(--c27-dur-fast) var(--c27-ease-out),
+      border-color var(--c27-dur-fast) var(--c27-ease-out);
+  }
+
+  .c27-consent:has([aria-invalid="true"]),
+  .c27-consent:has(:user-invalid),
+  .c27-consent[aria-invalid="true"],
+  label:has(input[name="consent"][aria-invalid="true"]),
+  label:has(input[name="consent"]:user-invalid) {
+    border: 1px solid var(--c27-danger);
+    background: var(--c27-danger-soft);
+    padding: 0.625rem 0.875rem;
+    margin: 0;
   }
 
   .c27-form-actions {
