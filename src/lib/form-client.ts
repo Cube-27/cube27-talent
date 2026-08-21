@@ -93,9 +93,7 @@ export function attachFormHandler(options: Options) {
 
       // Highlight all invalid controls
       const elements = [...form.elements] as (
-        | HTMLInputElement
-        | HTMLSelectElement
-        | HTMLTextAreaElement
+        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
       )[];
       elements.forEach((el) => {
         if (el.checkValidity && !el.checkValidity()) {

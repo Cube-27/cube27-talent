@@ -153,11 +153,11 @@
 
   /* --- emphasis clause ----------------------------------------------
      Headlines in this system close on an emphasized clause rendered in
-     Source Serif italic in terracotta accent (`--c27-accent`).
+     terracotta accent (`--c27-accent`).
      Everywhere else the quiet clause is upright in ink. */
   .c27-emphasis {
     font-family: var(--c27-font-display);
-    font-style: italic;
+    font-style: normal;
     color: var(--c27-accent);
   }
 

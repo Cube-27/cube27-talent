@@ -76,7 +76,7 @@ Two tiers were added for the structural marks this system runs on. Neither is pr
 
 ### The emphasis clause
 
-Headlines close on an emphasized clause rendered in Source Serif italic in terracotta accent (`.c27-emphasis`). Everywhere else the clause is quiet ink (`.c27-emphasis-quiet`); the line break alone carries the rhythm.
+Headlines close on an emphasized clause rendered in terracotta accent (`.c27-emphasis`). Everywhere else the clause is quiet ink (`.c27-emphasis-quiet`); the line break alone carries the rhythm.
 
 Headings use sentence case and describe an outcome, decision, or capability.
 

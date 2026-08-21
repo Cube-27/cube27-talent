@@ -32,24 +32,13 @@ U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD 
   font-style: normal;
 }
 
-/* Source Serif 4 variable font for editorial display headings */
+/* Geist variable font for display headings and numerals */
 @font-face {
-  font-family: "Source Serif 4";
+  font-family: "Geist";
   src:
-    url("/fonts/source-serif-4-latin.woff2") format("woff2") tech(variations),
-    url("/fonts/source-serif-4-latin.woff2") format("woff2-variations");
-  font-weight: 200 900;
+    url("/fonts/geist-variable.woff2") format("woff2") tech(variations),
+    url("/fonts/geist-variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
   font-display: optional;
   font-style: normal;
-}
-
-@font-face {
-  font-family: "Source Serif 4";
-  src:
-    url("/fonts/source-serif-4-italic-latin.woff2") format("woff2")
-      tech(variations),
-    url("/fonts/source-serif-4-italic-latin.woff2") format("woff2-variations");
-  font-weight: 200 900;
-  font-display: optional;
-  font-style: italic;
 }
