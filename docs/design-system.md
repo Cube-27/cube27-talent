@@ -36,12 +36,12 @@ Every ratio below is measured, not estimated. Recompute before changing a value.
 - **Surface:** white (`#ffffff`) for pills, menus, and overlay surfaces.
 - **Surface 2:** warm parchment (`#f6f4ed`) — the consistent alternating band tone across pages.
 - **Hero:** warm sand (`#ede4d6`) — the hero's right-hand field only.
-- **Deep:** warm sand (`#ede4d6`) for the final CTA and the capability panel. It is a **light** tint, so its text ramp (`--c27-on-deep*`) mirrors the ink ramp rather than inverting it. Measured on it: 13.83 / 5.80 / 4.91 / 3.89.
+- **Deep:** warm sand (`#ede4d6`) for the final CTA and the capability panel. It is a **light** tint, so its text ramp (`--c27-on-deep*`) mirrors the ink ramp rather than inverting it. Measured on it: 13.83 / 5.80 / 4.91 / 3.59.
 - **Ink:** warm obsidian / deep charcoal (`#1b1a15`), with `#5a564e` and `#767066` beneath it. Measured minimum across all grounds: 17.42 on ground, 15.83 on surface-2, 13.83 on deep.
-- **Accent — Warm Terracotta / Burnt Sienna (`#b0522c`):** actions, links, focus, active state, index numerals, eyebrow squares, directional marks. 5.14 on ground and 5.14 for white-on-terracotta, so it is safe as both a fill and as text. `--c27-accent-d` (`#8c3b1a`, 7.62 on white, 6.05 on deep) is the hover and pressed step.
+- **Accent — Light Soft Terracotta / Burnt Sienna (`#b66238`):** actions, links, focus, active state, index numerals, eyebrow squares, directional marks. Lighter and softer, free of harsh glare on mobile screens. Measured: 4.52 on ground, 4.11 on surface-2, 3.59 on deep, and 4.52 for white-on-terracotta. `--c27-accent-d` (`#944621`, 6.75 on white, 5.35 on deep) is the hover and pressed step.
 - **Rules:** `--c27-line` (`#dfdbd2`) for list rows and control edges, `--c27-line-2` (`#d4cfc4`) for column dividers, `--c27-line-3` (`#c4beb1`) for the rule that opens a grid. These are deliberately stronger than a decorative hairline because they do the work a card border and shadow used to do.
 - **Line control (`#7d776c`):** the single bottom rule identifying a form field. Measured 4.44 on ground, 4.00 on field fill, 3.53 on deep.
-- **Footer (`#1b1a15`):** the one dark band, and only ever the footer — it closes the document rather than continuing the light rhythm, so it is never used as a section tone. Its ramp (`--c27-on-footer*`) inverts the ink ramp: measured on it, 17.42 / 10.37 / 6.55, with the link hover (`#e59c76`) at 7.76 and the wordmark numeral (`#d57a47`) at 6.12. Focus ring uses `--c27-on-footer-accent`.
+- **Footer (`#1b1a15`):** the one dark band, and only ever the footer — it closes the document rather than continuing the light rhythm, so it is never used as a section tone. Its ramp (`--c27-on-footer*`) inverts the ink ramp: measured on it, 17.42 / 10.37 / 6.55, with the link hover (`#e29b76`) at 7.62 and the wordmark numeral (`#d57c4b`) at 5.80. Focus ring uses `--c27-on-footer-accent`.
 - **Image caption (`#1b1a15`):** the bar under a photograph. It sits below the frame, not over it, so it never covers the image and the fill is solid: 17.42 for white text.
 - **Danger:** reserved for validation and errors.
 

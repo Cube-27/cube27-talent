@@ -207,20 +207,22 @@ const HERO_CAPABILITIES = [
     margin-top: 0.0625rem;
   }
 
-  /* A solid terracotta rule across the page: the numbers are the hero's proof, and
-     on the warm grey they read as another quiet band between two light fields.
-     Filled, they land as one statement and separate the hero from the sand
-     process rail below without needing a tone step. Terracotta is a signal colour,
-     so this is the only place it fills a section — text on it is --c27-on-fill
-     (measured 5.14). */
+  /* A quiet ruled band across the page: the numbers are the hero's proof,
+     set in subtle terracotta accent against the warm stone surface.
+     This preserves clean rhythm without glaring solid blocks on mobile screens. */
   .c27-proof-band {
-    background: var(--c27-accent);
-    padding-block: clamp(2.25rem, 4vw, 3.25rem);
+    background: var(--c27-surface-2);
+    border-top: 1px solid var(--c27-line-2);
+    border-bottom: 1px solid var(--c27-line-2);
+    padding-block: clamp(2rem, 3.5vw, 2.75rem);
   }
 
-  .c27-proof-band :global(.c27-metric),
+  .c27-proof-band :global(.c27-metric) {
+    color: var(--c27-accent);
+  }
+
   .c27-proof-band :global(.c27-side-label) {
-    color: var(--c27-on-fill);
+    color: var(--c27-ink-3);
   }
 
   /* No rules and no dividers — the band is a single measured statement, and
