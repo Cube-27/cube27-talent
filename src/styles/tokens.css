@@ -21,86 +21,80 @@
      --c27-surface are component fills, not section tones. */
   --c27-ground: #ffffff; /* white — the main reading surface */
   --c27-surface: #ffffff; /* pills, menus, and overlay surfaces */
-  --c27-surface-2: #f4f6fa; /* cool slate band tone */
-  --c27-hero: #e8ecfc; /* the hero's right-hand subtle cobalt/lavender field */
+  --c27-surface-2: #f6f4ed; /* warm parchment band tone */
+  --c27-hero: #ede4d6; /* the hero's right-hand warm sand field */
   /* The signature accent band tone for the final CTA and capability panel. */
-  --c27-deep: #e8ecfc;
+  --c27-deep: #ede4d6;
 
   /* --- ink -------------------------------------------------------
-     Deep navy-slate. Measured minimum across all five grounds above:
-     ink 13.31, ink-2 5.53, ink-3 4.83. All clear WCAG AA at every size.
-     Note the reference's own label greys (#68748a, #8390a4, #718097)
-     measure 3.5–3.9 on this ground and were rejected for that reason. */
-  --c27-ink: #12203a;
-  --c27-ink-2: #4f5c73;
-  --c27-ink-3: #59657a;
+     Warm obsidian / deep charcoal. Measured minimum across all grounds:
+     ink 17.42 on white, 15.83 on surface-2, 13.83 on deep.
+     ink-2 7.30 on white, 5.80 on deep. ink-3 4.91 on white.
+     All clear WCAG AA at every size. */
+  --c27-ink: #1b1a15;
+  --c27-ink-2: #5a564e;
+  --c27-ink-3: #767066;
 
   /* --- accent ----------------------------------------------------
-     Signal Cobalt. One accent, one job: actions, links, active state,
-     index numerals, and the directional marks. It is a signal colour,
-     not decoration — never use it to fill a decorative shape.
-     --c27-accent measures 5.44 on ground and 5.93 white-on-cobalt, so
-     it is safe as both a fill and as text. --c27-accent-d (8.19 on
-     white) is the pressed/hover step. */
-  --c27-accent: #284bff;
-  --c27-accent-d: #173bcf;
-  --c27-accent-soft: #e9edff;
+     Warm Terracotta / Burnt Sienna. One accent, one job: actions, links,
+     active state, index numerals, and directional marks.
+     --c27-accent measures 5.14 on ground and 5.14 white-on-accent, so
+     it is safe as both a fill and as text. --c27-accent-d (7.62 on
+     white, 6.05 on deep) is the pressed/hover step. */
+  --c27-accent: #b0522c;
+  --c27-accent-d: #8c3b1a;
+  --c27-accent-soft: #faeee7;
   /* --- lines -----------------------------------------------------
      A 1px rule is the only separator in this system, and it does the
-     work a card border and shadow used to do — so it is deliberately
-     stronger than the old hairline. Three weights, by structural role. */
-  --c27-line: #d3d8e0; /* default: list rows, control edges */
-  --c27-line-2: #c8ced9; /* column dividers inside a rule grid */
-  --c27-line-3: #b7becc; /* the top rule that opens a rule grid */
-  --c27-line-deep: rgba(18, 32, 58, 0.17); /* rules inside a deep field */
+     work a card border and shadow used to do — warm stone rules. */
+  --c27-line: #dfdbd2; /* default: list rows, control edges */
+  --c27-line-2: #d4cfc4; /* column dividers inside a rule grid */
+  --c27-line-3: #c4beb1; /* the top rule that opens a rule grid */
+  --c27-line-deep: rgba(27, 26, 21, 0.15); /* rules inside a deep field */
   /* Form controls are open at rest and use --c27-field-fill only as their
      active well. The bottom rule must therefore clear 3:1 against both the
-     focus fill and every page surface (WCAG 1.4.11) — measured 3.46 on the
-     fill, 3.74 on ground, 4.08 on surface, 3.38 on deep. Never use the control
-     rule as a decorative separator; that is --c27-line. */
-  --c27-line-control: #737e95;
-  --c27-field-fill: #f1f4f9;
+     focus fill and every page surface (WCAG 1.4.11) — measured 4.44 on
+     ground, 4.00 on field fill, 3.53 on deep. */
+  --c27-line-control: #7d776c;
+  --c27-field-fill: #f5f3ec;
 
   /* --- on deep fields -------------------------------------------
      The deep field is a light tint, so this ramp mirrors the ink ramp
-     rather than inverting it. Measured on --c27-deep: 13.46 / 5.60 /
-     4.88 / 4.92. Re-measure all four first if --c27-deep ever moves. */
-  --c27-on-deep: #12203a;
-  --c27-on-deep-2: #4f5c73;
-  --c27-on-deep-3: #59657a;
-  --c27-on-deep-accent: #284bff;
+     rather than inverting it. Measured on --c27-deep: 13.83 / 5.80 /
+     4.91 / 3.89 (accent large/titles). */
+  --c27-on-deep: #1b1a15;
+  --c27-on-deep-2: #5a564e;
+  --c27-on-deep-3: #767066;
+  --c27-on-deep-accent: #b0522c;
 
   /* --- footer ----------------------------------------------------
      The one dark band in the system, and the last thing on every page:
-     it closes the document rather than continuing the light rhythm, so
-     it does not participate in the ground → surface-2 → deep cycle and
-     is never used as a section tone. Its text ramp inverts the ink ramp
-     and is measured on --c27-footer: 15.75 / 8.71 / 5.58, with the link
-     hover at 8.26 and the wordmark numeral at 6.39. Re-measure all five
-     first if --c27-footer ever moves. */
-  --c27-footer: #18223c;
+     deep warm obsidian closing the document. Its text ramp inverts
+     the ink ramp: measured on --c27-footer: 17.42 / 10.37 / 6.55, with
+     the link hover at 7.76 and the wordmark numeral at 6.12. */
+  --c27-footer: #1b1a15;
   --c27-on-footer: #ffffff;
-  --c27-on-footer-2: #b8c1d4;
-  --c27-on-footer-3: #8e9ab4;
-  --c27-on-footer-accent: #aebcff;
-  --c27-on-footer-brand-27: #de8abe;
+  --c27-on-footer-2: #c8c3b8;
+  --c27-on-footer-3: #9e988d;
+  --c27-on-footer-accent: #e59c76;
+  --c27-on-footer-brand-27: #d57a47;
   --c27-line-footer: rgba(255, 255, 255, 0.14);
 
   /* --- image furniture -------------------------------------------
      The caption bar under a photograph. It sits below the frame rather
      than over it, so nothing shows through and the fill is solid: white
-     text measures 16.23 on it. */
-  --c27-image-caption: #12203a;
-  /* Text laid directly on a cobalt or caption fill. */
+     text measures 17.42 on it. */
+  --c27-image-caption: #1b1a15;
+  /* Text laid directly on a terracotta accent or caption fill. */
   --c27-on-fill: #ffffff;
   /* Competency coordinates: the faint blueprint grid behind editorial
-     fields, and the tighter, brighter grid over image corners. */
-  --c27-grid-line: rgba(40, 75, 255, 0.08);
-  --c27-grid-line-hi: rgba(40, 75, 255, 0.82);
-  --c27-grid-tint: rgba(238, 241, 255, 0.26);
-  /* The cobalt corner bracket on a portrait panel. */
-  --c27-bracket: rgba(40, 75, 255, 0.8);
-  --c27-bracket-fill: rgba(40, 75, 255, 0.11);
+     fields, and the tighter grid over image corners. */
+  --c27-grid-line: rgba(176, 82, 44, 0.08);
+  --c27-grid-line-hi: rgba(176, 82, 44, 0.75);
+  --c27-grid-tint: rgba(237, 228, 214, 0.35);
+  /* The terracotta corner bracket on a portrait panel. */
+  --c27-bracket: rgba(176, 82, 44, 0.8);
+  --c27-bracket-fill: rgba(176, 82, 44, 0.08);
   /* The scrolled header: the ground colour at 93% behind a blur. */
   --c27-header-fill: rgba(255, 255, 255, 0.93);
 

@@ -2,7 +2,7 @@
 
 ## 1. Visual direction
 
-The interface is a contemporary Swiss editorial field applied to high-end B2B: precise, high-trust, and structured like a considered business journal rather than an agency website. Strong typography, generous whitespace, off-axis columns, and 1px rules create structure. Cobalt is an information signal, never decoration.
+The interface is a contemporary Swiss editorial field applied to high-end B2B: precise, high-trust, and structured like a considered business journal rather than an agency website. Strong typography, generous whitespace, off-axis columns, and 1px rules create structure. Terracotta is an information signal, never decoration.
 
 It must not read as a card-based SaaS template. The failure mode this system exists to prevent is a page that turns every paragraph into a bordered, shadowed, rounded box.
 
@@ -11,9 +11,9 @@ It must not read as a card-based SaaS template. The failure mode this system exi
 1. **Radius is `0`.** Every surface is a hard rectangle: panels, buttons, chips, fields, images, menus, tiles. There is no rounded variant and no exception.
 2. **There is no card shadow.** Depth comes from colour fields, 1px rules, and offset blocks. The only shadow is `--c27-shadow-overlay`, reserved for menus and listboxes; never apply it to a section or content panel.
 3. **A set of related items is a rule-divided lattice, not a row of boxes.** Use `.c27-rule-grid`. See §6.
-4. **One cobalt accent carries actions, state, indices, and directional marks.** It is a signal colour: never use it to fill a decorative shape.
+4. **One terracotta accent carries actions, state, indices, and directional marks.** It is a signal colour: never use it to fill a decorative shape.
 5. **A 1px rule is the only separator.** Three weights by structural role — see §3.
-6. Gradients are limited to the hero's two-tone field and the blueprint grid overlays. No gradient text, glass, floating badges, decorative pills, or hover lifts.
+6. Gradients are limited to the blueprint grid overlays. No gradient text, glass, floating badges, decorative pills, or hover lifts.
 7. **The primary hover idiom is colour + indent + arrow reveal.** Nothing lifts or gains a shadow. A restrained `ImagePanel` crop zoom is the only hover-scale exception; `:active` on a pressable control is the only other scale.
 8. The hiring-process rail owns the most expressive motion.
 
@@ -34,18 +34,16 @@ Every ratio below is measured, not estimated. Recompute before changing a value.
 
 - **Ground:** white (`#ffffff`) — the main reading surface.
 - **Surface:** white (`#ffffff`) for pills, menus, and overlay surfaces.
-- **Surface 2:** cool slate (`#f4f6fa`) — the consistent alternating band tone across pages.
-- **Hero:** soft cobalt (`#e8ecfc`) — the hero's right-hand field only.
-- **Deep:** soft cobalt (`#e8ecfc`) for the final CTA and the capability panel. It is a **light** tint, so its text ramp (`--c27-on-deep*`) mirrors the ink ramp rather than inverting it. Measured on it: 13.46 / 5.60 / 4.88 / 4.92.
-- **Ink:** deep navy-slate (`#12203a`), with `#4f5c73` and `#59657a` beneath it. Measured minimum across all five grounds: 13.31 / 5.53 / 4.83.
-- **Accent — Signal Cobalt (`#284bff`):** actions, links, focus, active state, index numerals, eyebrow squares, directional marks. 5.44 on ground and 5.93 for white-on-cobalt, so it is safe as both a fill and as text. `--c27-accent-d` (`#173bcf`, 8.19 on white) is the hover and pressed step.
-- **Rules:** `--c27-line` (`#d3d8e0`) for list rows and control edges, `--c27-line-2` (`#c8ced9`) for column dividers, `--c27-line-3` (`#b7becc`) for the rule that opens a grid. These are deliberately stronger than a decorative hairline because they do the work a card border and shadow used to do.
-- **Line control (`#737e95`):** the single bottom rule identifying a form field. It sits between the fill above and the surface below so it must clear 3:1 against **both** (WCAG 1.4.11) — measured 3.46 on the fill, 3.74 on ground, 4.08 on surface, 3.38 on deep.
-- **Footer (`#18223c`):** the one dark band, and only ever the footer — it closes the document rather than continuing the light rhythm, so it is never used as a section tone. Its ramp (`--c27-on-footer*`) inverts the ink ramp: measured on it, 15.75 / 8.71 / 5.58, with the link hover (`#aebcff`) at 8.26 and the wordmark numeral (`#de8abe`) at 6.39. Cobalt measures 2.65 there, so the focus ring steps up to `--c27-on-footer-accent`.
-- **Image caption (`#12203a`):** the bar under a photograph. It sits below the frame, not over it, so it never covers the image and the fill is solid: 16.23 for white text, 10.34 for the index.
+- **Surface 2:** warm parchment (`#f6f4ed`) — the consistent alternating band tone across pages.
+- **Hero:** warm sand (`#ede4d6`) — the hero's right-hand field only.
+- **Deep:** warm sand (`#ede4d6`) for the final CTA and the capability panel. It is a **light** tint, so its text ramp (`--c27-on-deep*`) mirrors the ink ramp rather than inverting it. Measured on it: 13.83 / 5.80 / 4.91 / 3.89.
+- **Ink:** warm obsidian / deep charcoal (`#1b1a15`), with `#5a564e` and `#767066` beneath it. Measured minimum across all grounds: 17.42 on ground, 15.83 on surface-2, 13.83 on deep.
+- **Accent — Warm Terracotta / Burnt Sienna (`#b0522c`):** actions, links, focus, active state, index numerals, eyebrow squares, directional marks. 5.14 on ground and 5.14 for white-on-terracotta, so it is safe as both a fill and as text. `--c27-accent-d` (`#8c3b1a`, 7.62 on white, 6.05 on deep) is the hover and pressed step.
+- **Rules:** `--c27-line` (`#dfdbd2`) for list rows and control edges, `--c27-line-2` (`#d4cfc4`) for column dividers, `--c27-line-3` (`#c4beb1`) for the rule that opens a grid. These are deliberately stronger than a decorative hairline because they do the work a card border and shadow used to do.
+- **Line control (`#7d776c`):** the single bottom rule identifying a form field. Measured 4.44 on ground, 4.00 on field fill, 3.53 on deep.
+- **Footer (`#1b1a15`):** the one dark band, and only ever the footer — it closes the document rather than continuing the light rhythm, so it is never used as a section tone. Its ramp (`--c27-on-footer*`) inverts the ink ramp: measured on it, 17.42 / 10.37 / 6.55, with the link hover (`#e59c76`) at 7.76 and the wordmark numeral (`#d57a47`) at 6.12. Focus ring uses `--c27-on-footer-accent`.
+- **Image caption (`#1b1a15`):** the bar under a photograph. It sits below the frame, not over it, so it never covers the image and the fill is solid: 17.42 for white text.
 - **Danger:** reserved for validation and errors.
-
-> The reference palette this system is derived from uses `#68748a`, `#8390a4`, and `#718097` for its 9–10px uppercase labels. Those measure 3.5–3.9 on this ground and **fail AA**. They were rejected; use the ink ramp.
 
 All combinations meet WCAG AA.
 
@@ -69,18 +67,16 @@ Use the local DM Sans variable font:
 6. **L6: Body (`--c27-text-body`, 16px / 1.55–1.6)** — standalone prose, form values, and interface copy.
 7. **L7: Compact body (`--c27-text-body-sm`, 15px / 1.55–1.65)** — list descriptions and supporting component copy.
 8. **L8: Caption (`--c27-text-caption`, 13px / component-specific leading)** — metadata, form help, and compact annotations.
-9. **L9: Metric (`--c27-text-metric`, 32–40px / 1 / `-.035em`)** — approved proof figures, in cobalt with tabular numerals.
+9. **L9: Metric (`--c27-text-metric`, 32–40px / 1 / `-.035em`)** — approved proof figures, in terracotta accent with tabular numerals.
 
 Two tiers were added for the structural marks this system runs on. Neither is prose — never set a sentence at these sizes:
 
-10. **L10: Eyebrow (`--c27-text-label`, 10px / `.15em` / uppercase)** — `.c27-label`, via `Eyebrow.astro`. Names the field a section sits in, opened by an 8×8px solid cobalt square. One per section, two or three words.
-11. **L11: Index rail (`--c27-text-index`, 9px / `.14em` / uppercase)** — `.c27-index` via `IndexRail.astro`, and `.c27-side-label` for the bare variant. Numbers the section's place in the page's argument, with the numeral in cobalt.
+10. **L10: Eyebrow (`--c27-text-label`, 10px / `.15em` / uppercase)** — `.c27-label`, via `Eyebrow.astro`. Names the field a section sits in, opened by an 8×8px solid terracotta square. One per section, two or three words.
+11. **L11: Index rail (`--c27-text-index`, 9px / `.14em` / uppercase)** — `.c27-index` via `IndexRail.astro`, and `.c27-side-label` for the bare variant. Numbers the section's place in the page's argument, with the numeral in terracotta accent.
 
 ### The emphasis clause
 
-Headlines close on a second clause that shifts **colour**, never face. Cobalt (`.c27-emphasis`) is reserved for the page's opening statement — the hero. Everywhere else the clause is quiet ink (`.c27-emphasis-quiet`); the line break alone carries the rhythm.
-
-Keep it upright so emphasis stays structural rather than decorative.
+Headlines close on an emphasized clause rendered in Source Serif italic in terracotta accent (`.c27-emphasis`). Everywhere else the clause is quiet ink (`.c27-emphasis-quiet`); the line break alone carries the rhythm.
 
 Headings use sentence case and describe an outcome, decision, or capability.
 
@@ -103,7 +99,7 @@ Headings use sentence case and describe an outcome, decision, or capability.
 
 Every section opens the same way, through `SectionHead`. One pattern, no exceptions — the capability map had its own topline and executive search stacked an index rail on top of an eyebrow, and side by side they read as three different systems.
 
-- **One label per section.** An `IndexRail` — a cobalt numeral and the name of the field, running in document order across the page. Never an index and an eyebrow together; `Eyebrow` is for sections that have no place in the numbered argument (the hero, the closing CTA).
+- **One label per section.** An `IndexRail` — a terracotta numeral and the name of the field, running in document order across the page. Never an index and an eyebrow together; `Eyebrow` is for sections that have no place in the numbered argument (the hero, the closing CTA).
 - **A 50/50 split.** Heading in the left half flush to the left gutter, note in the right half flush to the right, `align-items: end`. This is the one place the system splits evenly: both halves close on a gutter, so nothing pools in between.
 - **The heading fills its half** — the ladder's 24ch cap is lifted in the split variant. With every head on the same grid the column is what makes the wrap consistent; a cap inside a half-width column leaves the heading using half of its own half.
 - **The right side is a note, not a lede.** 14px, right-aligned. At lede size it reads as a second headline competing with the first. The reference sets these at 14–15px throughout.
@@ -121,7 +117,7 @@ Set the desktop column count with `--c27-cols`. The class handles both step-down
 
 ### Buttons
 
-`primary` is a solid cobalt fill with white text. `line` is a ruled outline. `link` is a ruled text link — the underline is a real border so it sits at a controlled distance from the baseline rather than through the descenders — and is the only element that moves its arrow (3px on hover). All variants press to `scale(.97)` on `:active`.
+`primary` is a solid terracotta fill with white text. `line` is a ruled outline. `link` is a ruled text link — the underline is a real border so it sits at a controlled distance from the baseline rather than through the descenders — and is the only element that moves its arrow (3px on hover). All variants press to `scale(.97)` on `:active`.
 
 ### Elevation hierarchy
 
@@ -134,15 +130,15 @@ Set the desktop column count with `--c27-cols`. The class handles both step-down
 
 ### Image panels
 
-Photography is evidence, not decoration: a hard rectangle flush to the grid, carrying a contained label that ties the people in it to the process being described. `ImagePanel.astro` composes a dark caption bar, a cobalt corner chip, and one corner mark — either the tight coordinate grid or the cobalt bracket. `caption` and `chip` both occupy the bottom edge; use one or the other. Required dimensions establish the frame's intrinsic aspect ratio and reserve space before the image loads; callers with a definite editorial crop may override that ratio with `auto`.
+Photography is evidence, not decoration: a hard rectangle flush to the grid, carrying a contained label that ties the people in it to the process being described. `ImagePanel.astro` composes a dark caption bar, a terracotta corner chip, and one corner mark — either the tight coordinate grid or the terracotta bracket. `caption` and `chip` both occupy the bottom edge; use one or the other. Required dimensions establish the frame's intrinsic aspect ratio and reserve space before the image loads; callers with a definite editorial crop may override that ratio with `auto`.
 
 ### Competency coordinates
 
-`.c27-blueprint` lays a 68px cobalt grid at 8% behind an editorial field, masked so it fades out by 48% and never competes with copy set over it. `.c27-rule-mark` is the masthead flag: a 6×84px solid cobalt bar opening a page.
+`.c27-blueprint` lays a 68px terracotta grid at 8% behind an editorial field, masked so it fades out by 48% and never competes with copy set over it. `.c27-rule-mark` is the masthead flag: a 6×84px solid terracotta bar opening a page.
 
 ### Icons
 
-Icons sit directly on the ground at 24px in cobalt. **There are no icon tiles.** The graded tile behind an icon was the last surviving piece of the card system and it made every list item look like a widget.
+Icons sit directly on the ground at 24px in terracotta accent. **There are no icon tiles.** The graded tile behind an icon was the last surviving piece of the card system and it made every list item look like a widget.
 
 ### Capability panel
 
@@ -154,7 +150,7 @@ A metric is a scope descriptor — `24/7`, `1→N`, `360°`, `C-level` — never
 
 **A form is part of the page field, never a card placed on top of it.** The shell has no fill, inset padding, enclosing border, radius, or shadow. One stronger top rule opens the region and the submit area closes with the same rule.
 
-**Controls are open ruled lines at rest.** Each has one 1px bottom rule in `--c27-line-control`, no top or side border, square corners, and a transparent background. On focus, `--c27-field-fill` creates a subtle active well and the rule turns cobalt, thickened with an inset shadow rather than a wider border so nothing shifts while tabbing.
+**Controls are open ruled lines at rest.** Each has one 1px bottom rule in `--c27-line-control`, no top or side border, square corners, and a transparent background. On focus, `--c27-field-fill` creates a subtle active well and the rule turns terracotta accent, thickened with an inset shadow rather than a wider border so nothing shifts while tabbing.
 
 Labels use the display face at 11px, uppercase with `0.1em` tracking. Entered values use the body face at 16px. Related controls may share columns, with a compact 24px row gap and individual baselines keeping them legible as fields rather than a spreadsheet. Multi-select choices use a rule-divided grid; selection is shown with the accent tint and text, not a pill.
 
