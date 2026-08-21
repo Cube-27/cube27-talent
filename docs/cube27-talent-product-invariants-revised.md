@@ -91,7 +91,8 @@ The words “nine steps,” numbered stages, and count-based process claims are 
 
 - The site is a lead generator for a manual recruiting operation.
 - V1 has no accounts, marketplace, candidate inventory, dashboards, ATS, matching engine, scheduling, payments, or payroll product.
-- Existing Astro, Cloudflare Pages Functions, Turnstile, Resend, upload validation, attribution, consent, and redirect behavior remain intact.
+- The employer enquiry keeps its Astro, Cloudflare Pages Function, Turnstile, Resend, attribution, and redirect behavior while collecting only name, company, work email, and optional requirement detail.
+- Candidate upload validation, attribution, consent, and redirect behavior remain intact.
 - Recorded assessments may be marketed, but any recording workflow requires separately approved consent, storage, access, retention, and deletion controls.
 - Canonical origin remains `https://talent.cube27.com`.
 

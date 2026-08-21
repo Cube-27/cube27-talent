@@ -1,5 +1,5 @@
 /**
- * POST /api/employer-lead — structured hiring requirement. Plan §13.4.
+ * POST /api/employer-lead — streamlined employer enquiry.
  *
  * Sequence: method → origin → size → parse → honeypot → Turnstile →
  * validate → id → internal email (critical) → acknowledgement (best effort).
@@ -17,13 +17,10 @@ import {
   checkLine,
   checkBlock,
   isEmail,
-  inAllowList,
   attribution,
 } from "../_shared/validation.ts";
 import { parseBoundedFormData } from "../_shared/request-body.ts";
 import { verifyTurnstile } from "../_shared/turnstile.ts";
-// Single source of truth for the taxonomy — see the note in src/data/roles.ts.
-import { ROLE_FAMILY_IDS } from "../../src/data/roles.ts";
 import {
   sendEmail,
   htmlRows,
@@ -42,22 +39,7 @@ interface Env {
   TURNSTILE_SECRET_KEY?: string;
 }
 
-const HIRE_COUNTS = ["1", "2–5", "6–10", "11–25", "25+"] as const;
-const START_WINDOWS = [
-  "As soon as possible",
-  "Within 30 days",
-  "1–3 months",
-  "Planning ahead",
-] as const;
-const ENGAGEMENTS = ["Full-time employment", "Either", "Contract"] as const;
-const ARRANGEMENTS = [
-  "Remote",
-  "Hybrid",
-  "Onsite",
-  "Relocation",
-  "Flexible",
-] as const;
-const GENERIC_ERROR = "We could not send your requirement. Please try again.";
+const GENERIC_ERROR = "We could not send your enquiry. Please try again.";
 
 export const onRequest = async ({
   request,
@@ -104,39 +86,19 @@ export const onRequest = async ({
   const name = asText(form.get("name"));
   const email = asText(form.get("email"));
   const company = asText(form.get("company"));
-  const jobTitle = asText(form.get("jobTitle"));
-  const country = asText(form.get("country"));
-  const hires = asText(form.get("hires"));
-  const startWindow = asText(form.get("startWindow"));
-  const engagement = asText(form.get("engagement"));
-  const arrangement = asText(form.get("arrangement"));
   const requirement = asText(form.get("requirement"));
-  const consent = asText(form.get("consent"));
-  const roleFamilies = form
-    .getAll("roleFamilies")
-    .map((value) => asText(value))
-    .filter((value) => inAllowList(value, ROLE_FAMILY_IDS));
 
   const valid =
     checkLine(name, 100) &&
     isEmail(email) &&
     checkLine(company, 200) &&
-    checkLine(jobTitle, 120) &&
-    checkLine(country, 80) &&
-    inAllowList(hires, HIRE_COUNTS) &&
-    inAllowList(startWindow, START_WINDOWS) &&
-    inAllowList(engagement, ENGAGEMENTS) &&
-    inAllowList(arrangement, ARRANGEMENTS) &&
-    checkBlock(requirement, 20, 4000) &&
-    roleFamilies.length > 0 &&
-    consent === "yes";
+    (!requirement || checkBlock(requirement, 1, 4000));
 
   if (!valid) {
     return json(
       {
         ok: false,
-        error:
-          "Please complete every required field, including at least one role family and the privacy acknowledgement.",
+        error: "Please enter your name, company, and a valid work email.",
       },
       422,
     );
@@ -162,15 +124,8 @@ export const onRequest = async ({
     ["Submission", id],
     ["Name", name],
     ["Email", email],
-    ["Job title", jobTitle],
     ["Company", company],
-    ["Country", country],
-    ["Positions", hires],
-    ["Role families", roleFamilies.join(", ")],
-    ["Engagement", engagement],
-    ["Arrangement", arrangement],
-    ["Target start", startWindow],
-    ["Requirement", requirement],
+    ["Requirement", requirement || "Not provided"],
     ["Landing page", attr.landingPage],
     ["Referrer", attr.referrer],
     ["utm_source", attr.utmSource],
@@ -189,9 +144,9 @@ export const onRequest = async ({
     from: env.RESEND_FROM!,
     to: env.EMPLOYER_LEADS_TO!,
     replyTo: headerSafe(email),
-    subject: `${envTag}[Employer][${hires}] ${headerSafe(company)} — ${id}`,
+    subject: `${envTag}[Employer] ${headerSafe(company)} — ${id}`,
     text: textRows(fields),
-    html: wrapHtml(`New hiring requirement — ${id}`, htmlRows(fields)),
+    html: wrapHtml(`New employer enquiry — ${id}`, htmlRows(fields)),
   });
 
   if (!internal.ok) {
@@ -208,30 +163,30 @@ export const onRequest = async ({
     from: env.RESEND_FROM!,
     to: headerSafe(email),
     replyTo: env.RESEND_REPLY_TO,
-    subject: `Cube27 Talent — requirement received (${id})`,
+    subject: `Cube27 Talent — enquiry received (${id})`,
     text: [
       `Hello ${name},`,
       "",
-      "Thank you for your interest in Cube27 Talent. Your hiring requirement has reached us.",
+      "Thank you for your interest in Cube27 Talent. Your enquiry has reached us.",
       "",
-      "We will read it properly, work out whether we can assess the role well, and come back to you either way using the details you supplied. Sending a requirement does not by itself start an engagement.",
+      "We will review your enquiry and come back to you using the details you supplied. Sending an enquiry does not by itself start an engagement.",
       "",
       `Your reference is ${id}.`,
       "",
       "— Cube27 Talent",
     ].join("\n"),
     html: wrapHtml(
-      "Thank you — Requirement received",
+      "Thank you — Enquiry received",
       htmlRows([
         ["Reference", id],
         ["Company", company],
         [
           "Status",
-          "Thank you for your interest in Cube27 Talent. We have received your requirement.",
+          "Thank you for your interest in Cube27 Talent. We have received your enquiry.",
         ],
         [
           "Next",
-          "We will read it properly, work out whether we can assess the role well, and come back to you either way using the details you supplied. Sending a requirement does not by itself start an engagement.",
+          "We will review your enquiry and come back to you using the details you supplied. Sending an enquiry does not by itself start an engagement.",
         ],
       ]),
     ),

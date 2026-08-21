@@ -487,24 +487,11 @@ test("candidate submission carries the optional GitHub profile into the recruitm
   }
 });
 
-test("employer submission carries a managed-team requirement into the sales email", async () => {
+test("employer submission accepts the three required fields without a requirement", async () => {
   const form = new FormData();
   form.set("name", "Priya Raghavan");
   form.set("email", "priya@example.com");
   form.set("company", "Example Global");
-  form.set("jobTitle", "VP Talent Acquisition");
-  form.set("country", "Netherlands");
-  form.set("hires", "6–10");
-  form.set("startWindow", "Within 30 days");
-  form.set("engagement", "Full-time employment");
-  form.set("arrangement", "Hybrid");
-  form.append("roleFamilies", "business-operations");
-  form.append("roleFamilies", "leadership");
-  form.set(
-    "requirement",
-    "Build an operations leadership team across multiple markets.",
-  );
-  form.set("consent", "yes");
   form.set("cf-turnstile-response", "verified-test-token");
 
   const resendPayloads: Array<Record<string, unknown>> = [];
@@ -548,14 +535,8 @@ test("employer submission carries a managed-team requirement into the sales emai
 
     assert.equal(response.status, 200);
     assert.equal(resendPayloads.length, 2);
-    assert.match(
-      String(resendPayloads[0]?.text),
-      /Role families: business-operations, leadership/,
-    );
-    assert.match(
-      String(resendPayloads[0]?.text),
-      /Build an operations leadership team across multiple markets\./,
-    );
+    assert.match(String(resendPayloads[0]?.text), /Requirement: Not provided/);
+    assert.doesNotMatch(String(resendPayloads[0]?.text), /Job title:/);
     assert.deepEqual(resendPayloads[0]?.to, ["sales@example.com"]);
   } finally {
     globalThis.fetch = originalFetch;

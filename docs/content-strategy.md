@@ -24,7 +24,7 @@ These patterns inform structure and clarity only. Competitor claims, language, m
 Supporting message: Managed hiring for specialists, complete teams, and senior leadership, with evidence-backed shortlists and ongoing workforce compliance support.
 
 Primary CTA: **Build your team**  
-Form submission CTA: **Send requirement**  
+Form submission CTA: **Send enquiry**
 Candidate CTA: **Apply to join**
 
 ## Proof hierarchy
@@ -61,7 +61,7 @@ Enterprise-authority hero → Fortune 500 and C-suite operator experience → ev
 
 ### Build your team
 
-Clear employer proposition → what the conversation establishes → structured requirement form → concise FAQ.
+Clear employer proposition → low-friction contact form → concise FAQ.
 
 ### For talent
 

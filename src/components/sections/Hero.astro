@@ -46,7 +46,11 @@ const HERO_CAPABILITIES = [
     </p>
 
     <div class="c27-hero-actions">
-      <Button href={ROUTES.hire} variant="primary" arrow>Build your team</Button
+      <Button
+        href={ROUTES.hire}
+        variant="primary"
+        arrow
+        class="c27-hero-primary">Build your team</Button
       >
       <Button href={ROUTES.join} variant="link" arrow="down-right">
         Looking for your next role?
@@ -293,6 +297,23 @@ const HERO_CAPABILITIES = [
 
     .c27-hero-sideitem {
       max-width: none;
+    }
+
+    /* The sticky header already carries the filled employer CTA on mobile.
+       Keep the hero route visible without repeating the same heavy button. */
+    .c27-hero-actions :global(.c27-hero-primary) {
+      min-height: 44px;
+      padding: 0 0 3px;
+      border: 0;
+      border-bottom: 1px solid currentColor;
+      background: transparent;
+      color: var(--c27-ink);
+      font-size: 0.875rem;
+    }
+
+    .c27-hero-actions :global(.c27-hero-primary:hover) {
+      background: transparent;
+      color: var(--c27-accent-d);
     }
   }
 

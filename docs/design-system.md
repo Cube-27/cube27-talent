@@ -184,4 +184,4 @@ Every phase is present in the DOM. Desktop uses a vertical spine with scroll-lin
 
 ## 9. Writing inside the interface
 
-Use commercial claims, concrete nouns, and active verbs. Keep supporting paragraphs to one short sentence. Do not narrate internal operations. Buttons name the action: **Build your team**, **Send requirement**, **Apply to join**.
+Use commercial claims, concrete nouns, and active verbs. Keep supporting paragraphs to one short sentence. Do not narrate internal operations. Buttons name the action: **Build your team**, **Send enquiry**, **Apply to join**.

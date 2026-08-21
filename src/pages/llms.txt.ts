@@ -41,7 +41,7 @@ export const GET: APIRoute = () => {
     `- [Home](${url(ROUTES.home)}): managed hiring, proof, cross-functional scope, compliance, and support.`,
     `- [How we hire](${url(ROUTES.how)}): role-specific assessment and selection.`,
     `- [Why us](${url(ROUTES.whyUs)}): operator experience, hiring standards, workforce compliance, and approved proof.`,
-    `- [Build your team](${url(ROUTES.hire)}): the employer requirement form.`,
+    `- [Build your team](${url(ROUTES.hire)}): the employer enquiry form.`,
     `- [For talent](${url(ROUTES.join)}): the candidate proposition and application.`,
     "",
     "## Questions from employers",

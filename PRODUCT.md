@@ -29,7 +29,8 @@ The service supports global, remote, hybrid, onsite, and relocation-based hiring
 - AI may assist sourcing and screening, but people make every decision.
 - V1 is a lead-generation website for a manual operation, not a marketplace or software platform.
 - Public copy may describe benefit-level coordination of contracts, payroll, applicable local requirements, culture onboarding, and performance reviews. It excludes contractual mechanics, legal advice, pricing, guarantees, fake proof, and certification ownership.
-- Existing forms, Cloudflare Pages Functions, Turnstile, Resend, upload validation, consent, and redirects remain stable.
+- The employer form requires only name, company, and work email; requirement detail is optional. Turnstile, attribution, Resend delivery, and redirects remain stable.
+- Candidate upload validation and separate processing and retention consent behavior remain stable.
 
 ## Brand Commitments
 

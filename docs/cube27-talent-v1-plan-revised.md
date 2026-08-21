@@ -12,11 +12,11 @@ Create an enterprise-facing lead-generation site for a managed talent and team-b
 - why our assessment is credible;
 - what action to take next.
 
-The primary conversion is a completed employer requirement. Candidate applications remain a complete secondary funnel.
+The primary conversion is a completed employer enquiry. Candidate applications remain a complete secondary funnel.
 
 ## 2. Positioning and message sequence
 
-The homepage leads with “Build the team your business needs.” It then proves scale, states the commercial value, shows the hiring evidence, lists lifecycle coverage, presents cross-functional hiring scope and compliance support, and ends with a direct requirement CTA.
+The homepage leads with “Build the team your business needs.” It then proves scale, states the commercial value, shows the hiring evidence, lists lifecycle coverage, presents cross-functional hiring scope and compliance support, and ends with a direct employer CTA.
 
 The sales story is:
 
@@ -32,7 +32,7 @@ Existing routes remain stable:
 - `/` — employer-focused homepage
 - `/how-it-works/` — deeper explanation of how we hire and support teams
 - `/why-us/` — operator experience, evidence-led hiring standards, workforce compliance, and approved proof
-- `/hire-talent/` — employer requirement and conversion page
+- `/hire-talent/` — employer enquiry and conversion page
 - `/join-talent-network/` — candidate proposition and application
 - existing thank-you and error routes
 
@@ -65,15 +65,15 @@ No visible, accessible, metadata, or documentation copy numbers the phases or ca
 
 - **How we hire:** expand the four phases, explain assessment evidence and human judgment, then show ongoing lifecycle coverage.
 - **Why us:** prove operator experience, hiring judgment, workforce compliance, culture alignment, and approved scale without repeating the homepage role catalogue.
-- **Build your team:** use a concise enterprise proposition beside the existing structured requirement form.
+- **Build your team:** use a concise enterprise proposition beside a low-friction employer contact form.
 - **For talent:** explain career value, discipline-specific assessment, process clarity, and global work without promises.
 - **Thank-you and error pages:** use direct, specific headings and next actions consistent with the new shell.
 
 ## 7. Forms and integrations
 
-Preserve payloads, endpoints, Turnstile actions, Resend delivery, upload validation, consent fields, hidden attribution fields, rate limiting, and redirects.
+Preserve endpoints, Turnstile actions, Resend delivery, upload validation, candidate consent fields, hidden attribution fields, rate limiting, and redirects.
 
-Employer fields remain structured around role, scale, start window, engagement, arrangement, role families, and requirement detail. Candidate fields retain the optional LinkedIn and GitHub/portfolio URLs and resume upload.
+The employer form requires name, company, and work email, with optional requirement detail. Candidate fields retain the optional LinkedIn and GitHub/portfolio URLs and resume upload.
 
 ## 8. Content constraints
 

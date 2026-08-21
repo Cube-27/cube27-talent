@@ -80,7 +80,7 @@ export const GET: APIRoute = () => {
     `- [Home](${url(ROUTES.home)}): Managed hiring overview, proof metrics, cross-functional scope, compliance, and ongoing support.`,
     `- [How we hire](${url(ROUTES.how)}): Evidence-based assessment methodology, practitioner interviews, and selection process.`,
     `- [Why us](${url(ROUTES.whyUs)}): Operator experience, hiring standards, workforce compliance, and approved proof.`,
-    `- [Build your team](${url(ROUTES.hire)}): Employer requirement form and hiring consultation request.`,
+    `- [Build your team](${url(ROUTES.hire)}): Employer enquiry form and hiring consultation request.`,
     `- [For talent](${url(ROUTES.join)}): Candidate network application and career opportunities.`,
     `- [Overview index](${url("/llms.txt")}): Machine-readable concise summary.`,
     "",
