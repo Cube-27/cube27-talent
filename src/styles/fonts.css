@@ -14,12 +14,13 @@ U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD 
        --layout-features=kern,liga,calt,tnum,ccmp,locl,mark,mkmk \
        --no-hinting --desubroutinize --name-IDs=1,2,3,4,6 --drop-tables+=DSIG
 
-   font-display: optional, not swap. `swap` paints the fallback first and then
-   re-renders in the real face, which reads as a flicker on every load that is
-   not already warm. `optional` gives the font a short window to arrive and then commits
-   to whatever it has, never swapping mid-view. Preloading is what makes it
-   win that window; the files are same-origin and cached immutably for a year
-   (public/_headers), so repeat views are instant. */
+   Use font-display: swap so a cold first visit applies the downloaded face.
+   `optional` gives the font only a very short window to arrive and can commit
+   to the fallback for the entire page view, even though the preload completes
+   moments later. That made the intended fonts appear only after a refresh on
+   slower laptop and mobile connections. The files are preloaded, same-origin,
+   and cached immutably for a year (public/_headers), which keeps the fallback
+   interval short while ensuring the real face is used as soon as it is ready. */
 
 /* Unified type face for body prose, buttons, and structural labels. */
 @font-face {
@@ -28,7 +29,7 @@ U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD 
     url("/fonts/dm-sans-variable.woff2") format("woff2") tech(variations),
     url("/fonts/dm-sans-variable.woff2") format("woff2-variations");
   font-weight: 300 700;
-  font-display: optional;
+  font-display: swap;
   font-style: normal;
 }
 
@@ -39,6 +40,6 @@ U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD 
     url("/fonts/geist-variable.woff2") format("woff2") tech(variations),
     url("/fonts/geist-variable.woff2") format("woff2-variations");
   font-weight: 100 900;
-  font-display: optional;
+  font-display: swap;
   font-style: normal;
 }
